@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About | BillTracking</title>
+<meta name="description" content="What BillTracking is, how the feeds are generated from official legislative records, and who is behind it — an independent project whose only revenue is X's creator program, disclosed plainly.">
+<link rel="canonical" href="https://billtracking.org/about.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://billtracking.org/about.html">
+<meta property="og:title" content="About BillTracking">
+<meta property="og:description" content="What BillTracking is, how the feeds are generated from official records, and who is behind it.">
+<meta property="og:image" content="https://billtracking.org/assets/eu-banner.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+<link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">BillTracking<span class="tld">.org</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="us-process.html">US Process</a>
+      <a href="eu-process.html">EU Process</a>
+      <a href="educators.html">Educators</a>
+      <a href="accuracy.html">Accuracy</a>
+      <a href="about.html" aria-current="page">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<div class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">About</p>
+    <h1>About BillTracking</h1>
+    <p class="lede">BillTracking is an <strong>independent project</strong> that publishes
+    a live, source-linked record of lawmaking in the United States Congress and the
+    European Union, through two automated feeds and this site. It's run independently by
+    one person, not an institution, and its only revenue is X's creator program &mdash;
+    <strong>no sponsors, no advertisers, and nothing anyone can pay us to post.</strong></p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow on-light">The idea</p>
+    <h2>The record deserves a feed</h2>
+    <p class="measure-wide muted">Democracies record everything their legislatures do —
+    and then publish it in databases most citizens will never open. The gap between
+    <em>public</em> and <em>accessible</em> is where BillTracking sits: software that reads the
+    official record continuously and republishes it, step by step, in the places people
+    actually read, in language that doesn't require a law degree.</p>
+    <p class="measure-wide muted">The project's bet is long and unglamorous: that
+    <strong>consistency, accuracy and completeness over years</strong> — not speed, not hot
+    takes — is what makes a source worth citing. News will always break stories first.
+    The feeds do something different: they are the reference you check the story against.</p>
+
+    <h3 id="why-x">Why X?</h3>
+    <p class="measure-wide muted">Because that's where the conversation about legislation
+    actually happens. Journalists, congressional and parliamentary staff, policy academics
+    and engaged citizens argue about lawmaking on X in real time — and a record is most
+    useful in the room where the argument is. Posting the official record into that
+    conversation means a claim can be checked the moment it's made, not after it's been
+    retweeted for a day.</p>
+    <p class="measure-wide muted">We know the platform has critics. That's part of why this
+    site exists: billtracking.org is the platform-independent home of the project, and if
+    enough readers want the feeds mirrored elsewhere, we'll listen — tell us at
+    <a href="mailto:contact@billtracking.org">contact@billtracking.org</a>.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <p class="eyebrow on-light">How it works</p>
+    <h2>From the record to your feed</h2>
+
+    <ol class="howto">
+      <li><strong>Read the record.</strong> Software polls the official sources — the
+      Congress.gov API for the US feed; the European Parliament's open-data service, the EU
+      Publications Office's Cellar database and the OEIL Legislative Observatory for the EU
+      feed.</li>
+      <li><strong>Classify the step.</strong> Each new action in the record is matched against
+      a model of the legislative process — <em>passed the House; cloture failed; trilogue
+      mandate agreed; published in the Official Journal.</em> Actions the system can't
+      confidently place are logged and skipped, never guessed (see
+      <a href="accuracy.html">Accuracy</a>).</li>
+      <li><strong>Compose the post.</strong> Fixed templates state the action in the record's
+      own terms, with dates and vote numbers verbatim, plus an honest "what's next". AI is
+      used for one thing only: the optional plain-English summary of what a bill would do —
+      always labeled <strong>[AI-Generated]</strong>.</li>
+      <li><strong>Post, and stand behind it.</strong> Errors are corrected visibly and logged
+      publicly. Every post can be traced back to its official source by anyone.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow on-light">Who is behind it</p>
+    <h2>Independence, funding, and the .org question</h2>
+
+    <p class="measure-wide muted">BillTracking is built and run by <strong>one person,
+    independently</strong>. It is an independent project — if it ever earns money, it will be
+    through the X platform's creator features, not by charging you. The feeds and this site are free and will stay free to read; there is no premium
+    tier, no institutional license, and no data collection business behind it.
+    No sponsors, no advertisers, no paid placements: the posts are generated by software
+    from the official record, so there is no editorial desk to buy.</p>
+
+    <p class="measure-wide muted"><strong>Why a .org domain, then?</strong> Because .org fits
+    what the site is for — a public-facing civic resource — and carries no legal restriction
+    to nonprofits. Rather than let the domain imply anything, we say it outright: this is an
+    independent project, not an "organization", an institute, or an official body. There
+    is no team page because there is no team to inflate — it is a small operation, and
+    pretending otherwise would cut against the one asset that matters here: being exactly
+    what it says it is.</p>
+
+    <div class="callout">
+      <p><strong>Not affiliated:</strong> BillTracking has no connection to, and no endorsement
+      from, the United States Congress, the Library of Congress, the European Union or any of
+      its institutions, or any government body. It republishes their public records, with
+      attribution, under their open-data terms.</p>
+    </div>
+
+    <h3>Contact</h3>
+    <p class="muted">General: <a href="mailto:contact@billtracking.org">contact@billtracking.org</a><br>
+    Error reports: <a href="mailto:accuracy@billtracking.org">accuracy@billtracking.org</a> —
+    see <a href="accuracy.html">how corrections work</a>.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="wordmark" href="index.html">BillTracking<span class="tld">.org</span></a>
+        <p>An independent project publishing a live, source-linked record of US and EU
+        lawmaking. Its only revenue is X's creator monetization &mdash; no sponsors, no
+        paid placements. Not affiliated with, or endorsed by, the United States
+        Congress, the European Union, or any government body.</p>
+      </div>
+      <div>
+        <h5>Pages</h5>
+        <ul>
+          <li><a href="us-process.html">The US process</a></li>
+          <li><a href="eu-process.html">The EU process</a></li>
+          <li><a href="educators.html">Educators</a></li>
+          <li><a href="accuracy.html">Accuracy &amp; corrections</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:contact@billtracking.org">contact@billtracking.org</a></li>
+          <li><a href="mailto:accuracy@billtracking.org">accuracy@billtracking.org</a></li>
+          <li><a href="https://x.com/USBillTracker">@USBillTracker</a></li>
+          <li><a href="https://x.com/EUBillTracker">@EUBillTracker</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>BillTracking is an independent project · © 2026 billtracking.org</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

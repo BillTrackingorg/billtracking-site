@@ -1,0 +1,23 @@
+BillTracking — copy-paste syllabus blurbs
+=========================================
+
+US feed (American politics / Congress / con-law courses):
+
+  We will follow @USBillTracker on X (x.com/USBillTracker) this semester — an automated,
+  source-linked feed that posts every step of legislation moving through Congress, from
+  committee to the President's desk, straight from the Congress.gov record. Free and public;
+  background at billtracking.org.
+
+EU feed (EU politics / European law / EU-studies courses):
+
+  We will follow @EUBillTracker on X (x.com/EUBillTracker) this semester — an automated,
+  plain-English feed of every legislative procedure moving through the European Parliament
+  and Council, from the EU's official registers. Free and public; background at
+  billtracking.org.
+
+Both feeds (comparative politics / comparative legislatures):
+
+  We will follow @USBillTracker and @EUBillTracker on X this semester — twin automated feeds
+  posting every step of US and EU lawmaking from the official records, in one format. Watching
+  the two systems process legislation side by side is the course's running case study. Free and
+  public; background at billtracking.org.
