@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "REPLACE_TEAM_ID.REPLACE_IOS_BUNDLE_ID",
+        "paths": ["/p/*"]
+      }
+    ]
+  }
+}
