@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 
+# Repository tooling and fixtures. GitHub Pages serves the entire repo (there is
+# a .nojekyll file), so these are reachable even though they are not part of the
+# site. Keep them out of search results.
+Disallow: /build/
+Disallow: /README.md
+
 Sitemap: https://billtracking.org/sitemap.xml
