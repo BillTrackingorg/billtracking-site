@@ -45,8 +45,18 @@ Pages serves from the repository root on `main`. `.nojekyll` is present so files
 are served as-is rather than run through Jekyll.
 
 Once Pages is enabled and the domain is pointed at it, the checklist for any
-site change is: confirm the GA4 tag is still on every page, and re-submit the
-sitemap in Search Console.
+site change is: re-submit the sitemap in Search Console.
+
+⚠️ **This site carries no analytics and no JavaScript at all** — verified
+2026-07-19 by a full audit of every HTML, CSS and JS file. Zero third-party
+resources; fonts are self-hosted woff2 (`style.css:8-28`). An earlier version of
+this checklist said to "confirm the GA4 tag is still on every page". That was
+imported in error from the YAP site, which is a different property. **There is no
+GA4 tag here and there never was.** Do not add one, and do not carry YAP's
+analytics disclosure into this project's privacy policy — it would make the
+policy false on its first day.
+
+If analytics is ever added, see `ANALYTICS-DECISION.md` and add the check back.
 
 ## Consistency with the app
 
