@@ -798,7 +798,10 @@ details.blurbs blockquote {
   gap: 2rem;
 }
 
-@media (min-width: 46rem) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+/* Four columns since the Legal group was added (privacy / terms / deletion).
+   The blurb keeps the widest track; the three link lists are equal. Below
+   46rem it stays a single column, so nothing is cramped on a phone. */
+@media (min-width: 46rem) { .footer-grid { grid-template-columns: 1.8fr 1fr 1fr 1.1fr; } }
 
 .site-footer .wordmark { font-size: 1.25rem; }
 
