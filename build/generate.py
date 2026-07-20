@@ -103,7 +103,24 @@ def text_html(text: str) -> str:
 
 
 def describe(rec: dict) -> tuple[str, str]:
-    """(title, meta-description) for <title>/og — plain text, escaped later."""
+    """(title, meta-description) for <title>/og — plain text, escaped later.
+
+    The description feeds <meta name="description">, og:description and the
+    Twitter card — i.e. Google snippets and every social preview.
+
+    When it is drawn from `summary` it is AI-GENERATED TEXT, and it MUST carry
+    the [AI-Generated] marker. The body of the page gets that label because the
+    bot bakes it into the posted text; the summary field does not, so a preview
+    built from it would show AI-written prose with nothing saying so — while the
+    app and site both promise "AI is labeled".
+
+    That is also the one EU AI Act Article 50(4) obligation within our control:
+    a deployer publishing AI-generated text to inform the public on matters of
+    public interest must disclose it as such. Applies from 2 August 2026.
+
+    The `text` branch is NOT labelled: it is the bot's own composed post, drawn
+    verbatim from the official record with no model involvement.
+    """
     ref = rec.get("reference", "")
     label = rec.get("label", "")
     if ref and label:
@@ -112,7 +129,18 @@ def describe(rec: dict) -> tuple[str, str]:
         title = ref
     else:
         title = (rec.get("text", "").splitlines() or ["BillTracking post"])[0][:90]
-    desc = rec.get("summary") or " ".join(rec.get("text", "").split())[:180]
+
+    summary = rec.get("summary")
+    if summary:
+        # Truncate the summary itself, never the marker — the marker is the
+        # part that must survive. 160-180 chars is the practical snippet limit.
+        marker = " [AI-Generated]"
+        body = " ".join(summary.split())
+        if len(body) + len(marker) > 180:
+            body = body[: 180 - len(marker) - 1].rstrip() + "…"
+        desc = body + marker
+    else:
+        desc = " ".join(rec.get("text", "").split())[:180]
     return title, desc
 
 
