@@ -83,3 +83,23 @@ Presentation each renderer owns (mirrors the app's D16): the alternating
 section tint on the site is applied from section order in the generator, and
 the app ignores both the tint and the per-section eyebrow. Change the look in
 `style.css` (site) or `legal-doc-view.tsx` (app), never here.
+
+## Safety net + known limits
+
+The generator **fails loud** rather than silently mis-rendering, so a typo in a
+future edit stops the build instead of shipping wrong output. It errors on: a
+heading without its space (`##Heading`, or an unsupported `#### `), a list item
+without its space (`-item`), an `^eyebrow` not immediately followed by a `## `
+heading, a missing front-matter key, and an empty hero lede. URLs may contain
+parentheses (e.g. EUR-Lex `.../833(1)/oj`). `python build/generate_legal.py
+--selftest` checks all of this.
+
+Still author-beware (outside the tiny grammar, not guarded):
+- **No markup inside a link label** other than a wholly-bold one — write
+  `[**bold link**](url)`, not `[a **word** here](url)`, and don't put a link
+  inside a `**bold**` span.
+- A **lone literal `*`** in prose can pair with a later `*` and italicise the
+  span between them. Avoid stray asterisks; `*italic*` must be a clean pair.
+
+After any edit, eyeball the regenerated page — the same output feeds the app, so
+what you see on the site is what the app shows.

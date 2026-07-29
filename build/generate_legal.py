@@ -64,7 +64,11 @@ APP_ROUTE = {"privacy.html": "/privacy", "terms.html": "/terms"}
 # --------------------------------------------------------------------------- #
 #  Parsing  (Markdown source -> structured document)
 # --------------------------------------------------------------------------- #
-_INLINE = re.compile(r"\*\*(.+?)\*\*|\*(.+?)\*|\[([^\]]+)\]\(([^)]+)\)")
+# The href group allows ONE level of nested parentheses so URLs like EUR-Lex
+# `.../833(1)/oj` survive — a plain `[^)]+` would truncate the href at the first
+# inner `)` and dump the tail as literal text (silent dead link).
+_INLINE = re.compile(
+    r"\*\*(.+?)\*\*|\*(.+?)\*|\[([^\]]+)\]\(((?:[^()]|\([^()]*\))+)\)")
 _BOLD_LABEL = re.compile(r"^\*\*(.+)\*\*$")
 
 
@@ -141,7 +145,22 @@ def parse_body(body: str) -> tuple[list[dict], list[dict]]:
         if not s:
             i += 1
             continue
+        # Fail loud on markers that look like a typo rather than silently
+        # emitting them as body text (a mistyped heading would also drop a
+        # section and flip every later section's tint).
+        if s.startswith("#") and not (s.startswith("## ") or s.startswith("### ")):
+            raise ValueError(f"heading must be '## ' or '### ' (with a space): {s!r}")
+        if re.match(r"^-\S", s):
+            raise ValueError(f"list item must start with '- ' (with a space): {s!r}")
         if s.startswith("^"):
+            # an eyebrow kicker only makes sense directly above its heading;
+            # otherwise it would leak onto a later section or vanish silently
+            j = i + 1
+            while j < n and not lines[j].strip():
+                j += 1
+            if j >= n or not lines[j].strip().startswith("## "):
+                raise ValueError(
+                    f"'^{s[1:].strip()}' must be immediately followed by a '## ' heading")
             pending_eyebrow = s[1:].strip()
             i += 1
         elif s.startswith("## "):
@@ -161,15 +180,19 @@ def parse_body(body: str) -> tuple[list[dict], list[dict]]:
                 i += 1
             current["blocks"].append({"kind": "list", "items": items})
         elif s.startswith(">"):
+            # consecutive `>` lines fold into ONE callout paragraph (so a
+            # hard-wrapped quote is not split into stray <p>s — matches how
+            # plain paragraphs fold)
             variant = "gold" if s.startswith(">!") else "default"
-            paras = []
+            texts = []
             while i < n and lines[i].strip().startswith(">"):
                 t = lines[i].strip()
                 t = t[2:] if t.startswith(">!") else t[1:]
-                paras.append(parse_inline(t.strip()))
+                texts.append(t.strip())
                 i += 1
             current["blocks"].append(
-                {"kind": "callout", "variant": variant, "paras": paras})
+                {"kind": "callout", "variant": variant,
+                 "paras": [parse_inline(" ".join(texts))]})
         else:
             para_lines = []
             while i < n and lines[i].strip() and not _special(lines[i]):
@@ -181,9 +204,18 @@ def parse_body(body: str) -> tuple[list[dict], list[dict]]:
     return lede, sections
 
 
+REQUIRED_KEYS = ("slug", "title", "eyebrow", "htmlTitle", "description",
+                 "ogTitle", "ogDescription", "updated")
+
+
 def load_doc(md_path: Path) -> dict:
     meta, body = parse_front_matter(md_path.read_text(encoding="utf-8"))
+    missing = [k for k in REQUIRED_KEYS if k not in meta]
+    if missing:
+        raise ValueError(f"{md_path.name}: missing front-matter key(s): {missing}")
     lede, sections = parse_body(body)
+    if not lede:
+        raise ValueError(f"{md_path.name}: the first body paragraph (hero lede) is empty")
     doc = dict(meta)
     doc["lede"] = lede
     doc["sections"] = sections
@@ -356,6 +388,16 @@ def js(s: str) -> str:
     return json.dumps(s, ensure_ascii=False)
 
 
+def to_const(slug: str) -> str:
+    """slug -> the exported TS identifier, camelCased so a kebab slug like
+    `cookie-policy` yields a valid `cookiePolicyDoc` (not `cookie-policyDoc`,
+    which is a TS syntax error). `privacy` -> `privacyDoc`, unchanged."""
+    parts = [p for p in re.split(r"[^a-zA-Z0-9]+", slug) if p]
+    head = parts[0].lower()
+    tail = "".join(p[:1].upper() + p[1:] for p in parts[1:])
+    return f"{head}{tail}Doc"
+
+
 def app_href(raw: str) -> str:
     if raw in APP_ROUTE:
         return APP_ROUTE[raw]
@@ -406,7 +448,7 @@ def ts_section(sec: dict) -> str:
 
 
 def render_app(doc: dict) -> str:
-    const = f"{doc['slug']}Doc"
+    const = to_const(doc["slug"])
     sections = ",\n".join(ts_section(s) for s in doc["sections"])
     return (
         "// GENERATED — do not edit by hand.\n"
@@ -427,6 +469,34 @@ def render_app(doc: dict) -> str:
 
 
 # --------------------------------------------------------------------------- #
+#  Self-test — the grammar's edge behaviour, so it can't silently regress
+# --------------------------------------------------------------------------- #
+def _selftest() -> None:
+    # a ) inside a URL survives (EUR-Lex-style link)
+    assert parse_inline("[x](https://e.eu/833(1)/oj)") == [
+        {"text": "x", "href": "https://e.eu/833(1)/oj"}]
+    # consecutive `>` lines fold into ONE callout paragraph
+    _, secs = parse_body("Lede.\n\n> one\n> two")
+    callout = secs[0]["blocks"][0]
+    assert callout["kind"] == "callout" and len(callout["paras"]) == 1, callout
+    # kebab slug -> valid camelCase identifier; single word unchanged
+    assert to_const("cookie-policy") == "cookiePolicyDoc"
+    assert to_const("privacy") == "privacyDoc"
+    # out-of-grammar input FAILS LOUD instead of mis-rendering
+    for bad in ("Lede.\n\n^Kicker\nnot a heading",   # orphaned eyebrow
+                "Lede.\n\n^Kicker",                   # eyebrow at EOF
+                "Lede.\n\n##Heading",                 # missing space
+                "Lede.\n\n#### H4",                   # unsupported level
+                "Lede.\n\n-item"):                    # list missing space
+        try:
+            parse_body(bad)
+        except ValueError:
+            continue
+        raise AssertionError(f"expected ValueError for: {bad!r}")
+    print("selftest OK")
+
+
+# --------------------------------------------------------------------------- #
 #  Build
 # --------------------------------------------------------------------------- #
 def main():
@@ -441,7 +511,13 @@ def main():
                     help="app dir that receives <slug>.generated.ts "
                          "(default: ../app/src/data/legal)")
     ap.add_argument("--no-app", action="store_true", help="skip the app module")
+    ap.add_argument("--selftest", action="store_true",
+                    help="run the grammar self-test and exit")
     a = ap.parse_args()
+
+    if a.selftest:
+        _selftest()
+        return
 
     app_out = a.app_out
     if app_out is None and not a.no_app:
@@ -451,6 +527,11 @@ def main():
             log.warning("app repo not found beside the site — writing site only")
 
     for md in sorted(legal_src.glob("*.md")):
+        # a policy source starts with `---` front-matter; other .md files here
+        # (LEGAL-SPEC.md, README.md) are documentation — skip, don't parse them
+        if not md.read_text(encoding="utf-8").lstrip().startswith("---"):
+            log.info("skip  %s (no front-matter - documentation, not a source)", md.name)
+            continue
         doc = load_doc(md)
         (a.site_out / f"{doc['slug']}.html").write_text(
             render_site(doc), encoding="utf-8")
