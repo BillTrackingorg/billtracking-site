@@ -58,8 +58,24 @@ policy false on its first day.
 
 If analytics is ever added, see `ANALYTICS-DECISION.md` and add the check back.
 
+## Legal pages (privacy / terms)
+
+`privacy.html` and `terms.html` are **generated**, not hand-edited. Their single
+source of truth is `legal/privacy.md` / `legal/terms.md`, and one generator
+renders each into both this site and the app's in-app screen:
+
+```bash
+python build/generate_legal.py        # writes *.html here + *.generated.ts in the app repo
+```
+
+So updating a policy is: edit the `.md`, run that, commit both repos. Grammar
+and the full workflow are in [`legal/LEGAL-SPEC.md`](legal/LEGAL-SPEC.md); the
+app side is in the app repo's `DECISIONS.md` D23. `delete-account.html` is still
+hand-authored (not yet on this pipeline).
+
 ## Consistency with the app
 
 Any promise or claim made here must match the app, and vice versa —
 `accuracy.html` mirrors the app's accuracy screen. If you soften a commitment in
-one, soften it in the other in the same change.
+one, soften it in the other in the same change. The privacy/terms text can no
+longer drift: both surfaces render from the one `legal/*.md` source (see above).
