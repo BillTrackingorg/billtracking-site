@@ -11,13 +11,15 @@ Intended to be served by GitHub Pages at **billtracking.org**.
 
 Pages is deliberately **not** enabled yet. Two things must be true first.
 
-**1. `.well-known/` still contains placeholders.**
-`apple-app-site-association` reads `REPLACE_TEAM_ID.REPLACE_IOS_BUNDLE_ID`, and
-`assetlinks.json` has no Android package or signing SHA-256. These are the files
-iOS and Android fetch to decide whether a `billtracking.org/p/...` link may open
-the app. Serving them malformed doesn't produce an error anyone sees — universal
-links just silently fail. The real values only exist once the app is registered
-with the stores. See [`.well-known/LAUNCH-README.md`](.well-known/LAUNCH-README.md).
+**1. The `.well-known/` association files are staged, not served, and still hold placeholders.**
+They live at `build/well-known-pending/` — NOT a served `/.well-known/`, and `robots.txt`
+disallows `/build/`. `apple-app-site-association` reads `REPLACE_TEAM_ID.REPLACE_IOS_BUNDLE_ID`,
+and `assetlinks.json` has no Android package or signing SHA-256. These are the files iOS and
+Android fetch to decide whether a `billtracking.org/p/...` link may open the app. Serving them
+malformed produces no error anyone sees — universal links just silently fail. The real values
+only exist once the app is registered with the stores. **Launch step: fill the placeholders AND
+move the folder to a served `/.well-known/` at the repo root.** See
+[`build/well-known-pending/LAUNCH-README.md`](build/well-known-pending/LAUNCH-README.md).
 
 **2. `p/` must be regenerated from the real feed.**
 It is gitignored, and the copy currently on disk was built from *synthetic
@@ -56,7 +58,9 @@ GA4 tag here and there never was.** Do not add one, and do not carry YAP's
 analytics disclosure into this project's privacy policy — it would make the
 policy false on its first day.
 
-If analytics is ever added, see `ANALYTICS-DECISION.md` and add the check back.
+If analytics is ever added, see `ANALYTICS-DECISION.md` (it lives in the **app** repo, under
+`app/legal/`) and add the check back — but change `legal/privacy.md` and regenerate FIRST (D23),
+or the published policy becomes false on day one.
 
 ## Legal pages (privacy / terms)
 
