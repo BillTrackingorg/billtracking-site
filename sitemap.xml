@@ -9,4 +9,8 @@
   <url><loc>https://billtracking.org/privacy.html</loc></url>
   <url><loc>https://billtracking.org/terms.html</loc></url>
   <url><loc>https://billtracking.org/delete-account.html</loc></url>
+  <!-- The permanent permalink pages live under /p/; this is their browse index.
+       The full per-post list is in /p/sitemap.xml (built at deploy, also
+       referenced from robots.txt). -->
+  <url><loc>https://billtracking.org/p/</loc></url>
 </urlset>
