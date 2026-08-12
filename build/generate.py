@@ -141,6 +141,22 @@ def describe(rec: dict) -> tuple[str, str]:
         desc = body + marker
     else:
         desc = " ".join(rec.get("text", "").split())[:180]
+
+    # A corrected post keeps its ORIGINAL label in the title — the generator
+    # never rewrites the archived record — so the <title>, og:title and
+    # description (the share card and Google snippet, seen BEFORE the in-page
+    # "Corrected" banner) would otherwise present the SUPERSEDED figure as fact.
+    # Flag it in the title, and lead the description with the correction itself
+    # (its reason usually carries the corrected figure, which is human-written —
+    # no AI marker needed), so the preview can never show the old number uncued.
+    # `_correction` is set on the record in build() before render()/describe().
+    correction = rec.get("_correction")
+    if correction:
+        title = f"[Corrected] {title}"
+        reason = " ".join(str(correction.get("reason", "")).split())
+        if reason:
+            date = str(correction.get("date", "")).strip()
+            desc = f"Corrected {date}: {reason}".strip()[:180]
     return title, desc
 
 
