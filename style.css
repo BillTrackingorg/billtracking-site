@@ -468,7 +468,13 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
   border: 1px solid #C7D8EC;
   border-radius: 999px;
   padding: 0.22rem 0.75rem;
-  white-space: nowrap;
+  /* Long chips (e.g. "Act adopted — Parliament approved the Council's
+     position") must WRAP rather than run off a narrow phone. nowrap forced a
+     single line wider than the viewport; max-width caps the chip at its
+     container and overflow-wrap breaks the rare unbreakable token. The pill
+     radius still reads fine across two lines. */
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .eu-page .chip { background: var(--wash-eu); border-color: #C3CFEE; color: var(--royal-deep); }
