@@ -30,6 +30,7 @@ import hashlib
 import html
 import json
 import logging
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -100,6 +101,27 @@ def esc(s: str) -> str:
 def text_html(text: str) -> str:
     # escape first, THEN restore line breaks — never trust the record's bytes
     return esc(text).replace("\n", "<br>\n")
+
+
+_MONTHS = (
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+)
+
+
+def human_date(posted_at: str) -> str:
+    """ISO `2026-07-13T…` -> `13 July 2026` — the app's D22 display format (day
+    without a leading zero, spelled-out month), so the site, the app and the
+    posts all read the same date. Falls back to the raw `YYYY-MM-DD` prefix on
+    anything that is not a clean date, and never guesses a wrong one."""
+    iso = (posted_at or "")[:10]
+    m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", iso)
+    if not m:
+        return iso
+    month = int(m.group(2))
+    if not 1 <= month <= 12:
+        return iso
+    return f"{int(m.group(3))} {_MONTHS[month - 1]} {m.group(1)}"
 
 
 def describe(rec: dict) -> tuple[str, str]:
@@ -261,7 +283,7 @@ def render(rec: dict, id_: str, superseded_by: str | None) -> str:
     source_name, source_url = SOURCE.get(bot, SOURCE["us"])
     handle = HANDLES.get(bot, "USBillTracker")
 
-    posted_human = rec.get("posted_at", "")[:10]
+    posted_human = human_date(rec.get("posted_at", ""))
 
     x_btn = ""
     tid = rec.get("tweet_id")
@@ -338,7 +360,7 @@ def build(feed_paths, overrides_path, out_root):
     # lightweight browse index at /p/
     rows = "".join(
         f'<li><a href="/p/{id_}.html">{esc(t)}</a> '
-        f'<span class="pi-date">{esc(d)} · {esc(TRACKER.get(b, ""))}</span></li>\n'
+        f'<span class="pi-date">{esc(human_date(d))} · {esc(TRACKER.get(b, ""))}</span></li>\n'
         for id_, t, d, b in sorted(pages, key=lambda x: x[2], reverse=True))
     index = INDEX.format(rows=rows, n=written, SITE_URL=SITE_URL, NAV=NAV)
     (out_p / "index.html").write_text(index, encoding="utf-8")
