@@ -113,15 +113,19 @@ def human_date(posted_at: str) -> str:
     """ISO `2026-07-13T…` -> `13 July 2026` — the app's D22 display format (day
     without a leading zero, spelled-out month), so the site, the app and the
     posts all read the same date. Falls back to the raw `YYYY-MM-DD` prefix on
-    anything that is not a clean date, and never guesses a wrong one."""
+    anything that is not a REAL date — bad shape, out-of-range month OR day —
+    and never guesses a wrong one (mirrors lib/format-date.ts's leap-aware
+    refusal; posted_at is always a valid bot timestamp, so this is a belt)."""
     iso = (posted_at or "")[:10]
     m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", iso)
     if not m:
         return iso
-    month = int(m.group(2))
-    if not 1 <= month <= 12:
+    y, month, day = int(m.group(1)), int(m.group(2)), int(m.group(3))
+    try:
+        datetime(y, month, day)      # rejects 00/13 months AND impossible days (leap-aware)
+    except ValueError:
         return iso
-    return f"{int(m.group(3))} {_MONTHS[month - 1]} {m.group(1)}"
+    return f"{day} {_MONTHS[month - 1]} {y}"
 
 
 def describe(rec: dict) -> tuple[str, str]:
