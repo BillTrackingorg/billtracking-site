@@ -188,8 +188,8 @@ def describe(rec: dict) -> tuple[str, str]:
 
 NAV = """    <a class="wordmark" href="/index.html">BillTracking<span class="tld">.org</span></a>
     <nav class="site-nav" aria-label="Main">
-      <a href="/us-process.html">US Process</a>
-      <a href="/eu-process.html">EU Process</a>
+      <a href="/us">US Process</a>
+      <a href="/eu">EU Process</a>
       <a href="/educators.html">Educators</a>
       <a href="/accuracy.html">Accuracy</a>
       <a href="/about.html">About</a>
