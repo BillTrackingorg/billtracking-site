@@ -20,13 +20,13 @@ show different words.
 2. Regenerate:
 
 ```bash
-python build/generate_legal.py
+python ../app/site-build/generate_legal.py
 ```
 
 3. Commit the changed files in **both** repos (the site `.html` here, and the
    `.generated.ts` in the app repo — they are written as siblings on disk).
 
-`python build/generate_legal.py --no-app` writes only the site page, for when
+`python ../app/site-build/generate_legal.py --no-app` writes only the site page, for when
 the app repo isn't checked out beside the site.
 
 Do **not** hand-edit `*.html` or `*.generated.ts` — they are build output and
@@ -35,7 +35,7 @@ the next regenerate overwrites them.
 ## Grammar
 
 Deliberately tiny and stdlib-only (no Markdown dependency), matching the
-zero-dependency style of `build/generate.py`.
+zero-dependency style of `app/site-build/generate.py`.
 
 ### Front-matter
 
@@ -91,7 +91,7 @@ future edit stops the build instead of shipping wrong output. It errors on: a
 heading without its space (`##Heading`, or an unsupported `#### `), a list item
 without its space (`-item`), an `^eyebrow` not immediately followed by a `## `
 heading, a missing front-matter key, and an empty hero lede. URLs may contain
-parentheses (e.g. EUR-Lex `.../833(1)/oj`). `python build/generate_legal.py
+parentheses (e.g. EUR-Lex `.../833(1)/oj`). `python ../app/site-build/generate_legal.py
 --selftest` checks all of this.
 
 Still author-beware (outside the tiny grammar, not guarded):

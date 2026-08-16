@@ -7,39 +7,45 @@ this file wins.
 
 Intended to be served by GitHub Pages at **billtracking.org**.
 
-## ⚠️ Before enabling GitHub Pages
+## ⚠️ This repo IS the live site — everything in it is public
 
-Pages is deliberately **not** enabled yet. Two things must be true first.
+GitHub Pages serves this repo whole at billtracking.org (live since 2026-07;
+push = deploy). So **nothing goes in here that isn't meant to be read by
+anyone**: no tooling, no notes, no fixtures. Since 2026-08-16 the site's
+build tooling lives in the PRIVATE app repo at `app/site-build/` — the two
+generators, the sample fixtures, and the launch-time deep-link files. This
+repo holds only what is served: hand-written pages, `style.css`, `legal/`
+(the D23 policy SOURCES — public on purpose), the app's web export
+(`us.html`, `eu.html`, `bill/`, `_expo/`, `assets/`, `404.html`), and `p/`
+once it is generated from the real feed.
 
-**1. The `.well-known/` association files are staged, not served, and still hold placeholders.**
-They live at `build/well-known-pending/` — NOT a served `/.well-known/`, and `robots.txt`
-disallows `/build/`. `apple-app-site-association` reads `REPLACE_TEAM_ID.REPLACE_IOS_BUNDLE_ID`,
-and `assetlinks.json` has no Android package or signing SHA-256. These are the files iOS and
-Android fetch to decide whether a `billtracking.org/p/...` link may open the app. Serving them
-malformed produces no error anyone sees — universal links just silently fail. The real values
-only exist once the app is registered with the stores. **Launch step: fill the placeholders AND
-move the folder to a served `/.well-known/` at the repo root.** See
-[`build/well-known-pending/LAUNCH-README.md`](build/well-known-pending/LAUNCH-README.md).
+**Two launch-time steps still pending (both driven from `app/site-build/`):**
 
-**2. `p/` must be regenerated from the real feed.**
-It is gitignored, and the copy currently on disk was built from *synthetic
-sample data*. Publishing fabricated bill pages would be the single most damaging
-thing this repo could do, on a site whose entire pitch is accuracy.
+1. **Deep-link association files.** `app/site-build/well-known-pending/` holds
+   `apple-app-site-association` and `assetlinks.json` with placeholders
+   (`REPLACE_TEAM_ID`, package, SHA-256). At store launch: fill them, then
+   copy them to a served `/.well-known/` at THIS repo's root. Serving them
+   malformed fails silently (links just open the browser). Full instructions:
+   `app/site-build/well-known-pending/LAUNCH-README.md`.
+2. **`p/` permalink pages** must be generated from the REAL feed, never from
+   the sample fixtures. Publishing fabricated bill pages would be the single
+   most damaging thing this repo could do, on a site whose pitch is accuracy.
 
 ## Permalink pages
 
-`build/generate.py` renders one static page per delivered post at
+`app/site-build/generate.py` renders one static page per delivered post at
 `/p/<id>.html`, plus a sitemap and a browse index, from the bots' feed export.
+No pipeline runs it yet (the live `/p/` is 404 today) — it is a launch-time
+piece, wired when share links go live.
 
 ```bash
-python build/generate.py --feed <feed.jsonl> --out .
+python ../app/site-build/generate.py --feed <feed.jsonl> --out .   # from this repo
 ```
 
 Output lands in `p/`, which is **gitignored on purpose** — it is build output,
-not source. Regenerate at deploy time; never commit it.
-
-`build/sample-feed.jsonl` and `build/sample-overrides.jsonl` are synthetic
-fixtures for testing the generator, not real data.
+not source. Regenerate at deploy time; never commit it. The synthetic fixtures
+(`sample-feed.jsonl`, `sample-overrides.jsonl`) live beside the generator in
+the app repo and are for testing only.
 
 ## Deploying
 
@@ -69,7 +75,7 @@ source of truth is `legal/privacy.md` / `legal/terms.md`, and one generator
 renders each into both this site and the app's in-app screen:
 
 ```bash
-python build/generate_legal.py        # writes *.html here + *.generated.ts in the app repo
+python ../app/site-build/generate_legal.py   # writes *.html here + *.generated.ts in the app repo
 ```
 
 So updating a policy is: edit the `.md`, run that, commit both repos. Grammar

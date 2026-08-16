@@ -1,6 +1,6 @@
 ---
 # Canonical source for the Privacy page. Edit here, then run
-# `python build/generate_legal.py` to regenerate BOTH privacy.html (this site)
+# `python ../app/site-build/generate_legal.py` (from the site repo) to regenerate BOTH privacy.html (this site)
 # and the app's in-app Privacy screen. Grammar: legal/LEGAL-SPEC.md
 slug: privacy
 title: What we hold, and how to make us stop

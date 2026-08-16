@@ -1,6 +1,6 @@
 ---
 # Canonical source for the Terms page. Edit here, then run
-# `python build/generate_legal.py` to regenerate BOTH terms.html (this site)
+# `python ../app/site-build/generate_legal.py` (from the site repo) to regenerate BOTH terms.html (this site)
 # and the app's in-app Terms screen. Grammar: legal/LEGAL-SPEC.md
 slug: terms
 title: The deal, in plain words

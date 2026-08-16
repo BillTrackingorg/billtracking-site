@@ -1,10 +1,9 @@
 User-agent: *
 Allow: /
 
-# Repository tooling and fixtures. GitHub Pages serves the entire repo (there is
-# a .nojekyll file), so these are reachable even though they are not part of the
-# site. Keep them out of search results.
-Disallow: /build/
+# GitHub Pages serves the entire repo (there is a .nojekyll file). Tooling and
+# fixtures moved to the private app repo (app/site-build/, 2026-08-16); the
+# README is the one non-page file left here. Keep it out of search results.
 Disallow: /README.md
 
 # Two sitemaps: the hand-maintained top-level pages, and the permalink pages
