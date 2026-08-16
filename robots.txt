@@ -1,10 +1,12 @@
 User-agent: *
 Allow: /
 
-# GitHub Pages serves the entire repo (there is a .nojekyll file). Tooling and
-# fixtures moved to the private app repo (app/site-build/, 2026-08-16); the
-# README is the one non-page file left here. Keep it out of search results.
+# GitHub Pages serves the entire repo (there is a .nojekyll file). The permalink
+# generator (tools/) and the README are the only non-page files here — keep
+# them out of search results. (Other tooling lives in the private app repo.)
 Disallow: /README.md
+Disallow: /tools/
+Disallow: /.github/
 
 # Two sitemaps: the hand-maintained top-level pages, and the permalink pages
 # under /p/ — rendered every 2 h by the app repo's permalinks workflow, whose own sitemap lists

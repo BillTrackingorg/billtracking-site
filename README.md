@@ -11,15 +11,16 @@ Intended to be served by GitHub Pages at **billtracking.org**.
 
 GitHub Pages serves this repo whole at billtracking.org (live since 2026-07;
 push = deploy). So **nothing goes in here that isn't meant to be read by
-anyone**: no tooling, no notes, no fixtures. Since 2026-08-16 the site's
-build tooling lives in the PRIVATE app repo at `app/site-build/` — the two
-generators, the sample fixtures, and the launch-time deep-link files. This
-repo holds only what is served: hand-written pages, `style.css`, `legal/`
-(the D23 policy SOURCES — public on purpose), the app's web export
-(`us.html`, `eu.html`, `bill/`, `_expo/`, `assets/`, `404.html`), and `p/`
-once it is generated from the real feed.
+anyone**: no notes, no fixtures, no secrets. This repo holds what is served
+plus ONE tool: hand-written pages, `style.css`, `legal/` (the D23 policy
+SOURCES — public on purpose), the app's web export (`us.html`, `eu.html`,
+`bill/`, `_expo/`, `assets/`, `404.html`), the workflow-rendered `p/` pages,
+and `tools/generate.py` (the permalink generator — public by design so this
+repo's own workflow can run it with no credentials; a page renderer, nothing
+secret in it). The legal generator, the sample fixtures and the launch-time
+deep-link files live in the PRIVATE app repo at `app/site-build/`.
 
-**Two launch-time steps still pending (both driven from `app/site-build/`):**
+**Two launch-time steps still pending:**
 
 1. **Deep-link association files.** `app/site-build/well-known-pending/` holds
    `apple-app-site-association` and `assetlinks.json` with placeholders
@@ -27,25 +28,24 @@ once it is generated from the real feed.
    copy them to a served `/.well-known/` at THIS repo's root. Serving them
    malformed fails silently (links just open the browser). Full instructions:
    `app/site-build/well-known-pending/LAUNCH-README.md`.
-2. **`p/` permalink pages** must be generated from the REAL feed, never from
-   the sample fixtures. Publishing fabricated bill pages would be the single
-   most damaging thing this repo could do, on a site whose pitch is accuracy.
+2. **Store URLs** in `tools/generate.py` `STORE_URLS` once the listings exist —
+   the funnel under every post page then shows real store buttons (until then
+   it truthfully says the app is coming).
 
 ## Permalink pages
 
-`app/site-build/generate.py` renders one static page per delivered post at
-`/p/<id>.html`, plus a sitemap and a browse index, from the bots' feed export.
-No pipeline runs it yet (the live `/p/` is 404 today) — it is a launch-time
-piece, wired when share links go live.
+`tools/generate.py` renders one static page per delivered post at `/p/<id>`,
+plus a sitemap and a browse index, from the bots' PUBLISHED feed. It is run
+by this repo's own workflow (`.github/workflows/permalinks.yml`, every 2 h +
+manual) with the built-in workflow token — no credentials — which commits
+ONLY `p/`. Every id equals the app's "Copy link" id (proven by the app repo's
+`check:permalinks`). Runbook: `app/docs/PERMALINKS.md`.
 
-```bash
-python ../app/site-build/generate.py --feed <feed.jsonl> --out .   # from this repo
-```
-
-Output lands in `p/`, which is **gitignored on purpose** — it is build output,
-not source. Regenerate at deploy time; never commit it. The synthetic fixtures
-(`sample-feed.jsonl`, `sample-overrides.jsonl`) live beside the generator in
-the app repo and are for testing only.
+`p/` is tracked but written by that workflow ALONE. Never commit a locally
+generated `p/`: a sample-fed run (the fixtures live in `app/site-build/`)
+renders FABRICATED bills — publishing those would be the single most damaging
+thing this repo could do. `--out` is required precisely so a bare run cannot
+land here.
 
 ## Deploying
 

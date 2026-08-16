@@ -1,0 +1,147 @@
+# Permalink pages — billtracking.org/p/<id>
+#
+# Every post the app can "Copy link" resolves to a static page here: the post
+# as itself (the shared artifact), an honest call to action beneath it, the
+# D22 dateline, and any public correction. This is the fallback for everyone
+# the OS can't route to the app — desktop browsers, email opens, a platform
+# not yet published — and the OG/share card for every link.
+#
+# THE BOTS ARE NEVER TOUCHED. This job PULLS the published feed files (public
+# GitHub Pages, the same bytes the phones read), runs tools/generate.py, and
+# commits ONLY the generated p/ tree to this repo. Nothing here can change a
+# post, a tally, or a bot.
+#
+# NO CREDENTIALS. This runs IN the site repo with the workflow's own built-in
+# GITHUB_TOKEN — no personal token, no secret, no expiry. The `permissions`
+# block below is the whole grant: contents write on THIS repo, nothing else,
+# readable by anyone in this file. (An earlier design ran this from the
+# private app repo with a fine-grained PAT; the owner rightly asked for the
+# cleaner shape, 2026-08-16.) Public repo ⇒ Actions minutes are free.
+#
+# Cadence: every 2 hours, off the bots' minute (they publish on their own
+# schedules; a page appearing up to ~2 h after the post is fine — the app has
+# the post instantly, this is the web shadow). Manual dispatch re-renders now.
+#
+# Failure posture (loudness doctrine): any fetch/render error fails the run
+# and nothing is committed. A partial or SHRUNKEN tree is never published:
+# past months are immutable (D17), so a past-month 404 or empty file, a
+# page-count shrink, or a stray non-generated file under p/ all fail loudly.
+
+name: permalinks
+on:
+  schedule:
+    - cron: '37 */2 * * *'
+  workflow_dispatch: {}
+
+concurrency:
+  group: permalinks
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # The public feed — every month file since the epoch, plus the PER-BOT
+      # corrections sheets the bots write and the app reads (us-overrides +
+      # eu-overrides; the root overrides.jsonl is a dead legacy). A 404 is a
+      # quiet month ONLY for the current month; a 404 or empty body for any
+      # PAST month is an upstream failure. curl gets retries + a time budget;
+      # its status is read on its own line so a transport error can never
+      # concatenate into a bogus code.
+      - name: Fetch the published feed
+        env:
+          FEED: https://billtrackingorg.github.io/billtracking-feed
+        run: |
+          set -euo pipefail
+          mkdir -p feed
+          fetch() {  # fetch URL DEST -> echoes the HTTP code (000 on transport failure)
+            local out
+            out=$(curl -sS --retry 3 --retry-all-errors --max-time 60 -o "$2" -w '\n%{http_code}' "$1" 2>/dev/null) || { echo 000; return; }
+            printf '%s\n' "$out" | tail -n1
+          }
+          y=2026; m=7   # FEED_EPOCH 2026-07 (app feed-client.ts) — nothing older exists
+          now_y=$(date -u +%Y); now_m=$(date -u +%-m)
+          while [ "$y" -lt "$now_y" ] || { [ "$y" -eq "$now_y" ] && [ "$m" -le "$now_m" ]; }; do
+            mm=$(printf '%02d' "$m")
+            current=0; [ "$y" -eq "$now_y" ] && [ "$m" -eq "$now_m" ] && current=1
+            for bot in us eu; do
+              f="${bot}-${y}-${mm}.jsonl"
+              code=$(fetch "$FEED/$f" "feed/$f")
+              if [ "$code" = "404" ]; then
+                rm -f "feed/$f"
+                if [ "$current" = "1" ]; then echo "no $f yet (current month)";
+                else echo "::error::$f returned 404 — a PAST month is immutable and cannot vanish; refusing to render a shrunken site"; exit 1; fi
+              elif [ "$code" != "200" ]; then echo "::error::feed fetch $f returned $code"; exit 1;
+              else
+                lines=$(grep -c . "feed/$f" || true)
+                if [ "$lines" -eq 0 ] && [ "$current" = "0" ]; then echo "::error::$f is EMPTY (200, 0 lines) — a past month cannot be empty"; exit 1; fi
+                echo "got $f ($lines lines)"
+              fi
+            done
+            m=$((m+1)); if [ "$m" -gt 12 ]; then m=1; y=$((y+1)); fi
+          done
+          for bot in us eu; do
+            code=$(fetch "$FEED/${bot}-overrides.jsonl" "feed/${bot}-overrides.jsonl")
+            [ "$code" = "200" ] || { echo "::error::${bot}-overrides.jsonl returned $code"; exit 1; }
+            echo "${bot}-overrides: $(grep -c . "feed/${bot}-overrides.jsonl" || true) lines"
+          done
+          [ "$(ls feed/*-20*.jsonl 2>/dev/null | wc -l)" -gt 0 ] || { echo "::error::no feed files at all — refusing to render an empty site"; exit 1; }
+
+      # The generator scans the feed dir for *-overrides.jsonl itself. It
+      # renders into a scratch dir — never straight into the checkout — so the
+      # guards below can compare before anything in the repo changes.
+      - name: Render the pages
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          python tools/generate.py --feed feed --out out 2>&1 | tee render.log
+          n=$(ls out/p/*.html | grep -vc 'index.html' || true)
+          echo "rendered $n post pages"
+          [ "$n" -gt 0 ] || { echo "::error::generator produced no pages"; exit 1; }
+          if grep -q 'skipping' render.log; then echo "::warning::generator skipped records — see the render log"; fi
+
+      # Publish = replace p/ wholesale — p/ is TRACKED but written by this job
+      # alone (only generated files ever live there; guarded), so the replace
+      # is safe. Then commit with the built-in token.
+      - name: Commit the pages
+        run: |
+          set -euo pipefail
+          # p/ must contain ONLY generated files. Anything else = someone
+          # hand-placed a file there; refuse rather than silently delete it.
+          if [ -d p ]; then
+            stray=$(cd p && ls | grep -Ev '^((us|eu)-[0-9]{8}-[0-9a-f]{8}\.html|index\.html|sitemap\.xml)$' || true)
+            [ -z "$stray" ] || { echo "::error::p/ contains non-generated files — refusing to replace it: $stray"; exit 1; }
+          fi
+          # SHRINK GUARD: the page count may only go up (D17 — nothing
+          # published ever leaves). Fewer pages than live = an upstream gap
+          # this run didn't catch; never publish a shrink.
+          prev=$(ls p/*.html 2>/dev/null | grep -vc index.html || true)
+          new=$(ls out/p/*.html | grep -vc index.html || true)
+          if [ "$new" -lt "$prev" ]; then
+            echo "::error::rendered $new pages but the site has $prev — refusing to publish a shrink"; exit 1
+          fi
+          rm -rf p
+          cp -r out/p p
+          git config user.name "billtracking-permalinks"
+          git config user.email "permalinks@billtracking.org"
+          git add -A p
+          if git diff --cached --quiet; then echo "no page changes"; exit 0; fi
+          git commit -q -m "permalinks: render $new post pages from the published feed"
+          # The repo also takes owner pushes; a race is ordinary. p/ is ours
+          # alone, so a rebase can never conflict with a hand-authored file.
+          for attempt in 1 2 3; do
+            if git push -q; then echo "published $new pages"; exit 0; fi
+            echo "push rejected (attempt $attempt) — rebasing onto the new head"
+            git pull --rebase -q || { echo "::error::rebase failed"; exit 1; }
+          done
+          echo "::error::could not push after 3 attempts"; exit 1
