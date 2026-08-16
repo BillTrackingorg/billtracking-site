@@ -7,7 +7,7 @@ Allow: /
 Disallow: /README.md
 
 # Two sitemaps: the hand-maintained top-level pages, and the permalink pages
-# under /p/ — generated at deploy by build/generate.py, whose own sitemap lists
+# under /p/ — rendered every 2 h by the app repo's permalinks workflow, whose own sitemap lists
 # every post page (the root sitemap does not enumerate them). Without this line
 # the /p/ pages are crawl-orphans.
 Sitemap: https://billtracking.org/sitemap.xml
