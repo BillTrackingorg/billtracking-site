@@ -6,22 +6,22 @@ slug: privacy
 title: What we hold, and how to make us stop
 eyebrow: Privacy
 htmlTitle: Privacy
-description: What BillTracking collects, why, and how to delete it. The informational pages set nothing on your device; the live feed pages keep your reading settings on your device only. An account exists only so a vote counts once.
+description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account exists only so a vote counts once.
 ogTitle: Privacy — BillTracking
 ogDescription: What we collect, why, and how to delete it — in plain language.
-updated: 14 August 2026
+updated: 17 August 2026
 ---
 
-The short version: **the informational pages of this website set nothing on your device and we receive no visitor logs.** The live feed pages — [/us](/us) and [/eu](/eu) — are the app running in your browser: they keep your reading preferences on your device and send us nothing. The app needs no account to read anything. An account exists for exactly one reason — so that a vote on a bill counts once per person — and it can be deleted from inside the app in two taps.
+The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — your reading preferences, and a sign-in session if you choose to vote — stays in your browser, on your device. The app needs no account to read anything. An account exists for exactly one reason — so that a vote on a bill counts once per person — and it can be deleted from inside the app in two taps.
 
 >! **What exists today.** The two X feeds, this website, and the live feed pages on it ([/us](/us) and [/eu](/eu)) are live. **The BillTracking app has not been released to the app stores**, and accounts and votes are not live anywhere yet. The sections below describing accounts and votes describe how they will work — they are published now because app stores require this page to exist before release, and because we would rather say what we intend to do before doing it than afterwards.
 
 ^This website
 ## billtracking.org collects nothing from you
 
-There is no analytics anywhere on this site. No Google Analytics, no Cloudflare, no pixel, no tag manager, nothing. The informational pages — this one, the process explainers, everything reachable from the footer — contain no JavaScript at all, no cookies, no local storage, no embedded video, no third-party fonts and no contact form. Nothing you do on them is recorded by us, because there is nothing there capable of recording it.
+There is no analytics anywhere on this site. No Google Analytics, no Cloudflare, no pixel, no tag manager, no advertising and no tracking SDKs — on any page, of any kind. We do not record what you read, what you search for or where you arrived from, we do not sell or share anything about you, and we build no profile of you.
 
-The live feed pages — [/us](/us) and [/eu](/eu) — are the BillTracking app itself, running in your browser, and they follow the app's rules described below: they fetch the published feed and bill records as static files, they keep your followed bills, keywords and display settings in your browser's storage **on your device**, and they send us nothing — no analytics, no tracking, and no report of what you read or search.
+Some pages do keep things for you, deliberately. The live feed pages — [/us](/us) and [/eu](/eu) — are the BillTracking app itself running in your browser, and they fetch the published feed and bill records as static files. Your followed bills, your keywords, your display settings and — if you choose to vote — your sign-in session are kept **in your browser, on your device**. None of it is transmitted to us. The only thing that ever leaves your device is a vote you deliberately cast, exactly as described below.
 
 One honest caveat, because the alternative would be a false claim: the site is hosted on **GitHub Pages**, and any web host necessarily handles your IP address at the network layer in order to send you a page. GitHub does not surface those logs to us and we have never seen them — but we will not tell you no IP address is processed anywhere, because that would not be true.
 
