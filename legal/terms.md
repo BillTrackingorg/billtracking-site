@@ -9,7 +9,7 @@ htmlTitle: Terms of use
 description: The terms for using BillTracking: what the service is, what it costs, what it does not promise, and the rules for voting and for reusing the content.
 ogTitle: Terms of use — BillTracking
 ogDescription: What the service is, what it costs, and what it does not promise.
-updated: 20 July 2026
+updated: 19 August 2026
 ---
 
 BillTracking republishes the official legislative record of the US Congress and the European Union. It is **free**, there is nothing to buy, and it is run by one person, not a company. These terms are short because the arrangement is simple.
@@ -35,7 +35,7 @@ It is a free service run by one person on free infrastructure. It may be interru
 - **Reading never requires an account.** An account exists so that a vote on a bill counts once per person.
 - **One account per person.** Do not create multiple accounts to vote more than once, and do not use automated means to influence the counts. It corrupts the only thing the counts are for.
 - **Votes are reader sentiment, not a poll.** They are a show of hands among whoever happens to use this app — self-selected, unweighted and unrepresentative. Please do not present them as public opinion research, and be careful citing them as anything more than what they are.
-- **You may withdraw a vote or delete your account at any time**, from the You tab or via the [deletion page](delete-account.html).
+- **You may withdraw a vote or delete your account at any time** — from the You tab in the app, from your [account page](https://billtracking.org/account) on this website, or via the [deletion page](delete-account.html).
 - **We may remove votes we believe are automated or duplicated**, and may suspend an account doing it.
 
 How votes are stored and published is set out on the [privacy page](privacy.html). In short: who voted which way is never published, shown or attached to a profile.
@@ -57,6 +57,8 @@ The service is provided as-is. To the extent the law allows, we are not liable f
 > **What we do not exclude, because it cannot be and should not be:** liability for death or personal injury caused by negligence, for fraud, for damage caused intentionally, and any liability that the law of your country does not permit to be excluded. **If you are a consumer in the EU or UK, nothing here takes away rights you have under your own national law, including the right to bring a claim in your own courts.**
 
 We may update these terms. If we change something that matters we will say so on this page and update the date. If you keep using the service after a change, that is acceptance; if you would rather not, you can stop, and delete your account.
+
+**19 August 2026.** Signing in, voting and deleting an account now work on this website as well as in the app. Nothing else here changed.
 
 ### Contact
 

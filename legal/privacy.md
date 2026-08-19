@@ -9,26 +9,26 @@ htmlTitle: Privacy
 description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account exists only so a vote counts once.
 ogTitle: Privacy — BillTracking
 ogDescription: What we collect, why, and how to delete it — in plain language.
-updated: 17 August 2026
+updated: 19 August 2026
 ---
 
-The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — your reading preferences, and a sign-in session if you choose to vote — stays in your browser, on your device. The app needs no account to read anything. An account exists for exactly one reason — so that a vote on a bill counts once per person — and it can be deleted from inside the app in two taps.
+The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — your reading preferences, and a sign-in session if you choose to vote — stays in your browser, on your device. The app needs no account to read anything. An account exists for exactly one reason — so that a vote on a bill counts once per person — and it can be deleted in two taps, from inside the app or from your account page on this website.
 
->! **What exists today.** The two X feeds, this website, and the live feed pages on it ([/us](/us) and [/eu](/eu)) are live. **The BillTracking app has not been released to the app stores**, and accounts and votes are not live anywhere yet. The sections below describing accounts and votes describe how they will work — they are published now because app stores require this page to exist before release, and because we would rather say what we intend to do before doing it than afterwards.
+>! **What exists today.** The two X feeds, this website, and the feed pages on it ([/us](/us) and [/eu](/eu)) are live. **The BillTracking app has not been released to the app stores.** Accounts and voting are built into both the app and this website and switch on when sign-in is enabled; until then the sign-in and vote controls are visibly present and visibly switched off rather than hidden, and no vote has been cast anywhere. The sections below set out what a vote records and how it is handled — they are published now because app stores require this page to exist before release, and because we would rather say what we intend to do before doing it than afterwards.
 
 ^This website
 ## billtracking.org collects nothing from you
 
 There is no analytics anywhere on this site. No Google Analytics, no Cloudflare, no pixel, no tag manager, no advertising and no tracking SDKs — on any page, of any kind. We do not record what you read, what you search for or where you arrived from, we do not sell or share anything about you, and we build no profile of you.
 
-Some pages do keep things for you, deliberately. The live feed pages — [/us](/us) and [/eu](/eu) — are the BillTracking app itself running in your browser, and they fetch the published feed and bill records as static files. Your followed bills, your keywords, your display settings and — if you choose to vote — your sign-in session are kept **in your browser, on your device**. None of it is transmitted to us. The only thing that ever leaves your device is a vote you deliberately cast, exactly as described below.
+Some pages do keep things for you, deliberately — the feed pages ([/us](/us) and [/eu](/eu)) most of all. Whatever a page keeps — the posts it has already shown you, so that it opens quickly the next time, your display preferences, and your sign-in session if you choose to vote — stays **in your browser, on your device**, and none of it is transmitted to us. We are not told which pages you opened, what you read, or where you arrived from. The only thing that ever leaves your device is a vote you deliberately cast, exactly as described below.
 
 One honest caveat, because the alternative would be a false claim: the site is hosted on **GitHub Pages**, and any web host necessarily handles your IP address at the network layer in order to send you a page. GitHub does not surface those logs to us and we have never seen them — but we will not tell you no IP address is processed anywhere, because that would not be true.
 
 ^The app — reading
 ## Reading needs no account and sends us nothing
 
-The feed, bill timelines and notification settings all work without signing in. The app — on a phone or in a browser — fetches the published feed as static files from GitHub Pages, the same infrastructure that hosts this website; it does not report back what you read, what you follow, or what you search for. Your followed bills, your keywords and your display settings are stored **on your device** and are not transmitted to us.
+The feed, bill timelines and notification settings all work without signing in. The app and this website both fetch the published record as static files from GitHub Pages, the same infrastructure this site is hosted on; neither of them reports back what you read, what you follow, or what you search for. Your followed bills, your keywords and your display settings are stored **on your device** and are not transmitted to us.
 
 The app contains no advertising, no third-party analytics and no tracking SDKs.
 
@@ -58,9 +58,9 @@ Our database provider is Supabase, acting as a processor on our instructions. If
 ^Deleting
 ## Deleting your account
 
-In the app: **You → Delete account**. It is immediate and permanent. Your account and every vote you cast are erased; there is no recovery window and we keep no copy.
+In the app: **You → Delete account**. On this website: your [account page](https://billtracking.org/account). It is immediate and permanent. Your account and every vote you cast are erased; there is no recovery window and we keep no copy.
 
-If you have already uninstalled the app, use the [account deletion page](delete-account.html).
+If you can no longer sign in in either place, use the [account deletion page](delete-account.html).
 
 One thing we will not pretend about: counts that were already published — in a post, or in a file someone downloaded — are not retrospectively rewritten. They were true when published and they contain nothing that points to you. Your vote is removed from our database and from every count produced afterwards.
 
@@ -86,3 +86,5 @@ BillTracking is an independent project run by one person, not a company. The dat
 ### Changes
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
+
+**19 August 2026.** Signing in, voting and deleting an account now work on this website as well as in the app, and this page says so. Nothing new is collected, and nothing that was kept on your device moved off it.
