@@ -32,20 +32,36 @@ deep-link files live in the PRIVATE app repo at `app/site-build/`.
    the funnel under every post page then shows real store buttons (until then
    it truthfully says the app is coming).
 
-## Permalink pages
+## Permalink + bill pages
 
-`tools/generate.py` renders one static page per delivered post at `/p/<id>`,
-plus a sitemap and a browse index, from the bots' PUBLISHED feed. It is run
-by this repo's own workflow (`.github/workflows/permalinks.yml`, every 2 h +
-manual) with the built-in workflow token — no credentials — which commits
-ONLY `p/`. Every id equals the app's "Copy link" id (proven by the app repo's
-`check:permalinks`). Runbook: `app/docs/PERMALINKS.md`.
+`tools/generate.py` renders, from the bots' PUBLISHED feed + per-bill path
+artifacts, in one workflow run (`.github/workflows/permalinks.yml`, every 2 h +
+manual, built-in token — no credentials):
 
-`p/` is tracked but written by that workflow ALONE. Never commit a locally
-generated `p/`: a sample-fed run (the fixtures live in `app/site-build/`)
-renders FABRICATED bills — publishing those would be the single most damaging
-thing this repo could do. `--out` is required precisely so a bare run cannot
-land here.
+- **`/p/<id>`** — one static page per delivered post (the shared artifact +
+  funnel), plus `p/sitemap.xml` and a `/p/` browse index. Post pages are
+  `noindex` and are the bill pages' citations.
+- **`/b/<polity>/<slug>`** — the INDEXABLE unit: one page per bill (`/b/us/119-hr-3497`,
+  `/b/eu/2023-0447-cod`), showing the same merged path the app's bill screen
+  shows, plus a `/b/<polity>/` index and a root `bill-sitemap.xml`. Bill pages
+  carry `noindex` until the owner's Gate-2 flip (`INDEX_BILL_PAGES` in the
+  generator). `/b/` is a SEPARATE tree from the app's web export `bill/[ref].html`.
+
+Every id and every bill row equals the app's own (proven by the app repo's
+`check:permalinks`, which runs the app's REAL code against this generator).
+Runbook + the IMMUTABLE slug law: `app/docs/PERMALINKS.md`. SEO model:
+`app/docs/WEB.md` §SEO.
+
+`p/` and `b/` are tracked but written by that workflow ALONE (stray-file +
+shrink guards refuse anything else). Never commit a locally generated `p/` or
+`b/`: a sample-fed run (fixtures in `app/site-build/`) renders FABRICATED bills —
+publishing those would be the single most damaging thing this repo could do.
+`--out` is required precisely so a bare run cannot land here.
+
+**Adding a legislature:** its bills auto-render the moment its `bot` value
+appears in the feed; give them a real name/source by adding one entry to
+`LEGISLATURES` in `tools/generate.py` (the workflow log `::warning::`s until you
+do). That is the only manual step per legislature.
 
 ## Deploying
 

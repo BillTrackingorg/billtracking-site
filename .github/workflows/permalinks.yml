@@ -1,15 +1,21 @@
-# Permalink pages — billtracking.org/p/<id>
+# Permalink + bill pages — billtracking.org/p/<id> and /b/<polity>/<slug>
 #
-# Every post the app can "Copy link" resolves to a static page here: the post
-# as itself (the shared artifact), an honest call to action beneath it, the
-# D22 dateline, and any public correction. This is the fallback for everyone
-# the OS can't route to the app — desktop browsers, email opens, a platform
-# not yet published — and the OG/share card for every link.
+# TWO page types, one renderer, one run:
+#  • /p/<id> — every post the app can "Copy link" as a static page: the post as
+#    itself (the shared artifact), an honest CTA, the D22 dateline, any public
+#    correction. The OS-can't-route fallback + the OG/share card for every link.
+#    A post that belongs to a bill points its canonical at that bill (below).
+#  • /b/<polity>/<slug> — the INDEXABLE unit: one page per bill (bounded by bills
+#    that MOVE, not by time), showing the same merged path the app's bill screen
+#    shows (parity proven by the app's scripts/check-permalinks.js). Post pages
+#    are its citations. Bill pages carry `noindex` until the owner's Gate-2 flip
+#    (INDEX_BILL_PAGES in the generator) — published now as citations only.
 #
-# THE BOTS ARE NEVER TOUCHED. This job PULLS the published feed files (public
-# GitHub Pages, the same bytes the phones read), runs tools/generate.py, and
-# commits ONLY the generated p/ tree to this repo. Nothing here can change a
-# post, a tally, or a bot.
+# THE BOTS ARE NEVER TOUCHED. This job PULLS the published feed files + the
+# per-bill path artifacts (public GitHub Pages, the same bytes the phones read),
+# runs tools/generate.py, and commits ONLY the generated p/ + b/ trees and the
+# bill sitemap. Nothing here can change a post, a tally, a path, or a bot. b/ is
+# SEPARATE from the app's own web export (bill/[ref].html) — never touched here.
 #
 # NO CREDENTIALS. This runs IN the site repo with the workflow's own built-in
 # GITHUB_TOKEN — no personal token, no secret, no expiry. The `permissions`
@@ -25,7 +31,11 @@
 # Failure posture (loudness doctrine): any fetch/render error fails the run
 # and nothing is committed. A partial or SHRUNKEN tree is never published:
 # past months are immutable (D17), so a past-month 404 or empty file, a
-# page-count shrink, or a stray non-generated file under p/ all fail loudly.
+# page-count shrink (posts OR bills), or a stray non-generated file under p/ or
+# b/ all fail loudly. A path artifact 404 is the one tolerated miss — a bill
+# with no path yet is normal (posts-only, the app does the same); any OTHER
+# path-fetch code fails the run (the artifact may exist and we just couldn't
+# get it — never publish a page that would falsely say "not published yet").
 
 name: permalinks
 on:
@@ -97,50 +107,118 @@ jobs:
           done
           [ "$(ls feed/*-20*.jsonl 2>/dev/null | wc -l)" -gt 0 ] || { echo "::error::no feed files at all — refusing to render an empty site"; exit 1; }
 
-      # The generator scans the feed dir for *-overrides.jsonl itself. It
-      # renders into a scratch dir — never straight into the checkout — so the
-      # guards below can compare before anything in the repo changes.
+      # BILL-PATH ARTIFACTS. The bill pages (/b/) show the same full procedural
+      # record the app's bill screen shows, which lives in per-bill artifacts at
+      # {FEED}/paths/*.json (the exact files the app's path-client reads). GitHub
+      # Pages gives no directory listing, so the GENERATOR tells us which files a
+      # bill needs (--list-paths, one derivation) and we fetch exactly those.
+      #  • 200 → use it.  • 404 → the bill has no path published yet — NORMAL (the
+      #    app renders posts-only too); skip, no error.  • anything else → the
+      #    artifact may EXIST but we couldn't fetch it, and rendering posts-only
+      #    would falsely say "not published yet" — so FAIL the run (loudness
+      #    doctrine: never publish a page we can't stand behind). Bots untouched.
+      - name: Fetch bill-path artifacts
+        env:
+          FEED: https://billtrackingorg.github.io/billtracking-feed
+        run: |
+          set -euo pipefail
+          mkdir -p paths
+          python tools/generate.py --feed feed --out /tmp/_list --list-paths > paths.txt
+          echo "bills needing a path artifact: $(grep -c . paths.txt || true)"
+          while read -r name; do
+            [ -n "$name" ] || continue
+            case "$name" in */*|*..*) echo "::error::refusing suspicious artifact name: $name"; exit 1;; esac
+            code=$(curl -sS --retry 3 --retry-all-errors --max-time 60 -o "paths/$name" -w '%{http_code}' "$FEED/paths/$name" 2>/dev/null || echo 000)
+            if [ "$code" = "200" ]; then :
+            elif [ "$code" = "404" ]; then rm -f "paths/$name"   # no path yet — posts-only, honest
+            else echo "::error::path artifact $name returned $code — refusing to render it posts-only (it may exist)"; exit 1; fi
+          done < paths.txt
+          echo "fetched $(ls paths 2>/dev/null | wc -l) path artifacts"
+
+      # The generator scans the feed dir for *-overrides.jsonl itself. It renders
+      # into a scratch dir — never straight into the checkout — so the guards
+      # below can compare before anything in the repo changes. Bill pages carry
+      # `noindex` until the Gate-2 flip (INDEX_BILL_PAGES); this run publishes
+      # them as citations only.
       - name: Render the pages
         run: |
           set -euo pipefail
           mkdir -p out
-          python tools/generate.py --feed feed --out out 2>&1 | tee render.log
+          python tools/generate.py --feed feed --paths paths --out out 2>&1 | tee render.log
           n=$(ls out/p/*.html | grep -vc 'index.html' || true)
-          echo "rendered $n post pages"
-          [ "$n" -gt 0 ] || { echo "::error::generator produced no pages"; exit 1; }
+          b=$(find out/b -type f -name '*.html' ! -name index.html | wc -l)
+          echo "rendered $n post pages, $b bill pages"
+          [ "$n" -gt 0 ] || { echo "::error::generator produced no post pages"; exit 1; }
           if grep -q 'skipping' render.log; then echo "::warning::generator skipped records — see the render log"; fi
+          # Re-emit EVERY ::warning:: the generator logged at COLUMN 0 so Actions
+          # annotates it. The logger prefixes "WARNING " (level name), which pushes
+          # ::warning:: off column 0 and past GitHub's parser — so a legislature,
+          # corrupt-artifact, or unsupported-schema warning was invisible in the UI
+          # (guard finding, 2026-08-17). Strip the prefix and re-echo, de-duped.
+          grep -o '::warning::.*' render.log | sort -u | while IFS= read -r w; do echo "$w"; done || true
 
-      # Publish = replace p/ wholesale — p/ is TRACKED but written by this job
-      # alone (only generated files ever live there; guarded), so the replace
-      # is safe. Then commit with the built-in token.
+      # Publish = replace p/ AND b/ wholesale + the bill sitemap. Both trees are
+      # TRACKED but written by this job alone (only generated files live there;
+      # guarded), so the replace is safe. b/ is the SEO bill pages ONLY — it is a
+      # SEPARATE tree from the app's own web export (bill/[ref].html), which this
+      # job never touches. Then commit with the built-in token.
       - name: Commit the pages
         run: |
           set -euo pipefail
-          # p/ must contain ONLY generated files. Anything else = someone
+          # p/ and b/ must contain ONLY generated files. Anything else = someone
           # hand-placed a file there; refuse rather than silently delete it.
           if [ -d p ]; then
-            stray=$(cd p && ls | grep -Ev '^((us|eu)-[0-9]{8}-[0-9a-f]{8}\.html|index\.html|sitemap\.xml)$' || true)
+            stray=$(cd p && ls | grep -Ev '^([a-z]{2,12}-[0-9]{8}-[0-9a-f]{8}\.html|index\.html|sitemap\.xml)$' || true)
             [ -z "$stray" ] || { echo "::error::p/ contains non-generated files — refusing to replace it: $stray"; exit 1; }
           fi
-          # SHRINK GUARD: the page count may only go up (D17 — nothing
-          # published ever leaves). Fewer pages than live = an upstream gap
-          # this run didn't catch; never publish a shrink.
-          prev=$(ls p/*.html 2>/dev/null | grep -vc index.html || true)
-          new=$(ls out/p/*.html | grep -vc index.html || true)
-          if [ "$new" -lt "$prev" ]; then
-            echo "::error::rendered $new pages but the site has $prev — refusing to publish a shrink"; exit 1
+          if [ -d b ]; then
+            stray=$(find b -type f | grep -Ev '^b/[a-z0-9]{2,12}/([a-z0-9][a-z0-9-]*\.html|index\.html)$' || true)
+            [ -z "$stray" ] || { echo "::error::b/ contains unexpected files — refusing to replace it: $stray"; exit 1; }
           fi
-          rm -rf p
+          # SHRINK GUARDS by SET-DIFF (exact — no fuzzy count). A page/bill in the
+          # committed tree but ABSENT from this render is either a SANCTIONED
+          # remove-duplicate (listed in the generator's suppression manifest) or an
+          # upstream gap (D17: nothing published ever leaves; a bill never un-exists).
+          # Any UNLISTED disappearance fails the run. This replaces a
+          # remove-duplicate COUNT that could over-count a free-text match and mask a
+          # real shrink, and that was cumulative not per-run (guard finding, 2026-08-17).
+          # `|| true` on comm keeps set -e from firing when there are no missing lines;
+          # the `exit 1` inside the loop still propagates (last pipeline stage).
+          if [ -d p ]; then
+            comm -23 \
+              <( (cd p && ls *.html 2>/dev/null) | grep -v '^index\.html$' | sed 's/\.html$//' | sort ) \
+              <( (cd out/p && ls *.html) | grep -v '^index\.html$' | sed 's/\.html$//' | sort ) \
+            | while IFS= read -r id; do
+                [ -n "$id" ] || continue
+                grep -qxF "$id" out/.suppressed-pages 2>/dev/null \
+                  || { echo "::error::/p/ lost ${id}.html and it is NOT a sanctioned remove-duplicate — upstream gap, refusing to publish"; exit 1; }
+              done
+          fi
+          if [ -d b ]; then
+            comm -23 \
+              <( (cd b && find . -type f -name '*.html' ! -name index.html) | sed 's|^\./||; s|\.html$||' | sort ) \
+              <( (cd out/b && find . -type f -name '*.html' ! -name index.html) | sed 's|^\./||; s|\.html$||' | sort ) \
+            | while IFS= read -r slug; do
+                [ -n "$slug" ] || continue
+                grep -qxF "$slug" out/.suppressed-bills 2>/dev/null \
+                  || { echo "::error::/b/ lost ${slug}.html and it is NOT a sanctioned removal — upstream gap, refusing to publish"; exit 1; }
+              done
+          fi
+          new=$(ls out/p/*.html | grep -vc index.html || true)
+          newb=$(find out/b -type f -name '*.html' ! -name index.html | wc -l)
+          rm -rf p b
           cp -r out/p p
+          cp -r out/b b
+          cp out/bill-sitemap.xml bill-sitemap.xml
           git config user.name "billtracking-permalinks"
           git config user.email "permalinks@billtracking.org"
-          git add -A p
+          git add -A p b bill-sitemap.xml
           if git diff --cached --quiet; then echo "no page changes"; exit 0; fi
-          git commit -q -m "permalinks: render $new post pages from the published feed"
-          # The repo also takes owner pushes; a race is ordinary. p/ is ours
-          # alone, so a rebase can never conflict with a hand-authored file.
+          git commit -q -m "permalinks: render $new post + $newb bill pages from the published feed"
+          # The repo also takes owner pushes; a race is ordinary. p/ and b/ are
+          # ours alone, so a rebase can never conflict with a hand-authored file.
           for attempt in 1 2 3; do
-            if git push -q; then echo "published $new pages"; exit 0; fi
+            if git push -q; then echo "published $new post + $newb bill pages"; exit 0; fi
             echo "push rejected (attempt $attempt) — rebasing onto the new head"
             git pull --rebase -q || { echo "::error::rebase failed"; exit 1; }
           done
