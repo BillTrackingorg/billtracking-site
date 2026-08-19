@@ -42,8 +42,6 @@
       font-family: var(--sans); font-size: .85rem; color: var(--ink-soft); }
     .post-archived-text { padding: 0 1rem 1rem; margin: 0; white-space: pre-line;
       font-size: .95rem; line-height: 1.65; color: var(--ink); }
-    .post-back { display: inline-block; margin-bottom: 1.2rem; font-family: var(--sans);
-      font-size: .9rem; color: var(--ink-soft); }
     .post-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1rem; }
     .post-funnel { margin-top: 1.6rem; padding: 1.2rem 1.4rem; background: var(--wash);
       border: 1px solid var(--line); border-radius: var(--radius); }
@@ -134,12 +132,13 @@
       <a href="/educators.html">Educators</a>
       <a href="/accuracy.html">Accuracy</a>
       <a href="/about.html">About</a>
+      <a class="nav-signin" id="bt-nav-account" href="/account">Sign in</a>
     </nav>
   </div>
 </header>
 
 <main class="post-wrap">
-  <a class="post-back" href="/us">&larr; Back to the feed</a>
+  <a class="back-link" href="/us" data-bt-back><svg class="back-arrow" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12l14 0M5 12l6 6M5 12l6 -6"/></svg><span class="back-label">Back to the feed</span></a>
   <p class="post-kicker"><span class="tk">US tracker</span></p>
   <h1 class="post-ref">S.Res. 833</h1>
   <p class="post-date">6 August 2026 · posted 7 August 2026</p>
@@ -149,7 +148,7 @@
   <div class="card-anchored"><p class="card-next"><span class="lead">What&#39;s next: </span>Policy adoption (resolutions don&#39;t become law)</p></div>
   <div class="card-deferred"><div class="card-summary"><p><span class="lead">Summary: </span>The resolution would honor the 1960 University of Missouri Tigers football team for completing an undefeated regular season, winning the Orange Bowl, and claiming the national championship that year.</p><span class="ai-tag">[AI-Generated]</span></div></div>
   <button class="card-expander" aria-expanded="false" aria-controls="us-20260807-21d972ca-body"><span class="card-expander-label">Show more</span><svg class="glyph" aria-hidden="true"><use href="#chevron-down"/></svg></button>
-  <div class="card-strip"><button class="card-strip-glyph" aria-label="Vote breakdown"><svg class="glyph" aria-hidden="true"><use href="#chart-bar"/></svg></button><div class="vote-chips"><button class="vote-chip" data-dir="up" aria-pressed="false">▲ Yea</button><button class="vote-chip" data-dir="down" aria-pressed="false">▼ Nay</button><p class="vote-reason"></p></div>
+  <div class="card-strip"><button class="card-strip-glyph" aria-label="Vote breakdown"><svg class="glyph" aria-hidden="true"><use href="#chart-bar"/></svg></button><p class="vote-reason"></p><div class="vote-chips"><button class="vote-chip" data-dir="up" aria-pressed="false">▲ Yea</button><button class="vote-chip" data-dir="down" aria-pressed="false">▼ Nay</button></div>
   </div>
 </article>
 
