@@ -16,9 +16,8 @@
 # the ids, the one date formatter, the bill identity, the path merge, the two
 # content models and their HTML renderers — the same modules the phone runs. No
 # second implementation of a product rule lives on this side any more.
-# tools/generate.py, the Python port it replaces, stays in the tree until the
-# swap is proven byte-for-byte over the live pages; this workflow no longer
-# calls it, and no step here needs Python.
+# tools/generate.py, the Python port it replaced, was deleted on 2026-08-19 once the
+# swap was proven over the live corpus; no step here needs Python.
 #
 # THE BOTS ARE NEVER TOUCHED. This job PULLS the published feed files + the
 # per-bill path artifacts (public GitHub Pages, the same bytes the phones read),

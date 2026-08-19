@@ -54,9 +54,9 @@ is what the feed, account and callback pages load; `bt-site.cjs` is what the
 workflow runs. Build-and-copy commands: [`assets/js/README.md`](assets/js/README.md)
 §8. What the renderer writes and why: [`tools/README-bt-site.md`](tools/README-bt-site.md).
 
-`tools/generate.py` is the retired Python renderer. **Nothing calls it.** It stays
-in the tree only until the swap is proven byte-for-byte over the live pages —
-deleting it early would remove the only thing the swap can be proven against.
+`tools/generate.py`, the Python renderer the TypeScript one replaced, was deleted on
+2026-08-19 once the swap had been proven over the live corpus (page sets, canonicals, row
+orders and JSON-LD equal). Its history is in git.
 
 ## Permalink + bill pages
 

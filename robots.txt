@@ -11,10 +11,12 @@ Disallow: /tools/
 Disallow: /.github/
 Disallow: /view/
 
-# Two sitemaps: the hand-maintained top-level pages, and the permalink pages
-# under /p/ — rendered from the published feed by this repo's permalinks workflow
-# (no cadence is promised; GitHub schedules on a best-effort basis), whose own
-# sitemap lists every post page (the root sitemap does not enumerate them).
-# Without this line the /p/ pages are crawl-orphans.
+# Three sitemaps: the hand-maintained top-level pages; the BILL pages under /b/
+# (the indexable unit — one page per bill, Gate 2 flipped 2026-08-19); and the post
+# pages under /p/, which are noindex citations of their bill and are listed so a
+# crawler can discover the canonical bill page from a shared link. All three are
+# rendered from the published record by this repo's permalinks workflow (no
+# cadence is promised; GitHub schedules on a best-effort basis).
 Sitemap: https://billtracking.org/sitemap.xml
+Sitemap: https://billtracking.org/bill-sitemap.xml
 Sitemap: https://billtracking.org/p/sitemap.xml

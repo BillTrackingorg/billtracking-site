@@ -13,9 +13,9 @@ repo), and that check earned its keep — it caught an id scheme that would have
 equal has to be extended every time either one learns something. The answer to
 two implementations is one (web-overhaul plan §12(1), `DECISIONS.md` D27).
 
-**`generate.py` stays in this tree until the swap is proven byte-for-byte over
-the live pages.** Nothing calls it any more; deleting it early would remove the
-only thing the swap can be proven against.
+**`generate.py` was deleted on 2026-08-19** (phase 2 of the cut-over) after the swap was
+proven over the live corpus — page sets, canonicals, row orders and JSON-LD equal; the
+HTML bodies differ only by the deltas listed below. Its history is in git.
 
 ---
 
@@ -159,16 +159,17 @@ npm run check             # everything, including check:permalinks (still Python
 Here, before the swap:
 
 ```sh
-# render both, then diff — the swap gate (plan §12(1))
-python tools/generate.py --feed feed --paths paths --out /tmp/py
-node   tools/bt-site.cjs  --feed feed --paths paths --out /tmp/ts
-diff -r /tmp/py/p /tmp/ts/p        # expect only the deltas listed above
+# the swap gate that was run on 2026-08-19 (kept for the record; generate.py is gone):
+#   python tools/generate.py --feed feed --paths paths --out /tmp/py   (git show 2dd10e6:tools/generate.py)
+#   node   tools/bt-site.cjs  --feed feed --paths paths --out /tmp/ts
+#   diff -r /tmp/py/p /tmp/ts/p  — only the deltas listed above
+node tools/bt-site.cjs --selftest
 ```
 
 ## The Gate-2 flip
 
-Bill pages carry `noindex` until the owner litigates the unit and the copy. The
-flip is still ONE switch, and it moved with the renderer: `INDEX_BILL_PAGES` in
-the app repo's `src/site/chrome.ts`, plus listing `bill-sitemap.xml` in
-`robots.txt`, plus submitting it. Keep it `false` in both the TypeScript and
-`generate.py` until then.
+**Flipped 2026-08-19.** Bill pages and the `/b/` indexes are indexable and
+`bill-sitemap.xml` is listed in `robots.txt`; `/p/` pages stay `noindex` forever (they
+are the bill's citations). The switch is ONE constant — `INDEX_BILL_PAGES` in the app
+repo's `src/site/chrome.ts` — and the renderer's selftest follows it. The remaining step
+is the owner's: submit the bill sitemap in Search Console.

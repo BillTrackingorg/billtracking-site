@@ -9,7 +9,7 @@ __pycache__/
 
 # p/ (the permalink pages) IS committed here — but ONLY by the app repo's
 # permalinks workflow, which renders it from the REAL published feed
-# (tools/generate.py + .github/workflows/permalinks.yml, this repo, 2026-08-16).
+# (tools/bt-site.cjs + .github/workflows/permalinks.yml, this repo — the Python generate.py retired 2026-08-19).
 # Never hand-edit p/, never commit a locally generated p/ (a local run may be
 # built from the sample fixtures — fabricated bill pages would be the single
 # most damaging thing this repo could publish).
