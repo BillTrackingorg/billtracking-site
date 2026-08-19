@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
-<link rel="stylesheet" href="/style.css?v=2">
+<link rel="stylesheet" href="/style.css?v=3">
 <link rel="stylesheet" href="/assets/css/feed.css?v=1">
 </head>
 <body>
@@ -29,6 +29,7 @@
       <a href="/educators.html">Educators</a>
       <a href="/accuracy.html">Accuracy</a>
       <a href="/about.html">About</a>
+      <a class="nav-signin" id="bt-nav-account" href="/account">Sign in</a>
     </nav>
   </div>
 </header>
@@ -70,14 +71,19 @@
       <p>An account does one thing: it lets your vote follow you. Reading never
       needs one, and never will.</p>
       <div class="acct-buttons">
-        <button type="button" class="btn-provider" id="bt-signin-google" disabled>
+        <button type="button" class="btn-provider" id="bt-signin-google">
           Continue with Google
         </button>
-        <button type="button" class="btn-provider" id="bt-signin-apple" disabled>
+        <button type="button" class="btn-provider" id="bt-signin-apple">
           Continue with Apple
         </button>
       </div>
-      <p class="acct-note" id="bt-provider-note">Sign-in coming soon.</p>
+      <!-- The one line the JS ever writes on this page: what happened when a
+           provider could not be reached or is not switched on yet. It ships
+           EMPTY and collapses (`.acct-note:empty`) — a standing apology here would
+           be the page describing itself as unfinished to somebody who has just
+           decided to join (owner directive, 2026-08-19). -->
+      <p class="acct-note" id="bt-provider-note"></p>
     </div>
     <div class="acct-card">
       <h2>What an account is for</h2>

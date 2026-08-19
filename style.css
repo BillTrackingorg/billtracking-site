@@ -130,6 +130,68 @@ a:hover { color: var(--royal); }
 .site-nav a:hover { color: #fff; }
 .site-nav a[aria-current="page"] { color: #fff; border-bottom-color: var(--gold); }
 
+/* --- the account pill ------------------------------------------------------
+   The site's one sign-in affordance, in every page's nav (owner, 2026-08-19:
+   "How come there's no standard sign-in tab or page on the website? A yellow
+   button seems like it could make sense.").
+
+   IT IS DEFINED HERE AND NOT IN feed.css ON PURPOSE. Every page on this site
+   loads style.css; only the pages that draw cards load feed.css. A nav control
+   styled in the second would simply be missing from About, Privacy, Educators
+   and every /b/ bill page.
+
+   Shape: .btn in miniature — the same --gold, the same navy ink, the same 8px
+   radius — sized to sit in a row of 0.82rem nav words without making the
+   header taller. Only its WORD changes: the runtime relabels it "Account" for
+   a browser that holds a session (src/web/site-chrome.ts, src/site/chrome.ts). */
+.site-nav a.nav-signin {
+  background: var(--gold);
+  color: var(--navy-deep);
+  border-radius: 8px;
+  padding: 0.35rem 0.85rem;
+  /* `auto` rather than a fixed gap: on a desktop nav the flex gap already
+     separates it and this changes nothing, and on a phone — where the six words
+     wrap and the pill lands alone on a third row — it holds the pill against the
+     right edge instead of orphaning it at the left. */
+  margin-left: auto;
+  border-bottom: 2px solid transparent;
+}
+.site-nav a.nav-signin:hover { background: #E6B800; color: var(--navy-deep); }
+/* The site's focus ring is gold, which on a gold pill is a ring nobody can see.
+   White is that same ring in the one place gold has nothing to sit against —
+   and the header behind it is navy, so it reads at least as strongly. */
+.site-nav a.nav-signin:focus-visible { outline-color: #fff; }
+
+/* --- the way back ----------------------------------------------------------
+   ONE control, three page types (owner, 2026-08-19: "let's just use a large
+   back arrow. The 'Back to the feed' text is ok — it's that tiny skinny little
+   arrow I take issue with. Where is the standard arrow that most modern sites,
+   including X, use?"). The answer is Tabler's arrow-left at 22px beside its
+   label, in a 44px hit area — the shape X and every mobile app draw. The markup
+   is src/site/chrome.ts `backControl`; the behaviour (history.back when the
+   reader came from a feed page) is src/web/site-chrome.ts.
+
+   HERE, NOT IN feed.css, for the same reason as the pill and a sharper one:
+   /b/ bill pages draw no cards and therefore never load feed.css at all. */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  margin: 0 0 0.6rem;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+}
+.back-arrow { flex: none; width: 22px; height: 22px; }
+/* The label underlines, the arrow does not: a rule running under the icon makes
+   it read as part of a word rather than as a control. Colour holds on hover —
+   the global a:hover royal would turn a navigation control into a link. */
+.back-link:hover { color: var(--navy); }
+.back-link:hover .back-label { text-decoration: underline; text-underline-offset: 3px; }
+
 /* --------------------------------------------------------------------------
    Heroes
    -------------------------------------------------------------------------- */

@@ -7,10 +7,18 @@ them, copied the bundle in, rendered the whole live corpus through the
 TypeScript renderer and drove every page in a browser. What is in the tree now:
 `assets/js/bt-web.js` + its chunks (the compiled core) and `tools/bt-site.cjs`
 (the same core, for the workflow). Nothing is committed or pushed — that is the
-owner's gate. No sign-in provider is configured, so every sign-in control still
-ships disabled and says so, and the vote RPC does not exist yet, so the
-breakdown panel honestly reports that it could not load rather than reporting a
-result. See §8 for the exact build-and-copy commands and §9 for what is still
+owner's gate. The vote RPC does not exist yet, so the breakdown panel honestly
+reports that it could not load rather than reporting a result.
+
+⚠️ **UX round, 2026-08-19/20 — THE SIGN-IN CONTROLS ARE NO LONGER DISABLED.**
+Owner directive: *"We shouldn't be building as though things are coming soon, we
+should be building to launch."* The compile-time `WEB_PROVIDERS` gate is deleted;
+the provider buttons are live and ask the Supabase project itself whether a
+provider exists (§1.2), the card caption reads `Sign in to vote` on the chips'
+own row (§2 rule 13, §2b), every page's nav ends with a gold **Sign in** pill
+(§1.2), and `/p/`, `/b/` and the resolver share one proper back control (§2c).
+There is no "coming soon" anywhere on the website; the honesty moved to the point
+of action rather than being deleted. See §8 for the exact build-and-copy commands and §9 for what is still
 open. This file is what the pages promise, written by the markup lane so the JS
 lane can build against it without reading four HTML files. The card DOM in §2 is
 what `renderCard` emits.
@@ -50,9 +58,13 @@ Files this lane produced:
 
 ## 1. Page shells and mount points
 
-All four page types load `<script type="module" src="/assets/js/bt-web.js">` as
-the last element in `<body>`. One module, four entry paths; branch on what is
-in the DOM, not on `location`.
+Every page that has something to wire loads
+`<script type="module" src="/assets/js/bt-web.js">` as the last element in
+`<body>`. One module, four entry paths; branch on what is in the DOM, not on
+`location`. Since 2026-08-19 that set includes `/b/` bill pages — for the back
+control, which is the one thing on them a static file cannot do (§2c) — and
+`main()` wires the site chrome (the nav pill and the back control) BEFORE it
+branches, because those two belong to every page type rather than to any mount.
 
 ### 1.1 Feed page — `us.html`, `eu.html` (served as `/us`, `/eu`)
 
@@ -109,9 +121,9 @@ in the DOM, not on `location`.
 <main class="account-page" id="bt-account">
   <section class="acct-region" id="bt-acct-loading"> … </section>
   <section class="acct-region" id="bt-acct-signed-out" hidden>
-      <button id="bt-signin-google" class="btn-provider" disabled>Continue with Google</button>
-      <button id="bt-signin-apple"  class="btn-provider" disabled>Continue with Apple</button>
-      <p id="bt-provider-note" class="acct-note">Sign-in coming soon.</p>
+      <button id="bt-signin-google" class="btn-provider">Continue with Google</button>
+      <button id="bt-signin-apple"  class="btn-provider">Continue with Apple</button>
+      <p id="bt-provider-note" class="acct-note"></p>   <!-- EMPTY; only a failed sign-in fills it -->
   </section>
   <section class="acct-region" id="bt-acct-signed-in" hidden>
       <p id="bt-acct-email" class="acct-value"></p>
@@ -126,11 +138,33 @@ in the DOM, not on `location`.
 
 * Exactly one region visible: toggle the `hidden` attribute; `.acct-region[hidden]`
   is `display:none` in CSS, so nothing flashes.
-* **The provider buttons ship `disabled` and the note reads "Sign-in coming
-  soon."** That is the honest default: enable them and swap the note *only*
-  when the provider is actually configured. Inviting a sign-in that cannot
-  happen is the dishonest affordance this product exists to avoid — the app
-  makes the same call in `vote-chips.tsx` (interim wording, 2026-08-14).
+* **The provider buttons ship LIVE, and `#bt-provider-note` ships EMPTY.**
+  ⚠️ **CHANGED 2026-08-19** (owner directive: *"We shouldn't be building as
+  though things are coming soon, we should be building to launch … honest, not a
+  disabled button"*). They used to ship `disabled` under "Sign-in coming soon",
+  gated by a compile-time `WEB_PROVIDERS` table in `src/web/auth.ts`. **That
+  table is deleted.** Pressing a button now asks the Supabase project itself —
+  GoTrue's public `/auth/v1/settings` (`external.google`, `external.apple`), one
+  small `fetch`, no auth library — and:
+  * provider ON → `signInWithOAuth`, and the browser leaves for the provider;
+  * provider OFF → the button re-enables and `#bt-provider-note` says
+    *"Google sign-in isn't available yet — we're still setting it up."*
+    (`PROVIDER_UNAVAILABLE`, per provider);
+  * could not ask → proceed anyway. "We could not check" is not "it is off",
+    and a flaky connection must not be reported as a missing feature.
+
+  Two things this buys beyond the copy. The answer is **the project's, not a
+  constant's**, so the day the owner switches a provider on in the dashboard the
+  website is correct with no code change, no build and no deploy — the failure
+  mode `GOOGLE_OAUTH.configured` warns about ("a hand-set boolean is how a build
+  claims to be configured when it is not") is gone. And the refusal happens **on
+  our page, in our words**: `signInWithOAuth` cannot report it (it assigns
+  `location` and returns `{error:null}` whatever the settings say — supabase-js
+  2.110.7 `_handleProviderSignIn`), so without the probe a reader would land on
+  GoTrue's own 400 page. The signed-out region ships `hidden`, so a reader with
+  no JavaScript never sees a live-looking button a missing script has made inert.
+  `check:webauth` fails if a compile-time provider table comes back, if the probe
+  is removed, or if a refusal message reverts to "coming soon".
 * Sign-out is `{ scope: 'local' }` — a browser sign-out must never kill the
   phone's session. **Settled, and not this file's to get right any more:** the
   bug was fixed in the app repo and the scoped call now lives in
@@ -199,14 +233,36 @@ in the DOM, not on `location`.
 * `#bt-acct-loading` carries a static second line saying what it means if the
   region never changes (the module failed to load — `<noscript>` does not fire
   for that). Replacing the region, which is what you do anyway, removes it.
-* **NOTHING LINKS TO `/account` YET.** The site's nav is one shared block across
-  every page and is not this lane's to fork, so the feed→account edge is the
-  card's: on a card whose chips are actionable but whose reader is signed out,
-  the caption under the chips is a **link to `/account`** — the web equivalent
-  of the app's caption opening the You tab (`vote-chips.tsx`, "a caption that
-  names an action IS the action"). Until sign-in exists the caption keeps the
-  app's interim wording, `Voting — coming soon`, and still links there. A nav
-  entry is an owner call, not a JS one.
+* ~~**NOTHING LINKS TO `/account` YET.**~~ ⚠️ **SUPERSEDED 2026-08-19** — the
+  owner made that call: *"How come there's no standard sign-in tab or page on the
+  website? A yellow button seems like it could make sense."* **Every served page's
+  nav now ends with a gold pill linking to `/account`**, and it is one block
+  everywhere — the hand-authored pages, `tools/templates/feed-page.html`,
+  `src/site/chrome.ts` (the generated `/p/` and `/b/` pages) and
+  `site-build/generate_legal.py` (privacy + terms):
+
+  ```html
+  <a class="nav-signin" id="bt-nav-account" href="/account">Sign in</a>
+  ```
+
+  * **`style.css` styles it, never `feed.css`.** Every page loads the first;
+    only card-drawing pages load the second, and a nav control missing on
+    `/about` is not a nav control. Same rule sends `.back-link` there (§2c).
+  * **The runtime relabels it, and only it.** With `bt-web.js` on the page,
+    `src/web/site-chrome.ts` sets the word to `Account` when this browser holds a
+    session — read from the **cheap storage probe**, never `getSessionState()`:
+    labelling a nav item must not fetch 200 KB of auth library, least of all on a
+    `/b/` page. Same href either way; `/account` is the page that answers both
+    questions and says which one it is answering.
+  * The card caption stays exactly what it was — the feed→account edge on a card,
+    now reading `Sign in to vote` (§2b) — and carries `?next=` where the pill does
+    not: the pill is on every page including ones `safeNext` would refuse.
+
+  `check:sitenav` (app repo, in `npm run check`) fails the build if any served
+  page carries zero or two account pills, or if any page's nav link set or ORDER
+  differs from the one `src/site/chrome.ts` emits. Destinations are compared
+  resolved, so this site's three spellings (`index.html`, `/index.html`, `/us`)
+  compare as the pages they are.
 
 ### 1.3 OAuth return — `auth/callback.html` (served as `/auth/callback`)
 
@@ -388,16 +444,18 @@ depends on it.
   </button>
 
   <!-- 6. STRIP — never clipped. Status posts with a reference.
-       THE STRIP GATES ON THE REFERENCE, THE BREAKDOWN GLYPH ON THE IDENTITY. -->
+       THE STRIP GATES ON THE REFERENCE, THE BREAKDOWN GLYPH ON THE IDENTITY.
+       ONE ROW: [glyph] [caption] … [chips]. ⚠️ `.vote-reason` IS A CHILD OF
+       `.card-strip`, NOT OF `.vote-chips` — changed 2026-08-19, see rule 13. -->
   <div class="card-strip">
     <!-- ONLY when the card has a data-billkey. -->
     <button class="card-strip-glyph" aria-label="Vote breakdown">
       <svg class="glyph" aria-hidden="true"><use href="#chart-bar"/></svg>
     </button>
+    <p class="vote-reason"></p>
     <div class="vote-chips">
       <button class="vote-chip" data-dir="up"   aria-pressed="false">▲ Yea</button>
       <button class="vote-chip" data-dir="down" aria-pressed="false">▼ Nay</button>
-      <p class="vote-reason"></p>
     </div>
   </div>
 </article>
@@ -477,6 +535,21 @@ depends on it.
    navigates would promise a menu that is not there, and it was also the *only*
    feed→post edge on the page. If the web ever grows that sheet, ⋯ returns to
    this slot and the open affordance moves elsewhere — say so here when it does.
+13. **The caption slot sits ON the chips' row, left of them.** `.vote-reason` is
+   a direct child of `.card-strip` (`flex: 1 1 auto; min-width: 0`), between the
+   breakdown glyph and `.vote-chips`. ⚠️ **MOVED 2026-08-19** — owner directive:
+   *"it should be 'Sign in to vote' and it should be on the same row as the
+   buttons and only appear when a user is not signed in."* It used to live INSIDE
+   `.vote-chips` with `flex-basis: 100%`, taking a line of its own under them, on
+   the argument that `NO_IDENTITY_REASON` is a full sentence and reads like an
+   error toast when squeezed beside two pills. True of that sentence — and the
+   caption a reader actually meets is four words, and it is the strip's primary
+   invitation. It is also where the APP has always put it (`vote-chips.tsx`
+   renders the caption as the third child of the chip ROW, `flexShrink: 1`), so
+   the web was the outlier. `min-width: 0` is what lets the long refusal wrap
+   inside the row rather than push the chips off the card; below 24rem the strip
+   wraps and the caption takes the first line. An EMPTY slot collapses
+   (`.vote-reason:empty`), so a signed-in reader's strip carries no hole.
 
 ---
 
@@ -498,7 +571,7 @@ slot with a fixed precedence, exactly as the app's is:
 | state | what is in `.vote-reason` |
 |---|---|
 | no `data-billkey` | `NO_IDENTITY_REASON`, as rendered. The island does not touch it — there is nothing to sign in *for* on that post. |
-| keyed, signed out | `<a class="vote-caption" href="/account?next=…">` — `Voting — coming soon` while `WEB_PROVIDERS` is off, `Sign in to vote` once a provider is live. |
+| keyed, signed out | `<a class="vote-caption" href="/account?next=…">Sign in to vote</a>` — **always, on the web** (`VOTE_COPY.signIn`, imported). ⚠️ **CHANGED 2026-08-19**: it used to fall back to the app's interim wording while `WEB_PROVIDERS` said no provider was configured. That table is deleted (§1.2) — the honest answer is now given at the point of action, on `/account`, by the project itself. The PHONE still uses the interim wording; its gate is `GOOGLE_OAUTH.configured` and it is a separate owner call (`data/vote-copy.ts`). |
 | keyed, signed in | empty. |
 | after a failed write | the one-line note, then back to the row above. |
 
@@ -539,6 +612,46 @@ sanctioned exception as `--glyph-stroke` (rule 11): a per-row percentage cannot
 be a class, and a custom property is data rather than a style rule.
 
 **4. `.acct-delete`** and `.btn-provider.is-danger` on the account page (§1.2).
+
+---
+
+## 2c. The back control — `/p/`, `/b/`, and the resolver
+
+Added 2026-08-19. Owner directive: *"When a bill path is accessed through a
+post's bill ref link, the bill path should have a back button that goes back to
+the feed … let's just use a large back arrow … Where is the standard arrow that
+most modern sites, including X, use?"*
+
+```html
+<a class="back-link" href="/us" data-bt-back>
+  <svg class="back-arrow" viewBox="0 0 24 24" width="22" height="22" fill="none"
+       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+       aria-hidden="true" focusable="false"><path d="M5 12l14 0M5 12l6 6M5 12l6 -6"/></svg>
+  <span class="back-label">Back to the feed</span>
+</a>
+```
+
+* **One definition** — `backControl(feedPath)` in the app's `src/site/chrome.ts`
+  — used by the `/p/` template, the `/b/` template and the 404 resolver (which
+  drew its own `Back to the <short> feed` line before). It replaced `&larr;`, a
+  text glyph at body weight, which is exactly why it read as skinny.
+* **The icon is INLINE, not a sprite symbol.** `tools/glyphs.svg` carries LABEL
+  glyphs, is inlined per page under two id vocabularies (§5), and is a build
+  input generated in the app repo. A chrome control does not earn all of that.
+* **CSS in `style.css`, not `feed.css`** — `/b/` pages draw no cards and never
+  load `feed.css`. 44px hit area, 22px arrow, navy, and the hover underline is on
+  the LABEL only (a rule under the arrow makes it read as part of a word).
+* **`data-bt-back` is the behaviour hook.** `src/web/site-chrome.ts` installs ONE
+  delegated document listener (so a resolver-rendered control is covered without
+  being wired) and calls `history.back()` **only** when `document.referrer` is
+  same-origin AND its path is `/us` or `/eu` (`.html` stripped — Pages serves
+  both spellings), on a plain left click. That is the only case where "back" is
+  the feed, and it is what puts the reader back at their scroll position.
+  Anything else — a cold link, a search result, a shared URL, no JavaScript,
+  ctrl/⌘/shift/middle click — is the plain `<a href>` to the polity's feed.
+* **`/b/` pages now load `bt-web.js`** for this (`island: true` in the bill page's
+  `documentHtml`). It is the one thing on that page a static file cannot do, and
+  it is the same cached bundle every other page already asks for.
 
 ### One departure from the packet's client spec, with its evidence
 
@@ -844,8 +957,9 @@ Three rules the copy obeys:
   anyone's devtools. The maps stay in the app repo, where `out/` is gitignored.
 * **The entry name is stable, the chunk names are not.** `bt-web.js` is
   referenced literally by `us.html`, `eu.html`, `account.html`,
-  `auth/callback.html`, `404.html`, `tools/templates/feed-page.html` and (since
-  this pass) every generated `/p/` page. The chunks are content-hashed, so
+  `auth/callback.html`, `404.html`, `tools/templates/feed-page.html` and every
+  generated `/p/` page — and, since 2026-08-19, every generated `/b/` page too
+  (§2c). The chunks are content-hashed, so
   step 2's `rm` is what keeps the directory from accumulating dead ones.
 * **Bundle and HTML ship together** (§9). Never the HTML first.
 

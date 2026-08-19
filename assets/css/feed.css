@@ -749,27 +749,48 @@ button[disabled],
    disabled state, they converge here. */
 .vote-chip[disabled] { color: var(--ink-faint-aa); border-color: var(--line-soft); }
 
-/* The refusal line. A chip that cannot record a vote says why, in words — the
-   caption never becomes an instruction the product cannot honour. It takes a
-   line of its own under the chips: the app's caption is four words and sits
-   beside them, but a reason that explains itself needs the width, and squeezing
-   it into a column beside two pills makes it look like an error toast. */
+/* The caption slot — ON THE CHIPS' ROW, left of them, after the breakdown glyph.
+
+   ⚠️ THIS MOVED ON 2026-08-19 AND THE OLD REASONING IS RECORDED BELOW, because
+   it was right about its own case and wrong about the one that matters. It used
+   to be a child of .vote-chips with `flex-basis: 100%`, taking a line of its own
+   UNDER the chips — argued for on the grounds that NO_IDENTITY_REASON is a full
+   sentence and squeezing it beside two pills makes it look like an error toast.
+   True of that sentence. But the caption a reader actually meets is four words,
+   "Sign in to vote", and it is the strip's primary invitation: owner directive,
+   2026-08-19 — "it should be 'Sign in to vote' and it should be on the same row
+   as the buttons". It is also where the APP has always put it (vote-chips.tsx
+   renders the caption as the third child of the chip ROW, shrinkable), so the
+   web was the outlier.
+
+   So the slot is now a child of .card-strip and the row reads
+   [glyph] [caption] … [chips]. `flex: 1` claims the gap between them, and
+   `min-width: 0` is what lets the long refusal WRAP inside that gap instead of
+   shoving the chips off the card — the same job `flexShrink: 1` does on the
+   phone. A two-line refusal simply makes the strip two lines tall, which is
+   what it does on the phone too. */
 .vote-reason {
-  flex-basis: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
   font-family: var(--sans);
   font-size: 11px;
   line-height: 1.45;
   color: var(--ink-faint-aa);
-  margin: 5px 0 0;
+  margin: 0;
   max-width: none;
-  text-align: right;
+  text-align: left;
 }
 
-/* Narrow phones: the strip stacks rather than squeezing the chips. */
+/* Nothing to say is a state, not a gap: an empty slot must claim no width at
+   all, or a signed-in reader's strip carries a hole where a caption was. */
+.vote-reason:empty { display: none; }
+
+/* Narrow phones: the strip stacks rather than squeezing the chips, and the
+   caption takes the first line on its own. */
 @media (max-width: 24rem) {
   .card-strip { flex-wrap: wrap; }
+  .vote-reason { flex-basis: 100%; }
   .vote-chips { justify-content: flex-start; }
-  .vote-reason { text-align: left; }
 }
 
 /* --------------------------------------------------------------------------
@@ -854,6 +875,10 @@ button[disabled],
    so. Inviting a sign-in that does not exist is the dishonest-affordance
    version of the very thing this product guards against. */
 .acct-note { font-size: 0.85rem; color: var(--ink-faint-aa); margin: 0.7rem 0 0; max-width: none; }
+/* #bt-provider-note ships empty and is filled only when a sign-in could not be
+   started (src/web/account.ts). Empty must take no room at all, or the page
+   carries a gap that looks like a missing sentence. */
+.acct-note:empty { display: none; }
 
 .acct-danger { margin-top: 1.6rem; font-size: 0.9rem; }
 .acct-danger a { color: var(--navy); }
