@@ -872,3 +872,366 @@ button[disabled],
 
 .page-links { list-style: none; padding: 0; margin: 1.2rem 0 0; }
 .page-links li { margin: 0.45rem 0; }
+
+/* The 404 resolver's own "As published" block. The archived text inside it is
+   `.post` / `.post-text`, which style.css already sets `white-space: pre-line`
+   on, so only the disclosure around it needs saying. */
+.resolver-archive {
+  margin-top: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+}
+.resolver-archive > summary {
+  cursor: pointer;
+  padding: 0.6rem 0.9rem;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.resolver-archive .post { padding: 0 0.9rem 0.9rem; }
+
+/* The legacy `/bill/<ref>` pick, when a reference names more than one bill (a
+   rollover pair): the title under each row is what tells two "H.R. 3497" rows
+   apart, beside the Congress the link itself names. */
+.resolver-pick-title {
+  display: block;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* --------------------------------------------------------------------------
+   6. What the vote island adds (README section 2b)
+   -------------------------------------------------------------------------- */
+
+/* WRITTEN 2026-08-19 BY THE INTEGRATION LANE, against the DOM the island
+   actually emits (`src/web/{votes,consent,breakdown,geo-picker,account}.ts`).
+   README 2b specified these classes before the styling existed, and two of them
+   were reachable by any visitor the moment the bundle shipped, with nothing to
+   draw them:
+
+     - `.vote-caption.is-pulse` is the whole answer to a signed-out chip tap.
+       The island adds the class for 800 ms and does nothing else, deliberately
+       (the caption's words never change mid-tap, owner 2026-07-23). With no
+       rule the tap was SILENT, which is the one thing that state must not be.
+     - `.vote-breakdown` opens for every reader, signed in or not, and drew an
+       unstyled block of text under the card.
+
+   The look is the app's, not a new one: `vote-breakdown.tsx`'s track is
+   --line-soft with the polity accent as the fill, its "you" tag is gold, its
+   stats are bordered tiles. */
+
+/* --- the caption ---------------------------------------------------------- */
+
+/* It inherits size and colour from `.vote-reason`, the slot it lives in (one
+   slot, fixed precedence). Only the link-ness and the pulse are its own. */
+.vote-caption {
+  color: var(--accent);
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 1px 4px;
+  margin: -1px -4px;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.vote-caption:hover { border-bottom-color: var(--accent); }
+
+/* ONE sweep, 800 ms - the same 800 ms the island holds the class for, so the
+   emphasis ends with it rather than being cut off mid-animation. */
+@keyframes bt-caption-pulse {
+  0%   { background: transparent; }
+  25%  { background: var(--accent-wash); }
+  100% { background: transparent; }
+}
+.vote-caption.is-pulse { animation: bt-caption-pulse 800ms ease-out; }
+
+/* A reader who asked for less motion still has to SEE that the tap was
+   answered, so the emphasis stays and only the animation goes. The class is
+   removed after 800 ms either way, which is what makes a static wash read as a
+   flash rather than as a new permanent state. */
+@media (prefers-reduced-motion: reduce) {
+  .vote-caption.is-pulse { animation: none; background: var(--accent-wash); }
+}
+
+/* --- the Article 9 consent step ------------------------------------------ */
+
+/* It appears INSIDE the strip that raised it, and it is a question - so it is
+   bordered like one and not styled like a banner. */
+.vote-consent {
+  flex-basis: 100%;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+  text-align: left;
+}
+.vote-consent-text {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0 0 9px;
+  max-width: none;
+}
+.vote-consent-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.vote-consent-btn {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 13px;
+  background: var(--card);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+/* "Agree and vote" is the affirmative, so it carries the accent - but it is a
+   consent button, so it is not the loudest thing on the card. */
+.vote-consent-btn.is-agree {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+  color: var(--accent-chip-text);
+}
+
+/* --- the breakdown panel -------------------------------------------------- */
+
+/* A panel, not a dialog (README 2b): it opens in place after the strip, inside
+   the card, and takes the card's full width back from the strip's flex row. */
+.vote-breakdown {
+  margin-top: 10px;
+  padding: 11px 12px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+}
+.vb-eyebrow {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 9.5px;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: var(--ink-faint-aa);
+  margin: 0 0 2px;
+  max-width: none;
+}
+.vb-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.25;
+  color: var(--navy-ink);
+  margin: 0 0 11px;
+  max-width: none;
+}
+
+/* The three states are kept visually apart on purpose: a failure must never be
+   mistaken for a result (`vote-breakdown-model.ts`). */
+.vb-message { padding: 6px 0 2px; text-align: center; }
+.vb-message-title {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--navy-ink);
+  margin: 0 0 4px;
+  max-width: none;
+}
+.vb-message-body {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-faint-aa);
+  margin: 0 auto;
+  max-width: 30rem;
+}
+.vb-retry {
+  margin-top: 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 13px;
+  background: var(--card);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--accent);
+}
+
+.vb-stats { display: flex; gap: 9px; margin-bottom: 11px; }
+.vb-stat {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--card);
+  padding: 8px 10px;
+}
+/* The reader's own place is pinned and never collapsed into the tail, so it is
+   the one tile that wears the accent. */
+.vb-stat.is-inpolity { border-color: var(--accent); background: var(--accent-wash); }
+.vb-stat-label {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 9.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-faint-aa);
+  margin: 0 0 1px;
+  max-width: none;
+}
+.vb-stat-count {
+  font-family: var(--serif);
+  font-size: 21px;
+  line-height: 1.15;
+  color: var(--navy-ink);
+  margin: 0;
+  max-width: none;
+}
+.vb-stat-split {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  margin: 1px 0 0;
+  max-width: none;
+}
+
+.vb-coverage {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  color: var(--ink-faint-aa);
+  margin: 0 0 9px;
+  max-width: none;
+}
+
+.vb-rows { list-style: none; padding: 0; margin: 0; }
+.vb-row { padding: 6px 2px; }
+/* A group boundary is a hairline, not a heading: the rows are one list and the
+   break only says "a different kind of place starts here". */
+.vb-row[data-group-start] {
+  margin-top: 4px;
+  padding-top: 9px;
+  border-top: 1px solid var(--line-soft);
+}
+.vb-row-head { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.vb-flag { font-size: 16px; line-height: 1; }
+.vb-badge {
+  min-width: 26px;
+  padding: 0 4px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--wash);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  line-height: 17px;
+  text-align: center;
+  color: var(--ink-soft);
+}
+/* A residual row ("Rest of world") stands for no place in particular, so its
+   marker is drawn as an absence rather than as another badge. */
+.vb-badge.is-residual { background: transparent; border-style: dashed; }
+.vb-label {
+  flex: 1;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.vb-you {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 9.5px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--gold-text);
+}
+/* BOTH SIDES, ALWAYS - never a net score (D14, README 2b). */
+.vb-split { font-family: var(--sans); font-weight: 600; font-size: 12.5px; color: var(--ink); }
+.vb-split-down { font-weight: 400; color: var(--ink-faint-aa); }
+/* n IS NOT DECORATION. It is what keeps a one-person row honest; do not hide it
+   to tidy the row (D14). */
+.vb-total {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  min-width: 32px;
+  text-align: right;
+}
+.vb-track {
+  height: 7px;
+  border-radius: 4px;
+  background: var(--line-soft);
+  overflow: hidden;
+}
+/* The width is DATA, so it arrives as a custom property on the element - the
+   same sanctioned exception as --glyph-stroke (README rule 11). */
+.vb-fill { width: var(--vb-fill, 0%); height: 100%; background: var(--accent); }
+
+.vb-more { padding: 6px 0 2px; text-align: center; }
+.vb-more-btn {
+  background: none;
+  border: 0;
+  padding: 4px 6px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--accent);
+}
+
+.vb-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 11px 0 0;
+  font-family: var(--sans);
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  max-width: none;
+}
+.vb-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.vb-dot.is-up { background: var(--accent); }
+.vb-dot.is-down { background: var(--line-soft); border: 1px solid var(--line); }
+/* The legend is one line of "dot word dot word"; the second pair needs the gap
+   the first one gets from the flex `gap` alone. */
+.vb-legend .vb-dot ~ .vb-dot { margin-left: 8px; }
+
+.vb-foot {
+  font-family: var(--sans);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ink-faint-aa);
+  margin: 8px 0 0;
+  max-width: none;
+}
+
+/* --- the account page's location picker and delete card ------------------- */
+
+.geo-picker { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 0.6rem; }
+.geo-field { display: flex; flex-direction: column; gap: 0.25rem; min-width: 11rem; flex: 1; }
+.geo-field[hidden] { display: none; }
+.geo-label {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint-aa);
+}
+.geo-select {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+  background: var(--card);
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.geo-select[disabled] { color: var(--ink-faint-aa); background: var(--paper); }
+.geo-status { flex-basis: 100%; }
+.geo-status:empty { display: none; }
+
+/* Deleting an account is irreversible, so its card is marked - and its confirm
+   button is the only red thing on the page. */
+.acct-delete { border-color: color-mix(in srgb, var(--red) 35%, var(--line)); }
+.btn-provider.is-danger { border-color: var(--red); color: var(--red); }
+.btn-provider.is-danger:hover:not([disabled]) {
+  background: color-mix(in srgb, var(--red) 7%, var(--card));
+}

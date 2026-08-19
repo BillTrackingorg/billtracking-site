@@ -1,8 +1,30 @@
 # `bt-web.js` — the contract with the HTML
 
-**Status:** the HTML, the CSS and the glyph sprite exist; `bt-web.js` and
-`bt-core.js` do not yet. This file is what the pages promise, written by the
-markup lane so the JS lane can build against it without reading four HTML files.
+**Status (2026-08-19, integration pass): `bt-web.js` IS IN THIS REPO.** The
+shells, the CSS and the sprite were here already; the reader half, the account
+half and the two HTML renderers were built in the app repo; this pass compiled
+them, copied the bundle in, rendered the whole live corpus through the
+TypeScript renderer and drove every page in a browser. What is in the tree now:
+`assets/js/bt-web.js` + its chunks (the compiled core) and `tools/bt-site.cjs`
+(the same core, for the workflow). Nothing is committed or pushed — that is the
+owner's gate. No sign-in provider is configured, so every sign-in control still
+ships disabled and says so, and the vote RPC does not exist yet, so the
+breakdown panel honestly reports that it could not load rather than reporting a
+result. See §8 for the exact build-and-copy commands and §9 for what is still
+open. This file is what the pages promise, written by the markup lane so the JS
+lane can build against it without reading four HTML files. The card DOM in §2 is
+what `renderCard` emits.
+
+⚠️ **THERE IS NO `bt-web.js` SHIM ANY MORE — the bundle itself carries that
+name** (integration pass, deviation from the earlier plan, recorded here per §7).
+`src/web/entry-web.ts` still exports `main()` without calling it, because the
+checks import it in Node; the side effect lives in a three-line
+`src/web/boot-web.ts`, which is what esbuild compiles, and the emitted entry is
+named `bt-web.js`. So the file the five shells reference is the real bundle, not
+a one-line module importing another file: one fewer published file, one fewer
+round trip before first paint, and nothing hand-written in a public repo that no
+check covers. The ENTRY name is stable (no hash) because the shells name it
+literally; the chunks are hashed and nothing but the bundle names them.
 
 `bt-web.js` is a thin **view**. It owns no product rules. Everything that
 decides *what a card says* — the adapter, dedupe, ids, corrections/revisions,
@@ -62,6 +84,12 @@ in the DOM, not on `location`.
   the container back as a live region.)
 * `#bt-status` — exactly one state at a time (§3), or empty. `:empty` collapses
   it, so clear it with `replaceChildren()`; do not leave `<div></div>` padding.
+  It may carry ONE extra paragraph under the state, `<p class="feed-status-notice">`,
+  and only for the unsupported-legislature line (§3): that sentence is a fact
+  about the BUILD rather than about this feed's emptiness, so it renders under
+  whichever state is showing. `.feed-status p` already styles it; the class is a
+  hook for the day it wants its own margin. (Added 2026-08-19 by the runtime
+  lane — the app draws the same line, in the same place, for the same reason.)
   **It ships with the loading state already in the HTML** — true at first paint,
   and better than a blank rectangle. Replace it as soon as you know better; empty
   it the moment cards render. It stays a live region: a state change here *is*
@@ -104,15 +132,70 @@ in the DOM, not on `location`.
   happen is the dishonest affordance this product exists to avoid — the app
   makes the same call in `vote-chips.tsx` (interim wording, 2026-08-14).
 * Sign-out is `{ scope: 'local' }` — a browser sign-out must never kill the
-  phone's session (`auth.ts:157` defaults to global; that is a known bug).
+  phone's session. **Settled, and not this file's to get right any more:** the
+  bug was fixed in the app repo and the scoped call now lives in
+  `src/lib/auth-core.ts`, platform-free, which the web imports rather than
+  re-typing (`src/web/auth.ts` `signOutLocal`). `check:votes` pins the scope of
+  both it and `deleteAccount`; `check:webauth` fails the build if any web module
+  calls `auth.signOut(` for itself.
 * `#bt-geo-picker` and `#bt-consent` are **mounts, not copy**. Location is
   account-level (set once, same on every surface); the consent sentence comes
   from `lib/voter.ts` `consentSentence()`, which lifts it VERBATIM from the
   published privacy policy through the D23 pipeline. Do not write a second
   wording here — the one the reader agreed to has to be the one we published.
   `CONSENT_VERSION` is what makes it answerable later.
-* Delete account keeps its own page (`/delete-account.html`); do not build a
-  second deletion flow here.
+
+  What lands in them (`src/web/geo-picker.ts`, `src/web/consent.ts`) — the CSS
+  lane owns every class below, and none of them is styled yet:
+
+  ```html
+  <div class="geo-picker">
+    <label class="geo-field"><span class="geo-label">Country</span>
+      <select class="geo-select" name="country"> … "Not set" first … </select></label>
+    <label class="geo-field" hidden><span class="geo-label">State</span>
+      <select class="geo-select" name="us_state"> … </select></label>
+    <p class="acct-note geo-status" role="status"></p>
+  </div>
+  ```
+
+  Native `<select>`s on purpose: keyboard- and screen-reader-correct everywhere
+  for free, and a phone renders them as the same native picker the app's sheet
+  is. The state field is `hidden` unless the country is `US`.
+
+  ⚠️ **The picker is DISABLED until the account has a `voters` row**, and says
+  so. That row is the consent record and `setVoterLocation` UPDATES only —
+  creating one here would record a consent nobody gave — so a write before the
+  first vote would match zero rows, return no error, and look exactly like a
+  successful save. **This is a real product gap, not a JS limitation**: the phone
+  keeps a location locally and hands it up at the consent step, and the web has
+  no such fallback by design (D27/§12(3): location is the account's). A reader
+  who wants their first vote counted in their own state cannot currently set it
+  first. Owner call — the fix is a product decision, not a patch.
+
+  The consent mount renders **status only** — `Recorded` / `Not recorded yet`,
+  the policy's own sentence, and the stored version string verbatim (never
+  parsed back into a date). What consent *means*, how it is withdrawn and what
+  re-consent looks like after a policy change stay in the published policy and
+  remain an owner item (identity packet §8(3)).
+* ~~Delete account keeps its own page (`/delete-account.html`); do not build a
+  second deletion flow here.~~ **DEVIATION, recorded 2026-08-19 by the auth
+  lane.** The plan is explicit that `/account` carries deletion ("delete account
+  (existing Edge Function, CORS already allows the site) … required once accounts
+  can be created on the web (Apple 5.1.1(v), D13)", §2), and once an account can
+  be MADE here, the email route is a several-day wait for something the phone
+  does in two taps. So the signed-in region grows an `.acct-delete` card, mounted
+  by the JS above the existing link.
+
+  What the rule was protecting is intact: there is no second *flow*. The card
+  calls the same `deleteAccount()` in `lib/auth-core.ts` that the phone's sheet
+  calls, renders the same `DELETE_ACCOUNT_COPY` from that module, arms in the
+  same two steps, and shows the same Apple "one more step" notice from the same
+  `appleFallbackNotice()` — which is also why it does **not** redirect away the
+  moment the server answers: that notice is the only place a reader is ever told
+  they still have a dead entry in their Apple ID settings. They leave by pressing
+  **Done**. `/delete-account.html` stays exactly as it is; it is the route for
+  somebody who no longer has any way to sign in, and it should gain a line about
+  this one (owner/copy call, not a JS one).
 * `#bt-acct-loading` carries a static second line saying what it means if the
   region never changes (the module failed to load — `<noscript>` does not fire
   for that). Replacing the region, which is what you do anyway, removes it.
@@ -165,10 +248,39 @@ in the DOM, not on `location`.
 * The static copy is already a correct 404. Only replace it when you have
   actually resolved something; if the resolver finds nothing, leave the page
   alone. Never render "loading" over a page that is already true.
+  **One flagged deviation (runtime lane, 2026-08-19):** the moment the address
+  PARSES as a `/p/`, `/b/` or `/bill/` target, `#bt-resolver-status` is replaced
+  with "Looking for this in the published record…". From that moment the static
+  "there is nothing at that address" may be false, and leaving a claim standing
+  while actively disproving it is the one thing this page must not do. Everything
+  else — the heading, the links, the note — is untouched until something is
+  found. An address that does not parse still gets the page exactly as shipped.
+* **On a hit, the eyebrow and the `<h1>` are hidden** (`hidden`, so the UA rule
+  applies). "404 / Page not found" over a post that was just found is a page
+  arguing with itself, and a bill render brings its own kicker and `<h1>`.
+* **A client-rendered `/b/` page has no bill-page CSS here, and that is a known
+  gap for the generator lane.** The `/b/` markup is `renderBillPath`'s — the
+  same rows the generated page uses — but those pages carry their own inline
+  `BILL_CSS` from `generate.py`, which `404.html` does not load, so the path
+  renders as a plain, readable `<ol>`. Two ways out when the generator swaps to
+  the shared renderer: move `BILL_CSS` into a stylesheet both pages link, or lift
+  the row rules into `feed.css`. Until then this is degraded, not wrong.
+* **`#ic-` glyph ids are bridged at runtime.** `renderBillPath` references the
+  generated page's prefixed symbols (`#ic-capitol`); this page's inlined sprite
+  uses bare ids. `dom.ts` `bridgeGlyphIds()` clones each missing `#ic-x` from
+  `#x` before painting — because a `<use>` at a missing id paints nothing and
+  reports nothing, which is the exact failure class §5 exists to prevent. It
+  disappears the day the two stylesheets merge.
 * `/p/<id>` or `/b/<polity>/<slug>` published but not yet rendered (the cron
   runs every 15 min) ⇒ draw it client-side into `#bt-resolver-mount`, so a link
   works the instant it exists. Legacy `/bill/<ref>` ⇒ resolve to the key and
   redirect **only when unambiguous**; otherwise say so and offer the choices.
+  "Unambiguous" is only known once the WHOLE archive has loaded (the app's
+  `/bill/[ref]` shim waits for the same reason — after a rollover the hot window
+  shows the newer bill first), so the redirect waits for it; the pick rows name
+  each bill's Congress (`congressOrdinal`, from the identity's own field) and
+  title, because a rollover pair prints the same reference (verifier,
+  2026-08-19; `.resolver-pick-title` in `feed.css` §5).
 
 ---
 
@@ -199,11 +311,20 @@ depends on it.
     </a>
   </div>
 
-  <!-- franchise variant of the head's left side -->
-  <p class="card-date-lead">
-    <svg class="glyph" aria-hidden="true"><use href="#calendar-event-band"/></svg>
-    8 August 2026 at 09:30 AM
-  </p>
+  <!-- Franchise variant of the head's left side. It rides INSIDE the same
+       `.card-ref-row`, because a franchise post can carry a correction pill too
+       (the app draws one in exactly that place) and the pill needs a flex row
+       to sit in. Status cards put `.card-ref` in that row; franchise cards put
+       this. (Recorded 2026-08-19 by the renderer lane — the original sketch
+       showed this as a sibling of `.card-ref-row`, which left a corrected
+       franchise card with nowhere to hang its pill.) -->
+  <div class="card-ref-row">
+    <p class="card-date-lead">
+      <svg class="glyph" aria-hidden="true"><use href="#calendar-event-band"/></svg>
+      8 August 2026 at 09:30 AM
+    </p>
+    <!-- pill, when the post carries one -->
+  </div>
 
   <!-- 2. BODY — the ONLY collapsing region. data-clipped="1" when it overflows. -->
   <div class="card-body" data-clipped="1">
@@ -213,7 +334,11 @@ depends on it.
     <p class="card-meta">Sen. Richard Durbin (D-IL) | Commerce, Science, and Transportation Committee</p>
     <p class="card-action">
       <svg class="glyph glyph-cal" aria-hidden="true"><use href="#calendar-event-band"/></svg>
-      <span class="card-action-date"> 7 August 2026&nbsp; |&nbsp; </span>
+      <!-- The separator's two-space padding is drawn with a literal U+00A0 in
+           each pair rather than the `&nbsp;` entity — identical to a browser,
+           and it keeps the renderer's escaping unconditional (nothing is
+           spliced in raw). -->
+      <span class="card-action-date"> 7 August 2026  |  </span>
       <span class="glyph-wrap has-badge">
         <svg class="glyph glyph-label" aria-hidden="true"><use href="#capitol"/></svg>
         <span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#check"/></svg></span>
@@ -355,10 +480,90 @@ depends on it.
 
 ---
 
+## 2b. What the vote island adds to a card (`src/web/votes.ts`, `breakdown.ts`)
+
+The island **wires the strip §2 already drew** — it never draws a second one.
+Chips, their vocabulary, the disabled state and `NO_IDENTITY_REASON` all come
+from `renderCard` (and, on `/p/` and `/b/`, from the generator emitting the same
+DOM). What it adds is behaviour, plus the four small structures below. They were
+written before the styling so the markup could be reviewed against a contract
+rather than against a screenshot; **the styling landed on 2026-08-19**
+(`feed.css` section 6), built against this spec and against the DOM the modules
+actually emit. Everything below still describes the contract — change the class,
+change this.
+
+**1. The caption lives in the slot that is already there.** `.vote-reason` is one
+slot with a fixed precedence, exactly as the app's is:
+
+| state | what is in `.vote-reason` |
+|---|---|
+| no `data-billkey` | `NO_IDENTITY_REASON`, as rendered. The island does not touch it — there is nothing to sign in *for* on that post. |
+| keyed, signed out | `<a class="vote-caption" href="/account?next=…">` — `Voting — coming soon` while `WEB_PROVIDERS` is off, `Sign in to vote` once a provider is live. |
+| keyed, signed in | empty. |
+| after a failed write | the one-line note, then back to the row above. |
+
+The caption is **persistent, not tap-triggered** (the app renders it the same
+way). A chip tap by a signed-out reader adds `.is-pulse` to it for 800 ms and
+does nothing else: the caption's words never change mid-tap (owner call
+2026-07-23 — swapping instructions reads as scolding), and a chip tap must not
+navigate, because the caption is the thing that navigates. **`.vote-caption` and
+`.vote-caption.is-pulse` need a rule** — the app's is a dark letter-wave; a
+single emphasis sweep is enough here. With no CSS the tap is silent, which is the
+one thing this state must not be.
+
+**2. The consent step, inside the strip that raised it** (`.vote-consent`,
+`.vote-consent-text`, `.vote-consent-actions`, `.vote-consent-btn.is-agree`).
+Shown once per account, before the first cast ever reaches the database, with
+the policy's own sentence and two buttons from `lib/voter.ts` — never words
+written for the button.
+
+**3. The breakdown panel** opens in place, after `.card-strip`, when the
+`.card-strip-glyph` is pressed (the island sets `aria-expanded` on it and toggles
+on a second press; Escape closes and returns focus). It is a panel and not a
+dialog on purpose: a page has room, and a focus trap is a heavier promise than
+"show me the numbers". Classes: `.vote-breakdown[data-polity]` › `.vb-eyebrow`,
+`.vb-title`, `.vb-message`(`-title`/`-body`) + `.vb-retry`, `.vb-stats` ›
+`.vb-stat.is-inpolity` › `.vb-stat-label`/`-count`/`-split`, `.vb-coverage`,
+`.vb-rows` › `.vb-row[data-group-start]` › `.vb-row-head` ›
+`.vb-flag`/`.vb-badge.is-residual`/`.vb-label`/`.vb-you`/`.vb-split` ›
+`.vb-split-down`/`.vb-total`, then `.vb-track` › `.vb-fill`, `.vb-more` ›
+`.vb-more-btn`, `.vb-legend` › `.vb-dot.is-up`/`.is-down`, `.vb-foot`.
+
+Two rules the CSS must not undo: **`n` is rendered beside every split and is not
+decoration** (D14 — it is what keeps a one-person row honest, and hiding it to
+tidy the row turns an honest row into a misleading one), and **there is never a
+net score** — both sides, always, in the legislature's own words.
+
+`.vb-fill` carries its width as a custom property, `style="--vb-fill:34%"`. Same
+sanctioned exception as `--glyph-stroke` (rule 11): a per-row percentage cannot
+be a class, and a custom property is data rather than a style rule.
+
+**4. `.acct-delete`** and `.btn-provider.is-danger` on the account page (§1.2).
+
+### One departure from the packet's client spec, with its evidence
+
+The vote/auth packet asked for `lock: navigatorLock` on the web client. **It is
+not passed**, verified against the pinned `@supabase/supabase-js` 2.110.7 on
+2026-08-19: `GoTrueClient` now calls the option a *"legacy opt-in path preserved
+for backwards compatibility"* marked for removal in v3 and uses its own lockless
+cross-tab coordination when none is given — and `navigatorLock` is not exported
+by `@supabase/supabase-js` at all, only by the transitive `@supabase/auth-js`.
+Reaching into a transitive package to satisfy a recommendation the library has
+withdrawn is how a build breaks on a patch release. Everything else in that spec
+is set, and set ONCE, in the app's `lib/supabase-core.ts`: PKCE, the explicit
+storage key, `persistSession`, `autoRefreshToken`, `storage` left to the library
+(browser `localStorage`). `check:webauth` fails if any web module sets `flowType`
+or builds a client of its own.
+
+---
+
 ## 3. `#bt-status` — the six honest states
 
-Render **one**, in the app's order (`app/src/app/(tabs)/index.tsx` `FeedEmpty`),
-in the app's words. Shape:
+Render **one**, in the app's order and in the app's words. ⚠️ **Since
+2026-08-19 those words are not copied — they are IMPORTED.** The ladder moved out
+of the screen into `app/src/data/feed-copy.ts`, which both surfaces consume
+(D27), and `npm run check:web` executes it branch by branch; `web/status.ts`
+renders the result. Do not re-type the table below into any page. Shape:
 
 ```html
 <h2>Can't reach the feed</h2>
@@ -561,7 +766,33 @@ Consequences for the JS:
   "complete path", and no "live"/"real time" superlative in a title,
   description or OG tag — **"as it moves"** is the house phrase.
 
-## 8. Rebuilding the shells
+## 7b. The generated `/p/` pages draw cards too — and they draw them OPEN
+
+`tools/bt-site.cjs` renders the same `renderCard` output onto every `/p/` page,
+beneath the site chrome and above the archived post text (`tools/README-bt-site.md`).
+Two consequences for this lane, recorded here by the site-renderer lane on
+2026-08-19 because they are exceptions to §2 rule 3:
+
+* A generated page ships its card **open**: its own `<style>` block sets
+  `.post-wrap .card-deferred { display: block }`, un-caps `.card-body`, and
+  hides `.card-expander`. A static page has no script to operate the control,
+  and a control that does nothing is a fabricated affordance — while a page
+  whose whole job is ONE post has nothing to gain by hiding half of it.
+  **When the vote island mounts on `/p/` (Phase 3), do not re-collapse it** and
+  do not wire the expander there; `wireCards` should skip a card inside
+  `.post-wrap`. ✅ **Done 2026-08-19:** `main()`'s fallthrough calls
+  `mountStaticIslands(document)`, which mounts the vote strips and nothing else,
+  so no measurement ever touches a card the page has deliberately opened.
+* Those pages load `/style.css` **and** `/assets/css/feed.css`, so the card is
+  styled by exactly this lane's stylesheet. A change to `.card*` therefore
+  reaches `/p/` too — the point of the arrangement, and worth knowing before
+  scoping a rule to `.feed-page`. (`.feed-page :focus-visible` is scoped that
+  way today, so a `/p/` card falls back to `style.css`'s gold ring; harmless,
+  but the first thing to widen if that ring is ever judged too weak on white.)
+
+## 8. Rebuilding — the shells, and the bundle
+
+### 8a. The shells
 
 ```sh
 python tools/build_feed_pages.py           # us.html + eu.html from the template,
@@ -579,18 +810,122 @@ The sprite itself is regenerated from the app's `icon.tsx` whenever that file's
 PATHS table changes. That step lives in the app repo (it reads app source), and
 its output is committed here.
 
+### 8b. The bundle — `assets/js/bt-web.js` and `tools/bt-site.cjs`
+
+Both are COMPILED ARTEFACTS of the private app repo. They are never edited here
+and never built here: the build refuses to emit unless the app's own
+`npm run check` is green, which is the whole reason a compiled bundle is allowed
+to sit in a public repo at all (D27; `site-build/core/build.mjs`).
+
+The two repos are siblings (`…/BillTracking/app`, `…/BillTracking/site`).
+
+```sh
+# 1. build, in the APP repo — runs `npm run check` first and stops on red
+cd ../app && npm run build:core
+
+# 2. copy, from the SITE repo root
+cd ../site
+rm -f assets/js/bt-*.js                              # chunk hashes change per build:
+                                                     # sweep, or orphans pile up
+cp ../app/site-build/core/out/web/*.js  assets/js/
+cp ../app/site-build/core/out/site/bt-site.cjs  tools/bt-site.cjs
+
+# 3. prove the copied renderer, exactly as the workflow will
+node tools/bt-site.cjs --selftest
+```
+
+Three rules the copy obeys:
+
+* **`*.js` ONLY — never a `*.map`.** esbuild's source maps embed
+  `sourcesContent`, which for this bundle is the whole of the app's TypeScript
+  *including its comments*: copying them here would publish the private repo's
+  source. The build emits maps as `sourcemap: 'external'` so the published files
+  carry no `//# sourceMappingURL` pointer either — no leak, and no 404 in
+  anyone's devtools. The maps stay in the app repo, where `out/` is gitignored.
+* **The entry name is stable, the chunk names are not.** `bt-web.js` is
+  referenced literally by `us.html`, `eu.html`, `account.html`,
+  `auth/callback.html`, `404.html`, `tools/templates/feed-page.html` and (since
+  this pass) every generated `/p/` page. The chunks are content-hashed, so
+  step 2's `rm` is what keeps the directory from accumulating dead ones.
+* **Bundle and HTML ship together** (§9). Never the HTML first.
+
+### 8c. Rendering the pages locally (what CI does)
+
+```sh
+mkdir -p /tmp/feed /tmp/paths
+# month files since 2026-07 for us+eu + both -overrides.jsonl, from
+#   https://billtrackingorg.github.io/billtracking-feed
+node tools/bt-site.cjs --feed /tmp/feed --list-paths      # which artifacts to fetch
+node tools/bt-site.cjs --feed /tmp/feed --paths /tmp/paths --out /tmp/out
+```
+
+`--out` is required and must NOT be this repo: `p/`, `b/` and `view/` are
+workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
+
 ---
 
-## 9. Two things to carry into the cut-over (not fixed here, deliberately)
+## 9. What to carry into the cut-over
 
 * **Push ordering is load-bearing.** `/us` paints head → "Loading…" → footer and
   stops until `bt-web.js` exists. Pages caches HTML for ten minutes, so an HTML
   push that lands without the bundle gives every visitor a `role="status"` that
   says "Loading…" and never changes — the page telling a lie about itself, for
   ten minutes minimum. Ship the bundle in the same push as the HTML, or before.
+  The same ordering binds `tools/bt-site.cjs`: `permalinks.yml` now runs it and
+  fails loudly every 15 minutes if it is not there, so the bundle must land in
+  or before the push that merges the workflow.
 * **`/auth/callback` resolving from `auth/callback.html` is asserted, not
   proven.** Pages' extensionless resolution is the same rule the site already
   relies on, but it has not been probed for a file one directory down. The OAuth
   redirect URI is registered exactly once and a 404 there breaks sign-in
   completely: probe the live URL at Gate B, before the provider config is
   written.
+* **The stylesheet is versioned by hand, and only on the shells.** The five
+  hand-authored pages ask for `/assets/css/feed.css?v=1`; the generated `/p/`
+  pages ask for `/assets/css/feed.css` with no query at all. Same file, two cache
+  entries. It is harmless before the first publish (nothing holds either yet),
+  but from the first publish on, ANY edit to `feed.css` needs the query bumped in
+  the template + the four hand-authored shells, or returning visitors keep the
+  old sheet. Worth collapsing to one form at the cut-over.
+* **A client-rendered `/b/` path on `404.html` is unstyled.** `renderBillPath`'s
+  markup is styled by `BILL_CSS`, which lives inside the generated bill page's
+  own `<style>` block (app repo `src/site/chrome.ts`) and cannot reach the
+  hand-authored 404 page. The resolver's bill render is therefore a plain,
+  readable `<ol>` — degraded, never wrong, and it self-heals within one workflow
+  run when the real page appears. The clean fix is the one `chrome.ts` already
+  names: move the bill-path rules into `feed.css` (which `404.html` loads) and
+  let the generated page load `feed.css` instead of inlining a second copy —
+  which also collapses the `#ic-` sprite prefix and `dom.ts`'s `bridgeGlyphIds`.
+  One job, not a drive-by.
+* **`/b/` pages carry `data-billkey` and no vote strip.** Plan §2 promises the
+  bill page a vote island; the bill-path content model has no strip today, and
+  the app's own bill screen shows chips only on the post cards it embeds. The
+  attribute is already on `<main class="bill-wrap">`, so the day a strip is drawn
+  the island wires it with no new transcription. Deliberately not invented here.
+
+---
+
+## 10. What the integration pass changed in this contract (2026-08-19)
+
+Recorded here because §7 says a deviation is written into this file in the same
+edit that makes it.
+
+1. **`bt-web.js` is the bundle, not a shim** — see the Status block at the top.
+2. **Generated `/p/` pages load the runtime.** `documentHtml` grew an `island`
+   flag (app repo `src/site/chrome.ts`) and post pages set it, so a `/p/` page
+   ends with the same `<script type="module" src="/assets/js/bt-web.js">` the
+   shells carry. Without it those pages drew two enabled vote chips that answered
+   nothing — a fabricated affordance, and the very thing §7b's argument for
+   un-collapsing the static card is about. Index pages and `/b/` pages set it
+   `false`: neither has a control only a browser can work.
+3. **§7b's request is honoured by a named entry point, not by a special case in
+   the measurer.** `main()`'s fallthrough calls `mountStaticIslands(document)`
+   (votes only) rather than `mountIslands` (votes + card wiring), so nothing
+   re-measures a card whose own stylesheet has lifted the clip and hidden the
+   expander.
+4. **§2b's classes now exist in `feed.css`** (its new section 6). Two of them
+   were reachable by any visitor with nothing to draw them: `.vote-caption.is-pulse`
+   (a signed-out chip tap was completely silent) and `.vote-breakdown` (the door
+   beside the chips opens for everyone, signed in or not, and drew unstyled text
+   under the card). The consent, geo and delete rules are written from the same
+   spec but cannot be exercised until a provider and the migration exist.

@@ -11,11 +11,23 @@
 #    are its citations. Bill pages carry `noindex` until the owner's Gate-2 flip
 #    (INDEX_BILL_PAGES in the generator) — published now as citations only.
 #
+# THE RENDERER IS THE APP'S OWN CODE. tools/bt-site.cjs is `bt-core` compiled
+# from the app repo's TypeScript (web-overhaul plan §12(1), D27): the adapter,
+# the ids, the one date formatter, the bill identity, the path merge, the two
+# content models and their HTML renderers — the same modules the phone runs. No
+# second implementation of a product rule lives on this side any more.
+# tools/generate.py, the Python port it replaces, stays in the tree until the
+# swap is proven byte-for-byte over the live pages; this workflow no longer
+# calls it, and no step here needs Python.
+#
 # THE BOTS ARE NEVER TOUCHED. This job PULLS the published feed files + the
 # per-bill path artifacts (public GitHub Pages, the same bytes the phones read),
-# runs tools/generate.py, and commits ONLY the generated p/ + b/ trees and the
-# bill sitemap. Nothing here can change a post, a tally, a path, or a bot. b/ is
-# SEPARATE from the app's own web export (bill/[ref].html) — never touched here.
+# runs tools/bt-site.cjs, and commits ONLY the generated p/ + b/ + view/ trees
+# and the bill sitemap. Nothing here can change a post, a tally, a path, or a
+# bot. b/ is SEPARATE from the app's own web export (bill/[ref].html) — never
+# touched here. view/ is the published packaged form of the same render (index,
+# shaped months, per-bill views, the legislature registry): data for any future
+# surface, written by this job alone.
 #
 # NO CREDENTIALS. This runs IN the site repo with the workflow's own built-in
 # GITHUB_TOKEN — no personal token, no secret, no expiry. The `permissions`
@@ -24,9 +36,14 @@
 # private app repo with a fine-grained PAT; the owner rightly asked for the
 # cleaner shape, 2026-08-16.) Public repo ⇒ Actions minutes are free.
 #
-# Cadence: every 2 hours, off the bots' minute (they publish on their own
-# schedules; a page appearing up to ~2 h after the post is fine — the app has
-# the post instantly, this is the web shadow). Manual dispatch re-renders now.
+# Cadence: every 15 minutes. This repo is PUBLIC, so Actions minutes are free
+# and the cost of a run is the fetch itself. The web is no longer a 2-hourly
+# shadow of the app: the feed pages read the published record live, and a shared
+# link should land on a real page rather than on the 404 resolver's client-side
+# render — so the gap between "the bot posted" and "the page exists" is worth
+# closing. GitHub schedules on a best-effort basis and runs late under load; the
+# cron is a request, not a promise, and no page claims a cadence.
+# Manual dispatch re-renders now.
 #
 # Failure posture (loudness doctrine): any fetch/render error fails the run
 # and nothing is committed. A partial or SHRUNKEN tree is never published:
@@ -40,7 +57,7 @@
 name: permalinks
 on:
   schedule:
-    - cron: '37 */2 * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch: {}
 
 concurrency:
@@ -57,9 +74,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      # Node 20 — the runtime the committed bundle targets (esbuild
+      # `target: node20`; app repo site-build/core/build.mjs).
+      - uses: actions/setup-node@v4
         with:
-          python-version: '3.12'
+          node-version: '20'
+
+      # The renderer is a COMMITTED artifact, not something this job builds: it
+      # is produced in the (private) app repo by a green `npm run check` and
+      # copied here. If it is missing, say so in one line rather than letting
+      # node fail with a module-resolution error at the bottom of a log. The
+      # selftest is the bundle proving ITSELF — the fixture assertions compiled
+      # into it — before it is trusted with the live record.
+      - name: Check the renderer, and let it prove itself
+        run: |
+          set -euo pipefail
+          for f in tools/bt-site.cjs tools/glyphs.svg; do
+            [ -f "$f" ] || { echo "::error::$f is missing — the site cannot be rendered without the compiled core (app repo: npm run build:core)"; exit 1; }
+          done
+          node tools/bt-site.cjs --selftest
 
       # The public feed — every month file since the epoch, plus the PER-BOT
       # corrections sheets the bots write and the app reads (us-overrides +
@@ -110,8 +143,10 @@ jobs:
       # BILL-PATH ARTIFACTS. The bill pages (/b/) show the same full procedural
       # record the app's bill screen shows, which lives in per-bill artifacts at
       # {FEED}/paths/*.json (the exact files the app's path-client reads). GitHub
-      # Pages gives no directory listing, so the GENERATOR tells us which files a
-      # bill needs (--list-paths, one derivation) and we fetch exactly those.
+      # Pages gives no directory listing, so the RENDERER tells us which files a
+      # bill needs (--list-paths, which reads `post.bill.pathFile` — the same
+      # string the bill key and the /b/ slug are made of, so there is ONE
+      # derivation and it is the app's) and we fetch exactly those.
       #  • 200 → use it.  • 404 → the bill has no path published yet — NORMAL (the
       #    app renders posts-only too); skip, no error.  • anything else → the
       #    artifact may EXIST but we couldn't fetch it, and rendering posts-only
@@ -123,7 +158,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p paths
-          python tools/generate.py --feed feed --out /tmp/_list --list-paths > paths.txt
+          node tools/bt-site.cjs --feed feed --list-paths > paths.txt
           echo "bills needing a path artifact: $(grep -c . paths.txt || true)"
           while read -r name; do
             [ -n "$name" ] || continue
@@ -135,31 +170,32 @@ jobs:
           done < paths.txt
           echo "fetched $(ls paths 2>/dev/null | wc -l) path artifacts"
 
-      # The generator scans the feed dir for *-overrides.jsonl itself. It renders
+      # The renderer scans the feed dir for *-overrides.jsonl itself. It renders
       # into a scratch dir — never straight into the checkout — so the guards
       # below can compare before anything in the repo changes. Bill pages carry
       # `noindex` until the Gate-2 flip (INDEX_BILL_PAGES); this run publishes
       # them as citations only.
+      #
+      # It EXITS NON-ZERO on anything that would make a page untrustworthy, so a
+      # failed render commits nothing (loudness doctrine). Ordinary gaps — a
+      # record the app also drops, a path artifact that would not parse, a
+      # legislature this build does not carry — are ::warning:: lines it prints
+      # at COLUMN 0, which is where GitHub's parser reads them: nothing needs
+      # re-emitting the way the Python logger's level prefix did.
       - name: Render the pages
         run: |
           set -euo pipefail
           mkdir -p out
-          python tools/generate.py --feed feed --paths paths --out out 2>&1 | tee render.log
+          node tools/bt-site.cjs --feed feed --paths paths --out out
           n=$(ls out/p/*.html | grep -vc 'index.html' || true)
           b=$(find out/b -type f -name '*.html' ! -name index.html | wc -l)
           echo "rendered $n post pages, $b bill pages"
-          [ "$n" -gt 0 ] || { echo "::error::generator produced no post pages"; exit 1; }
-          if grep -q 'skipping' render.log; then echo "::warning::generator skipped records — see the render log"; fi
-          # Re-emit EVERY ::warning:: the generator logged at COLUMN 0 so Actions
-          # annotates it. The logger prefixes "WARNING " (level name), which pushes
-          # ::warning:: off column 0 and past GitHub's parser — so a legislature,
-          # corrupt-artifact, or unsupported-schema warning was invisible in the UI
-          # (guard finding, 2026-08-17). Strip the prefix and re-echo, de-duped.
-          grep -o '::warning::.*' render.log | sort -u | while IFS= read -r w; do echo "$w"; done || true
+          [ "$n" -gt 0 ] || { echo "::error::the renderer produced no post pages"; exit 1; }
+          [ -d out/view/v1 ] || { echo "::error::the renderer produced no view/ tree"; exit 1; }
 
-      # Publish = replace p/ AND b/ wholesale + the bill sitemap. Both trees are
-      # TRACKED but written by this job alone (only generated files live there;
-      # guarded), so the replace is safe. b/ is the SEO bill pages ONLY — it is a
+      # Publish = replace p/, b/ AND view/ wholesale + the bill sitemap. All three
+      # trees are TRACKED but written by this job alone (only generated files live
+      # there; guarded), so the replace is safe. b/ is the SEO bill pages ONLY — a
       # SEPARATE tree from the app's own web export (bill/[ref].html), which this
       # job never touches. Then commit with the built-in token.
       - name: Commit the pages
@@ -174,6 +210,13 @@ jobs:
           if [ -d b ]; then
             stray=$(find b -type f | grep -Ev '^b/[a-z0-9]{2,12}/([a-z0-9][a-z0-9-]*\.html|index\.html)$' || true)
             [ -z "$stray" ] || { echo "::error::b/ contains unexpected files — refusing to replace it: $stray"; exit 1; }
+          fi
+          # view/ is workflow-owned too — the published packaged form of this same
+          # render (plan §12(1)). Same rule as p/ and b/: anything else in there
+          # was hand-placed, and this job refuses rather than silently deleting it.
+          if [ -d view ]; then
+            stray=$(find view -type f | grep -Ev '^view/v1/([a-z]{2,12}-[0-9]{4}-[0-9]{2}\.json|index\.json|registry\.json|bills/[a-z0-9]{2,12}/[a-z0-9][a-z0-9-]*\.json)$' || true)
+            [ -z "$stray" ] || { echo "::error::view/ contains unexpected files — refusing to replace it: $stray"; exit 1; }
           fi
           # SHRINK GUARDS by SET-DIFF (exact — no fuzzy count). A page/bill in the
           # committed tree but ABSENT from this render is either a SANCTIONED
@@ -206,17 +249,19 @@ jobs:
           fi
           new=$(ls out/p/*.html | grep -vc index.html || true)
           newb=$(find out/b -type f -name '*.html' ! -name index.html | wc -l)
-          rm -rf p b
+          rm -rf p b view
           cp -r out/p p
           cp -r out/b b
+          cp -r out/view view
           cp out/bill-sitemap.xml bill-sitemap.xml
           git config user.name "billtracking-permalinks"
           git config user.email "permalinks@billtracking.org"
-          git add -A p b bill-sitemap.xml
+          git add -A p b view bill-sitemap.xml
           if git diff --cached --quiet; then echo "no page changes"; exit 0; fi
           git commit -q -m "permalinks: render $new post + $newb bill pages from the published feed"
-          # The repo also takes owner pushes; a race is ordinary. p/ and b/ are
-          # ours alone, so a rebase can never conflict with a hand-authored file.
+          # The repo also takes owner pushes; a race is ordinary. p/, b/ and view/
+          # are ours alone, so a rebase can never conflict with a hand-authored
+          # file. A 15-minute cadence makes the race commoner, not different.
           for attempt in 1 2 3; do
             if git push -q; then echo "published $new post + $newb bill pages"; exit 0; fi
             echo "push rejected (attempt $attempt) — rebasing onto the new head"

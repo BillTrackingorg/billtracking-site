@@ -2,15 +2,19 @@ User-agent: *
 Allow: /
 
 # GitHub Pages serves the entire repo (there is a .nojekyll file). The permalink
-# generator (tools/) and the README are the only non-page files here — keep
-# them out of search results. (Other tooling lives in the private app repo.)
+# renderer (tools/), the README and the published view/ data tree (JSON, written
+# by the permalinks workflow for other surfaces — not pages) are the non-page
+# files here — keep them out of search results. (Other tooling lives in the
+# private app repo.)
 Disallow: /README.md
 Disallow: /tools/
 Disallow: /.github/
+Disallow: /view/
 
 # Two sitemaps: the hand-maintained top-level pages, and the permalink pages
-# under /p/ — rendered every 2 h by the app repo's permalinks workflow, whose own sitemap lists
-# every post page (the root sitemap does not enumerate them). Without this line
-# the /p/ pages are crawl-orphans.
+# under /p/ — rendered from the published feed by this repo's permalinks workflow
+# (no cadence is promised; GitHub schedules on a best-effort basis), whose own
+# sitemap lists every post page (the root sitemap does not enumerate them).
+# Without this line the /p/ pages are crawl-orphans.
 Sitemap: https://billtracking.org/sitemap.xml
 Sitemap: https://billtracking.org/p/sitemap.xml
