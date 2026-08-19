@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>The US feed — Congress as it moves | BillTracking</title>
 <meta name="description" content="Every recorded step a bill takes in the US Congress, posted as it moves — from the official record at Congress.gov.">
 <meta name="robots" content="noindex">
@@ -24,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
 <link rel="stylesheet" href="/style.css?v=3">
-<link rel="stylesheet" href="/assets/css/feed.css?v=1">
+<link rel="stylesheet" href="/assets/css/feed.css?v=2">
 </head>
 <body>
 
@@ -152,6 +152,16 @@
   <div id="bt-status" class="feed-status" role="status">
     <h2>Loading&hellip;</h2>
     <p>Fetching the latest from the official record.</p>
+    <!-- THE FAILURE PATH, STATIC ON PURPOSE — the same reasoning as /account's
+         loading region. If bt-web.js 404s or throws, <noscript> does NOT fire
+         (scripts are enabled; one just didn't run) and this page would sit on
+         "Loading…" for ever, asserting an action nobody is performing. The JS
+         removes this line the moment it takes over (src/web/feed-page.ts), so
+         it is only ever seen while it is true — a slow fetch is a load that IS
+         happening, and leaves the sentence above standing alone. -->
+    <p class="feed-status-note" id="bt-boot-note">If this line is still here
+    after a few seconds, this page's script did not load. Reloading usually
+    fixes it — or read the plain pages in the <a href="/p/">post archive</a>.</p>
   </div>
 
   <!-- "Show more POSTS". Every card carries its own "Show more" (app law,
@@ -166,10 +176,17 @@
       <p><strong>This feed is built in your browser</strong>, so with JavaScript
       switched off it stays empty. Nothing is hidden from you — the record is
       published as plain pages too.</p>
+      <!-- NO CADENCE IS CLAIMED HERE. It used to say "within about fifteen
+           minutes", which is the cron's REQUEST: GitHub schedules on a
+           best-effort basis and runs late under load, so the interval is
+           something we ask for and not something we can promise a reader
+           (.github/workflows/permalinks.yml says exactly that, and adds "no page
+           claims a cadence"). The honest shape is the mechanism plus the
+           consequence — estate review R7, 2026-08-20. -->
       <p>Every post has its own page in the <a href="/p/">post archive</a>, and
       every bill has one in the <a href="/b/us/">US Congress bill index</a>
-      — a new post reaches those pages within about fifteen minutes of being
-      published, so the newest one or two may not be there yet.
+      — a new post reaches those pages when the site next re-renders, so the
+      newest one or two may not be there yet.
       <a href="/us-process.html">How a bill becomes law</a> is a plain page as well.</p>
     </div>
   </noscript>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>Your account | BillTracking</title>
 <meta name="description" content="Your BillTracking account: the address you signed in with, where your votes are counted from, signing out, and deleting the account.">
 <meta name="robots" content="noindex">
@@ -13,7 +13,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
 <link rel="stylesheet" href="/style.css?v=3">
-<link rel="stylesheet" href="/assets/css/feed.css?v=1">
+<link rel="stylesheet" href="/assets/css/feed.css?v=2">
 </head>
 <body>
 
@@ -58,13 +58,20 @@
     account has changed, and reading never needs one.</p>
   </section>
 
-  <!-- REGION: signed out. The buttons stay DISABLED until a provider is
-       configured, and the note below says so in the app's own words — an
-       invitation to sign in that cannot be honoured is exactly the dishonest
-       affordance this product exists to avoid. The JS enables them and swaps
-       the note when Google / Apple are live. Same provider set on every
-       surface, or a Hide-My-Email iPhone user and their Google web sign-in
-       become two different accounts. -->
+  <!-- REGION: signed out. The buttons are LIVE — pressing one asks the Supabase
+       project itself whether that provider is switched on, and a refusal is said
+       in one sentence beneath them, at the moment it answers something the
+       reader actually did (src/web/account.ts `wireProviders`).
+
+       ⚠️ THIS COMMENT USED TO DESCRIBE THE OPPOSITE, and it outlived its code by
+       a day: the buttons shipped DISABLED under a "coming soon" note while a
+       compile-time `WEB_PROVIDERS` table said no provider was configured. That
+       table was deleted in the 2026-08-19/20 UX round — owner directive, "we
+       shouldn't be building as though things are coming soon" — and the honesty
+       moved to the point of action rather than being removed. The markup below
+       has carried no `disabled` since; only this note lagged (estate review,
+       2026-08-20). Same provider set on every surface, or a Hide-My-Email iPhone
+       user and their Google web sign-in become two different accounts. -->
   <section class="acct-region" id="bt-acct-signed-out" hidden>
     <div class="acct-card">
       <h2>Sign in</h2>

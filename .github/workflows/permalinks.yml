@@ -224,8 +224,12 @@ jobs:
           # Any UNLISTED disappearance fails the run. This replaces a
           # remove-duplicate COUNT that could over-count a free-text match and mask a
           # real shrink, and that was cumulative not per-run (guard finding, 2026-08-17).
-          # `|| true` on comm keeps set -e from firing when there are no missing lines;
-          # the `exit 1` inside the loop still propagates (last pipeline stage).
+          # `comm` exits 0 whether or not it prints anything, so no `|| true` is
+          # needed anywhere below (the comment that claimed one was here described
+          # a `|| true` that no longer exists — corrected 2026-08-20). What DOES
+          # carry the failure is the `exit 1` inside each loop: the loop is the last
+          # stage of the pipeline, so its status is the pipeline's and `set -e`
+          # stops the job.
           if [ -d p ]; then
             comm -23 \
               <( (cd p && ls *.html 2>/dev/null) | grep -v '^index\.html$' | sed 's/\.html$//' | sort ) \
@@ -246,6 +250,29 @@ jobs:
                   || { echo "::error::/b/ lost ${slug}.html and it is NOT a sanctioned removal — upstream gap, refusing to publish"; exit 1; }
               done
           fi
+          # view/ GETS THE SAME SET-DIFF, because it is published data and a
+          # consumer reading a month file or a bill view has exactly the same
+          # claim on it that a reader has on a page: D17 says nothing published
+          # ever leaves. It had only the stray-file guard, which catches a file
+          # that should not BE there and says nothing about one that has gone
+          # (estate review, 2026-08-20). A per-bill view disappears for the same
+          # sanctioned reason its page does, so it is checked against the same
+          # manifest — `.suppressed-bills` holds `<polity>/<slug>`, which is
+          # exactly what `v1/bills/<polity>/<slug>.json` reduces to. A month file
+          # or the two roots have no sanctioned way to vanish at all.
+          if [ -d view ]; then
+            comm -23 \
+              <( (cd view && find . -type f -name '*.json') | sed 's|^\./||' | sort ) \
+              <( (cd out/view && find . -type f -name '*.json') | sed 's|^\./||' | sort ) \
+            | while IFS= read -r rel; do
+                [ -n "$rel" ] || continue
+                slug=$(printf '%s' "$rel" | sed -n 's|^v1/bills/\(.*\)\.json$|\1|p')
+                if [ -n "$slug" ] && grep -qxF "$slug" out/.suppressed-bills 2>/dev/null; then
+                  continue
+                fi
+                echo "::error::view/ lost ${rel} and it is NOT a sanctioned removal — upstream gap, refusing to publish"; exit 1
+              done
+          fi
           new=$(ls out/p/*.html | grep -vc index.html || true)
           newb=$(find out/b -type f -name '*.html' ! -name index.html | wc -l)
           rm -rf p b view
@@ -263,9 +290,24 @@ jobs:
           # ~10/hour. So a heartbeat-only diff is not worth a publish; view consumers get
           # a fresh built_at whenever anything real changes, and the record's own
           # freshness is judged from the feed, never from this stamp (2026-08-20).
+          #
+          # ⚠️ EXCEPT WHEN THE STAMP NAMES A NEW CORE. `index.json` carries
+          # `core.appSha` — which build rendered this tree — and that is not a
+          # heartbeat: after a bundle redeploy the FIRST quiet run is the only
+          # thing that refreshes it, and skipping it would leave view/ claiming
+          # the previous build until the next post happens to arrive. The file is
+          # one long line, so "did the diff mention appSha" is always yes; the
+          # two blobs are compared by VALUE instead — HEAD's against the staged
+          # one (estate review, 2026-08-20).
           staged=$(git diff --cached --name-only)
           if [ "$staged" = "view/v1/index.json" ]; then
-            echo "only the view heartbeat changed — skipping the publish"; git reset -q; exit 0
+            sha_of() { grep -o '"appSha":"[^"]*"' | head -n1 || true; }
+            was=$( { git show HEAD:view/v1/index.json 2>/dev/null || true; } | sha_of)
+            now=$(git show :view/v1/index.json | sha_of)
+            if [ "$was" = "$now" ]; then
+              echo "only the view heartbeat changed — skipping the publish"; git reset -q; exit 0
+            fi
+            echo "the view stamp names a new core (${was:-none} -> ${now:-none}) — publishing"
           fi
           git commit -q -m "permalinks: render $new post + $newb bill pages from the published feed"
           # The repo also takes owner pushes; a race is ordinary. p/, b/ and view/

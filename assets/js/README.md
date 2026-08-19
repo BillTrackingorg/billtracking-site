@@ -838,7 +838,7 @@ Every new page carries the same meta CSP:
 default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';
 img-src 'self' data:; font-src 'self';
 connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co;
-object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'
+object-src 'none'; base-uri 'none'; form-action 'none'
 ```
 
 Consequences for the JS:
@@ -855,11 +855,24 @@ Consequences for the JS:
   property, not a style rule.
 * `object-src 'none'` carries over from the Expo page's policy: `default-src`
   would cover it, but plugin content is worth denying by name.
-* **`frame-ancestors` is inert in a `<meta>` CSP** — it only works as an HTTP
-  header, and GitHub Pages does not let us set headers. It is included so the
-  policy is complete the day this moves behind anything that can send headers.
-  Clickjacking protection today is *not* in place; that is a known, stated gap,
-  not something the meta tag quietly fixes.
+* **`frame-ancestors` is NOT in the policy, and its absence is the honest
+  state** (removed 2026-08-20, estate review R6). The directive is defined for
+  HTTP headers only; in a `<meta>` policy every browser ignores it *and logs an
+  error saying so on every page load*. It used to be carried "so the policy is
+  complete the day this moves behind anything that can send headers" — but a
+  directive that does nothing except print an error is not completeness. It
+  reads as protection while providing none, and it fills this site's console
+  with a line that teaches everybody to ignore the console.
+
+  **There is no framing protection on this site today.** GitHub Pages cannot
+  send headers, so there is nothing to put the directive *in*; the gap is
+  recorded in the app repo's `docs/WEB.md` traps, and the directive comes back
+  in the same edit that puts a real header in front of the site. What bounds it
+  in the meantime is what the site actually offers: the only controls anywhere
+  on it are the two sign-in buttons, "Sign out on this device", and a vote chip.
+  Account deletion is **not a button on the web at all** — `/delete-account`
+  is a page of instructions with no form and no script — so there is no
+  one-click destructive action for a frame to steal a click on.
 
 ---
 
@@ -930,24 +943,30 @@ and never built here: the build refuses to emit unless the app's own
 `npm run check` is green, which is the whole reason a compiled bundle is allowed
 to sit in a public repo at all (D27; `site-build/core/build.mjs`).
 
-The two repos are siblings (`…/BillTracking/app`, `…/BillTracking/site`).
+The two repos are siblings (`…/BillTracking/app`, `…/BillTracking/site`), and
+both steps are run from the APP repo:
 
 ```sh
-# 1. build, in the APP repo — runs `npm run check` first and stops on red
-cd ../app && npm run build:core
-
-# 2. copy, from the SITE repo root
-cd ../site
-rm -f assets/js/bt-*.js                              # chunk hashes change per build:
-                                                     # sweep, or orphans pile up
-cp ../app/site-build/core/out/web/*.js  assets/js/
-cp ../app/site-build/core/out/site/bt-site.cjs  tools/bt-site.cjs
-
-# 3. prove the copied renderer, exactly as the workflow will
-node tools/bt-site.cjs --selftest
+cd ../app
+npm run build:core     # runs `npm run check` first and stops on red
+npm run copy:site      # copies into ../site, prunes, and proves the copy
 ```
 
-Three rules the copy obeys:
+`copy:site` is `site-build/core/copy-to-site.mjs` in the app repo. It copies
+`out/web/*.js` into `assets/js/` and `out/site/bt-site.cjs` into `tools/`,
+deletes the chunks nothing needs any more, writes `assets/js/.chunks-prev`, and
+finishes by running `node tools/bt-site.cjs --selftest` from this repo's root —
+exactly the way `permalinks.yml` will run it fifteen minutes later. It commits
+nothing and pushes nothing: **push is deploy**, and that stays a person's
+decision.
+
+It refuses, rather than publishing something wrong, when `out/` is missing, when
+the build's stamp names a different commit than the app tree is on, or when
+anything under the app's `src/` was touched after the build ran. All three mean
+the same thing — the bytes are not what this tree would build — and the site
+prints that stamp on every page.
+
+Four rules the copy obeys:
 
 * **`*.js` ONLY — never a `*.map`.** esbuild's source maps embed
   `sourcesContent`, which for this bundle is the whole of the app's TypeScript
@@ -955,12 +974,27 @@ Three rules the copy obeys:
   source. The build emits maps as `sourcemap: 'external'` so the published files
   carry no `//# sourceMappingURL` pointer either — no leak, and no 404 in
   anyone's devtools. The maps stay in the app repo, where `out/` is gitignored.
+  `copy:site` copies `.js` only *and then checks* that no `.map` is sitting in
+  `assets/js/` or `tools/`, refusing if one is.
 * **The entry name is stable, the chunk names are not.** `bt-web.js` is
   referenced literally by `us.html`, `eu.html`, `account.html`,
   `auth/callback.html`, `404.html`, `tools/templates/feed-page.html` and every
   generated `/p/` page — and, since 2026-08-19, every generated `/b/` page too
-  (§2c). The chunks are content-hashed, so
-  step 2's `rm` is what keeps the directory from accumulating dead ones.
+  (§2c). The chunks are content-hashed, so something has to remove the dead ones
+  or the directory grows for ever.
+* **…and the PREVIOUS generation of chunks survives one deploy.** This is why
+  the old recipe's `rm -f assets/js/bt-*.js` is gone: it deleted the chunks that
+  readers were still using. A browser holding a cached `bt-web.js` — or a tab
+  that has been open since before the deploy — imports chunks by the hashed
+  names the *old* build gave them, and sweeping them all makes those URLs 404:
+  sign-in breaks where the dynamic import fails, and the page never boots at all
+  where a static one does. `copy:site` keeps the union of the new generation and
+  the one it replaces, and deletes only `bt-*` chunks in neither.
+  `assets/js/.chunks-prev` is how it remembers which those were — a small JSON
+  manifest of the two most recent generations, committed with them. Deleting it
+  costs one generation of grace and nothing else; it is served (this repo has a
+  `.nojekyll`) and carries only filenames and the app's short commit sha, both
+  of which the bundle's own build stamp already publishes.
 * **Bundle and HTML ship together** (§9). Never the HTML first.
 
 ### 8c. Rendering the pages locally (what CI does)
@@ -995,12 +1029,15 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   completely: probe the live URL at Gate B, before the provider config is
   written.
 * **The stylesheet is versioned by hand, and only on the shells.** The five
-  hand-authored pages ask for `/assets/css/feed.css?v=1`; the generated `/p/`
+  hand-authored pages ask for `/assets/css/feed.css?v=2`; the generated `/p/`
   pages ask for `/assets/css/feed.css` with no query at all. Same file, two cache
   entries. It is harmless before the first publish (nothing holds either yet),
   but from the first publish on, ANY edit to `feed.css` needs the query bumped in
   the template + the four hand-authored shells, or returning visitors keep the
-  old sheet. Worth collapsing to one form at the cut-over.
+  old sheet. **`?v=1` → `?v=2` on 2026-08-20** with the `.card-open` hit-area fix
+  (estate review R2) — pre-publish, so it defeated nothing, and done anyway
+  because the habit is what has to hold after the cut-over, not the arithmetic.
+  Worth collapsing to one form at the cut-over.
 * **A client-rendered `/b/` path on `404.html` is unstyled.** `renderBillPath`'s
   markup is styled by `BILL_CSS`, which lives inside the generated bill page's
   own `<style>` block (app repo `src/site/chrome.ts`) and cannot reach the

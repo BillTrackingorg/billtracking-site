@@ -58,6 +58,25 @@ SPRITE_PAGES = ["404.html"]
 # The registry. Interim home: this table moves into bt-core (the one
 # legislature registry the app, the web and the generator all read) and this
 # script will import it from the built view instead of declaring it.
+#
+# ⚠️ IT IS A SECOND REGISTRY UNTIL THEN, AND A CHECK HOLDS IT EQUAL. The app's
+# `scripts/check-site-nav.js` parses this table and compares it, row by row,
+# against `src/data/legislatures.ts` — the id set and its ORDER (a legislature in
+# the registry with no feed page is a page this script owes), the names, the
+# accent hex and the explainer path. Adding a legislature there and forgetting it
+# here now fails `npm run check` instead of quietly shipping one feed page for a
+# two-legislature build (estate review, 2026-08-20).
+#
+# What the check deliberately does NOT compare is the PROSE — intro, title,
+# og_title, description, explainer_label. Those are this page's own copy, the
+# registry has no field for them, and inventing one so a check could compare it
+# would put marketing sentences in the app's data layer. They are governed by the
+# copy law in this file's docstring instead.
+#
+# The mapping, so the two tables can be read side by side:
+#     polity_name  = names.formal      eyebrow      = f"{names.short} tracker"
+#     h1           = f"The {names.short} feed"      accent  = theme C[accent.blue]
+#     explainer_url = explainerPath                 og_image = SITE/assets/<id>-banner.webp
 # --------------------------------------------------------------------------
 
 LEGISLATURES: dict[str, dict[str, str]] = {
@@ -81,7 +100,13 @@ LEGISLATURES: dict[str, dict[str, str]] = {
         "og_image": "https://billtracking.org/assets/us-banner.webp",
     },
     "eu": {
-        "polity_name": "EU",
+        # The registry's `names.formal` — the institution, formally, which is the
+        # register the sentence this fills needs ("… in the <name> bill index",
+        # beside "US Congress" on the other page). It read "EU" until 2026-08-20,
+        # which was `names.short` doing a formal name's job: the two rows
+        # answered one question in two different registers, and neither the app
+        # nor a check could tell which was intended.
+        "polity_name": "European Union",
         "eyebrow": "EU tracker",
         "h1": "The EU feed",
         "intro": (

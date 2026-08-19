@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>Signing you in | BillTracking</title>
 <meta name="description" content="Finishing sign-in and returning you to where you were.">
 <meta name="robots" content="noindex, nofollow">
@@ -13,7 +13,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
 <link rel="stylesheet" href="/style.css?v=3">
-<link rel="stylesheet" href="/assets/css/feed.css?v=1">
+<link rel="stylesheet" href="/assets/css/feed.css?v=2">
 </head>
 <body>
 
@@ -53,18 +53,35 @@
        not fire when scripts are on and this page's module simply failed to
        load, and a heading that says "Signing you in…" for ever is a claim
        about something that is not happening. The JS removes this line as soon
-       as it takes over. -->
+       as it takes over.
+
+       ⚠️ AND IT NAMES NO SIGN-IN. This page is also what a reader gets by
+       opening /auth/callback directly — from a bookmark, from history, from a
+       shared link — where nothing sent them anywhere, nothing was started, and
+       there may be no account at all. It said "sign-in did not complete" and
+       "nothing was changed on your account" until 2026-08-20 (estate review
+       R10): both describe an event and an account this page cannot know exist.
+       What it CAN see is that its own script is not running, so that is the
+       whole of what it says.
+
+       The heading and the status line above deliberately keep claiming the
+       sign-in: they are the pre-JS state of the page a real OAuth return lands
+       on, which is what almost every visit here is, and the module rewrites
+       both within a moment on any visit that is not. This line is the one that
+       is still standing when nothing rewrites anything. -->
   <p class="acct-note" id="bt-callback-boot-note">If nothing happens within a
-  few seconds, this page's script did not load and sign-in did not complete.
-  Nothing was changed on your account — start again from
-  <a href="/account">your account page</a>.</p>
+  few seconds, this page's script did not load. Nothing has been changed — you
+  can sign in from <a href="/account">your account page</a>.</p>
 
   <!-- ERROR STATE. Hidden until the exchange actually fails; the JS fills the
-       reason it was given and never invents one. -->
+       reason it was given and never invents one — and this card is ALSO what a
+       direct visit resolves to (`callback.ts`: no session, so it fails), which
+       is why the sentence below says "nothing has been changed" rather than
+       "try again", and names no account the reader may not have. -->
   <div class="acct-card" id="bt-callback-error" hidden>
     <h2>Sign-in didn't finish</h2>
     <p id="bt-callback-error-detail"></p>
-    <p>Nothing was changed on your account. You can try again from
+    <p>Nothing has been changed. You can sign in from
     <a href="/account">your account page</a>, or carry on reading — the feeds
     never need an account.</p>
   </div>
@@ -78,9 +95,9 @@
   <noscript>
     <div class="feed-noscript">
       <p><strong>This page needs JavaScript</strong> to complete sign-in.
-      Nothing has been saved. Go back to <a href="/account">your account page</a>
-      and try again with scripts enabled, or keep reading — the feeds never need
-      an account.</p>
+      Nothing has been saved. Go to <a href="/account">your account page</a>
+      with scripts enabled, or keep reading — the feeds never need an
+      account.</p>
     </div>
   </noscript>
 
