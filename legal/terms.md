@@ -58,7 +58,7 @@ The service is provided as-is. To the extent the law allows, we are not liable f
 
 We may update these terms. If we change something that matters we will say so on this page and update the date. If you keep using the service after a change, that is acceptance; if you would rather not, you can stop, and delete your account.
 
-**19 August 2026.** Signing in, voting and deleting an account now work on this website as well as in the app. Nothing else here changed.
+**19 August 2026.** Signing in, voting and deleting an account are built into this website as well as the app, and switch on when sign-in is enabled. Nothing else here changed.
 
 ### Contact
 

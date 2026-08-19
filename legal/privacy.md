@@ -87,4 +87,4 @@ BillTracking is an independent project run by one person, not a company. The dat
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
 
-**19 August 2026.** Signing in, voting and deleting an account now work on this website as well as in the app, and this page says so. Nothing new is collected, and nothing that was kept on your device moved off it.
+**19 August 2026.** Signing in, voting and deleting an account are built into this website as well as the app, and switch on when sign-in is enabled — this page now covers them. Nothing new is collected, and nothing that was kept on your device moved off it.
