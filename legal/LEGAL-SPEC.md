@@ -34,8 +34,12 @@ the next regenerate overwrites them.
 
 ## Grammar
 
-Deliberately tiny and stdlib-only (no Markdown dependency), matching the
-zero-dependency style of `app/site-build/generate.py`.
+Deliberately tiny and stdlib-only (no Markdown dependency). It used to cite
+`app/site-build/generate.py` as the house style to match; no such file exists —
+the generator it meant was the site's own `tools/generate.py`, retired and
+deleted on 2026-08-19 (D28). The style survives it, in the two Python files this
+project still has: this one and `site/tools/build_feed_pages.py`. Stdlib only,
+one file each, no build step.
 
 ### Front-matter
 

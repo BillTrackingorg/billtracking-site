@@ -7,9 +7,12 @@ desktop.ini
 # Python bytecode
 __pycache__/
 
-# p/ (the permalink pages) IS committed here — but ONLY by the app repo's
-# permalinks workflow, which renders it from the REAL published feed
-# (tools/bt-site.cjs + .github/workflows/permalinks.yml, this repo — the Python generate.py retired 2026-08-19).
-# Never hand-edit p/, never commit a locally generated p/ (a local run may be
+# p/, b/ and view/ ARE committed here — but ONLY by THIS repo's own permalinks
+# workflow (.github/workflows/permalinks.yml + tools/bt-site.cjs), which renders
+# them from the REAL published feed on its built-in GITHUB_TOKEN, with no
+# credentials. It is not the app repo's workflow: the app repo BUILDS bt-site.cjs
+# and it is copied here as an artefact, and nothing in the app repo can write to
+# this tree. (The Python generate.py it replaced was retired 2026-08-19.)
+# Never hand-edit them, never commit a locally generated copy (a local run may be
 # built from the sample fixtures — fabricated bill pages would be the single
-# most damaging thing this repo could publish).
+# most damaging thing this repo could publish; it is why --out is required).
