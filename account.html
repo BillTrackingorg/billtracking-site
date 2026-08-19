@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'">
+<title>Your account | BillTracking</title>
+<meta name="description" content="Your BillTracking account: the address you signed in with, where your votes are counted from, signing out, and deleting the account.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://billtracking.org/account">
+<meta name="theme-color" content="#0A3161">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
+<link rel="stylesheet" href="/style.css?v=2">
+<link rel="stylesheet" href="/assets/css/feed.css?v=1">
+</head>
+<body>
+
+<a class="skip-link" href="#bt-account">Skip to your account</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="/index.html">BillTracking<span class="tld">.org</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/index.html">Home</a>
+      <a href="/us">US Process</a>
+      <a href="/eu">EU Process</a>
+      <a href="/educators.html">Educators</a>
+      <a href="/accuracy.html">Accuracy</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main class="account-page" id="bt-account" tabindex="-1">
+
+  <!-- No eyebrow: it read "Your account" directly above <h1>Your account</h1>,
+       which a screen reader speaks twice and a sighted reader reads twice. On
+       the feed pages the eyebrow earns its place because it is a different
+       register ("US tracker" / "The US feed"); here it was an echo. -->
+  <h1>Your account</h1>
+
+  <!-- REGION: checking. The first paint, before the JS knows the answer.
+       Says what it is doing rather than guessing at a state.
+
+       THE SECOND LINE IS THE FAILURE PATH, and it is static on purpose. If
+       bt-web.js 404s or throws, <noscript> does NOT fire — scripts are enabled,
+       one just didn't run — and this page would otherwise sit on "Checking…"
+       for ever, asserting an action nobody is performing. The JS replaces this
+       whole region the moment it knows anything, so the line is only ever seen
+       when it is true. -->
+  <section class="acct-region" id="bt-acct-loading">
+    <p class="acct-status">Checking whether you are signed in on this device…</p>
+    <p class="acct-note">If this line is still here after a few seconds, this
+    page's script did not load. Reloading usually fixes it. Nothing about your
+    account has changed, and reading never needs one.</p>
+  </section>
+
+  <!-- REGION: signed out. The buttons stay DISABLED until a provider is
+       configured, and the note below says so in the app's own words — an
+       invitation to sign in that cannot be honoured is exactly the dishonest
+       affordance this product exists to avoid. The JS enables them and swaps
+       the note when Google / Apple are live. Same provider set on every
+       surface, or a Hide-My-Email iPhone user and their Google web sign-in
+       become two different accounts. -->
+  <section class="acct-region" id="bt-acct-signed-out" hidden>
+    <div class="acct-card">
+      <h2>Sign in</h2>
+      <p>An account does one thing: it lets your vote follow you. Reading never
+      needs one, and never will.</p>
+      <div class="acct-buttons">
+        <button type="button" class="btn-provider" id="bt-signin-google" disabled>
+          Continue with Google
+        </button>
+        <button type="button" class="btn-provider" id="bt-signin-apple" disabled>
+          Continue with Apple
+        </button>
+      </div>
+      <p class="acct-note" id="bt-provider-note">Sign-in coming soon.</p>
+    </div>
+    <div class="acct-card">
+      <h2>What an account is for</h2>
+      <p>Votes are the one number on this site that is ours rather than an
+      institution's, so they are tied to an account and counted once. Everything
+      else you can see here you can see signed out.</p>
+    </div>
+  </section>
+
+  <!-- REGION: signed in. -->
+  <section class="acct-region" id="bt-acct-signed-in" hidden>
+
+    <div class="acct-card">
+      <p class="acct-label">Signed in as</p>
+      <p class="acct-value" id="bt-acct-email"></p>
+      <p class="acct-note" id="bt-acct-email-note">If you signed in with Apple and
+      chose to hide your address, this is the relay address Apple gives us. We
+      never see the real one, and we do not need it.</p>
+    </div>
+
+    <!-- MOUNT: location picker. Set once, and it is the same on every surface;
+         it is what makes the published geographic breakdown mean anything. -->
+    <div class="acct-card">
+      <h2>Where your vote is counted from</h2>
+      <p>Votes are published as a breakdown by place. Set this once — it applies
+      wherever you are signed in. Leave it unset and your vote still counts; it
+      simply sits outside the breakdown.</p>
+      <div id="bt-geo-picker"></div>
+    </div>
+
+    <!-- MOUNT: consent status (Art. 9). Rendered from the same source of copy
+         as the app; the wording lives in site/legal/, never here. -->
+    <div class="acct-card">
+      <h2>Consent</h2>
+      <div id="bt-consent"></div>
+    </div>
+
+    <div class="acct-card">
+      <h2>Sign out</h2>
+      <p>Signs you out of this browser only. Your phone stays signed in.</p>
+      <div class="acct-buttons">
+        <button type="button" class="btn-provider" id="bt-signout">Sign out on this device</button>
+      </div>
+      <p class="acct-note">Browser sessions are kept in this browser's own
+      storage. Some browsers clear that after about a week without a visit — if
+      that happens, sign in again; nothing is lost.</p>
+    </div>
+
+    <p class="acct-danger"><a href="/delete-account.html">Delete your account and everything in it</a></p>
+
+  </section>
+
+  <p class="acct-status" id="bt-acct-status" role="status"></p>
+
+  <noscript>
+    <div class="feed-noscript">
+      <p><strong>This page needs JavaScript</strong> — it asks the account
+      service about your session and nothing else.</p>
+      <p>Account deletion does not need this page: the
+      <a href="/delete-account.html">deletion page</a> explains how to ask, and
+      the <a href="/privacy.html">privacy policy</a> says what is held.</p>
+    </div>
+  </noscript>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="wordmark" href="/index.html">BillTracking<span class="tld">.org</span></a>
+        <p>An independent project publishing a live, source-linked record of US and EU
+        lawmaking. No sponsors, no advertisers, no
+        paid placements. Not affiliated with, or endorsed by, the United States
+        Congress, the European Union, or any government body.</p>
+      </div>
+      <div>
+        <h5>Pages</h5>
+        <ul>
+          <li><a href="/us-process.html">The US process</a></li>
+          <li><a href="/eu-process.html">The EU process</a></li>
+          <li><a href="/educators.html">Educators</a></li>
+          <li><a href="/accuracy.html">Accuracy &amp; corrections</a></li>
+          <li><a href="/about.html">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="/privacy.html">Privacy</a></li>
+          <li><a href="/terms.html">Terms of use</a></li>
+          <li><a href="/delete-account.html">Delete your account</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:contact@billtracking.org">contact@billtracking.org</a></li>
+          <li><a href="mailto:accuracy@billtracking.org">accuracy@billtracking.org</a></li>
+          <li><a href="https://x.com/USBillTracker">@USBillTracker</a></li>
+          <li><a href="https://x.com/EUBillTracker">@EUBillTracker</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>BillTracking is an independent project &middot; &copy; 2026 billtracking.org</p>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/assets/js/bt-web.js"></script>
+
+</body>
+</html>

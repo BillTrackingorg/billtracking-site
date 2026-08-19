@@ -1,0 +1,874 @@
+/* ==========================================================================
+   BillTracking — feed pages, cards, account.  Loaded AFTER style.css.
+
+   This file is the web half of ONE design. Every number in the card section
+   is the app's own number, lifted from `app/src/components/post-card.tsx`,
+   `vote-chips.tsx` and `collapsible-body.tsx` and governed by
+   `app/COMPONENT-STYLE.md` — the card must look like the app's card, because
+   it renders the same record. When the app changes, this changes with it.
+
+   Structure:
+     1. Scope tokens (incl. the AA fix for --ink-faint)
+     2. Skip link + focus
+     3. Feed page shell (head, freshness, feed, status, show-more)
+     4. The card
+     5. Account / callback / resolver pages
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Scope tokens
+   -------------------------------------------------------------------------- */
+
+/* --ink-faint (#6B7C90) fails WCAG AA as text on every background this site
+   puts it on: 4.28 on white, 4.13 on paper, 3.87 on wash, 3.78 on the EU wash
+   (UNIFIED-WEB-SCOPE-2026-08-17, accessibility defect 1). None of the places
+   it is used are large text — 10 to 12.5 px — so AA-large does not rescue it.
+   Same hue family, three steps darker: 5.21 / 5.03 / 4.72 / 4.61. Used for
+   EVERY faint text in this file; --ink-faint itself is left alone so the rest
+   of the site is untouched. */
+.feed-page,
+.account-page,
+#bt-callback,
+#bt-resolver {
+  --ink-faint-aa: #5E6E82;
+  --card-radius: 12px;
+  --feed-measure: 640px;   /* ≈ ⅓ of 1920 — the site's article measure */
+}
+
+/* style.css's `main section { padding: 3.25rem 0 }` is right for the prose
+   pages, where a <section> IS a band of the page. Here a <section> is a
+   region — the feed, an account block — and that padding opens a 52 px hole
+   above the first card. Neutralised in scope only; style.css is untouched. */
+.feed-page section,
+.account-page section,
+#bt-callback section,
+#bt-resolver section { padding: 0; }
+
+/* --------------------------------------------------------------------------
+   2. Skip link + focus
+   -------------------------------------------------------------------------- */
+
+/* The site had no skip link anywhere (accessibility defect 2). It is the
+   first focusable thing on the page and stays invisible until focused. */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.5rem;
+  z-index: 50;
+  transform: translateY(-200%);
+  background: var(--gold);
+  color: var(--navy-deep);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.skip-link:focus { transform: translateY(0); color: var(--navy-deep); }
+
+/* Buttons here are real <button>s; style.css's :focus-visible ring applies to
+   them, but they need the cursor and the site's font. */
+button.btn,
+.card-expander,
+.card-open,
+.card-strip-glyph,
+.vote-chip {
+  font-family: var(--sans);
+  cursor: pointer;
+}
+button[disabled],
+.vote-chip[disabled] { cursor: default; }
+
+/* THE FOCUS RING NEEDS 3:1 AGAINST WHAT IT SITS ON (WCAG 2.2 SC 1.4.11).
+   style.css's ring is `3px solid var(--gold)` — 8.55:1 on the navy chrome it
+   was designed for, but 1.51:1 on a white card and 1.46:1 on paper. These four
+   pages are the first where nearly every focusable control (ref, pill, open,
+   expander, breakdown, both chips, Show more) sits on white, so the ring is
+   re-coloured in this scope only: navy is 12.0:1 on the card and 11.1:1 on
+   paper, and the chrome above and below keeps its gold. */
+.feed-page :focus-visible,
+.account-page :focus-visible,
+#bt-callback :focus-visible,
+#bt-resolver :focus-visible { outline-color: var(--navy); }
+
+/* Visually hidden, still announced. Used for the feed's announcement region —
+   see the note on #bt-feed below. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   3. Feed page shell
+   -------------------------------------------------------------------------- */
+
+.feed-page {
+  max-width: var(--feed-measure);
+  margin: 0 auto;
+  padding: 0 1rem 3.5rem;   /* 16px gutters on narrow screens */
+}
+
+.feed-head { padding: 2.25rem 0 0; }
+
+.feed-head .eyebrow { margin-bottom: 0.55rem; }
+
+.feed-head h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.95rem, 5.5vw, 2.5rem);
+  font-weight: 650;
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+  color: var(--navy-ink);
+  margin: 0 0 0.6rem;
+}
+
+.feed-intro {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 0.5rem;
+  max-width: none;
+}
+
+.feed-explainer {
+  font-size: 0.92rem;
+  margin: 0 0 0.2rem;
+  max-width: none;
+}
+
+/* The freshness line (mandatory — a page that cannot tell quiet from broken is
+   the honesty hole the 2026-08-17 scope flagged). Empty until the JS fills it,
+   so it must occupy no space when empty. */
+.feed-fresh {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink-faint-aa);
+  margin: 0.9rem 0 0;
+  max-width: none;
+}
+.feed-fresh:empty { display: none; }
+
+.feed-fresh .fresh-warn { color: var(--gold-text); font-weight: 600; }
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 1.4rem;
+}
+
+/* The honest empty / health states. Dashed border is the site's own honesty-box
+   grammar (style.css .log-empty), which COMPONENT-STYLE already names as the
+   app's honesty box. Six states, the app's order and the app's words — loading,
+   can't reach the feed, no matches, no posts yet, nothing on your docket,
+   filters, nothing recent — rendered by the JS into this element. */
+.feed-status {
+  border: 1.5px dashed var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  padding: 1.2rem 1.35rem;
+  margin-top: 1.4rem;
+}
+.feed-status:empty { display: none; }
+
+.feed-status h2 {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  font-weight: 650;
+  color: var(--navy-ink);
+  margin: 0 0 0.35rem;
+}
+
+.feed-status p {
+  font-size: 0.93rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: none;
+}
+
+.btn-more {
+  display: block;
+  margin: 1.35rem auto 0;
+  background: var(--card);
+  border-color: var(--line);
+  color: var(--navy);
+}
+.btn-more:hover { background: var(--wash); }
+.btn-more[hidden] { display: none; }
+
+/* The no-JavaScript fallback. Plain, honest, and pointing at the pages that
+   really are readable without scripts. */
+.feed-noscript {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  padding: 1.1rem 1.3rem;
+  margin-top: 1.4rem;
+  font-size: 0.93rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.feed-noscript p { margin: 0 0 0.5rem; max-width: none; }
+.feed-noscript p:last-child { margin-bottom: 0; }
+
+/* Build line — "skew is observable, never assumed" (plan §3). Sits under the
+   feed, above the site footer. */
+.feed-build {
+  font-size: 0.72rem;
+  color: var(--ink-faint-aa);
+  margin: 2rem 0 0;
+  text-align: center;
+  max-width: none;
+}
+.feed-build:empty { display: none; }
+
+/* --------------------------------------------------------------------------
+   4. The card
+   -------------------------------------------------------------------------- */
+
+/* Glyphs. Stroke and stroke-width are inherited properties, so the referencing
+   <svg> decides weight and colour and the sprite carries geometry only.
+
+   ⚠️ WEIGHT COMES THROUGH `--glyph-stroke`, NOT A `stroke-width` ATTRIBUTE.
+   The label table carries per-glyph weights that are owner law — ❌ is a bold
+   `x` at 2.15 ("the most instantly-read no"), 🗳 ballot 1.95, 🤝 handshake
+   1.55, ✅ circle-check 2 — and a CSS rule beats an SVG presentation
+   attribute, so `svg.setAttribute('stroke-width', …)` is silently ignored
+   here and every glyph would render at the class default. A custom property
+   is the one channel that survives the cascade AND accepts a value the table
+   invents tomorrow. The JS sets it on that one <svg>:
+       svg.style.setProperty('--glyph-stroke', String(lp.stroke));
+   Set it on the <svg>, never on a wrapper: it inherits, and the green corner
+   badge lives in a sibling span. */
+.glyph {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--glyph-stroke, 2);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.glyph--filled { fill: currentColor; stroke: none; }
+
+.card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  padding: 13px 15px;
+  box-shadow: 0 1px 4px rgba(10, 49, 97, 0.05);
+}
+
+/* Per-polity accents — the content law: a post keeps its OWN polity colours
+   forever, whatever page it is shown on (COMPONENT-STYLE, "the theme is the
+   building, posts are the residents"). --glyph-band paints the calendar
+   glyph's header band through the <use> shadow tree: US red, EU gold, the
+   twin-card hairline. */
+.card[data-polity="us"] {
+  --accent: var(--navy);
+  --accent-wash: var(--wash);
+  --accent-chip-text: var(--navy-ink);
+  --glyph-band: var(--red);
+}
+.card[data-polity="eu"] {
+  --accent: var(--royal);
+  --accent-wash: var(--wash-eu);
+  --accent-chip-text: var(--royal-deep);
+  --glyph-band: var(--gold);
+}
+
+/* deep-linked / highlighted card */
+.card.is-highlighted { border-color: var(--accent); border-width: 1.5px; padding: 12.5px 14.5px; }
+
+/* --- head row ------------------------------------------------------------ */
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.card-ref-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.card-ref {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 13.5px;
+  line-height: 1.3;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.card-ref:hover { color: var(--accent); }
+
+/* Franchise / batch cards lead with the date instead of a reference. */
+.card-date-lead {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--ink-faint-aa);
+  min-width: 0;
+}
+.card-date-lead .glyph { width: 17px; height: 17px; stroke-width: 1.7; }
+
+/* THE HEAD-RIGHT SLOT IS AN "OPEN", NOT A "MENU" — the one place this card
+   deliberately differs from the app's, and it differs because the surfaces
+   differ. In the app that slot is ⋯: it opens a sheet (share, report an error,
+   open the source). The web has no such sheet, and the plan gives the web its
+   own navigation instead (D27(f): "on the web a card opens /p/<id>"). Drawing
+   ⋯ for a control that navigates would be the dishonest-affordance pattern
+   this product refuses — an 18 px unlabelled menu glyph as the *only*
+   feed→post edge. Same slot, same size, same quiet ink; a disclosure chevron,
+   which is what it does. When the web grows a real overflow menu, ⋯ comes
+   back here and this moves. */
+.card-open {
+  background: none;
+  border: 0;
+  padding: 2px;
+  line-height: 0;
+  color: var(--ink-faint-aa);
+  flex: none;
+}
+.card-open .glyph { width: 18px; height: 18px; }
+
+/* --- header pills -------------------------------------------------------- */
+
+/* One pill per header (correction flags win the slot; the older-action FOOTER
+   still renders below whether or not its pill did — COMPONENT-STYLE). */
+.pill-correction,
+.flag-older {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 1px 7px;
+  white-space: nowrap;
+  flex: none;
+  text-decoration: none;
+}
+/* "Inaccurate" names a problem, "Correction" names the fix — never a pair that
+   shares a stem (COMPONENT-STYLE, litigated). flagRed marks OUR mistake and is
+   not the negative-outcome rule breaking: a bill's fate is never coloured. */
+.pill-correction[data-kind="inaccurate"] { color: #A32D2D; }
+.pill-correction[data-kind="correction"] { color: #1A7F37; }
+.flag-older { color: var(--gold-text); }
+
+/* --- collapsing body (D6) ------------------------------------------------ */
+
+/* Only the BODY collapses. The head row above and the vote strip below stay
+   anchored — clipping either would make expanding the card the only way to
+   reach the ⋯ menu or vote. */
+.card-body { position: relative; }
+
+.card-body[data-clipped="1"] { max-height: 168px; overflow: hidden; }
+
+/* Softened clip edge — no hard cut through a line of text. */
+.card-body[data-clipped="1"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 34px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--card));
+}
+
+.card.is-open .card-body { max-height: none; overflow: visible; }
+.card.is-open .card-body::after { content: none; }
+
+/* Always behind the expander, never clipped (structure, not measurement: a
+   summary box is ~60-70px and never once fitted). */
+.card-deferred { display: none; }
+.card.is-open .card-deferred { display: block; }
+
+/* --- status card body ---------------------------------------------------- */
+
+/* font-weight is EXPLICIT: the card is a heading element here (§ card DOM), and
+   style.css's h2 rule would otherwise impose the site's 650 display weight. The
+   app's card serif is `SourceSerif4_600SemiBold` — 600. */
+.card-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 23px;
+  color: var(--navy-ink);
+  margin: 0 0 3px;
+  max-width: none;
+}
+
+/* THE TITLE CLAMPS; THE STATUS LINE NEVER DOES. Bill titles are legal
+   boilerplate and run to 380 characters — on this product the status is the
+   news and the title is context, so the title is what gives way.
+
+   THE CONDITION IS "COLLAPSED", NOT "CLIPPED", and the app is the reason for
+   both halves: `numberOfLines={expanded ? undefined : 3}` (post-card.tsx) —
+   it clamps whenever the card is closed, whether or not the body overflows,
+   and it shows the FULL TITLE ON EXPAND. Keying the clamp to data-clipped got
+   the first half wrong; leaving it un-lifted got the second half wrong, and
+   the second is the serious one: the bottom half of a 382-character title was
+   unreachable on the web. */
+.card:not(.is-open) .card-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.card-meta {
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+  max-width: none;
+}
+
+.card-action {
+  font-size: 14.5px;
+  line-height: 22.5px;
+  color: var(--ink);
+  margin: 0 0 6px;
+  max-width: none;
+}
+
+/* Glyphs ride INSIDE the text flow so wrapping uses the full card width.
+   :where() again — this rule must not out-specify the per-context ones below
+   that adjust the same properties. */
+:where(.card-action, .card-headline) .glyph {
+  display: inline-block;
+  vertical-align: -4px;
+}
+/* Context rules sit inside :where() so they carry the specificity of the class
+   alone (0,1,0). Written as plain descendants, `.card-headline .glyph-label`
+   (0,2,0) tied with `.glyph-label.is-green` and won on source order — the
+   green ✅ family rendered navy in a headline, and "colour only for the good
+   news" is a named law, not a nicety. */
+:where(.card-action) .glyph-cal {
+  width: 18.5px;
+  height: 18.5px;
+  --glyph-stroke: 1.7;
+  color: var(--ink-soft);
+}
+:where(.card-action) .glyph-label {
+  width: 20px;
+  height: 20px;
+  --glyph-stroke: 1.7;
+  color: var(--accent);
+}
+/* Colour only for the good news: passage/adoption may carry meaning through
+   colour; a rejection, veto or withdrawal stays neutral ink. Never red. */
+.glyph-label.is-green { color: #1A7F37; }
+
+.card-action-date { font-family: var(--sans); color: var(--ink-soft); }
+.card-action-label { font-family: var(--sans); font-weight: 600; color: var(--ink); }
+.card-action-tally { font-family: var(--sans); color: var(--ink-soft); }
+
+/* Badge-bearing glyphs (✅🏛️ passed a chamber, 📜 became law) carry a small
+   green check at the corner; the badge overhangs, so the wrapper reserves
+   room before the text that follows. */
+.glyph-wrap { position: relative; display: inline-block; vertical-align: -4px; }
+.glyph-wrap.has-badge { padding-right: 5px; }
+.glyph-wrap .glyph { vertical-align: top; }
+.glyph-badge {
+  position: absolute;
+  top: -3.6px;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background: #1A7F37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* The badge's tick keeps a literal weight: it is fixed by the badge's own
+   geometry and must never inherit a label glyph's table weight. */
+.glyph-badge .glyph {
+  width: 8px;
+  height: 8px;
+  stroke-width: 3.8;
+  color: #fff;
+}
+
+.card-source {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--ink-faint-aa);
+  margin: 8px 0 0;
+  max-width: none;
+}
+
+/* --- franchise card body ------------------------------------------------- */
+
+.card-headline {
+  font-family: var(--serif);
+  font-size: 16.5px;
+  font-weight: 600;   /* the app's card serif — see .card-title */
+  line-height: 26px;
+  color: var(--navy-ink);
+  margin: 0 0 8px;
+  max-width: none;
+}
+:where(.card-headline) .glyph-label {
+  width: 24px;
+  height: 24px;
+  --glyph-stroke: 1.7;
+  color: var(--accent);
+  vertical-align: -5px;
+}
+:where(.card-headline) .glyph-wrap { vertical-align: -5px; }
+
+.card-body-lines { display: flex; flex-direction: column; gap: 6px; }
+
+.card-body-lines p {
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 20.5px;
+  color: var(--ink);
+  margin: 0;
+  max-width: none;
+}
+
+/* --- anchored: what's next + budget -------------------------------------- */
+
+/* ANCHORED, NOT CLIPPED. "What's next" is the answer to the question a reader
+   of a legislative feed actually has, and it was being decided by title
+   length — short-titled bills showed it, three-line resolution titles ate it. */
+.card-next {
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 20.5px;
+  color: var(--ink);
+  margin: 0 0 2px;
+  max-width: none;
+}
+.card-budget {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--ink-soft);
+  margin: 4px 0 0;
+  max-width: none;
+}
+.lead { font-weight: 600; }
+
+/* --- deferred: summary, older note, quote -------------------------------- */
+
+.card-summary {
+  background: var(--accent-wash);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 9px 11px;
+  margin-top: 9px;
+}
+.card-summary p {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 20px;
+  color: var(--ink);
+  margin: 0;
+  max-width: none;
+}
+/* ALWAYS, with every summary. Not a conditional. */
+.card-summary .ai-tag {
+  display: block;
+  font-family: var(--sans);
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--ink-faint-aa);
+  margin-top: 4px;
+}
+
+/* Footnote register: inkSoft rather than faint, because this one is meant to
+   be READ. Cause-neutral wording is the bot's own house rule. */
+.card-older-note {
+  font-family: var(--sans);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--ink-soft);
+  margin: 8px 0 0;
+  max-width: none;
+}
+
+/* The quote shape: an inset, left-ruled reference to the corrected post.
+   Single-sided border ⇒ NO radius (COMPONENT-STYLE) — rounded corners only
+   work with a full border. */
+.card-quote {
+  display: block;
+  border-left: 3px solid var(--accent);
+  border-radius: 0;
+  background: var(--paper);
+  padding: 6px 0 6px 10px;
+  margin-top: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+.card-quote-tag {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink-faint-aa);
+  margin: 0 0 3px;
+  max-width: none;
+}
+.card-quote-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.card-quote-ref { font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--accent); }
+.card-quote-date { font-family: var(--sans); font-size: 12px; color: var(--ink-faint-aa); }
+.card-quote-label {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  margin: 2px 0 0;
+  max-width: none;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+.card-quote-tally { color: var(--ink-faint-aa); }
+.card-quote-missing { font-family: var(--sans); font-size: 12.5px; color: var(--ink-faint-aa); margin: 0; }
+
+/* --- expander ------------------------------------------------------------ */
+
+.card-expander {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 0;
+  padding: 9px 0 1px;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--accent);
+}
+.card-expander .glyph { width: 15px; height: 15px; stroke-width: 2.2; }
+.card-expander[hidden] { display: none; }
+
+/* --- action strip -------------------------------------------------------- */
+
+/* Opposite edges on purpose: the breakdown glyph at the far left — the "see
+   where it stands" anchor — and the chips at the far right, the action zone.
+   On a post with no bill identity the glyph is ABSENT (there is no tally to
+   open — README rule 2), leaving .vote-chips as the strip's only child. It
+   still lands in the same place: .vote-reason's `flex-basis: 100%` makes the
+   chip row span the strip, and its own `justify-content: flex-end` holds the
+   two pills at the right edge — measured identical to a keyed card's, to the
+   pixel. So a refused card reads as the same card with its chips off, not as a
+   differently-built one. */
+.card-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.card-strip-glyph {
+  background: none;
+  border: 0;
+  padding: 2px;
+  margin-right: 9px;
+  line-height: 0;
+  color: var(--ink-faint-aa);
+  flex: none;
+}
+.card-strip-glyph .glyph { width: 16px; height: 16px; stroke-width: 1.7; }
+
+/* Vote chips — accuracy guard, owner-locked. "▲ Yea · ▼ Nay" (US) /
+   "▲ For · ▼ Against" (EU). Never hearts, never thumbs, never a net score,
+   and no counts on the chip on ANY surface. Text arrows, not icons. */
+.vote-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.vote-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 11px;
+  background: var(--card);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.vote-chip[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+  color: var(--accent-chip-text);
+}
+/* DELIBERATE DIVERGENCE FROM THE APP, recorded so it is a decision and not
+   drift: `vote-chips.tsx` disables a chip with `opacity: 0.45`, which on this
+   palette lands around 2.4:1 — unreadable, and this is the one chip state that
+   has to be READ, because it is the state whose whole job is to say "we can't
+   key this post, so voting is off". The web keeps the same two signals (muted
+   text, softened border) at AA instead. If the app ever adopts a readable
+   disabled state, they converge here. */
+.vote-chip[disabled] { color: var(--ink-faint-aa); border-color: var(--line-soft); }
+
+/* The refusal line. A chip that cannot record a vote says why, in words — the
+   caption never becomes an instruction the product cannot honour. It takes a
+   line of its own under the chips: the app's caption is four words and sits
+   beside them, but a reason that explains itself needs the width, and squeezing
+   it into a column beside two pills makes it look like an error toast. */
+.vote-reason {
+  flex-basis: 100%;
+  font-family: var(--sans);
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--ink-faint-aa);
+  margin: 5px 0 0;
+  max-width: none;
+  text-align: right;
+}
+
+/* Narrow phones: the strip stacks rather than squeezing the chips. */
+@media (max-width: 24rem) {
+  .card-strip { flex-wrap: wrap; }
+  .vote-chips { justify-content: flex-start; }
+  .vote-reason { text-align: left; }
+}
+
+/* --------------------------------------------------------------------------
+   5. Account / callback / resolver
+   -------------------------------------------------------------------------- */
+
+.account-page,
+#bt-callback,
+#bt-resolver {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 4rem;
+}
+
+.account-page h1,
+#bt-callback h1,
+#bt-resolver h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 4.5vw, 2.1rem);
+  font-weight: 650;
+  line-height: 1.18;
+  color: var(--navy-ink);
+  margin: 0 0 0.7rem;
+}
+
+.acct-region { margin-top: 1.6rem; }
+.acct-region[hidden] { display: none; }
+
+.acct-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.2rem 1.35rem;
+}
+
+.acct-card + .acct-card { margin-top: 1rem; }
+
+.acct-card h2 {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 650;
+  color: var(--navy-ink);
+  margin: 0 0 0.45rem;
+}
+
+.acct-card p { font-size: 0.94rem; line-height: 1.6; color: var(--ink-soft); margin: 0 0 0.6rem; max-width: none; }
+.acct-card p:last-child { margin-bottom: 0; }
+
+.acct-label {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint-aa);
+  margin: 0 0 0.2rem;
+}
+
+.acct-value { font-size: 0.98rem; color: var(--ink); margin: 0; word-break: break-word; }
+
+.acct-buttons { display: flex; flex-direction: column; gap: 0.65rem; margin-top: 0.9rem; }
+
+.btn-provider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.btn-provider:hover:not([disabled]) { background: var(--wash); }
+.btn-provider[disabled] { color: var(--ink-faint-aa); background: var(--paper); }
+
+/* When no provider is configured the buttons are disabled and this line says
+   so. Inviting a sign-in that does not exist is the dishonest-affordance
+   version of the very thing this product guards against. */
+.acct-note { font-size: 0.85rem; color: var(--ink-faint-aa); margin: 0.7rem 0 0; max-width: none; }
+
+.acct-danger { margin-top: 1.6rem; font-size: 0.9rem; }
+.acct-danger a { color: var(--navy); }
+
+.acct-status { font-size: 0.93rem; color: var(--ink-soft); margin: 0.9rem 0 0; }
+.acct-status:empty { display: none; }
+
+#bt-callback .auth-status,
+#bt-resolver .resolver-status {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 1rem;
+  max-width: none;
+}
+
+.page-links { list-style: none; padding: 0; margin: 1.2rem 0 0; }
+.page-links li { margin: 0.45rem 0; }
