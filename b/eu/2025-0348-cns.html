@@ -71,9 +71,14 @@
       fill: none; stroke: currentColor; stroke-width: 1.8;
       stroke-linecap: round; stroke-linejoin: round; }
     .glyph-green { color: #1A7F37; }
-    .glyph-badge { position: absolute; right: -.25em; bottom: -.2em; width: .7em; height: .7em; color: #1A7F37; }
-    .glyph-badge svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2.4;
-      stroke-linecap: round; stroke-linejoin: round; }
+    /* The badge is the app's: a FILLED green disc with a white tick, riding the glyph's
+       TOP-right (label-icon.tsx: top = -30% of the badge, overhanging the right edge —
+       owner note; the first cut had it bottom-right and outline-only, both wrong; owner
+       screenshot 2026-08-20). Byte-for-byte the card badge in feed.css. */
+    .glyph-badge { position: absolute; top: -3.6px; right: 0; width: 12px; height: 12px;
+      border-radius: 6px; background: #1A7F37; display: flex; align-items: center; justify-content: center; }
+    .glyph-badge .glyph { width: 8px; height: 8px; color: #fff; stroke-width: 3.8; }
+    .glyph-wrap.has-badge { padding-right: 5px; }
     .honesty { background: var(--wash); border: 1px solid var(--line); border-radius: var(--radius);
       padding: 1rem 1.2rem; font-size: .92rem; line-height: 1.6; color: var(--ink-soft); margin: 0 0 1.4rem; }
     .honesty strong { color: var(--ink); }
@@ -174,10 +179,10 @@
   <h2 class="bill-title">European Public Prosecutor’s Office (EPPO) and European Anti-Fraud Office (OLAF): access to value added tax information at Union level</h2>
   <p class="bill-meta">ECON · Michalis Hadjipantela (EPP)</p>
   <p class="bill-summary">This law allows two European agencies that fight fraud and financial crime to access value added tax records across the EU so they can investigate cases more effectively.<span class="ai-tag">[AI-Generated]</span></p>
-  <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-scroll"/></svg><span class="glyph-badge"><svg viewBox="0 0 24 24"><use href="#ic-circle-check"/></svg></span></span>Published in the Official Journal</span> <span class="st-date">27 July 2026</span></div>
+  <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-scroll"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Published in the Official Journal</span> <span class="st-date">27 July 2026</span></div>
   <p class="bill-asof">Record as of 27 July 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
-  <li class="spine" data-key="eu-20250348cns-20260803114807-942ea819" data-kind="post"><span class="row-date">27 July 2026</span> <span class="row-label"><a href="/p/eu-20260803-fa04ef73"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-scroll"/></svg><span class="glyph-badge"><svg viewBox="0 0 24 24"><use href="#ic-circle-check"/></svg></span></span>Published in the Official Journal</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>It&#39;s law. It enters into force on the date it specifies or, if none, the 20th day after publication in the Official Journal.</p></li>
+  <li class="spine" data-key="eu-20250348cns-20260803114807-942ea819" data-kind="post"><span class="row-date">27 July 2026</span> <span class="row-label"><a href="/p/eu-20260803-fa04ef73"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-scroll"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Published in the Official Journal</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>It&#39;s law. It enters into force on the date it specifies or, if none, the 20th day after publication in the Official Journal.</p></li>
   <li class="spine" data-key="rec-2025/0348(CNS)-5" data-kind="record"><span class="row-date">17 June 2026</span> <span class="row-label">Parliament adopted its opinion (consultation) <span class="row-tally">(549-33, 84 abstentions)</span></span>
     <details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">

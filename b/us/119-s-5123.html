@@ -71,9 +71,14 @@
       fill: none; stroke: currentColor; stroke-width: 1.8;
       stroke-linecap: round; stroke-linejoin: round; }
     .glyph-green { color: #1A7F37; }
-    .glyph-badge { position: absolute; right: -.25em; bottom: -.2em; width: .7em; height: .7em; color: #1A7F37; }
-    .glyph-badge svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2.4;
-      stroke-linecap: round; stroke-linejoin: round; }
+    /* The badge is the app's: a FILLED green disc with a white tick, riding the glyph's
+       TOP-right (label-icon.tsx: top = -30% of the badge, overhanging the right edge —
+       owner note; the first cut had it bottom-right and outline-only, both wrong; owner
+       screenshot 2026-08-20). Byte-for-byte the card badge in feed.css. */
+    .glyph-badge { position: absolute; top: -3.6px; right: 0; width: 12px; height: 12px;
+      border-radius: 6px; background: #1A7F37; display: flex; align-items: center; justify-content: center; }
+    .glyph-badge .glyph { width: 8px; height: 8px; color: #fff; stroke-width: 3.8; }
+    .glyph-wrap.has-badge { padding-right: 5px; }
     .honesty { background: var(--wash); border: 1px solid var(--line); border-radius: var(--radius);
       padding: 1rem 1.2rem; font-size: .92rem; line-height: 1.6; color: var(--ink-soft); margin: 0 0 1.4rem; }
     .honesty strong { color: var(--ink); }
@@ -174,11 +179,11 @@
   <h2 class="bill-title">A bill to amend title 36, United States Code, to designate July 20 as Lunar Landing Day.</h2>
   <p class="bill-meta">Sen. Tim Sheehy (R-MT)</p>
   <p class="bill-summary">The bill would designate July 20 as Lunar Landing Day, a federal observance commemorating the anniversary of the Apollo 11 moon landing.<span class="ai-tag">[AI-Generated]</span></p>
-  <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg viewBox="0 0 24 24"><use href="#ic-circle-check"/></svg></span></span>Passed Senate (unanimous consent)</span> <span class="st-date">23 July 2026</span></div>
+  <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (unanimous consent)</span> <span class="st-date">23 July 2026</span></div>
   <p class="bill-asof">Record as of 30 July 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
   <li class="detail" data-key="rec-S. 5123-3" data-kind="record"><span class="row-date">30 July 2026</span> <span class="row-label">Message on Senate action sent to the House.</span></li>
-  <li class="spine" data-key="us-s5123-20260724150513-73926a92" data-kind="post"><span class="row-date">23 July 2026</span> <span class="row-label"><a href="/p/us-20260724-7888c511"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg viewBox="0 0 24 24"><use href="#ic-circle-check"/></svg></span></span>Passed Senate (unanimous consent)</a></span></li>
+  <li class="spine" data-key="us-s5123-20260724150513-73926a92" data-kind="post"><span class="row-date">23 July 2026</span> <span class="row-label"><a href="/p/us-20260724-7888c511"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (unanimous consent)</a></span></li>
   <li class="spine" data-key="rec-S. 5123-0" data-kind="record"><span class="row-date">23 July 2026</span> <span class="row-label">Introduced in Senate</span></li>
   </ol>
 
