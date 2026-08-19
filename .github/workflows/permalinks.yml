@@ -257,6 +257,16 @@ jobs:
           git config user.email "permalinks@billtracking.org"
           git add -A p b view bill-sitemap.xml
           if git diff --cached --quiet; then echo "no page changes"; exit 0; fi
+          # A quiet run still moves view/v1/index.json (its built_at heartbeat). A commit
+          # whose ONLY change is that stamp would deploy the whole site every 15 minutes
+          # for nothing — GitHub Pages rebuilds on every push, and its build quota is
+          # ~10/hour. So a heartbeat-only diff is not worth a publish; view consumers get
+          # a fresh built_at whenever anything real changes, and the record's own
+          # freshness is judged from the feed, never from this stamp (2026-08-20).
+          staged=$(git diff --cached --name-only)
+          if [ "$staged" = "view/v1/index.json" ]; then
+            echo "only the view heartbeat changed — skipping the publish"; git reset -q; exit 0
+          fi
           git commit -q -m "permalinks: render $new post + $newb bill pages from the published feed"
           # The repo also takes owner pushes; a race is ordinary. p/, b/ and view/
           # are ours alone, so a rebase can never conflict with a hand-authored
