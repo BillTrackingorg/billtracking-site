@@ -913,3 +913,8 @@ details.blurbs blockquote {
   .step-no { width: 2.35rem; height: 2.35rem; font-size: 1.05rem; }
   .step::before { left: 1.1rem; }
 }
+
+/* A storefront button whose link does not exist yet (owner law 2026-08-20: the
+   product is finished, present tense — buttons render before their URLs do).
+   Same paint as the real button; only the cursor and interactivity differ. */
+.btn.is-inert { cursor: default; opacity: .92; }
