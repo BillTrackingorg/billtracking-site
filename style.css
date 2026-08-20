@@ -1066,6 +1066,25 @@ details.blurbs blockquote {
 .site-footer a { color: #D3E1F2; text-decoration: none; }
 .site-footer a:hover { color: #fff; text-decoration: underline; }
 
+/* THE APP ROW (owner, 2026-08-21): the store badges live HERE — the one place
+   the whole internet keeps a site's app badges — because a footer element
+   repeating on every page reads as furniture, where the same badges inside
+   every post read as a pitch. Styled in THIS sheet, not feed.css or a page's
+   inline CSS, because the footer is on all fourteen served pages (the same
+   rule as the pill and the bell). The badge black is the vendors' own and
+   sits naturally on the footer's navy. Inert until STORE_URLS fills
+   (chrome.ts FOOTER_APP); official badge artwork replaces the drawn marks at
+   launch, in the same edit. */
+.footer-app { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .95rem; }
+.store-badge { display: inline-flex; align-items: center; gap: .4rem; height: 30px;
+  padding: 0 .55rem; background: #000; color: #fff; border: 1px solid #A6A6A6;
+  border-radius: 6px; text-decoration: none; }
+.store-badge-mark { height: 14px; width: auto; }
+.store-badge-mark-apple { height: 16px; margin-top: -1px; }
+.store-badge-name { font-family: var(--sans); font-size: .78rem; font-weight: 600; }
+.store-badge.is-inert { cursor: default; opacity: .92; }
+.site-footer .store-badge, .site-footer .store-badge:hover { color: #fff; text-decoration: none; }
+
 .footer-legal {
   margin-top: 2.2rem;
   padding-top: 1.4rem;
