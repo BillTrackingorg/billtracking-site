@@ -1043,9 +1043,13 @@ details.blurbs blockquote {
 }
 
 /* Four columns since the Legal group was added (privacy / terms / deletion).
-   The blurb keeps the widest track; the three link lists are equal. Below
-   46rem it stays a single column, so nothing is cramped on a phone. */
-@media (min-width: 46rem) { .footer-grid { grid-template-columns: 1.8fr 1fr 1fr 1.1fr; } }
+   The blurb takes every spare pixel (the one `fr`); the three link lists are
+   `auto`, hugging their own text — equal-width tracks left a fat blank band
+   between Pages and Legal because Pages' words are short (owner, 2026-08-21).
+   With content-width tracks every visual gap IS the grid gap: consistent by
+   construction. Below 46rem it stays a single column, so nothing is cramped
+   on a phone. */
+@media (min-width: 46rem) { .footer-grid { grid-template-columns: 1fr auto auto auto; } }
 
 .site-footer .wordmark { font-size: 1.25rem; }
 
@@ -1058,7 +1062,9 @@ details.blurbs blockquote {
   margin: 0 0 0.7rem;
 }
 
-.site-footer p { margin: 0.6rem 0 0; max-width: 44ch; }
+/* 48ch: a touch more room than the original 44 so the disclaimer's last word
+   does not sit alone on its own line (owner, 2026-08-21). */
+.site-footer p { margin: 0.6rem 0 0; max-width: 48ch; }
 
 .site-footer ul { list-style: none; margin: 0; padding: 0; }
 .site-footer li { margin: 0.35rem 0; }
