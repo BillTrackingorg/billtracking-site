@@ -1686,19 +1686,16 @@ button[disabled],
   box-shadow: 0 8px 28px rgba(10, 49, 97, 0.12);
   padding: 0.9rem 1.1rem 1rem;
   margin: 0.5rem 0 0;
-  /* THE PANEL CARRIES ITS OWN OVERFLOW, or a long one (many keyword chips)
-     has rows a reader can only reach by scrolling the whole page under a
-     sticky bar — and on a phone, where the page IS held, cannot reach at all.
-     `--bt-panel-max` is measured at open from the panel's real top edge
-     — the bar's height is not a constant, so a hard `calc()` would be wrong
-     exactly when the bar has wrapped to two lines. The fallback is for the
-     moment before the first measurement lands. */
-  max-height: var(--bt-panel-max, 70vh);
-  overflow-y: auto;
-  /* A flick that runs out of panel must not carry on into the page behind it —
-     on the phone's locked sheet that is the one way the page could still
-     appear to move. */
-  overscroll-behavior: contain;
+  /* NO max-height AND NO INTERNAL SCROLL ON DESKTOP — the panel's own
+     scrollbar arrived WITH the page lock (a held page could not scroll to
+     reveal a tall panel) and left with it (owner, 2026-08-20 night: "desktop
+     did not used to have that scroll bar"). With the page scrolling freely
+     again, a tall panel is revealed the original way: by scrolling the page.
+     The phone's SHEET still carries its own overflow in the media query below
+     — a sheet is viewport-anchored and has no page scroll to lean on. The
+     `--bt-panel-max` measurement in feed-page.ts is currently UNCONSUMED;
+     it stays because the stashed clamp spec (held page, no panel scrollbar —
+     the owner's own design) would need it back. */
 }
 .bt-panel[hidden] { display: none; }
 .bt-panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
@@ -2011,6 +2008,9 @@ mark.bt-hit {
        rule sits after the base one and wins. */
     max-height: 82vh;
     overflow-y: auto;
+    /* A flick that runs out of sheet must not carry on into the locked page
+       behind it — the one way it could still appear to move. */
+    overscroll-behavior: contain;
     border: 0;
     border-radius: 14px 14px 0 0;
     box-shadow: 0 -6px 24px rgba(10, 49, 97, 0.18);
