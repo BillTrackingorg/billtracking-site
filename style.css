@@ -1043,13 +1043,16 @@ details.blurbs blockquote {
 }
 
 /* Four columns since the Legal group was added (privacy / terms / deletion).
-   The blurb takes every spare pixel (the one `fr`); the three link lists are
-   `auto`, hugging their own text — equal-width tracks left a fat blank band
-   between Pages and Legal because Pages' words are short (owner, 2026-08-21).
-   With content-width tracks every visual gap IS the grid gap: consistent by
-   construction. Below 46rem it stays a single column, so nothing is cramped
-   on a phone. */
-@media (min-width: 46rem) { .footer-grid { grid-template-columns: 1fr auto auto auto; } }
+   Every column is content-width and `space-between` spreads the slack EVENLY
+   between them (owner, 2026-08-21, two rounds): equal-width tracks left a fat
+   blank band after Pages' short words; giving all the slack to the blurb (the
+   first fix) dumped that band after the blurb instead. Content-width + even
+   distribution is the shape where no single gap can outgrow the others,
+   whatever the copy's lengths do. Below 46rem it stays a single column, so
+   nothing is cramped on a phone. */
+@media (min-width: 46rem) {
+  .footer-grid { grid-template-columns: auto auto auto auto; justify-content: space-between; }
+}
 
 .site-footer .wordmark { font-size: 1.25rem; }
 
