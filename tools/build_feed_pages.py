@@ -84,9 +84,15 @@ LEGISLATURES: dict[str, dict[str, str]] = {
         "polity_name": "US Congress",
         "eyebrow": "US tracker",
         "h1": "The US feed",
+        # FEED, NOT DATABASE (owner law 2026-08-20): the intro says what this IS —
+        # a live feed with a stated start date — never an archive's promise. The
+        # old line ("Every recorded step…") read as a completeness claim over all
+        # of history; a reader hunting an old bill would blame our record, not
+        # our scope. Bill pages ARE complete per bill, and the intro says so.
         "intro": (
-            "Every recorded step a bill takes in the US Congress — from the "
-            "official record at Congress.gov, checked every hour."
+            "A live feed of the US Congress — bills as they move, from the "
+            "official record at Congress.gov. Tracking since July 2026; each "
+            "bill's page carries its complete official path."
         ),
         "explainer_url": "/us-process.html",
         "explainer_label": "How a bill becomes law",
@@ -94,8 +100,8 @@ LEGISLATURES: dict[str, dict[str, str]] = {
         "title": "The US feed — Congress as it moves | BillTracking",
         "og_title": "The US feed — Congress as it moves",
         "description": (
-            "Every recorded step a bill takes in the US Congress, posted as it "
-            "moves — from the official record at Congress.gov."
+            "A live feed of the US Congress — bills as they move, from the "
+            "official record at Congress.gov. Tracking since July 2026."
         ),
         "og_image": "https://billtracking.org/assets/us-banner.webp",
     },
@@ -110,9 +116,10 @@ LEGISLATURES: dict[str, dict[str, str]] = {
         "eyebrow": "EU tracker",
         "h1": "The EU feed",
         "intro": (
-            "Every recorded step a legislative procedure takes through the "
-            "European Parliament and the Council — from the EU's official "
-            "registers, in plain English."
+            "A live feed of EU lawmaking — procedures as they move through the "
+            "European Parliament and the Council, from the EU's official "
+            "registers, in plain English. Tracking since July 2026; each file's "
+            "page carries its complete path."
         ),
         "explainer_url": "/eu-process.html",
         "explainer_label": "How an EU law is made",
@@ -120,7 +127,7 @@ LEGISLATURES: dict[str, dict[str, str]] = {
         "title": "The EU feed — EU lawmaking as it moves | BillTracking",
         "og_title": "The EU feed — EU lawmaking as it moves",
         "description": (
-            "Every recorded step an EU legislative procedure takes through the "
+            "A live feed of EU lawmaking as it moves through the "
             "European Parliament and the Council, posted as it moves — from "
             "the EU's official registers."
         ),
