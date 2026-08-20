@@ -1038,7 +1038,11 @@ button[disabled],
 /* --- the caption ---------------------------------------------------------- */
 
 /* It inherits size and colour from `.vote-reason`, the slot it lives in (one
-   slot, fixed precedence). Only the link-ness and the pulse are its own. */
+   slot, fixed precedence). Only the link-ness and the pulse are its own.
+
+   --gold-wash is the pulse's colour, derived here from the palette's --gold
+   the same way the underline below derives from --accent — the gold itself
+   stays written once, in style.css. */
 .vote-caption {
   color: var(--accent);
   font-weight: 600;
@@ -1047,14 +1051,19 @@ button[disabled],
   margin: -1px -4px;
   text-decoration: none;
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  --gold-wash: color-mix(in srgb, var(--gold) 45%, transparent);
 }
 .vote-caption:hover { border-bottom-color: var(--accent); }
 
 /* ONE sweep, 800 ms - the same 800 ms the island holds the class for, so the
-   emphasis ends with it rather than being cut off mid-animation. */
+   emphasis ends with it rather than being cut off mid-animation.
+   GOLD, not the accent wash (owner, 2026-08-20): gold is the site's one visual
+   word for sign-in and the account (the nav pill, the notices panel's pill),
+   and this flash answers a press whose remedy IS sign-in — the pale accent
+   wash read as "something happened" where it should say "the door is here". */
 @keyframes bt-caption-pulse {
   0%   { background: transparent; }
-  25%  { background: var(--accent-wash); }
+  25%  { background: var(--gold-wash); }
   100% { background: transparent; }
 }
 .vote-caption.is-pulse { animation: bt-caption-pulse 800ms ease-out; }
@@ -1064,7 +1073,7 @@ button[disabled],
    removed after 800 ms either way, which is what makes a static wash read as a
    flash rather than as a new permanent state. */
 @media (prefers-reduced-motion: reduce) {
-  .vote-caption.is-pulse { animation: none; background: var(--accent-wash); }
+  .vote-caption.is-pulse { animation: none; background: var(--gold-wash); }
 }
 
 /* --- the Article 9 consent step ------------------------------------------ */

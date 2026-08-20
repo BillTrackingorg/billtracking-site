@@ -166,7 +166,7 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
       <div id="bt-geo-picker"></div>     <!-- MOUNT: location picker -->
       <div id="bt-consent"></div>        <!-- MOUNT: consent status  -->
       <button id="bt-signout" class="btn-provider">Sign out on this device</button>
-      <a href="/delete-account.html"> … </a>
+      <a href="/delete-account"> … </a>
   </section>
   <p id="bt-acct-status" class="acct-status" role="status"></p>
 </main>
@@ -1085,7 +1085,7 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   completely: probe the live URL at Gate B, before the provider config is
   written.
 * **The stylesheet is versioned by hand, and only on the shells.** The five
-  hand-authored pages ask for `/assets/css/feed.css?v=2`; the generated `/p/`
+  hand-authored pages ask for `/assets/css/feed.css?v=4`; the generated `/p/`
   pages ask for `/assets/css/feed.css` with no query at all. Same file, two cache
   entries. It is harmless before the first publish (nothing holds either yet),
   but from the first publish on, ANY edit to `feed.css` needs the query bumped in
@@ -1093,6 +1093,12 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   old sheet. **`?v=1` → `?v=2` on 2026-08-20** with the `.card-open` hit-area fix
   (estate review R2) — pre-publish, so it defeated nothing, and done anyway
   because the habit is what has to hold after the cut-over, not the arithmetic.
+  **`?v=2` → `?v=3` (with style.css `?v=3` → `?v=4`) later that day** with the
+  `.feed-page` min-height and the cross-document view transitions; **`?v=3` →
+  `?v=4` the same evening** with the refusal pulse going gold (`--gold-wash`).
+  ⚠️ A section of this file was once lost to `git checkout -- assets/js` run to
+  reset the BUNDLE — this README lives in assets/js but is hand-maintained, so
+  reset the chunk files by name, never the directory.
   Worth collapsing to one form at the cut-over.
 * **A client-rendered `/b/` path on `404.html` is unstyled.** `renderBillPath`'s
   markup is styled by `BILL_CSS`, which lives inside the generated bill page's
