@@ -70,6 +70,7 @@
 /* Buttons here are real <button>s; style.css's :focus-visible ring applies to
    them, but they need the cursor and the site's font. */
 button.btn,
+.card-bell,
 .card-expander,
 .card-open,
 .card-strip-glyph,
@@ -336,6 +337,50 @@ button[disabled],
   text-underline-offset: 3px;
 }
 .card-ref:hover { color: var(--accent); }
+
+/* --- the follow bell ------------------------------------------------------
+   ONE TAP TO PUT A BILL ON YOUR DOCKET, and on this surface what that buys is
+   the header's notices panel - there is no web push (spec, 2026-08-20). It sits
+   immediately after the reference because that is the bill it is about: the
+   accessible name says so too, and a bell floating at the other end of the row
+   would be a control with no visible subject.
+
+   THE SHAPE IS THE STATE, not the colour (owner, 2026-07-22): bell-plus when
+   you do not follow it, the filled bell when you do. The accent underneath is
+   an accompaniment, so nothing here depends on colour vision - the same two
+   glyphs the phone draws, out of the same sprite.
+
+   Geometry is `.card-open`'s law again ("padding P, margin -(P - 2)"): the
+   glyph draws at 18px, 9px of padding makes a 36px hit box, and -7px of margin
+   hands the layout back its 22px so the reference row keeps the rhythm it had.
+   The overhang stays inside the row's own 10px gaps, so pressing near the
+   reference link never lands on the bell. */
+.card-bell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  padding: 9px;
+  margin: -7px;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  line-height: 0;
+  color: var(--ink-faint-aa);
+}
+.card-bell .glyph { width: 18px; height: 18px; stroke-width: 1.7; }
+.card-bell[aria-pressed="true"] { color: var(--accent); }
+.card-bell:hover:not([disabled]) { color: var(--accent); }
+/* DISABLED IS A DIFFERENT STATEMENT HERE THAN ON A CHIP, so it is styled
+   differently on purpose. A disabled chip has to be READ - its words carry the
+   claim "we cannot key this post, so voting is off" - which is why feed.css
+   keeps it at AA rather than fading it. This control carries no claim at all:
+   an unkeyable post is drawn with NO bell (render/card.ts), so the only thing a
+   disabled bell ever says is "the page's JavaScript has not arrived", and the
+   one thing it must not look is pressable. Fading to the card's own hairline
+   ink is the honest shape - visibly present, visibly off - and WCAG exempts a
+   disabled control from contrast for exactly this case. */
+.card-bell[disabled] { color: var(--line); }
 
 /* Franchise / batch cards lead with the date instead of a reference. */
 .card-date-lead {

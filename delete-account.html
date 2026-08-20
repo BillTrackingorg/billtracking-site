@@ -28,6 +28,7 @@
       <a href="accuracy.html">Accuracy</a>
       <a href="about.html">About</a>
       <a class="nav-signin" id="bt-nav-account" href="/account">Sign in</a>
+      <button class="nav-bell" id="bt-nav-bell" type="button" aria-label="Notices" hidden><svg class="nav-bell-glyph" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg><span class="nav-bell-badge"></span></button>
     </nav>
   </div>
 </header>
@@ -95,6 +96,8 @@
       <li>Your account, including the identifier and email address from Google or Apple.</li>
       <li><strong>Every vote you have ever cast</strong>, including the optional country or state
       you set.</li>
+      <li><strong>The list of bills you follow</strong>, if you followed them while signed
+      in. It is a list of bill numbers and nothing else.</li>
       <li>Any token held to disconnect BillTracking from your Apple ID.</li>
     </ul>
 
@@ -105,17 +108,24 @@
       from our database and from every count produced afterwards, but a number already posted or
       already downloaded by someone is not retrospectively rewritten. It was true when it was
       published.</li>
-      <li><strong>Anything stored only on your own device</strong> — your followed bills,
-      keywords and display settings never reach us in the first place. Deleting the app removes
-      them.</li>
+      <li><strong>Anything stored only on your own device</strong> — your keywords, your
+      display settings, and bills you followed while signed out. Those never reach us in the
+      first place. Deleting the app removes them.</li>
       <li><strong>Emails you have sent us</strong>, which we keep as ordinary correspondence for
       as long as needed to deal with them. Ask and we will delete those too.</li>
     </ul>
 
     <div class="callout">
-      <p>Deleting your account does not stop you using BillTracking. Reading the feeds, following
-      bills and notifications have never required an account, and still work without one. You can
-      sign in again later — it will be a new account with no history.</p>
+      <!-- Following split off the list on 2026-08-20. In the app it still works
+           signed out, on the device; on this website it does not, because a
+           browser has nowhere honest to keep a docket. Saying "still works
+           without one" of both would be false on the surface the reader is
+           standing on. -->
+      <p>Deleting your account does not stop you using BillTracking. Reading the feeds and
+      notifications have never required an account, and still work without one. You can still
+      follow bills in the app, where that list stays on your device; on this website, following
+      needs an account. You can sign in again later — it will be a new account with no
+      history.</p>
     </div>
 
     <h3>If we say no</h3>

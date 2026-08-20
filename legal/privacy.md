@@ -6,13 +6,13 @@ slug: privacy
 title: What we hold, and how to make us stop
 eyebrow: Privacy
 htmlTitle: Privacy
-description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account exists only so a vote counts once.
+description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account makes a vote count once, and keeps your followed bills across your devices.
 ogTitle: Privacy — BillTracking
 ogDescription: What we collect, why, and how to delete it — in plain language.
-updated: 19 August 2026
+updated: 20 August 2026
 ---
 
-The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — your reading preferences, and a sign-in session if you choose to vote — stays in your browser, on your device. The app needs no account to read anything. An account exists for exactly one reason — so that a vote on a bill counts once per person — and it can be deleted in two taps, from inside the app or from your account page on this website.
+The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — your reading preferences, and a sign-in session if you choose to vote — stays in your browser, on your device. The app needs no account to read anything. An account does exactly two things — it makes a vote count once per person, and it keeps your followed bills the same on every device you sign in on — and it can be deleted in two taps, from inside the app or from your account page on this website.
 
 >! **What exists today.** The two X feeds, this website, and the feed pages on it ([/us](/us) and [/eu](/eu)) are live. **The BillTracking app has not been released to the app stores.** Accounts and voting are built into both the app and this website and switch on when sign-in is enabled; until then the sign-in and vote controls are visibly present and visibly switched off rather than hidden, and no vote has been cast anywhere. The sections below set out what a vote records and how it is handled — they are published now because app stores require this page to exist before release, and because we would rather say what we intend to do before doing it than afterwards.
 
@@ -21,14 +21,14 @@ The short version: **this website carries no analytics and no trackers of any ki
 
 There is no analytics anywhere on this site. No Google Analytics, no Cloudflare, no pixel, no tag manager, no advertising and no tracking SDKs — on any page, of any kind. We do not record what you read, what you search for or where you arrived from, we do not sell or share anything about you, and we build no profile of you.
 
-Some pages do keep things for you, deliberately — the feed pages ([/us](/us) and [/eu](/eu)) most of all. Whatever a page keeps — the posts it has already shown you, so that it opens quickly the next time, your display preferences, and your sign-in session if you choose to vote — stays **in your browser, on your device**, and none of it is transmitted to us. We are not told which pages you opened, what you read, or where you arrived from. The only thing that ever leaves your device is a vote you deliberately cast, exactly as described below.
+Some pages do keep things for you, deliberately — the feed pages ([/us](/us) and [/eu](/eu)) most of all. Whatever a page keeps — the posts it has already shown you, so that it opens quickly the next time, your display preferences, and your sign-in session if you choose to vote — stays **in your browser, on your device**, and none of it is transmitted to us. We are not told which pages you opened, what you read, or where you arrived from. The only things that ever leave your device are a vote you deliberately cast and — if you sign in — the bills you choose to follow, exactly as described below.
 
 One honest caveat, because the alternative would be a false claim: the site is hosted on **GitHub Pages**, and any web host necessarily handles your IP address at the network layer in order to send you a page. GitHub does not surface those logs to us and we have never seen them — but we will not tell you no IP address is processed anywhere, because that would not be true.
 
 ^The app — reading
 ## Reading needs no account and sends us nothing
 
-The feed, bill timelines and notification settings all work without signing in. The app and this website both fetch the published record as static files from GitHub Pages, the same infrastructure this site is hosted on; neither of them reports back what you read, what you follow, or what you search for. Your followed bills, your keywords and your display settings are stored **on your device** and are not transmitted to us.
+The feed, bill timelines and notification settings all work without signing in. The app and this website both fetch the published record as static files from GitHub Pages, the same infrastructure this site is hosted on; neither of them reports back what you read or what you search for. Your keywords and your display settings are stored **on your device** and are not transmitted to us. Followed bills stay on your device too, unless you sign in — then your follow list is kept with your account, so the app and this website show you the same bills. It is a list of bills, nothing more, and deleting your account deletes it.
 
 The app contains no advertising, no third-party analytics and no tracking SDKs.
 
@@ -37,7 +37,7 @@ The app contains no advertising, no third-party analytics and no tracking SDKs.
 
 You can mark a bill with a thumbs up or down. Because a reader's position on a bill is **a political opinion** — a specially protected category of personal data under EU law — we are deliberately narrow about this.
 
-- **Voting requires signing in with Google or Apple; reading never does.** The account's entire job is to make one vote per person per bill possible. Without it, the counts would be meaningless.
+- **Voting requires signing in with Google or Apple; reading never does.** The account is what makes one vote per person per bill possible. Without it, the counts would be meaningless.
 - **We ask for no profile.** No name, no photo, no contacts, no friends list, no date of birth. From the sign-in we receive an account identifier and an email address. If you use Sign in with Apple and choose *Hide My Email*, we only ever see Apple's relay address.
 - **A vote record is: which bill, thumbs up or down, when, and — only if you choose to set it — a country and, for the US, a state.** That location is optional, you choose it yourself, and nobody verifies it. Leaving it unset is a normal and fully-supported way to use the app.
 - **Who voted which way is never published, shown to anyone, or attached to a profile.** There are no public profiles and no vote histories. What is published is counts: how many voted each way overall, and how many from each country or state.
@@ -58,7 +58,7 @@ Our database provider is Supabase, acting as a processor on our instructions. If
 ^Deleting
 ## Deleting your account
 
-In the app: **You → Delete account**. On this website: your [account page](https://billtracking.org/account). It is immediate and permanent. Your account and every vote you cast are erased; there is no recovery window and we keep no copy.
+In the app: **You → Delete account**. On this website: your [account page](https://billtracking.org/account). It is immediate and permanent. Your account, every vote you cast and your follow list are erased; there is no recovery window and we keep no copy.
 
 If you can no longer sign in in either place, use the [account deletion page](delete-account.html).
 
@@ -86,5 +86,7 @@ BillTracking is an independent project run by one person, not a company. The dat
 ### Changes
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
+
+**20 August 2026.** If you sign in, the bills you follow are now kept with your account so they follow you across devices, and the website can show you new actions on them. Signed out, nothing changed: follows stay on your device and are not transmitted to us.
 
 **19 August 2026.** Signing in, voting and deleting an account are built into this website as well as the app, and switch on when sign-in is enabled — this page now covers them. Nothing new is collected, and nothing that was kept on your device moved off it.

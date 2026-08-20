@@ -100,6 +100,14 @@ a:hover { color: var(--royal); }
   gap: 0.4rem 1.5rem;
   padding-top: 0.85rem;
   padding-bottom: 0.85rem;
+  /* THE NOTICES PANEL HANGS FROM THIS BOX. `src/web/notices.ts` appends the
+     dropdown here rather than to <body> so it scrolls away with the header it
+     belongs to instead of floating over a page the reader has scrolled past;
+     that only works if this is the positioned ancestor. It is also the right
+     box to measure against: it stops at the page's own margins, so a
+     right-aligned panel lands under the bell and never off the edge of a
+     phone. */
+  position: relative;
 }
 
 .wordmark {
@@ -161,6 +169,174 @@ a:hover { color: var(--royal); }
    White is that same ring in the one place gold has nothing to sit against —
    and the header behind it is navy, so it reads at least as strongly. */
 .site-nav a.nav-signin:focus-visible { outline-color: #fff; }
+
+/* --- the notices bell ------------------------------------------------------
+   The header's SECOND account control (2026-08-20): what has happened on the
+   bills you follow, reachable from every page of this site.
+
+   DEFINED HERE AND NOT IN feed.css for the pill's reason exactly - every page
+   loads style.css, only the pages that draw cards load feed.css, and this bell
+   is in every page's nav. A panel that opened unstyled on /about would be worse
+   than no panel.
+
+   THE BUTTON SHIPS `hidden` IN THE HTML AND ONLY THE RUNTIME UNHIDES IT
+   (src/site/chrome.ts, src/web/notices.ts). These rules must therefore never be
+   the thing that makes it visible - and an author `display` BEATS the UA's
+   `[hidden] { display: none }` whatever the specificity, so the inline-flex
+   below would quietly show a control that nothing can open to a reader with no
+   JavaScript. The `[hidden]` rule under it is what keeps that promise, exactly
+   as `.bt-backdrop[hidden]` does in feed.css. */
+.site-nav .nav-bell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;          /* the badge is positioned against this box */
+  /* PAD IT OUT, PULL THE LAYOUT BOX BACK - feed.css's `.card-open` law
+     ("padding P, margin -(P - 2)"), one control over. The glyph draws at 19px
+     and would be TAPPED at 19px; 10px of padding takes the hit box to 39 and
+     -8px of margin returns the layout box to 23, so the bell sits on the nav's
+     own baseline and the header does not grow. What it overhangs is the nav's
+     1.35rem column gap, which is 21.6px - the pill's own box is never reached,
+     so the two controls cannot steal each other's presses. */
+  padding: 10px;
+  margin: -8px;
+  background: none;
+  border: 0;
+  color: #C9DAF0;              /* the nav words' own ink */
+  cursor: pointer;
+  border-radius: 8px;
+}
+.site-nav .nav-bell[hidden] { display: none; }
+.site-nav .nav-bell:hover { color: #fff; }
+/* Open is a STATE, and a reader should be able to see which control the panel
+   below belongs to. */
+.site-nav .nav-bell[aria-expanded="true"] {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+.site-nav .nav-bell:focus-visible { outline-color: #fff; }
+.nav-bell-glyph { width: 19px; height: 19px; display: block; }
+
+/* The count, and ONLY when there is one: `:empty` is what collapses it, which
+   is why the runtime clears the badge to an empty string rather than to "0".
+   Gold on navy is this site's one attention colour (the pill beside it), and
+   the number is small enough to sit on the bell without covering it. */
+.nav-bell-badge {
+  position: absolute;
+  top: 4px;
+  right: 3px;
+  min-width: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--navy-deep);
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}
+.nav-bell-badge:empty { display: none; }
+
+/* --- the notices panel -----------------------------------------------------
+   A dropdown, not a page: there is no /notices address and this change-set does
+   not add one. It hangs from the header's wrap (see `.site-header .wrap`) and
+   it is a white card on navy chrome - the same card the rest of the site is
+   made of, so it reads as this site's own furniture rather than as a widget. */
+.nav-panel {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 0.5rem);
+  /* The wrap's own 1.25rem padding, so the panel's right edge lines up with the
+     content edge above it rather than with the viewport. */
+  right: 1.25rem;
+  width: min(23rem, calc(100vw - 2.5rem));
+  max-height: min(70vh, 32rem);
+  overflow-y: auto;
+  padding: 0.9rem 1rem 0.7rem;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 32px rgba(6, 33, 63, 0.28);
+}
+.nav-panel[hidden] { display: none; }
+/* THE FOCUS RING NEEDS 3:1 AGAINST WHAT IT SITS ON (WCAG 2.2 SC 1.4.11), and
+   this is a white card hanging off navy chrome: the site's gold ring is 8.55:1
+   on the header and 1.51:1 in here. Navy is 12.0:1 on white - the same
+   re-colouring, and the same reason, as feed.css's `.feed-page :focus-visible`. */
+.nav-panel :focus-visible { outline-color: var(--navy); }
+
+.nt-title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 0.45rem;
+}
+.nt-note {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0.3rem 0 0.6rem;
+}
+/* The way in, and it is the pill's own shape: a reader who has met the header's
+   Sign in should recognise this as the same door. */
+.nt-signin {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  background: var(--gold);
+  color: var(--navy-deep);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.nt-signin:hover { background: #E6B800; color: var(--navy-deep); }
+
+.nt-rows { list-style: none; margin: 0; padding: 0; }
+.nt-row + .nt-row { border-top: 1px solid var(--line-soft); }
+/* The whole row is the link - a notice is one thing to open, and a row this
+   tall is a target a thumb can hit. */
+.nt-row a {
+  display: block;
+  padding: 0.55rem 0.4rem;
+  border-radius: 8px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nt-row a:hover { background: var(--wash); color: var(--ink); }
+.nt-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.4rem; }
+.nt-ref { font-family: var(--sans); font-size: 0.85rem; font-weight: 700; color: var(--navy); }
+.nt-date { font-family: var(--sans); font-size: 0.74rem; color: var(--ink-faint); }
+/* A WORD, not a dot (src/web/notices.ts): gold says "look here" and the word
+   says what it means, so neither colour vision nor a screen reader is the only
+   way to receive it. */
+.nt-new {
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--navy-deep);
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+/* The label keeps the bot's emoji here - a `<use>` would paint nothing on a
+   page with no sprite, which is most of this site (src/web/notices.ts). */
+.nt-label {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
 
 /* --- the way back ----------------------------------------------------------
    ONE control, three page types (owner, 2026-08-19: "let's just use a large
