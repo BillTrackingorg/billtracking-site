@@ -1585,6 +1585,39 @@ button[disabled],
 
 /* --- the display panel ---------------------------------------------------- */
 
+/* THE PAGE IS HELD STILL WHILE DISPLAY IS OPEN (owner, 2026-08-20). `dom.ts`
+   `lockScroll` adds this class to <html> and takes it off again, from the one
+   chokepoint every close path runs through.
+
+   ⚠️ THE CAP IS ON <html> ONLY, AND PUTTING IT ON BOTH BREAKS THIS PAGE.
+   Measured live, 2026-08-20, at 1280×720 with the bar stuck at the top:
+
+     html + body hidden → the bar's rect top is -609px. UNSTUCK.
+     html hidden        → 0px. sticky holds.
+     body hidden        → 0px. sticky holds.
+
+   The rule underneath is overflow PROPAGATION: the viewport takes its overflow
+   from <html>, and only falls back to <body> when <html> is `visible`. So with
+   the cap on <html>, <html> itself is left `visible` and nothing in the page
+   becomes a scroll container — but write it on <body> as WELL and that fallback
+   never fires, so <body> keeps the `hidden` for itself and turns into one. The
+   sticky bar's scrollport is then the body box, which does not scroll, and the
+   bar drops to its static position and takes the panel with it, off the top of
+   the screen. (Belt-and-braces is usually free. Here it costs the whole
+   feature, which is why the measurements are in the file.)
+
+   The `position: fixed` body pattern is deliberately NOT used either — it takes
+   the bar out of flow the same way, and for the same reason (`dom.ts`).
+
+   ⚠️ AND THE GUTTER IS PAID BACK. Capping the document removes the classic
+   scrollbar and the viewport gets ~15px wider, which slides a centred column
+   sideways the instant the panel opens. `--bt-scrollbar` is the width JS
+   measured BEFORE the cap went on; padding the body by exactly that keeps the
+   content box the size it already was, so nothing moves. It is 0px on
+   overlay-scrollbar systems, where there was never a gutter to pay. */
+html.bt-locked { overflow: hidden; }
+html.bt-locked body { padding-right: var(--bt-scrollbar, 0px); }
+
 .bt-backdrop { display: none; }
 
 .bt-panel {
@@ -1594,6 +1627,17 @@ button[disabled],
   box-shadow: 0 8px 28px rgba(10, 49, 97, 0.12);
   padding: 0.9rem 1.1rem 1rem;
   margin: 0.5rem 0 0;
+  /* WITH THE PAGE HELD STILL, THE PANEL HAS TO CARRY ITS OWN OVERFLOW, or a
+     long one (many keyword chips) has rows the reader cannot reach by any means
+     at all. `--bt-panel-max` is measured at open from the panel's real top edge
+     — the bar's height is not a constant, so a hard `calc()` would be wrong
+     exactly when the bar has wrapped to two lines. The fallback is for the
+     moment before the first measurement lands. */
+  max-height: var(--bt-panel-max, 70vh);
+  overflow-y: auto;
+  /* A flick that runs out of panel must not carry on into the page behind it —
+     the one way a locked page can still appear to move. */
+  overscroll-behavior: contain;
 }
 .bt-panel[hidden] { display: none; }
 .bt-panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
@@ -1901,6 +1945,9 @@ mark.bt-hit {
     inset: auto 0 0 0;
     z-index: 41;
     margin: 0;
+    /* A sheet is anchored to the VIEWPORT, not to the bar, so it keeps its own
+       height rather than the measured `--bt-panel-max` the dropdown uses. This
+       rule sits after the base one and wins. */
     max-height: 82vh;
     overflow-y: auto;
     border: 0;
