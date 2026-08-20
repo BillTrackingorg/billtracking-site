@@ -1296,3 +1296,616 @@ button[disabled],
 .btn-provider.is-danger:hover:not([disabled]) {
   background: color-mix(in srgb, var(--red) 7%, var(--card));
 }
+
+/* --------------------------------------------------------------------------
+   6. The feed bar — search, the legislature selector, the display controls
+      (SEARCH-JOB-SPEC-2026-08-20 §6-§8; drawn from the owner-reviewed mock)
+
+   ONE bar, and it STICKS. A searched or filtered feed that looks like the
+   plain feed is a lie by omission, so the query and the filtered-state strip
+   stay on screen while the reader scrolls. The site header deliberately does
+   not stick with it: one band of fixed chrome, never two.
+
+   No breakpoint decides the layout — `flex-wrap` plus `flex: 1 1 19rem` on the
+   search does. Wide enough and it is one line; narrow and the search drops
+   below the selector on its own. The ONE media query below is not a layout
+   breakpoint but a change of KIND: on a phone the selector becomes a chip row
+   that scrolls away and only the search line sticks, and the panel becomes the
+   bottom sheet the app already uses.
+
+   Everything here is `bt-` prefixed so it cannot collide with style.css or
+   with the card rules above. The one exception is `.card-hit`, which IS part
+   of a card.
+   -------------------------------------------------------------------------- */
+
+/* The page's accent, per legislature — the same content law the card obeys
+   ("the theme is the building, posts are the residents"): the CHROME of a feed
+   page wears the legislature's colour, and the cards inside it keep their own. */
+.feed-page[data-polity="us"] {
+  --accent: var(--navy);
+  --accent-soft: rgba(10, 49, 97, 0.10);
+  --accent-hair: var(--red);
+  --accent-wash: var(--wash);
+}
+.feed-page[data-polity="eu"] {
+  --accent: var(--royal);
+  --accent-soft: rgba(0, 51, 153, 0.10);
+  --accent-hair: var(--gold);
+  --accent-wash: var(--wash-eu);
+}
+
+.bt-barwrap {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  /* Bleeds into the page's own 1rem gutters so the bar reads as a band rather
+     than as a floating box, and so nothing scrolls through its edges. */
+  margin: 1.25rem -1rem 0;
+  padding: 0.5rem 1rem 0.55rem;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+.bt-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1 1 19rem;
+  min-width: 0;
+}
+
+/* --- the legislature selector -------------------------------------------- */
+
+/* Plain links in a pill row: switching legislature is NAVIGATION, so it works
+   without JavaScript, it is linkable, the back button is right, and it stores
+   nothing (spec §7). */
+.bt-seg {
+  display: flex;
+  gap: 2px;
+  background: var(--wash);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px;
+  flex: none;
+}
+.bt-seg a {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 0.36rem 0.78rem;
+  border-radius: 999px;
+  line-height: 1.25;
+}
+.bt-seg a:hover { color: var(--navy-ink); }
+.bt-seg a[aria-current="page"] {
+  background: var(--card);
+  color: var(--accent);
+  box-shadow: 0 1px 2px rgba(10, 49, 97, 0.12);
+}
+
+/* Past four legislatures the same slot is a button and a menu (spec §7). */
+.bt-picker { position: relative; flex: none; }
+.bt-picker-btn { font-weight: 700; }
+/* The picker's own menu hangs off the picker button, not off the whole bar —
+   restated after the shared rule above, which would otherwise stretch it across
+   the bar's full width. */
+.bt-menu { position: absolute; top: calc(100% + 0.4rem); left: 0; right: auto; z-index: 25; min-width: 20rem; }
+.bt-menu[hidden] { display: none; }
+.bt-menu .bt-search { margin-bottom: 0.6rem; }
+.bt-menu-list { display: flex; flex-direction: column; }
+.bt-menu-list a {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 0.34rem 0.2rem;
+  border-radius: 6px;
+}
+.bt-menu-list a:hover { background: var(--wash); color: var(--navy-ink); }
+.bt-menu-list a[aria-current="page"] { color: var(--navy-ink); font-weight: 700; }
+.bt-menu-list a[hidden] { display: none; }
+
+/* --- the search field ----------------------------------------------------- */
+
+.bt-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1 1 19rem;
+  min-width: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0 0.7rem;
+  box-shadow: 0 1px 4px rgba(10, 49, 97, 0.05);
+}
+.bt-search .glyph { width: 17px; height: 17px; color: var(--ink-faint-aa); }
+.bt-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  padding: 0.6rem 0;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--ink);
+}
+.bt-search input::placeholder { color: var(--ink-faint-aa); }
+/* THE RING MOVES TO THE BOX, IT IS NOT REMOVED. The old two-pane search killed
+   the focus outline outright (`outlineStyle: 'none'`) and put nothing back, so
+   a keyboard reader could not tell whether they were in the field. Here the
+   input's own outline goes and the WRAPPER draws the ring instead — a border
+   in the page's accent plus a 3px soft halo, which is the whole control rather
+   than a rectangle inside it. Remove one of these two lines and the other is a
+   defect (WCAG 2.2 SC 2.4.7). */
+.bt-search input:focus { outline: none; }
+.bt-search.is-focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.bt-clear {
+  background: none;
+  border: 0;
+  padding: 6px;
+  margin: -6px -4px -6px 0;
+  line-height: 0;
+  color: var(--ink-faint-aa);
+  cursor: pointer;
+}
+.bt-clear[hidden] { display: none; }
+.bt-clear .glyph { width: 15px; height: 15px; }
+
+/* --- the Display button --------------------------------------------------- */
+
+.bt-disp {
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  flex: none;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.52rem 0.72rem;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(10, 49, 97, 0.05);
+}
+.bt-disp .glyph { width: 17px; height: 17px; }
+.bt-disp .glyph-sm { width: 14px; height: 14px; }
+.bt-disp[aria-expanded="true"] { background: var(--wash); border-color: var(--accent); }
+/* The state dot is a SIGNAL, never the message: the button's accessible name
+   carries the count in words, because a colour is not a sentence. */
+.bt-dot { width: 7px; height: 7px; border-radius: 99px; background: var(--accent-hair); flex: none; }
+.bt-dot[hidden] { display: none; }
+
+/* --- what drops out of the bar -------------------------------------------- */
+
+/* ⚠️ BOTH OF THESE HANG OFF THE BAR, NOT OFF THE PAGE. The bar is sticky, so a
+   panel in the page's flow sits where the page was when it was drawn — open
+   Display after scrolling a screen and the button expands onto nothing. They
+   are absolutely positioned inside `.bt-barwrap` (which is `position: sticky`
+   and therefore their containing block), so they follow the bar. `left`/`right`
+   are the bar's own gutter, undoing its bleed so the panel lines up with the
+   column rather than with the bleed. */
+.bt-drop,
+.bt-panel {
+  position: absolute;
+  top: 100%;
+  left: 1rem;
+  right: 1rem;
+  z-index: 1;
+}
+
+/* The resting hint: what the box searches, shown on focus with an empty field. */
+.bt-drop {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 6px 24px rgba(10, 49, 97, 0.10);
+  padding: 0.85rem 1rem 0.95rem;
+  margin: 0.5rem 0 0;
+}
+.bt-drop[hidden] { display: none; }
+.bt-drop .bt-eyebrow { margin-bottom: 0.35rem; }
+.bt-drop p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: none;
+}
+
+.bt-count {
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  color: var(--ink-faint-aa);
+  margin: 0.8rem 0 0;
+  max-width: none;
+}
+.bt-count[hidden] { display: none; }
+
+/* The standing "you are looking at a filtered feed" strip. It is a flex child
+   of the sticky bar with a full-width basis, so it takes a line of its own
+   inside the band and travels with it — see the sticky note at the top of this
+   section. The band is one line taller only while something is hidden. */
+.bt-filtered {
+  flex: 1 0 100%;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--gold-text);
+  background: #FFFDF2;
+  border: 1px solid #F0E4B8;
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  margin: 0.55rem 0 0;
+}
+.bt-filtered[hidden] { display: none; }
+.bt-filtered button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  color: var(--navy);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* The D25 transposition — the other feeds' matches, with a way to them. */
+.bt-elsewhere {
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  padding: 0.75rem 0.95rem;
+  margin: 1.1rem 0 0;
+}
+.bt-elsewhere[hidden] { display: none; }
+.bt-elsewhere p { margin: 0; max-width: none; }
+.bt-elsewhere p + p { margin-top: 0.35rem; }
+.bt-elsewhere a { font-weight: 600; }
+
+/* --- the display panel ---------------------------------------------------- */
+
+.bt-backdrop { display: none; }
+
+.bt-panel {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 8px 28px rgba(10, 49, 97, 0.12);
+  padding: 0.9rem 1.1rem 1rem;
+  margin: 0.5rem 0 0;
+}
+.bt-panel[hidden] { display: none; }
+.bt-panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.bt-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+  margin: 0;
+  max-width: none;
+}
+.bt-panel-title {
+  font-family: var(--serif);
+  font-size: 1.18rem;
+  font-weight: 650;
+  color: var(--navy-ink);
+  margin: 0.1rem 0 0.5rem;
+  max-width: none;
+}
+.bt-x {
+  background: none;
+  border: 0;
+  padding: 8px;
+  margin: -8px -6px 0 0;
+  line-height: 0;
+  color: var(--ink-faint-aa);
+  cursor: pointer;
+}
+.bt-x .glyph { width: 17px; height: 17px; }
+.bt-group {
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-faint-aa);
+  margin: 1rem 0 0.1rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--line-soft);
+  max-width: none;
+}
+.bt-group:first-of-type { border-top: 0; padding-top: 0; margin-top: 0.2rem; }
+.bt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.bt-row:last-of-type { border-bottom: 0; }
+.bt-row-text { min-width: 0; }
+.bt-row-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.bt-row-cap {
+  display: block;
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-faint-aa);
+  margin-top: 1px;
+  max-width: none;
+}
+/* The app's own `rowSuperseded` grammar: a control whose answer is currently
+   being decided by something else is dimmed rather than hidden, so the reader
+   can see what it would do. */
+.bt-row.is-superseded { opacity: 0.45; }
+.bt-row.is-disabled .bt-row-label { color: var(--ink-faint-aa); }
+.bt-note {
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--gold-text);
+  margin: 0.5rem 0 0;
+  max-width: none;
+}
+.bt-keyword-cap { margin: 0.35rem 0 0.6rem; }
+.bt-foot {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--ink-faint-aa);
+  margin: 0.8rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--line-soft);
+  max-width: none;
+}
+
+/* A real checkbox, painted as the app's BrandSwitch: it keeps the keyboard
+   behaviour, the role and the checked state a switch drawn out of <div>s would
+   have to reinvent badly. */
+.bt-sw {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  position: relative;
+  width: 44px;
+  height: 26px;
+  border-radius: 999px;
+  background: #CFD9E6;
+  border: 0;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.bt-sw::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(10, 49, 97, 0.35);
+  transition: left 0.12s;
+}
+.bt-sw:checked { background: var(--accent); }
+.bt-sw:checked::after { left: 21px; }
+.bt-sw:disabled { opacity: 0.5; cursor: default; }
+
+/* The docket keywords: the reader's own words, in this browser. */
+.bt-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 0.6rem; }
+.bt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--accent-wash);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.18rem 0.3rem 0.18rem 0.65rem;
+}
+.bt-chip-x {
+  background: none;
+  border: 0;
+  padding: 3px;
+  line-height: 0;
+  color: var(--ink-faint-aa);
+  cursor: pointer;
+}
+.bt-chip-x .glyph { width: 13px; height: 13px; }
+.bt-addrow { display: flex; gap: 6px; }
+.bt-kw {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  padding: 0.45rem 0.6rem;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+}
+.bt-add {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+.bt-add .glyph { width: 16px; height: 16px; stroke-width: 2.4; }
+
+/* --- results: the tier dividers and the highlight ------------------------- */
+
+/* Drawn only when more than one group has hits — with one group there is
+   nothing to explain, and a divider would be noise. */
+.bt-tier {
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-faint-aa);
+  margin: 0.4rem 0 -0.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: none;
+}
+.bt-tier::after { content: ""; flex: 1; height: 1px; background: var(--line-soft); }
+.bt-tier:first-child { margin-top: 0; }
+
+/* A GOLD TINT AND NOTHING ELSE. The record's words are never re-weighted or
+   re-coloured to show a match — a highlight says "this is why it is here", not
+   "this part matters more". Not `.card.is-highlighted`, which is the deep-link
+   class and means something entirely different. */
+mark.bt-hit {
+  background: rgba(255, 204, 0, 0.45);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* THE DISCLOSURE ROW (spec §4) — and the two selectors below are the whole of
+   its logic. It is the immediate next sibling of `.card-body`, so:
+     - a body the browser did NOT have to clip carries no `data-clipped`, and a
+       bodyLines match is therefore already on screen: the row collapses;
+     - an OPEN card shows its summary and its whole body, so the row collapses
+       there too.
+   What is left is exactly the case the row exists for: a match the reader
+   cannot see, on a card that looks like a false positive without it. No
+   JavaScript decides any of this — the one thing only a browser knows (did
+   this body overflow?) is already written on the element by `dom.ts`. */
+.card-hit {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0.55rem 0 0;
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--accent-hair, var(--line));
+  max-width: none;
+}
+.card-hit .lead { font-weight: 700; color: var(--ink); }
+.card-body:not([data-clipped="1"]) + .card-hit[data-field="bodyLines"] { display: none; }
+.card.is-open .card-hit { display: none; }
+
+/* --- the phone ------------------------------------------------------------ */
+
+/* NOT A LAYOUT BREAKPOINT — a change of kind. On a phone two bands of sticky
+   chrome would eat the screen, so the selector becomes a chip row that scrolls
+   away with the page and only the search line stays. */
+@media (max-width: 47.9375rem) {
+  /* ⚠️ THE WRAP STAYS THE STICKY ELEMENT, PULLED UP BY THE CHIP ROW'S HEIGHT.
+     The obvious version — leave the wrap static and stick `.bt-bar` inside it —
+     does not work and looks like it does: a sticky element can only travel
+     inside its own PARENT's box, and the wrap's box ends a few pixels below the
+     bar, so the whole thing scrolled away on the first real phone test
+     (2026-08-20). Sticking the wrap with a NEGATIVE top of exactly the chip
+     row's height parks the chip row above the viewport and lands the search
+     line at 0, which is the spec's phone rule: the selector scrolls away, only
+     the search sticks. `min-height` rather than `height` so the failure is
+     graceful — a chip row that grows leaves a sliver of itself visible instead
+     of clipping. */
+  .bt-barwrap {
+    --bt-chiprow-h: 2.4rem;
+    top: calc(-1 * var(--bt-chiprow-h));
+    display: block;
+    padding-bottom: 0;
+  }
+  .bt-seg {
+    box-sizing: border-box;
+    min-height: var(--bt-chiprow-h);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    padding: 0.15rem 1rem 0.5rem;
+    margin: 0 -1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .bt-seg::-webkit-scrollbar { display: none; }
+  .bt-seg a {
+    flex: none;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.3rem 0.7rem;
+  }
+  .bt-seg a[aria-current="page"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: none;
+  }
+  .bt-bar {
+    margin: 0 -1rem;
+    padding: 0.4rem 1rem 0.5rem;
+  }
+  .bt-picker { width: 100%; }
+  .bt-menu { min-width: 0; right: 0; }
+
+  /* The panel becomes the app's bottom sheet. The backdrop is a real element
+     rather than a pseudo one so that tapping it closes the sheet — a scrim you
+     cannot dismiss by tapping is a scrim that reads as a broken modal. */
+  .bt-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(14, 42, 78, 0.38);
+  }
+  .bt-backdrop[hidden] { display: none; }
+  .bt-panel {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 41;
+    margin: 0;
+    max-height: 82vh;
+    overflow-y: auto;
+    border: 0;
+    border-radius: 14px 14px 0 0;
+    box-shadow: 0 -6px 24px rgba(10, 49, 97, 0.18);
+    padding: 1rem 1.1rem calc(1.2rem + env(safe-area-inset-bottom));
+  }
+}

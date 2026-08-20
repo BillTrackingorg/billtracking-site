@@ -175,8 +175,13 @@ def render(polity: str, entry: dict[str, str], template: str) -> str:
         "OG_TITLE": esc(entry["og_title"]),
         "DESCRIPTION": esc(entry["description"]),
         "OG_IMAGE": esc(entry["og_image"]),
-        "NAV_CURRENT_US": CURRENT if polity == "us" else "",
-        "NAV_CURRENT_EU": CURRENT if polity == "eu" else "",
+        # ONE "Feed" nav entry, and EVERY page this script renders is a feed
+        # page, so it always carries aria-current (SEARCH-JOB-SPEC section 7).
+        # The link's href is the FIRST registry entry's feed for every one of
+        # them - which is why the current page is marked by the attribute
+        # rather than by the address: on /eu the reader IS on the feed, and a
+        # nav that said otherwise would be lying about where they are.
+        "NAV_CURRENT_FEED": CURRENT,
     }
     out = template
     for key, value in fields.items():

@@ -71,6 +71,7 @@ branches, because those two belong to every page type rather than to any mount.
 ```html
 <main class="feed-page" data-polity="us">
   <header class="feed-head"> … eyebrow, H1, intro, explainer link … </header>
+  <!-- THE FEED BAR IS BUILT BY THE RUNTIME, not written here — see below. -->
   <p    id="bt-freshness" class="feed-fresh"></p>
   <section id="bt-feed" class="feed" tabindex="-1" aria-busy="true" aria-label="The US feed"></section>
   <p    id="bt-announce" class="sr-only" role="status"></p>
@@ -114,6 +115,41 @@ branches, because those two belong to every page type rather than to any mount.
 * `#bt-freshness` — §4. `:empty` collapses it; leave it empty until you know.
 * `#bt-build` — optional one-line build stamp (core sha / built-at). `:empty`
   collapses it.
+
+**The feed bar (2026-08-20, SEARCH-JOB-SPEC §6–§8) is NOT in this shell, and
+that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
+`.feed-head`:
+
+```html
+<div class="bt-barwrap">                      <!-- sticky; the panel's containing block -->
+  <nav class="bt-seg" aria-label="Legislature">…one <a> per registry entry…</nav>
+  <div class="bt-bar">
+    <search class="bt-search">…<input class="bt-q">…<button class="bt-clear"></button></search>
+    <button class="bt-disp" aria-expanded="false">Display<span class="bt-dot"></span></button>
+  </div>
+  <div class="bt-filtered" hidden>…</div>     <!-- in flow: it must stay on screen -->
+  <div class="bt-drop"  hidden>…</div>        <!-- absolute: the resting hint -->
+  <div class="bt-panel" hidden>…</div>        <!-- absolute (fixed sheet on a phone) -->
+</div>
+<div class="bt-backdrop" hidden></div>
+<p   class="bt-count" hidden></p>
+```
+
+* **The chips are the REGISTRY's, so the shell cannot hold them.** One `<a>` per
+  `LEGISLATURES` entry, at its own `feedPath`; a template that wrote one chip per
+  legislature would be the fifth per-legislature table this product spent a week
+  deleting. Past four entries the same slot becomes a filterable menu.
+* **They are plain links and they write NOTHING.** Switching legislature is
+  navigation between two pages — it works without JavaScript, it is linkable, the
+  back button is right, and a web selector that persisted a scope would silently
+  change what the reader's phone shows (D25).
+* **No `?q=` in the URL.** A query in the address bar puts what people search
+  into history and into the `Referer` of the next click out to Congress.gov.
+* `.bt-drop` and `.bt-panel` are absolutely positioned INSIDE `.bt-barwrap`
+  because the bar is sticky: left in the page's flow they sit where the page was
+  when they were drawn, and open the panel after scrolling and nothing appears.
+* `.bt-filtered` is in flow inside the bar on purpose — a filtered feed that
+  looks like the plain feed is a lie by omission, so it travels with the query.
 
 ### 1.2 Account — `account.html`
 
@@ -414,6 +450,15 @@ depends on it.
     <div class="card-body-lines"><p>…</p><p>…</p></div>
   </div>
 
+  <!-- 2b. THE MATCH DISCLOSURE ROW — present ONLY on a search result whose
+       match is not otherwise on the card (a summary is behind the expander by
+       structure; a bodyLines hit can be past the clip). It is the IMMEDIATE
+       next sibling of `.card-body`, which is load-bearing: feed.css collapses
+       it with `.card-body:not([data-clipped="1"]) + .card-hit[data-field=…]`
+       and with `.card.is-open .card-hit`, so no script has to decide what the
+       reader can see. -->
+  <p class="card-hit" data-field="bodyLines"><span class="lead">Match: </span>…a study of <mark class="bt-hit">AI</mark>-enabled toys…</p>
+
   <!-- 3. ANCHORED — always visible, never inside the clip. -->
   <div class="card-anchored">
     <p class="card-next"><span class="lead">What's next: </span>Policy adoption …</p>
@@ -689,12 +734,23 @@ renders the result. Do not re-type the table below into any page. Shape:
 | 2 | `feedHealth.state === 'unavailable'` | `Can't reach the feed` | as above — an outage outranks everything below |
 | 3 | a search query with no hits | `No matches` | `No posts on this feed match that search. The record is searched — labels, titles and summaries; predictions are not.` |
 | 4 | zero posts at all | `No posts yet` | `Nothing has been published to this feed yet. When Congress moves on a bill, it will appear here.` (EU: `the European Parliament`) |
-| 5 | docket filter on, nothing matches | `Nothing on your docket` | `There are recent posts, but none are for bills you follow or keywords you've saved. Turn off the docket filter to see everything.` |
-| 6 | display filters hide everything | `Nothing to show` | `Your display filters hide every recent post on this feed. Tap the filter icon above to adjust them.` |
+| 5 | docket filter on, nothing matches | `Nothing on your docket` | `There are recent posts, but none are for bills you follow or keywords you've saved. Turn off "My docket only" in the Display controls to see everything.` |
+| 6 | display filters hide everything | `Nothing to show` | `Your display filters hide every recent post on this feed. Adjust the Display controls above.` |
 | 7 | otherwise | `Nothing recent` | `There are no recent posts for Congress on this feed.` |
 
-(States 5 and 6 have no web control yet — keep the branches, they cost nothing
-and the alternative is blaming the wrong thing when they arrive.)
+⚠️ **The remedies in 5 and 6 are the WEB's.** The app says "Turn off the docket
+filter" and "Tap the filter icon above", because those are true on a phone; a
+browser has a panel called Display and a switch called "My docket only", and a
+sentence pointing at an affordance the reader cannot see reads as a broken page
+rather than as a fact about the feed. One verdict, two ways out — `feedEmptyCopy`
+takes the surface (2026-08-20). State 3's body also gained a second sentence
+saying that words are matched whole, which is what makes `ai` returning two posts
+explicable after the matcher change.
+
+(Until 2026-08-20 states 5 and 6 had no web control at all and the branches were
+kept anyway, "because the alternative is blaming the wrong thing when they
+arrive". They arrived — the Display panel drives both, and `web/status.ts` now
+passes the reader's real preferences instead of a hardcoded `false`/`true`.)
 
 **Clear `#bt-status` the moment cards render.** The bug this replaced was
 telling readers to go fix filters that were not the problem.
