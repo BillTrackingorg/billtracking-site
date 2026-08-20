@@ -1646,38 +1646,36 @@ button[disabled],
 
 /* --- the display panel ---------------------------------------------------- */
 
-/* THE PAGE IS HELD STILL WHILE DISPLAY IS OPEN (owner, 2026-08-20). `dom.ts`
-   `lockScroll` adds this class to <html> and takes it off again, from the one
-   chokepoint every close path runs through.
+/* THE PAGE IS HELD STILL ONLY WHERE THE PANEL IS A SHEET (owner rulings:
+   locked everywhere 2026-08-20 morning, REVERTED for desktop the same evening
+   — "revert to how it originally was"). `dom.ts` `lockScroll` still writes
+   `html.bt-locked` from the one chokepoint every close path runs through; the
+   class is a STATE, and this stylesheet decides what it costs per surface:
 
-   ⚠️ THE CAP IS ON <html> ONLY, AND PUTTING IT ON BOTH BREAKS THIS PAGE.
-   Measured live, 2026-08-20, at 1280×720 with the bar stuck at the top:
+   * On a PHONE the panel is a bottom sheet with a scrim, and a sheet whose
+     page scrolls behind it is a broken sheet — the cap lives in the phone
+     media query at the end of this file.
+   * On a DESKTOP the panel is a dropdown and the class costs NOTHING: the
+     page scrolls freely, as it originally did. (The owner's fuller clamp spec
+     — scroll to the panel's bottom + a buffer, then stop — sits in the paused
+     stash, undiscussed; if it lands it replaces this paragraph.)
+
+   ⚠️ BOUGHT KNOWLEDGE, KEPT FOR THE DAY A DESKTOP CAP RETURNS. The cap goes on
+   <html> ONLY — measured live, 2026-08-20, at 1280×720 with the bar stuck:
 
      html + body hidden → the bar's rect top is -609px. UNSTUCK.
      html hidden        → 0px. sticky holds.
      body hidden        → 0px. sticky holds.
 
-   The rule underneath is overflow PROPAGATION: the viewport takes its overflow
-   from <html>, and only falls back to <body> when <html> is `visible`. So with
-   the cap on <html>, <html> itself is left `visible` and nothing in the page
-   becomes a scroll container — but write it on <body> as WELL and that fallback
-   never fires, so <body> keeps the `hidden` for itself and turns into one. The
-   sticky bar's scrollport is then the body box, which does not scroll, and the
-   bar drops to its static position and takes the panel with it, off the top of
-   the screen. (Belt-and-braces is usually free. Here it costs the whole
-   feature, which is why the measurements are in the file.)
-
-   The `position: fixed` body pattern is deliberately NOT used either — it takes
-   the bar out of flow the same way, and for the same reason (`dom.ts`).
-
-   ⚠️ AND THE GUTTER IS PAID BACK. Capping the document removes the classic
-   scrollbar and the viewport gets ~15px wider, which slides a centred column
-   sideways the instant the panel opens. `--bt-scrollbar` is the width JS
-   measured BEFORE the cap went on; padding the body by exactly that keeps the
-   content box the size it already was, so nothing moves. It is 0px on
-   overlay-scrollbar systems, where there was never a gutter to pay. */
-html.bt-locked { overflow: hidden; }
-html.bt-locked body { padding-right: var(--bt-scrollbar, 0px); }
+   Overflow PROPAGATION explains it: the viewport takes its overflow from
+   <html>, falling back to <body> only when <html> is `visible`; cap both and
+   <body> becomes the scroll container, the sticky bar's scrollport is then the
+   body box, and the bar (panel with it) drops off the top of the screen. The
+   `position: fixed` body pattern is refused for the same reason (`dom.ts`).
+   And a DESKTOP cap must pay the scrollbar gutter back (`--bt-scrollbar`,
+   still measured by `dom.ts`) or the centred column jumps ~15px sideways at
+   open — the payment rule left with the desktop cap and returns with it. A
+   phone has no classic scrollbar, so the sheet cap below pays nothing. */
 
 .bt-backdrop { display: none; }
 
@@ -1688,16 +1686,18 @@ html.bt-locked body { padding-right: var(--bt-scrollbar, 0px); }
   box-shadow: 0 8px 28px rgba(10, 49, 97, 0.12);
   padding: 0.9rem 1.1rem 1rem;
   margin: 0.5rem 0 0;
-  /* WITH THE PAGE HELD STILL, THE PANEL HAS TO CARRY ITS OWN OVERFLOW, or a
-     long one (many keyword chips) has rows the reader cannot reach by any means
-     at all. `--bt-panel-max` is measured at open from the panel's real top edge
+  /* THE PANEL CARRIES ITS OWN OVERFLOW, or a long one (many keyword chips)
+     has rows a reader can only reach by scrolling the whole page under a
+     sticky bar — and on a phone, where the page IS held, cannot reach at all.
+     `--bt-panel-max` is measured at open from the panel's real top edge
      — the bar's height is not a constant, so a hard `calc()` would be wrong
      exactly when the bar has wrapped to two lines. The fallback is for the
      moment before the first measurement lands. */
   max-height: var(--bt-panel-max, 70vh);
   overflow-y: auto;
   /* A flick that runs out of panel must not carry on into the page behind it —
-     the one way a locked page can still appear to move. */
+     on the phone's locked sheet that is the one way the page could still
+     appear to move. */
   overscroll-behavior: contain;
 }
 .bt-panel[hidden] { display: none; }
@@ -2016,4 +2016,9 @@ mark.bt-hit {
     box-shadow: 0 -6px 24px rgba(10, 49, 97, 0.18);
     padding: 1rem 1.1rem calc(1.2rem + env(safe-area-inset-bottom));
   }
+  /* The sheet holds the page still — a sheet whose page scrolls behind its
+     scrim is a broken sheet. PHONE-ONLY since the owner's desktop revert
+     (2026-08-20 evening); the why-html-only measurements live at the class's
+     main comment in the display-panel section. */
+  html.bt-locked { overflow: hidden; }
 }

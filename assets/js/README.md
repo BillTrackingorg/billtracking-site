@@ -1085,7 +1085,7 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   completely: probe the live URL at Gate B, before the provider config is
   written.
 * **The stylesheet is versioned by hand, and only on the shells.** The five
-  hand-authored pages ask for `/assets/css/feed.css?v=4`; the generated `/p/`
+  hand-authored pages ask for `/assets/css/feed.css?v=5`; the generated `/p/`
   pages ask for `/assets/css/feed.css` with no query at all. Same file, two cache
   entries. It is harmless before the first publish (nothing holds either yet),
   but from the first publish on, ANY edit to `feed.css` needs the query bumped in
@@ -1095,7 +1095,9 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   because the habit is what has to hold after the cut-over, not the arithmetic.
   **`?v=2` → `?v=3` (with style.css `?v=3` → `?v=4`) later that day** with the
   `.feed-page` min-height and the cross-document view transitions; **`?v=3` →
-  `?v=4` the same evening** with the refusal pulse going gold (`--gold-wash`).
+  `?v=4` the same evening** with the refusal pulse going gold (`--gold-wash`);
+  **`?v=4` → `?v=5` the same night** with the desktop scroll-lock revert (the
+  cap is phone-only now — owner ruling).
   ⚠️ A section of this file was once lost to `git checkout -- assets/js` run to
   reset the BUNDLE — this README lives in assets/js but is hand-maintained, so
   reset the chunk files by name, never the directory.
