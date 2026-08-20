@@ -1655,10 +1655,11 @@ button[disabled],
    * On a PHONE the panel is a bottom sheet with a scrim, and a sheet whose
      page scrolls behind it is a broken sheet — the cap lives in the phone
      media query at the end of this file.
-   * On a DESKTOP the panel is a dropdown and the class costs NOTHING: the
-     page scrolls freely, as it originally did. (The owner's fuller clamp spec
-     — scroll to the panel's bottom + a buffer, then stop — sits in the paused
-     stash, undiscussed; if it lands it replaces this paragraph.)
+   * On a DESKTOP the class costs nothing HERE: the page scrolls, but only as
+     far as the bar's remaining travel — the scroll CLAMP in `feed-page.ts`
+     (the owner's own spec, shipped on his 2026-08-21 commission), with the
+     buffer spent as the panel's PANEL_FOOT_GAP so the whole panel plus a
+     clear band land on screen at the stop.
 
    ⚠️ BOUGHT KNOWLEDGE, KEPT FOR THE DAY A DESKTOP CAP RETURNS. The cap goes on
    <html> ONLY — measured live, 2026-08-20, at 1280×720 with the bar stuck:
@@ -1672,10 +1673,11 @@ button[disabled],
    <body> becomes the scroll container, the sticky bar's scrollport is then the
    body box, and the bar (panel with it) drops off the top of the screen. The
    `position: fixed` body pattern is refused for the same reason (`dom.ts`).
-   And a DESKTOP cap must pay the scrollbar gutter back (`--bt-scrollbar`,
-   still measured by `dom.ts`) or the centred column jumps ~15px sideways at
-   open — the payment rule left with the desktop cap and returns with it. A
-   phone has no classic scrollbar, so the sheet cap below pays nothing. */
+   And a DESKTOP cap must pay the scrollbar gutter back (`--bt-scrollbar` —
+   no longer measured; `dom.ts` says why) or the centred column jumps ~15px
+   sideways at open — restore the cap, the measurement and the payment
+   together, or not at all. A phone has no classic scrollbar; its sheet cap
+   pays nothing. */
 
 .bt-backdrop { display: none; }
 
@@ -1686,16 +1688,19 @@ button[disabled],
   box-shadow: 0 8px 28px rgba(10, 49, 97, 0.12);
   padding: 0.9rem 1.1rem 1rem;
   margin: 0.5rem 0 0;
-  /* NO max-height AND NO INTERNAL SCROLL ON DESKTOP — the panel's own
-     scrollbar arrived WITH the page lock (a held page could not scroll to
-     reveal a tall panel) and left with it (owner, 2026-08-20 night: "desktop
-     did not used to have that scroll bar"). With the page scrolling freely
-     again, a tall panel is revealed the original way: by scrolling the page.
-     The phone's SHEET still carries its own overflow in the media query below
-     — a sheet is viewport-anchored and has no page scroll to lean on. The
-     `--bt-panel-max` measurement in feed-page.ts is currently UNCONSUMED;
-     it stays because the stashed clamp spec (held page, no panel scrollbar —
-     the owner's own design) would need it back. */
+  /* THE PANEL CARRIES ITS OWN OVERFLOW — restored with the CLAMP (owner
+     commission 2026-08-21; the plain revert of the previous night briefly
+     removed it). The panel rides a sticky bar: once the bar parks at the top,
+     page scroll reveals not one more row of it, so a panel taller than the
+     room under the parked bar is reachable ONLY through its own overflow.
+     `--bt-panel-max` is measured at open (feed-page.ts sizePanel — capped to
+     end PANEL_FOOT_GAP above the fold; that gap is the owner's buffer), and
+     `auto` means the scrollbar appears ONLY when the panel genuinely outgrows
+     the window. */
+  max-height: var(--bt-panel-max, 70vh);
+  overflow-y: auto;
+  /* A flick that runs out of panel must not carry on into the page behind it. */
+  overscroll-behavior: contain;
 }
 .bt-panel[hidden] { display: none; }
 .bt-panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
