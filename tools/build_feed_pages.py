@@ -24,6 +24,18 @@ published site pages:
   * no "complete path", no notification promises.
   * titles, descriptions and OG carry no "live"/"real time" superlative;
     "as it moves" is the house phrase.
+  * THE WINDOW CLAIMS (D30, owner 2026-08-20). The intro names the session
+    window the feed covers, and the tracking-start date scopes what is IN it —
+    the two sentences travel together, because we joined mid-session and
+    "covers the 119th" alone would read as completeness back to January 2025.
+    The dates are the published record's own first posts (us-2026-07.jsonl:
+    2026-07-16; eu-2026-07.jsonl: 2026-07-17 — verified 2026-08-20), not the
+    bots' X launch. Only the US line may promise a reset: US bills die with
+    their Congress, while EU files are often RESUMED across terms under their
+    original codes, so the EU window keys on last activity and a "resets in
+    2029" would be false (AGENTS.md, EU WINDOW NUANCE). ⏰ At the 120th's
+    convening (2027-01-03) the US row's window sentence must be re-dated —
+    filed with the rollover cluster in the app repo's OPEN-ITEMS.
 
 Do not add a claim to this file without the same check.
 """
@@ -89,19 +101,23 @@ LEGISLATURES: dict[str, dict[str, str]] = {
         # old line ("Every recorded step…") read as a completeness claim over all
         # of history; a reader hunting an old bill would blame our record, not
         # our scope. Bill pages ARE complete per bill, and the intro says so.
+        # The window sentence is D30's (see the docstring's WINDOW CLAIMS law).
         "intro": (
             "A live feed of the US Congress — bills as they move, from the "
-            "official record at Congress.gov. Tracking since July 2026; each "
-            "bill's page carries its complete official path."
+            "official record at Congress.gov. The feed covers the 119th "
+            "Congress (January 2025 – January 2027) and resets with the "
+            "120th; tracking since 16 July 2026. Each bill's page carries "
+            "its complete official path."
         ),
-        "explainer_url": "/us-process.html",
+        "explainer_url": "/us-process",
         "explainer_label": "How a bill becomes law",
         "accent": "#0A3161",
         "title": "The US feed — Congress as it moves | BillTracking",
         "og_title": "The US feed — Congress as it moves",
         "description": (
             "A live feed of the US Congress — bills as they move, from the "
-            "official record at Congress.gov. Tracking since July 2026."
+            "official record at Congress.gov. Covering the 119th Congress; "
+            "tracking since 16 July 2026."
         ),
         "og_image": "https://billtracking.org/assets/us-banner.webp",
     },
@@ -115,21 +131,26 @@ LEGISLATURES: dict[str, dict[str, str]] = {
         "polity_name": "European Union",
         "eyebrow": "EU tracker",
         "h1": "The EU feed",
+        # No reset promise here, deliberately — EU files are often resumed
+        # across terms under their original codes (the docstring's WINDOW
+        # CLAIMS law), so this row names the term and stops.
         "intro": (
             "A live feed of EU lawmaking — procedures as they move through the "
             "European Parliament and the Council, from the EU's official "
-            "registers, in plain English. Tracking since July 2026; each file's "
-            "page carries its complete path."
+            "registers, in plain English. The feed covers the 10th "
+            "parliamentary term (2024–2029); tracking since 17 July 2026. "
+            "Each file's page carries its complete path."
         ),
-        "explainer_url": "/eu-process.html",
+        "explainer_url": "/eu-process",
         "explainer_label": "How an EU law is made",
         "accent": "#003399",
         "title": "The EU feed — EU lawmaking as it moves | BillTracking",
         "og_title": "The EU feed — EU lawmaking as it moves",
         "description": (
             "A live feed of EU lawmaking as it moves through the "
-            "European Parliament and the Council, posted as it moves — from "
-            "the EU's official registers."
+            "European Parliament and the Council — from the EU's official "
+            "registers. Covering the 10th parliamentary term; tracking "
+            "since 17 July 2026."
         ),
         "og_image": "https://billtracking.org/assets/eu-banner.webp",
     },

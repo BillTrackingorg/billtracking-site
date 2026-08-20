@@ -1094,3 +1094,26 @@ details.blurbs blockquote {
    product is finished, present tense — buttons render before their URLs do).
    Same paint as the real button; only the cursor and interactivity differ. */
 .btn.is-inert { cursor: default; opacity: .92; }
+
+/* --------------------------------------------------------------------------
+   Cross-document view transitions (2026-08-20)
+   --------------------------------------------------------------------------
+   Same-origin navigations (US <-> EU, any nav hop) swap with a short crossfade
+   instead of a hard cut. Pure progressive enhancement: browsers without
+   @view-transition keep the instant swap, and nothing here delays navigation -
+   the fade IS the paint of the new page. Kept fast on purpose: the product is
+   quick and should stay quick; this only removes the cut. Works with
+   feed.css's .feed-page min-height, which keeps the footer out of the first
+   paint - the two together are the "quick but smooth" fix. */
+@view-transition { navigation: auto; }
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 150ms; }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  /* Belt for engines that opt in above but drop a nested @view-transition:
+     kill the animation itself. Worst case either way is a 150ms opacity fade —
+     non-vestibular — but reduced motion asked for none, so none. */
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(root) { animation: none !important; }
+}

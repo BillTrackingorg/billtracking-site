@@ -116,6 +116,13 @@ button[disabled],
   max-width: var(--feed-measure);
   margin: 0 auto;
   padding: 0 1rem 3.5rem;   /* 16px gutters on narrow screens */
+  /* Reserve the first viewport before any card has rendered: the pre-hydration
+     page is only the head + the loading state, which put the FOOTER inside the
+     first paint — one visible frame of footer on every /us↔/eu hop (owner,
+     2026-08-20). The honest states still sit at the top; only the footer is
+     held below the fold. svh so a phone's collapsing URL bar doesn't overshoot. */
+  min-height: 100vh;
+  min-height: 100svh;
 }
 
 .feed-head { padding: 2.25rem 0 0; }
