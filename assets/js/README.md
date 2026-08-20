@@ -1085,7 +1085,7 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   completely: probe the live URL at Gate B, before the provider config is
   written.
 * **The stylesheet is versioned by hand, and only on the shells.** The five
-  hand-authored pages ask for `/assets/css/feed.css?v=7`; the generated `/p/`
+  hand-authored pages ask for `/assets/css/feed.css?v=6`; the generated `/p/`
   pages ask for `/assets/css/feed.css` with no query at all. Same file, two cache
   entries. It is harmless before the first publish (nothing holds either yet),
   but from the first publish on, ANY edit to `feed.css` needs the query bumped in
@@ -1097,7 +1097,7 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   `.feed-page` min-height and the cross-document view transitions; **`?v=3` →
   `?v=4` the same evening** with the refusal pulse going gold (`--gold-wash`);
   **`?v=4` → `?v=5` the same night** with the desktop scroll-lock revert (the
-  cap is phone-only now — owner ruling); **`?v=5` → `?v=6` right after** — the desktop panel cap (and its internal scrollbar) removed with it; **`?v=6` → `?v=7` on 2026-08-21** with the scroll CLAMP (the owner's spec: page scrolls to the bar's park point then holds; panel cap + overflow restored as the tall-panel fallback).
+  cap is phone-only now — owner ruling); **`?v=5` → `?v=6` right after** — the desktop panel cap (and its internal scrollbar) removed with it.
   ⚠️ A section of this file was once lost to `git checkout -- assets/js` run to
   reset the BUNDLE — this README lives in assets/js but is hand-maintained, so
   reset the chunk files by name, never the directory.
