@@ -164,10 +164,11 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   <section class="acct-region" id="bt-acct-signed-in" hidden>
       <p id="bt-acct-email" class="acct-value"></p>
       <div id="bt-geo-picker"></div>     <!-- MOUNT: the Country picker -->
-      <!-- the compact tail (owner ruling 2026-08-22): sign-out + one quiet
-           delete sentence — no consent card, no delete card -->
+      <!-- the tail (2026-08-22 ruling + same-day correction): the sign-out
+           card, then the runtime-mounted delete card, then the quiet
+           for-more line — the .acct-danger mount anchor. No consent card. -->
       <button id="bt-signout" class="btn-provider">Sign out on this device</button>
-      <p class="acct-note">For more, see <a href="/delete-account">Delete account</a>.</p>
+      <p class="acct-danger">For more, see <a href="/delete-account">Delete account</a>.</p>
       <section class="acct-settings" aria-labelledby="bt-settings-head">  <!-- INSIDE the region — owner ruling 2026-08-22, see bullet -->
           <h2 id="bt-settings-head">Settings</h2>
           <div id="bt-settings-groups" hidden></div>   <!-- MOUNT: the runtime fills + unhides -->
@@ -259,22 +260,24 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   repo's STORE-READINESS HARD GATE #4.
 * ~~Delete account keeps its own page (`/delete-account.html`); do not build a
   second deletion flow here.~~ **DEVIATION, recorded 2026-08-19 by the auth
-  lane** — the signed-in region grew an in-page `.acct-delete` card calling the
-  same `deleteAccount()` the phone's sheet calls, on the argument that once an
-  account can be MADE here, the email route is a several-day wait for something
-  the phone does in two taps.
-  ⚠️ **RE-FOLDED 2026-08-22 BY OWNER RULING** (*"I know you really aim for full
-  transparency and everything, but sometimes it's just too verbose"*): the card
-  is REMOVED and the original rule stands again — deletion on the web is
-  `/delete-account.html`, reached from the compact tail's one quiet sentence
-  ("For more, see Delete account.") whose only link words are "Delete account".
-  The same fold absorbed the sign-out card's two explainer notes and the long
-  danger link; the sign-out button is the tail's one functional control. Two
-  consequences worth knowing: the Apple-revocation "one more step" notice has
-  no web surface until an in-page flow returns (`src/web/account.ts` records
-  it beside the fold), and this page again offers no one-click destructive
-  control — §6's clickjacking framing note is simply true again. An in-page
-  flow returning is a ruling, not a drive-by (`check:webauth` fences it).
+  lane, AND IT STANDS** — the signed-in region carries an in-page
+  `.acct-delete` card calling the same `deleteAccount()` the phone's sheet
+  calls, with the same words, the same two-step arm, and the same Apple
+  "one more step" notice from `appleFallbackNotice()` (which is why it does
+  not redirect away on success — that notice is the only place a reader is
+  told about a dead Apple ID entry; they leave by pressing **Done**).
+  `/delete-account.html` stays exactly as it is; it is the route for somebody
+  who no longer has any way to sign in.
+  ⚠️ **WHAT THE 2026-08-22 VERBOSITY RULING CHANGED HERE — AND A CORRECTION.**
+  The ruling folded the tail's VERBOSE LINK ("Delete your account and
+  everything in it") into one quiet sentence — "For more, see Delete
+  account.", only "Delete account" linked — and trimmed the sign-out card's
+  two explainer notes. A misread briefly removed the delete CARD as well;
+  the owner corrected it within hours (*"where did the delete account
+  section go? It was so good? All I asked was to change a link location"*)
+  and the card was restored from git history. The quiet line carries the
+  card's old `.acct-danger` class, so it doubles as the runtime's mount
+  anchor exactly as the long link did.
 * `#bt-acct-loading` carries a static second line saying what it means if the
   region never changes (the module failed to load — `<noscript>` does not fire
   for that). Replacing the region, which is what you do anyway, removes it.
@@ -349,10 +352,11 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   signed-in region with plainly-sample values: `reader@example.com`, the real
   Country picker (always editable, nothing chosen, wired through the real
   `wireGeoPicker` with the preview's inert line in place of a save — the
-  US-state reveal behaves exactly as the real page's), and the page's own
-  compact sign-out/delete tail, every account control INERT (a press or a
-  picker selection answers with one line through `#bt-acct-status`, never a
-  call and never a held value). The Settings section
+  US-state reveal behaves exactly as the real page's), the real delete card
+  (`deleteCardIdleHtml`, mounted on the same `.acct-danger` anchor), and the
+  page's own sign-out card and quiet for-more line, every account control
+  INERT (a press or a picker selection answers with one line through
+  `#bt-acct-status`, never a call and never a held value). The Settings section
   rides the region and stays LIVE — its device controls really work without a
   session, so the preview's interceptor skips `.acct-settings`. No markup in this repo
   changes for it: the link lives inside the signed-out region, which only the
@@ -720,9 +724,9 @@ sanctioned exception as `--glyph-stroke` (rule 11): a per-row percentage cannot
 be a class, and a custom property is data rather than a style rule.
 
 **4. `.acct-delete`** and `.btn-provider.is-danger` on the account page (§1.2).
-⚠️ Occupant removed 2026-08-22 (the delete-card fold, §1.2): the two rules sit
-dormant in `feed.css` — deliberately left rather than churning a stylesheet
-version for dead selectors; they go, or revive, with any future in-page flow.
+(Both in use — the delete card was briefly removed on 2026-08-22 by a misread
+of the verbosity ruling and restored the same day; `.acct-danger` now styles
+the quiet for-more line the runtime anchors the card on.)
 
 ---
 

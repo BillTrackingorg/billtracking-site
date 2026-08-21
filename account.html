@@ -149,21 +149,25 @@
          that duty is coupled to the sign-in-enable gate (app repo
          STORE-READINESS, HARD GATE #4). -->
 
-    <!-- ONE compact tail — owner ruling 2026-08-22 ("I know you really aim
-         for full transparency and everything, but sometimes it's just too
-         verbose"): the sign-out card's two explainer notes, the runtime
-         delete card and the long danger link ("Delete your account and
-         everything in it") all folded into this. Sign-out is the one
-         functional control; deletion is one quiet sentence whose only link
-         words are "Delete account" — the delete PAGE owns the details,
-         which is its job. -->
+    <!-- THE TAIL — trimmed by the 2026-08-22 verbosity ruling, then CORRECTED
+         the same day. What the ruling changed: the sign-out card's two
+         explainer notes went, and the long danger link ("Delete your account
+         and everything in it") folded into the quiet line below — only the
+         words "Delete account" are the link. What it did NOT change (owner,
+         from the live page, after a misread briefly removed it: "where did
+         the delete account section go? It was so good? All I asked was to
+         change a link location"): the two-step DELETE CARD — the runtime
+         (app repo src/web/account.ts, and the preview) mounts it between the
+         sign-out card and the for-more line, anchored on .acct-danger
+         exactly as before. -->
     <div class="acct-card">
       <h2>Sign out</h2>
       <div class="acct-buttons">
         <button type="button" class="btn-provider" id="bt-signout">Sign out on this device</button>
       </div>
-      <p class="acct-note">For more, see <a href="/delete-account">Delete account</a>.</p>
     </div>
+
+    <p class="acct-danger">For more, see <a href="/delete-account">Delete account</a>.</p>
 
     <!-- SECTION: Settings — the app's Settings screen, on the web (owner
          commission 2026-08-22; module: src/web/settings.ts in the app repo).
