@@ -147,39 +147,48 @@
 
     <p class="acct-danger"><a href="/delete-account">Delete your account and everything in it</a></p>
 
-  </section>
+    <!-- SECTION: Settings — the app's Settings screen, on the web (owner
+         commission 2026-08-22; module: src/web/settings.ts in the app repo).
 
-  <!-- SECTION: Settings — the app's Settings screen, on the web (owner
-       commission 2026-08-22; module: src/web/settings.ts in the app repo).
-       It sits OUTSIDE the three session regions above because device
-       preferences are device things: the section renders the same signed in
-       or out, exactly as the app's Settings screen is reachable signed out.
+         ⚠️ INSIDE THE SIGNED-IN REGION BY OWNER RULING (2026-08-22, from the
+         live page): the signed-out /account screen shows ONLY the sign-in
+         card and "What an account is for" — that screen has one job. This is
+         a DELIBERATE, RECORDED DEVIATION from the app, whose Settings screen
+         is reachable signed out: on the web the signed-out home of the
+         device switches is the feed pages' Display panel, so nothing becomes
+         unreachable — and for signed-out or no-JS readers the Privacy, Terms
+         and Delete-account doors are in every page's FOOTER, which is the
+         floor, so no honesty is lost either. The section renders whenever
+         this region shows: a real session, or the temporary signed-in
+         preview riding the same region (account-preview.ts).
 
-       #bt-settings-groups ships EMPTY and hidden. The switch states live in
-       this browser's storage, which no static page can know, so the runtime
-       fills the groups and unhides them — the notices bell's precedent: a
-       reader with no JavaScript must never meet a dead control. The heading
-       and the Privacy card below are static because they work with no script
-       at all — links are links. The group ORDER (Shown in the feed → My
-       docket → Display → Privacy) is the app Settings screen's own, and the
-       gaps — no Legislatures, no Notices tree, no bucket rows, no follow
-       list, no Hide comments — are each recorded, with their reasons, at the
-       render in settings.ts, never silent. -->
-  <section class="acct-settings" aria-labelledby="bt-settings-head">
-    <h2 id="bt-settings-head">Settings</h2>
-    <div id="bt-settings-groups" hidden></div>
-    <h3 class="acct-eyebrow">Privacy</h3>
-    <div class="acct-card">
-      <!-- The app's Settings ends with Privacy too. Its paragraph's one web
-           home is /privacy itself (D23 single-source) — this card is the
-           doors, never a second copy of the words. Link labels are the
-           footer Legal column's, so the site keeps one name per page. -->
-      <ul class="acct-links">
-        <li><a href="/privacy">Privacy</a></li>
-        <li><a href="/terms">Terms of use</a></li>
-        <li><a href="/delete-account">Delete account</a></li>
-      </ul>
-    </div>
+         #bt-settings-groups still ships EMPTY and hidden. The switch states
+         live in this browser's storage, which no static page can know, so
+         the runtime fills the groups at mount — inside the hidden region,
+         cheap, ready the moment the region shows — and unhides them (the
+         notices bell's precedent: no reader ever meets a dead control). The
+         heading and the Privacy card are static; links are links. The group
+         ORDER (Shown in the feed → My docket → Display → Privacy) is the app
+         Settings screen's own, and the gaps — no Legislatures, no Notices
+         tree, no bucket rows, no follow list, no Hide comments — are each
+         recorded, with their reasons, at the render in settings.ts. -->
+    <section class="acct-settings" aria-labelledby="bt-settings-head">
+      <h2 id="bt-settings-head">Settings</h2>
+      <div id="bt-settings-groups" hidden></div>
+      <h3 class="acct-eyebrow">Privacy</h3>
+      <div class="acct-card">
+        <!-- The app's Settings ends with Privacy too. Its paragraph's one web
+             home is /privacy itself (D23 single-source) — this card is the
+             doors, never a second copy of the words. Link labels are the
+             footer Legal column's, so the site keeps one name per page. -->
+        <ul class="acct-links">
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms of use</a></li>
+          <li><a href="/delete-account">Delete account</a></li>
+        </ul>
+      </div>
+    </section>
+
   </section>
 
   <p class="acct-status" id="bt-acct-status" role="status"></p>

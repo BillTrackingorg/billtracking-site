@@ -1,0 +1,39 @@
+import{$ as P,Aa as K,Ea as S,Fa as F,Ga as j,K as c,L as b,N as d,Z as w,_ as T,aa as h,ha as H,ja as A,ka as g,ma as p,na as r,pa as D,qa as v,sa as N,ta as q,ua as U,wa as G,xa as V,ya as B,za as Y}from"./bt-chunk-5KZX23P4.js";import{c as x,d as I,e as _,g as M,h as O,i as R,j as W}from"./bt-chunk-JSQCGYAG.js";import"./bt-chunk-I4MGNEPI.js";var Q="Not set",st="Country",it="State",y=(t,e,n)=>r`<option value="${t}"${n?p(" selected"):p("")}>${e}</option>`;function L(t){let e=t!==null,n=t?.country??"",i=t?.usState??"";return r`<div class="geo-picker">
+  <label class="geo-field">
+    <span class="geo-label">${st}</span>
+    <select class="geo-select" name="country"${e?p(""):p(" disabled")}>${[y("",Q,n==="")].concat(U.map(o=>y(o.code,`${o.flag} ${o.name}`,o.code===n)))}</select>
+  </label>
+  <label class="geo-field"${n==="US"?p(""):p(" hidden")}>
+    <span class="geo-label">${it}</span>
+    <select class="geo-select" name="us_state"${e?p(""):p(" disabled")}>${[y("",Q,i==="")].concat(G.map(o=>y(o.code,o.name,o.code===i)))}</select>
+  </label>
+  <p class="acct-note geo-status" role="status">${e?"":"This becomes editable after your first vote \u2014 that is when your account record is created, and this is stored on it."}</p>
+</div>`}async function z(t){let e=null;try{e=await D()}catch{t.replaceChildren(d(r`<p class="acct-note">We couldn’t read your account record just now. This is a connection problem, not an answer — nothing has changed.</p>`));return}let n=d(L(e)),i=n.querySelector('select[name="country"]'),o=n.querySelector('select[name="us_state"]'),s=o.closest(".geo-field"),a=n.querySelector(".geo-status"),l=async()=>{let u=i.value||void 0,m=u==="US"&&o.value||void 0;a.textContent="Saving\u2026",await x();let f=await(await import("./bt-voter-XHK4BCC4.js")).setVoterLocation({...u?{country:u}:{},...m?{usState:m}:{}});v(),a.textContent=f.ok?"Saved.":f.message};i.addEventListener("change",()=>{let u=i.value==="US";s.hidden=!u,u||(o.value=""),l()}),o.addEventListener("change",()=>{l()}),t.replaceChildren(n)}var at="reader@example.com",k={link:"Preview the signed-in view",marker:"Preview \u2014 sample values. This is how the page looks signed in.",inert:"Preview \u2014 sign-in isn't enabled yet."};function J(){let t=c("bt-acct-signed-out");if(!t||c("bt-preview-signin"))return;let e=d(r`<p class="acct-note"><button type="button" class="acct-linklike"
+    id="bt-preview-signin">${k.link}</button></p>`),n=t.querySelector(".acct-card");n?n.after(e):t.appendChild(e),e.querySelector("button").addEventListener("click",()=>{ct()})}async function ct(){let t=c("bt-acct-signed-in");if(!t)return;for(let o of["loading","signed-out"]){let s=c(`bt-acct-${o}`);s&&(s.hidden=!0)}t.hidden=!1,t.querySelector(".acct-preview-marker")||t.prepend(d(r`<p class="acct-note acct-preview-marker">${k.marker}</p>`));let e=c("bt-acct-email");e&&(e.textContent=at);let n=c("bt-geo-picker");n&&b(n,L(null));let i=c("bt-consent");if(i&&b(i,N()),!t.querySelector(".acct-delete")){let[{DELETE_ACCOUNT_COPY:o},s]=await Promise.all([import("./bt-auth-core-FNZIJIN4.js"),import("./bt-account-4EMTYFNG.js")]),a=d(s.deleteCardIdleHtml(o)),l=t.querySelector(".acct-danger");l?l.before(a):t.appendChild(a)}t.dataset.btPreview||(t.dataset.btPreview="1",t.addEventListener("click",o=>{let s=o.target;if(!(s instanceof Element)||!s.closest("button")||s.closest(".acct-settings"))return;o.preventDefault();let a=c("bt-acct-status");a&&(a.textContent=k.inert)}))}function rt(t){let e=P("web");return r`<h3 class="acct-eyebrow">${h.shownGroup}</h3>
+<div class="acct-card">
+  <p class="bt-row-cap bt-keyword-cap">${g.shownNote}</p>
+  ${S(w.label,r`${w.caption}. <em>${H}</em>`,!1,p(' data-docket="1"'),{disabled:!0})}
+</div>
+<h3 class="acct-eyebrow">${g.docketGroup}</h3>
+<div class="acct-card">
+  <p class="acct-label">${A.head}</p>
+  <p class="bt-row-cap bt-keyword-cap">${g.keywordsCaption}</p>
+  ${F(t.keywords)}${j()}
+</div>
+<h3 class="acct-eyebrow">${h.displayGroup}</h3>
+<div class="acct-card">
+  ${T.map(n=>S(e[n].label,e[n].caption,t[n],p(` data-toggle="${n}"`)))}
+  <p class="bt-foot">${g.foot}</p>
+</div>`}function X(){let t=c("bt-settings-groups");if(!t||t.dataset.btWired)return;t.dataset.btWired="1";let e=V(),n=()=>b(t,rt(e)),i=s=>{e=s,B(e),n()};t.addEventListener("change",s=>{let a=s.target;if(!(a instanceof HTMLInputElement))return;let l=a.dataset.toggle;l&&i({...e,[l]:a.checked})});let o=()=>{let s=t.querySelector("input.bt-kw"),a=Y(e,s?.value??"");if(!a){s&&(s.value="");return}i(a),t.querySelector("input.bt-kw")?.focus()};t.addEventListener("click",s=>{let a=s.target;if(!(a instanceof Element))return;if(a.closest(".bt-add")){o();return}let l=a.closest(".bt-chip-x");l?.dataset.keyword!==void 0&&i(K(e,l.dataset.keyword))}),t.addEventListener("keydown",s=>{if(s.key!=="Enter")return;let a=s.target;a instanceof HTMLInputElement&&a.classList.contains("bt-kw")&&(s.preventDefault(),o())}),n(),t.hidden=!1}var lt="Your account",Z=!1,tt=!1;function et(t){for(let e of["loading","signed-out","signed-in"]){let n=c(`bt-acct-${e}`);n&&(n.hidden=e!==t)}}function dt(t){let e=c("bt-acct-status");e&&(e.textContent=t)}function nt(t){let e=c("bt-provider-note");e&&(e.textContent=t)}function ut(t){let e=[["google",c("bt-signin-google")],["apple",c("bt-signin-apple")]];for(let[n,i]of e)i instanceof HTMLButtonElement&&(i.disabled=!1,i.addEventListener("click",()=>{i.disabled=!0,nt(""),(async()=>{let o;try{o=await M(n,t)}catch{o={ok:!1,message:I[n]}}o.ok||(i.disabled=!1,nt(o.message))})()}))}function pt(t){return r`<div class="acct-card acct-delete">
+  <h2>${t.title}</h2>
+  <p>${t.permanence}</p>
+  <p>${t.published}</p>
+  <p class="acct-note">${t.withoutAccount}</p>
+  <p class="acct-status" role="status"></p>
+  <div class="acct-buttons"><button type="button" class="btn-provider is-danger">${t.arm}</button></div>
+</div>`}async function mt(){let{DELETE_ACCOUNT_COPY:t,appleFallbackNotice:e}=await import("./bt-auth-core-FNZIJIN4.js"),n=d(pt(t)),i=n.querySelector(".acct-buttons"),o=n.querySelector(".acct-status"),s=()=>{o.textContent=t.confirmQuestion,i.replaceChildren(d(r`<button type="button" class="btn-provider is-danger">${t.confirm}</button>`),d(r`<button type="button" class="btn-provider">${t.cancel}</button>`));let[u,m]=Array.from(i.querySelectorAll("button"));m.addEventListener("click",()=>a()),u.addEventListener("click",()=>{u.disabled=!0,m.disabled=!0,(async()=>{let{deleteAccount:$}=await import("./bt-auth-core-FNZIJIN4.js"),f=await $();if(!f.ok){o.textContent=f.message,u.disabled=!1,m.disabled=!1;return}v(),l(f.appleRevocation)})()})},a=()=>{o.textContent="",i.replaceChildren(d(r`<button type="button" class="btn-provider is-danger">${t.arm}</button>`)),i.querySelector("button").addEventListener("click",()=>s())},l=u=>{let m=e(u);n.replaceChildren(d(r`<div>
+  <h2>${t.doneTitle}</h2>
+  <p>${t.doneBody}</p>${m?r`<p class="acct-note">${m}</p>`:""}
+  <p>${t.doneAgain}</p>
+  <div class="acct-buttons"><a class="btn-provider" href="/">${t.done}</a></div>
+</div>`))};return a(),n}async function ft(t){let e=c("bt-acct-email");e&&(e.textContent=t.email??lt);let n=c("bt-signout");n instanceof HTMLButtonElement&&!n.dataset.btWired&&(n.dataset.btWired="1",n.addEventListener("click",()=>{n.disabled=!0,(async()=>(await O(),v(),n.disabled=!1))()}));let i=c("bt-acct-signed-in");if(i&&!tt){tt=!0;let a=i.querySelector(".acct-danger"),l=await mt();a?a.before(l):i.appendChild(l)}let o=c("bt-geo-picker");o&&await z(o);let s=c("bt-consent");s&&await q(s)}var C=null;function ot(t,e){if(t.status==="signed-in"){et("signed-in"),C!==t.userId&&(C=t.userId,ft(t)),e!=="/account"&&e!==location.pathname&&location.replace(e);return}C=null,et("signed-out")}function Gt(){if(Z)return;Z=!0,X(),J();let t=_(new URLSearchParams(location.search).get("next"));ut(t),W(e=>{dt(""),ot(e,t)}),R().then(e=>ot(e,t))}export{pt as deleteCardIdleHtml,Gt as mount};

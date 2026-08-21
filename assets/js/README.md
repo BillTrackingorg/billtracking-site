@@ -167,11 +167,11 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
       <div id="bt-consent"></div>        <!-- MOUNT: consent status  -->
       <button id="bt-signout" class="btn-provider">Sign out on this device</button>
       <a href="/delete-account"> … </a>
-  </section>
-  <section class="acct-settings" aria-labelledby="bt-settings-head">   <!-- 2026-08-22, see bullet -->
-      <h2 id="bt-settings-head">Settings</h2>
-      <div id="bt-settings-groups" hidden></div>   <!-- MOUNT: the runtime fills + unhides -->
-      … static Privacy card: /privacy, /terms, /delete-account …
+      <section class="acct-settings" aria-labelledby="bt-settings-head">  <!-- INSIDE the region — owner ruling 2026-08-22, see bullet -->
+          <h2 id="bt-settings-head">Settings</h2>
+          <div id="bt-settings-groups" hidden></div>   <!-- MOUNT: the runtime fills + unhides -->
+          … static Privacy card: /privacy, /terms, /delete-account …
+      </section>
   </section>
   <p id="bt-acct-status" class="acct-status" role="status"></p>
 </main>
@@ -305,10 +305,18 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   resolved, so this site's three spellings (`index.html`, `/index.html`, `/us`)
   compare as the pages they are.
 
-* **The Settings section (2026-08-22, owner commission).** After the three
-  session regions the page carries `<section class="acct-settings">` — the app
-  Settings screen's web equivalent, session-INDEPENDENT (device prefs are
-  device things, so it renders the same signed in or out). Three parts:
+* **The Settings section (2026-08-22, owner commission).** The signed-in
+  region carries `<section class="acct-settings">` — the app Settings
+  screen's web equivalent. ⚠️ **INSIDE `#bt-acct-signed-in` by owner ruling
+  (2026-08-22, from the live page): the signed-out screen shows ONLY the
+  sign-in card and "What an account is for".** That is a deliberate,
+  RECORDED deviation from the app, whose Settings screen is reachable signed
+  out — on the web the signed-out home of the device switches is the feed
+  pages' Display panel, so nothing becomes unreachable, and the footer's
+  Privacy/Terms/Delete doors on every page are the no-JS floor. The prefs
+  themselves stay device-local; the region's `hidden` decides who SEES the
+  section (a session, or the signed-in preview riding the same region).
+  Three parts:
   * a static `<h2 id="bt-settings-head">Settings</h2>` — the app screen's own
     name, which is the point (symmetry of interpretation);
   * `#bt-settings-groups`, shipped **EMPTY and `hidden`**: the app repo's
@@ -336,8 +344,10 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   the sign-in card — "Preview the signed-in view" — that renders the
   signed-in region with plainly-sample values: `reader@example.com`, the real
   location picker and consent block in their fresh-account shapes, the real
-  sign-out and delete cards, every button INERT (a press answers with one
-  line through `#bt-acct-status`, never a call). No markup in this repo
+  sign-out and delete cards, every account button INERT (a press answers with
+  one line through `#bt-acct-status`, never a call). The Settings section
+  rides the region and stays LIVE — its device controls really work without a
+  session, so the preview's interceptor skips `.acct-settings`. No markup in this repo
   changes for it: the link lives inside the signed-out region, which only the
   runtime ever unhides, so a no-JS reader never meets it. It is deleted —
   module, call line, the `.acct-linklike` rule in `feed.css`, its
