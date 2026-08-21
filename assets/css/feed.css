@@ -974,6 +974,43 @@ button[disabled],
 .acct-status { font-size: 0.93rem; color: var(--ink-soft); margin: 0.9rem 0 0; }
 .acct-status:empty { display: none; }
 
+/* The Settings section — the app's Settings screen on /account (2026-08-22;
+   src/web/settings.ts renders the groups into #bt-settings-groups, reusing the
+   Display panel's own .bt-row/.bt-sw/.bt-chips tree, which this stylesheet
+   already styles above). Only what that reuse does not cover is added here. */
+
+/* The switches' checked colour. `--accent` is otherwise defined only by a
+   card's or a feed page's [data-polity] — the two display toggles here are
+   cross-legislature device prefs, so they wear the site's own chrome navy,
+   never one legislature's colour. Without this the checked track would paint
+   TRANSPARENT (an undefined custom property invalidates the declaration). */
+.account-page { --accent: var(--navy); }
+
+.acct-settings { margin-top: 2.4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+.acct-settings > h2 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 650;
+  color: var(--navy-ink);
+  margin: 0;
+}
+
+/* The group eyebrows — the app Settings screen's own grammar (uppercase small
+   caps above a card), .acct-label's look freed from its in-card margins. */
+.acct-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint-aa);
+  margin: 1.3rem 0 0.45rem;
+}
+
+/* The Privacy card's quiet doors. */
+.acct-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.acct-links a { font-size: 0.94rem; color: var(--navy); }
+
 #bt-callback .auth-status,
 #bt-resolver .resolver-status {
   font-size: 1rem;

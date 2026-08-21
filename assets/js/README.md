@@ -168,6 +168,11 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
       <button id="bt-signout" class="btn-provider">Sign out on this device</button>
       <a href="/delete-account"> … </a>
   </section>
+  <section class="acct-settings" aria-labelledby="bt-settings-head">   <!-- 2026-08-22, see bullet -->
+      <h2 id="bt-settings-head">Settings</h2>
+      <div id="bt-settings-groups" hidden></div>   <!-- MOUNT: the runtime fills + unhides -->
+      … static Privacy card: /privacy, /terms, /delete-account …
+  </section>
   <p id="bt-acct-status" class="acct-status" role="status"></p>
 </main>
 ```
@@ -299,6 +304,32 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   differs from the one `src/site/chrome.ts` emits. Destinations are compared
   resolved, so this site's three spellings (`index.html`, `/index.html`, `/us`)
   compare as the pages they are.
+
+* **The Settings section (2026-08-22, owner commission).** After the three
+  session regions the page carries `<section class="acct-settings">` — the app
+  Settings screen's web equivalent, session-INDEPENDENT (device prefs are
+  device things, so it renders the same signed in or out). Three parts:
+  * a static `<h2 id="bt-settings-head">Settings</h2>` — the app screen's own
+    name, which is the point (symmetry of interpretation);
+  * `#bt-settings-groups`, shipped **EMPTY and `hidden`**: the app repo's
+    `src/web/settings.ts` fills it with the app screen's groups — Shown in the
+    feed → My docket → Display, the app's own order — and unhides it. The
+    bell's precedent: switch states live in this browser's storage, no static
+    page can know them, and a no-JS reader must never meet a dead control.
+    The rows and keyword chips are the Display panel's own DOM
+    (`src/web/prefs-ui.ts`) over the same `billtracking.web.prefs.v1` storage —
+    **two views of ONE state**, so a switch flipped here is flipped on the
+    feed pages. The two chrome glyphs are INLINE — this page carries no sprite
+    (§5's silent-failure class).
+  * a static Privacy card of quiet doors (`/privacy`, `/terms`,
+    `/delete-account`, `.acct-links`) — links need no runtime, and the app's
+    Settings ends with Privacy too.
+
+  The groups the section does NOT mirror (Legislatures, the Notices tree, the
+  bucket rows, the follow list, Hide comments) are each recorded, with their
+  reasons, at the render in `settings.ts` — deliberate gaps, never silent.
+  `check:web` executes the section (order, refusals, one-home copy) and this
+  page's half of the contract (heading static, mount hidden).
 
 ### 1.3 OAuth return — `auth/callback.html` (served as `/auth/callback`)
 
