@@ -163,10 +163,11 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   </section>
   <section class="acct-region" id="bt-acct-signed-in" hidden>
       <p id="bt-acct-email" class="acct-value"></p>
-      <div id="bt-geo-picker"></div>     <!-- MOUNT: location picker -->
-      <div id="bt-consent"></div>        <!-- MOUNT: consent status  -->
+      <div id="bt-geo-picker"></div>     <!-- MOUNT: the Country picker -->
+      <!-- the compact tail (owner ruling 2026-08-22): sign-out + one quiet
+           delete sentence — no consent card, no delete card -->
       <button id="bt-signout" class="btn-provider">Sign out on this device</button>
-      <a href="/delete-account"> … </a>
+      <p class="acct-note">For more, see <a href="/delete-account">Delete account</a>.</p>
       <section class="acct-settings" aria-labelledby="bt-settings-head">  <!-- INSIDE the region — owner ruling 2026-08-22, see bullet -->
           <h2 id="bt-settings-head">Settings</h2>
           <div id="bt-settings-groups" hidden></div>   <!-- MOUNT: the runtime fills + unhides -->
@@ -213,15 +214,8 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   re-typing (`src/web/auth.ts` `signOutLocal`). `check:votes` pins the scope of
   both it and `deleteAccount`; `check:webauth` fails the build if any web module
   calls `auth.signOut(` for itself.
-* `#bt-geo-picker` and `#bt-consent` are **mounts, not copy**. Location is
-  account-level (set once, same on every surface); the consent sentence comes
-  from `lib/voter.ts` `consentSentence()`, which lifts it VERBATIM from the
-  published privacy policy through the D23 pipeline. Do not write a second
-  wording here — the one the reader agreed to has to be the one we published.
-  `CONSENT_VERSION` is what makes it answerable later.
-
-  What lands in them (`src/web/geo-picker.ts`, `src/web/consent.ts`) — the CSS
-  lane owns every class below, and none of them is styled yet:
+* `#bt-geo-picker` is a **mount, not copy** — `src/web/geo-picker.ts` fills it
+  with the Country picker:
 
   ```html
   <div class="geo-picker">
@@ -237,40 +231,50 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   for free, and a phone renders them as the same native picker the app's sheet
   is. The state field is `hidden` unless the country is `US`.
 
-  ⚠️ **The picker is DISABLED until the account has a `voters` row**, and says
-  so. That row is the consent record and `setVoterLocation` UPDATES only —
-  creating one here would record a consent nobody gave — so a write before the
-  first vote would match zero rows, return no error, and look exactly like a
-  successful save. **This is a real product gap, not a JS limitation**: the phone
-  keeps a location locally and hands it up at the consent step, and the web has
-  no such fallback by design (D27/§12(3): location is the account's). A reader
-  who wants their first vote counted in their own state cannot currently set it
-  first. Owner call — the fix is a product decision, not a patch.
+  ⚠️ **ALWAYS EDITABLE (owner amendment 2026-08-22) — the first-vote lock this
+  bullet used to record is DEAD.** The picker shipped disabled until the
+  account had a `voters` row (the row is the consent record; `setVoterLocation`
+  UPDATES only, so an earlier write would match zero rows and look saved). That
+  gate was the web DIVERGING from the app, and the owner caught it: the app's
+  You-tab picker is gate-free and HOLDS a pre-row choice until there is a row
+  to write to. The web now mirrors the app's own semantics — **no row yet**:
+  the choice is held in this browser (`billtracking.web.geo-pending.v1`),
+  consumed by the first-vote consent step (consume point marked in
+  `src/web/consent.ts`), and a row found without a country is healed from the
+  held value at mount; **row exists**: written straight to the account. The
+  caption above the picker is static in `account.html`, owner-ruled verbatim,
+  and carries the SEMANTIC RULING (the country is self-declared and
+  unverifiable — copy claims only where the vote appears in the breakdown,
+  never residence or origin).
 
-  The consent mount renders **status only** — `Recorded` / `Not recorded yet`,
-  the policy's own sentence, and the stored version string verbatim (never
-  parsed back into a date). What consent *means*, how it is withdrawn and what
-  re-consent looks like after a policy change stay in the published policy and
-  remain an owner item (identity packet §8(3)).
+* **There is no `#bt-consent` mount any more.** The consent status card was
+  REMOVED ENTIRELY on 2026-08-22 (owner: "completely unnecessary" — a status
+  display about a thing that cannot happen yet is noise). The Article 9 consent
+  CAPTURE before the first cast (`src/web/consent.ts` `ensureConsent`, §2b
+  step 2) is untouched — its sentence still comes from `lib/voter.ts`
+  `consentSentence()`, lifted VERBATIM from the published policy through the
+  D23 pipeline; never write a second wording. When a real provider makes
+  voting reachable, a consent VIEW and a WITHDRAWAL path (withdrawal as easy
+  as giving) must return to some surface — the duty is coupled to the app
+  repo's STORE-READINESS HARD GATE #4.
 * ~~Delete account keeps its own page (`/delete-account.html`); do not build a
   second deletion flow here.~~ **DEVIATION, recorded 2026-08-19 by the auth
-  lane.** The plan is explicit that `/account` carries deletion ("delete account
-  (existing Edge Function, CORS already allows the site) … required once accounts
-  can be created on the web (Apple 5.1.1(v), D13)", §2), and once an account can
-  be MADE here, the email route is a several-day wait for something the phone
-  does in two taps. So the signed-in region grows an `.acct-delete` card, mounted
-  by the JS above the existing link.
-
-  What the rule was protecting is intact: there is no second *flow*. The card
-  calls the same `deleteAccount()` in `lib/auth-core.ts` that the phone's sheet
-  calls, renders the same `DELETE_ACCOUNT_COPY` from that module, arms in the
-  same two steps, and shows the same Apple "one more step" notice from the same
-  `appleFallbackNotice()` — which is also why it does **not** redirect away the
-  moment the server answers: that notice is the only place a reader is ever told
-  they still have a dead entry in their Apple ID settings. They leave by pressing
-  **Done**. `/delete-account.html` stays exactly as it is; it is the route for
-  somebody who no longer has any way to sign in, and it should gain a line about
-  this one (owner/copy call, not a JS one).
+  lane** — the signed-in region grew an in-page `.acct-delete` card calling the
+  same `deleteAccount()` the phone's sheet calls, on the argument that once an
+  account can be MADE here, the email route is a several-day wait for something
+  the phone does in two taps.
+  ⚠️ **RE-FOLDED 2026-08-22 BY OWNER RULING** (*"I know you really aim for full
+  transparency and everything, but sometimes it's just too verbose"*): the card
+  is REMOVED and the original rule stands again — deletion on the web is
+  `/delete-account.html`, reached from the compact tail's one quiet sentence
+  ("For more, see Delete account.") whose only link words are "Delete account".
+  The same fold absorbed the sign-out card's two explainer notes and the long
+  danger link; the sign-out button is the tail's one functional control. Two
+  consequences worth knowing: the Apple-revocation "one more step" notice has
+  no web surface until an in-page flow returns (`src/web/account.ts` records
+  it beside the fold), and this page again offers no one-click destructive
+  control — §6's clickjacking framing note is simply true again. An in-page
+  flow returning is a ruling, not a drive-by (`check:webauth` fences it).
 * `#bt-acct-loading` carries a static second line saying what it means if the
   region never changes (the module failed to load — `<noscript>` does not fire
   for that). Replacing the region, which is what you do anyway, removes it.
@@ -343,9 +347,12 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   (app repo `src/web/account-preview.ts`) injects one quiet text link under
   the sign-in card — "Preview the signed-in view" — that renders the
   signed-in region with plainly-sample values: `reader@example.com`, the real
-  location picker and consent block in their fresh-account shapes, the real
-  sign-out and delete cards, every account button INERT (a press answers with
-  one line through `#bt-acct-status`, never a call). The Settings section
+  Country picker (always editable, nothing chosen, wired through the real
+  `wireGeoPicker` with the preview's inert line in place of a save — the
+  US-state reveal behaves exactly as the real page's), and the page's own
+  compact sign-out/delete tail, every account control INERT (a press or a
+  picker selection answers with one line through `#bt-acct-status`, never a
+  call and never a held value). The Settings section
   rides the region and stays LIVE — its device controls really work without a
   session, so the preview's interceptor skips `.acct-settings`. No markup in this repo
   changes for it: the link lives inside the signed-out region, which only the
@@ -713,6 +720,9 @@ sanctioned exception as `--glyph-stroke` (rule 11): a per-row percentage cannot
 be a class, and a custom property is data rather than a style rule.
 
 **4. `.acct-delete`** and `.btn-provider.is-danger` on the account page (§1.2).
+⚠️ Occupant removed 2026-08-22 (the delete-card fold, §1.2): the two rules sit
+dormant in `feed.css` — deliberately left rather than churning a stylesheet
+version for dead selectors; they go, or revive, with any future in-page flow.
 
 ---
 

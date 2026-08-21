@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>Your account | BillTracking</title>
-<meta name="description" content="Your BillTracking account: the address you signed in with, where your votes are counted from, signing out, and deleting the account.">
+<meta name="description" content="Your BillTracking account: the address you signed in with, the country your vote appears under, signing out, and deleting the account.">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://billtracking.org/account">
 <meta name="theme-color" content="#0A3161">
@@ -117,35 +117,53 @@
       never see the real one, and we do not need it.</p>
     </div>
 
-    <!-- MOUNT: location picker. Set once, and it is the same on every surface;
-         it is what makes the published geographic breakdown mean anything. -->
+    <!-- MOUNT: the Country picker (app repo src/web/geo-picker.ts fills it —
+         ALWAYS editable, the app's own gate-free hold-and-apply semantics).
+
+         ⚠️ SEMANTIC RULING (owner, 2026-08-22): the country is SELF-DECLARED
+         and deliberately unverifiable — the caption claims only what the
+         product DOES with it (where the vote appears in the public
+         geo-breakdown), never residence or origin; future copy must not
+         claim otherwise. The heading this card carried ("Where your vote is
+         counted from") died in the same ruling — the picker's own "Country"
+         row label is the name — and the caption below is owner-ruled
+         VERBATIM the same day (its closing sentence states the mutability
+         the removed first-vote lock made true). Follow-up owed, OUT of this
+         change's scope, recorded here at the copy's home: the APP's You-tab
+         caption ("Marks where you sit in the vote breakdown", you.tsx ~138)
+         should unify onto this same sentence from one core home in a later
+         app-side pass. -->
     <div class="acct-card">
-      <h2>Where your vote is counted from</h2>
-      <p>Votes are published as a breakdown by place. Set this once — it applies
-      wherever you are signed in. Leave it unset and your vote still counts; it
-      simply sits outside the breakdown.</p>
+      <p>Decide where your vote appears in the public geo-breakdown. Leave it
+      blank and your vote still counts, just without a place. Change it
+      anytime.</p>
       <div id="bt-geo-picker"></div>
     </div>
 
-    <!-- MOUNT: consent status (Art. 9). Rendered from the same source of copy
-         as the app; the wording lives in site/legal/, never here. -->
-    <div class="acct-card">
-      <h2>Consent</h2>
-      <div id="bt-consent"></div>
-    </div>
+    <!-- The consent status card ("Consent" over a #bt-consent mount) sat here
+         until 2026-08-22 — REMOVED ENTIRELY by owner ruling ("completely
+         unnecessary"): a status display about a thing that cannot happen yet
+         is noise. The Article 9 consent CAPTURE at the first vote is
+         untouched. When real voting goes live, a consent view + a withdrawal
+         path (withdrawal as easy as giving) must return to some surface —
+         that duty is coupled to the sign-in-enable gate (app repo
+         STORE-READINESS, HARD GATE #4). -->
 
+    <!-- ONE compact tail — owner ruling 2026-08-22 ("I know you really aim
+         for full transparency and everything, but sometimes it's just too
+         verbose"): the sign-out card's two explainer notes, the runtime
+         delete card and the long danger link ("Delete your account and
+         everything in it") all folded into this. Sign-out is the one
+         functional control; deletion is one quiet sentence whose only link
+         words are "Delete account" — the delete PAGE owns the details,
+         which is its job. -->
     <div class="acct-card">
       <h2>Sign out</h2>
-      <p>Signs you out of this browser only. Your phone stays signed in.</p>
       <div class="acct-buttons">
         <button type="button" class="btn-provider" id="bt-signout">Sign out on this device</button>
       </div>
-      <p class="acct-note">Browser sessions are kept in this browser's own
-      storage. Some browsers clear that after about a week without a visit — if
-      that happens, sign in again; nothing is lost.</p>
+      <p class="acct-note">For more, see <a href="/delete-account">Delete account</a>.</p>
     </div>
-
-    <p class="acct-danger"><a href="/delete-account">Delete your account and everything in it</a></p>
 
     <!-- SECTION: Settings — the app's Settings screen, on the web (owner
          commission 2026-08-22; module: src/web/settings.ts in the app repo).
@@ -154,11 +172,13 @@
          live page): the signed-out /account screen shows ONLY the sign-in
          card and "What an account is for" — that screen has one job. This is
          a DELIBERATE, RECORDED DEVIATION from the app, whose Settings screen
-         is reachable signed out: on the web the signed-out home of the
-         device switches is the feed pages' Display panel, so nothing becomes
-         unreachable — and for signed-out or no-JS readers the Privacy, Terms
-         and Delete-account doors are in every page's FOOTER, which is the
-         floor, so no honesty is lost either. The section renders whenever
+         is reachable signed out: the bucket switches keep a signed-out home
+         in the feed pages' Display panel, while the two card-part switches
+         are signed-in-only on the web (they left that panel by owner ruling
+         the same day — reachability owner-accepted at zero users) — and for
+         signed-out or no-JS readers the Privacy, Terms and Delete-account
+         doors are in every page's FOOTER, which is the floor, so no honesty
+         is lost. The section renders whenever
          this region shows: a real session, or the temporary signed-in
          preview riding the same region (account-preview.ts).
 
