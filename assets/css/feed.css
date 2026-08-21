@@ -38,7 +38,13 @@
 /* style.css's `main section { padding: 3.25rem 0 }` is right for the prose
    pages, where a <section> IS a band of the page. Here a <section> is a
    region — the feed, an account block — and that padding opens a 52 px hole
-   above the first card. Neutralised in scope only; style.css is untouched. */
+   above the first card. Neutralised in scope only; style.css is untouched.
+   ⚠️ THE FENCE (found 2026-08-22, via the signed-in preview): at (0,1,1) this
+   reset also BEATS one-class component rules like `.acct-card` (0,1,0), so a
+   card-shaped <section> on these pages renders UNPADDED — it cost the delete
+   card its padding for three days. Card-shaped blocks here are DIVs
+   (`deleteCardIdleHtml` carries the same note); if a block must be a
+   <section>, give its padding a selector this reset cannot outrank. */
 .feed-page section,
 .account-page section,
 #bt-callback section,
@@ -986,13 +992,17 @@ button[disabled],
    TRANSPARENT (an undefined custom property invalidates the declaration). */
 .account-page { --accent: var(--navy); }
 
-.acct-settings { margin-top: 2.4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+/* The section-padding reset above zeroes any padding-top given here (it
+   outranks one-class rules — see the fence at the top of this file), so the
+   gap under the rule line rides on the heading's own margin instead; the
+   section's border blocks margin collapse, so it holds. */
+.acct-settings { margin-top: 2.4rem; border-top: 1px solid var(--line); }
 .acct-settings > h2 {
   font-family: var(--serif);
   font-size: 1.35rem;
   font-weight: 650;
   color: var(--navy-ink);
-  margin: 0;
+  margin: 1.5rem 0 0;
 }
 
 /* The group eyebrows — the app Settings screen's own grammar (uppercase small
@@ -1010,6 +1020,21 @@ button[disabled],
 /* The Privacy card's quiet doors. */
 .acct-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .acct-links a { font-size: 0.94rem; color: var(--navy); }
+
+/* TEMPORARY (owner ruling 2026-08-22): the signed-in preview's quiet link on
+   /account — delete this rule with the app repo's src/web/account-preview.ts
+   (its header carries the trigger; check:webauth enforces the sweep). A
+   button in the .acct-note register: the control is an ACTION, not a
+   navigation, and it must read as a minor aside, never as a button. */
+.acct-linklike {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--ink-faint-aa);
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 #bt-callback .auth-status,
 #bt-resolver .resolver-status {

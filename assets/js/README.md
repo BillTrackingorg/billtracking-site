@@ -331,6 +331,21 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   `check:web` executes the section (order, refusals, one-home copy) and this
   page's half of the contract (heading static, mount hidden).
 
+* **TEMPORARY — the signed-in preview (owner ruling 2026-08-22).** The runtime
+  (app repo `src/web/account-preview.ts`) injects one quiet text link under
+  the sign-in card — "Preview the signed-in view" — that renders the
+  signed-in region with plainly-sample values: `reader@example.com`, the real
+  location picker and consent block in their fresh-account shapes, the real
+  sign-out and delete cards, every button INERT (a press answers with one
+  line through `#bt-acct-status`, never a call). No markup in this repo
+  changes for it: the link lives inside the signed-out region, which only the
+  runtime ever unhides, so a no-JS reader never meets it. It is deleted —
+  module, call line, the `.acct-linklike` rule in `feed.css`, its
+  STORE-READINESS gate line, its `check:webauth` block, and THIS BULLET — in
+  the change-set that enables a real sign-in provider, and in any case before
+  outreach begins (owner: "the only issue would be if we kept it in that
+  state during outreach").
+
 ### 1.3 OAuth return — `auth/callback.html` (served as `/auth/callback`)
 
 ```html
