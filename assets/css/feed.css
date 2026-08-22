@@ -1021,20 +1021,12 @@ button[disabled],
 .acct-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .acct-links a { font-size: 0.94rem; color: var(--navy); }
 
-/* TEMPORARY (owner ruling 2026-08-22): the signed-in preview's quiet link on
-   /account — delete this rule with the app repo's src/web/account-preview.ts
-   (its header carries the trigger; check:webauth enforces the sweep). A
-   button in the .acct-note register: the control is an ACTION, not a
-   navigation, and it must read as a minor aside, never as a button. */
-.acct-linklike {
-  background: none;
-  border: 0;
-  padding: 0;
-  font: inherit;
-  color: var(--ink-faint-aa);
-  text-decoration: underline;
-  cursor: pointer;
-}
+/* (The temporary signed-in preview's `.acct-linklike` rule stood here until
+   2026-08-22. It was deleted with the module that drew the link, in the
+   change-set that enabled a real sign-in provider — the trigger its own header
+   carried. `check:webauth` proves the sweep, this file included: while the
+   module existed the rule had to exist, and now that it is gone the rule must
+   stay gone. No other class ever used it.) */
 
 #bt-callback .auth-status,
 #bt-resolver .resolver-status {

@@ -140,14 +140,33 @@
       <div id="bt-geo-picker"></div>
     </div>
 
-    <!-- The consent status card ("Consent" over a #bt-consent mount) sat here
-         until 2026-08-22 — REMOVED ENTIRELY by owner ruling ("completely
-         unnecessary"): a status display about a thing that cannot happen yet
-         is noise. The Article 9 consent CAPTURE at the first vote is
-         untouched. When real voting goes live, a consent view + a withdrawal
-         path (withdrawal as easy as giving) must return to some surface —
-         that duty is coupled to the sign-in-enable gate (app repo
-         STORE-READINESS, HARD GATE #4). -->
+    <!-- MOUNT: the consent VIEW (Art 9(2)(a) — app repo src/web/consent.ts
+         fills #bt-consent-body and unhides the card).
+
+         A consent STATUS card stood here until 2026-08-22, when an owner
+         ruling removed it entirely ("completely unnecessary"): with no
+         provider and no votes possible, a status display about a thing that
+         cannot happen yet is noise. It returns the same day as a VIEW, in the
+         change-set that enabled a real sign-in provider — Art 7(3), a reader
+         must be able to see the consent they gave and withdraw it as easily
+         as they gave it (app repo STORE-READINESS, HARD GATE #4, second
+         duty).
+
+         ⚠️ THE CARD SHIPS HIDDEN AND THE RUNTIME UNHIDES IT — the bell's
+         precedent, and the only way the removal ruling stays honoured: it
+         renders ONLY for an account that actually HAS a consent record, so
+         "Not recorded yet" is never said again, and a failed read says
+         nothing here (the Country card above already says it, once, from the
+         same request). The HEADING is static, as everywhere on this page; the
+         words under it are the reader's own record and the policy's own
+         sentence, so they can only be the runtime's. The withdrawal path is
+         the page's, not this card's: the two-step delete card below and the
+         quiet Delete-account line beneath it are there whether this card
+         renders or not. -->
+    <div class="acct-card" id="bt-consent" hidden>
+      <h2>Consent</h2>
+      <div id="bt-consent-body"></div>
+    </div>
 
     <!-- THE TAIL — trimmed by the 2026-08-22 verbosity ruling, then CORRECTED
          the same day. What the ruling changed: the sign-out card's two
@@ -157,9 +176,10 @@
          from the live page, after a misread briefly removed it: "where did
          the delete account section go? It was so good? All I asked was to
          change a link location"): the two-step DELETE CARD — the runtime
-         (app repo src/web/account.ts, and the preview) mounts it between the
-         sign-out card and the for-more line, anchored on .acct-danger
-         exactly as before. -->
+         (app repo src/web/account.ts) mounts it between the sign-out card
+         and the for-more line, anchored on .acct-danger exactly as before.
+         It is also the withdrawal half of the consent card above: withdrawing
+         consent and deleting the account are one action (D13). -->
     <div class="acct-card">
       <h2>Sign out</h2>
       <div class="acct-buttons">
@@ -182,9 +202,9 @@
          the same day — reachability owner-accepted at zero users) — and for
          signed-out or no-JS readers the Privacy, Terms and Delete-account
          doors are in every page's FOOTER, which is the floor, so no honesty
-         is lost. The section renders whenever
-         this region shows: a real session, or the temporary signed-in
-         preview riding the same region (account-preview.ts).
+         is lost. The section renders whenever this region shows — which,
+         since the temporary signed-in preview was deleted with the sign-in
+         provider on 2026-08-22, means one thing only: a real session.
 
          #bt-settings-groups still ships EMPTY and hidden. The switch states
          live in this browser's storage, which no static page can know, so

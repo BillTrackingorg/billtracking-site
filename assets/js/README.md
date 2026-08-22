@@ -248,16 +248,30 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   unverifiable — copy claims only where the vote appears in the breakdown,
   never residence or origin).
 
-* **There is no `#bt-consent` mount any more.** The consent status card was
-  REMOVED ENTIRELY on 2026-08-22 (owner: "completely unnecessary" — a status
-  display about a thing that cannot happen yet is noise). The Article 9 consent
-  CAPTURE before the first cast (`src/web/consent.ts` `ensureConsent`, §2b
-  step 2) is untouched — its sentence still comes from `lib/voter.ts`
-  `consentSentence()`, lifted VERBATIM from the published policy through the
-  D23 pipeline; never write a second wording. When a real provider makes
-  voting reachable, a consent VIEW and a WITHDRAWAL path (withdrawal as easy
-  as giving) must return to some surface — the duty is coupled to the app
-  repo's STORE-READINESS HARD GATE #4.
+* **The consent card — a VIEW now, and it ships hidden.** The page carries
+
+  ```html
+  <div class="acct-card" id="bt-consent" hidden>
+    <h2>Consent</h2>
+    <div id="bt-consent-body"></div>
+  </div>
+  ```
+
+  and `src/web/consent.ts` (`mountConsentView`) fills the body and unhides the
+  card — **only for an account that actually has a `voters` row.** No row, no
+  card; a failed read, no card either (the Country card above is drawn from the
+  same cached request and already says so, once). That conditional IS the owner
+  ruling of 2026-08-22 kept: the STATUS card that used to sit here was removed
+  entirely ("completely unnecessary" — a status display about a thing that
+  cannot happen yet is noise), and "Not recorded yet" never returns.
+  What returns, later the same day with the real sign-in provider, is the half
+  that became true when voting became reachable: **Art 7(3), withdrawal as easy
+  as giving** — you cannot withdraw what you cannot see (app repo
+  STORE-READINESS HARD GATE #4, second duty). The card shows the reader's
+  record — recorded date, the disclosure VERBATIM from `lib/voter.ts`
+  `consentSentence()` (never a second wording), the stored version — and points
+  at the delete card below by its own name. The Article 9 consent CAPTURE
+  before the first cast (`ensureConsent`, §2b step 2) is untouched.
 * ~~Delete account keeps its own page (`/delete-account.html`); do not build a
   second deletion flow here.~~ **DEVIATION, recorded 2026-08-19 by the auth
   lane, AND IT STANDS** — the signed-in region carries an in-page
@@ -346,26 +360,18 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   `check:web` executes the section (order, refusals, one-home copy) and this
   page's half of the contract (heading static, mount hidden).
 
-* **TEMPORARY — the signed-in preview (owner ruling 2026-08-22).** The runtime
-  (app repo `src/web/account-preview.ts`) injects one quiet text link under
-  the sign-in card — "Preview the signed-in view" — that renders the
-  signed-in region with plainly-sample values: `reader@example.com`, the real
-  Country picker (always editable, nothing chosen, wired through the real
-  `wireGeoPicker` with the preview's inert line in place of a save — the
-  US-state reveal behaves exactly as the real page's), the real delete card
-  (`deleteCardIdleHtml`, mounted on the same `.acct-danger` anchor), and the
-  page's own sign-out card and quiet for-more line, every account control
-  INERT (a press or a picker selection answers with one line through
-  `#bt-acct-status`, never a call and never a held value). The Settings section
-  rides the region and stays LIVE — its device controls really work without a
-  session, so the preview's interceptor skips `.acct-settings`. No markup in this repo
-  changes for it: the link lives inside the signed-out region, which only the
-  runtime ever unhides, so a no-JS reader never meets it. It is deleted —
-  module, call line, the `.acct-linklike` rule in `feed.css`, its
-  STORE-READINESS gate line, its `check:webauth` block, and THIS BULLET — in
-  the change-set that enables a real sign-in provider, and in any case before
-  outreach begins (owner: "the only issue would be if we kept it in that
-  state during outreach").
+* **The signed-in preview is GONE (2026-08-22), and nothing replaces it.** For
+  one day this page carried a quiet "Preview the signed-in view" link that drew
+  the signed-in region with sample values, every control inert — shipped under
+  an owner ruling (live-by-decision, zero users, temporary) with a written
+  removal trigger: *"the only issue would be if we kept it in that state during
+  outreach."* It was deleted in full — module, call line, its `feed.css` rule,
+  its gate line, its check block and its bullet here — in the change-set that
+  enabled a real sign-in provider, which is the trigger it named. The signed-in
+  region is now reached one way: by signing in. `check:webauth` keeps it that
+  way; the check that used to hold the preview to its rules now holds the
+  removal, and it fails if the module comes back or if any of those homes still
+  describes it.
 
 ### 1.3 OAuth return — `auth/callback.html` (served as `/auth/callback`)
 
