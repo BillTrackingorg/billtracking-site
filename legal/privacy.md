@@ -9,7 +9,7 @@ htmlTitle: Privacy
 description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account makes a vote count once, and keeps your followed bills across your devices.
 ogTitle: Privacy — BillTracking
 ogDescription: What we collect, why, and how to delete it — in plain language.
-updated: 20 August 2026
+updated: 22 August 2026
 ---
 
 The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — your reading preferences, and a sign-in session if you choose to vote — stays in your browser, on your device. The app needs no account to read anything. An account does exactly two things — it makes a vote count once per person, and it keeps your followed bills the same on every device you sign in on — and it can be deleted in two taps, from inside the app or from your account page on this website.
@@ -81,11 +81,13 @@ Otherwise, write to [contact@billtracking.org](mailto:contact@billtracking.org).
 
 ### Who we are
 
-BillTracking is an independent project run by one person, not a company. The data controller can be reached at [contact@billtracking.org](mailto:contact@billtracking.org); a postal address is available on request.
+BillTracking is an independent project run by one person, not a company. The data controller is Thomas Vanhoutte, who can be reached at [contact@billtracking.org](mailto:contact@billtracking.org); a postal address is available on request.
 
 ### Changes
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
+
+**22 August 2026.** The "Who we are" section now names the data controller, Thomas Vanhoutte. Nothing about what is collected or how it is handled changed.
 
 **20 August 2026.** If you sign in, the bills you follow are now kept with your account so they follow you across devices, and the website can show you new actions on them. Signed out, nothing changed: follows stay on your device and are not transmitted to us.
 
