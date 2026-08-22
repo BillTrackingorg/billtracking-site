@@ -9,7 +9,7 @@ htmlTitle: Privacy
 description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account makes a vote count once, and keeps your followed bills across your devices.
 ogTitle: Privacy — BillTracking
 ogDescription: What we collect, why, and how to delete it — in plain language.
-updated: 22 August 2026
+updated: 23 August 2026
 ---
 
 The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — your reading preferences, and a sign-in session if you choose to vote — stays in your browser, on your device. The app needs no account to read anything. An account does exactly two things — it makes a vote count once per person, and it keeps your followed bills the same on every device you sign in on — and it can be deleted in two taps, from inside the app or from your account page on this website.
@@ -21,16 +21,18 @@ The short version: **this website carries no analytics and no trackers of any ki
 
 There is no analytics anywhere on this site. No Google Analytics, no Cloudflare, no pixel, no tag manager, no advertising and no tracking SDKs — on any page, of any kind. We do not record what you read, what you search for or where you arrived from, we do not sell or share anything about you, and we build no profile of you.
 
-Some pages do keep things for you, deliberately — the feed pages ([/us](/us) and [/eu](/eu)) most of all. Whatever a page keeps — the posts it has already shown you, so that it opens quickly the next time, your display preferences, and your sign-in session if you choose to vote — stays **in your browser, on your device**, and none of it is transmitted to us. We are not told which pages you opened, what you read, or where you arrived from. The only things that ever leave your device are a vote you deliberately cast and — if you sign in — the bills you choose to follow, exactly as described below.
+Some pages do keep things for you, deliberately — the feed pages ([/us](/us) and [/eu](/eu)) most of all. Whatever a page keeps — the posts it has already shown you, so that it opens quickly the next time, your display preferences, and your sign-in session if you choose to vote — stays **in your browser, on your device**, and none of it is transmitted to us. We are not told which pages you opened, what you read, or where you arrived from. From this website, the only things that ever leave your device are a vote you deliberately cast and — if you sign in — the bills you choose to follow, exactly as described below.
 
 One honest caveat, because the alternative would be a false claim: the site is hosted on **GitHub Pages**, and any web host necessarily handles your IP address at the network layer in order to send you a page. GitHub does not surface those logs to us and we have never seen them — but we will not tell you no IP address is processed anywhere, because that would not be true.
 
 ^The app — reading
 ## Reading needs no account and sends us nothing
 
-The feed, bill timelines and notification settings all work without signing in. The app and this website both fetch the published record as static files from GitHub Pages, the same infrastructure this site is hosted on; neither of them reports back what you read or what you search for. Your keywords and your display settings are stored **on your device** and are not transmitted to us. Followed bills stay on your device too, unless you sign in — then your follow list is kept with your account, so the app and this website show you the same bills. It is a list of bills, nothing more, and deleting your account deletes it.
+The feed and bill timelines all work without signing in. The app and this website both fetch the published record as static files from GitHub Pages, the same infrastructure this site is hosted on; neither of them reports back what you read or what you search for. Your keywords and your display settings are stored **on your device** and are not transmitted to us. Followed bills stay on your device too, unless you sign in — then your follow list is kept with your account, so the app and this website show you the same bills. It is a list of bills, nothing more, and deleting your account deletes it.
 
 The app contains no advertising, no third-party analytics and no tracking SDKs.
+
+The app also checks for updates when it starts. That request carries a random identifier for the installation and the app's version — sent to Expo, the service that delivers our updates. It identifies the installation, not you.
 
 ^The app — accounts and votes
 ## An account exists so your vote counts once
@@ -86,6 +88,8 @@ BillTracking is an independent project run by one person, not a company. The dat
 ### Changes
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
+
+**23 August 2026.** The app checks for updates when it starts, and this page now says so and says what that request carries. The app has done this since over-the-air updates were wired in — what changed is that we wrote it down. We also dropped a mention of notification settings, which the app does not ship yet.
 
 **22 August 2026.** The "Who we are" section now names the data controller, Thomas Vanhoutte. Nothing about what is collected or how it is handled changed.
 
