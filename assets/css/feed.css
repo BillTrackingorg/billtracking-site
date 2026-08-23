@@ -963,6 +963,20 @@ button[disabled],
   color: var(--ink);
 }
 .btn-provider:hover:not([disabled]) { background: var(--wash); }
+/* One width for both doors (owner catch on the live page, 2026-08-23: Google
+   caps its rendered button at 400px, so it sat visibly narrower than the
+   full-width buttons around it). The whole sign-in column meets Google at its
+   ceiling: the mount is capped so the measured width handed to renderButton
+   IS 400, and the plain buttons wear the same cap — parity by agreement, not
+   by hoping. Scoped to the signed-out card; the signed-in tail and the delete
+   card keep their own widths. */
+#bt-acct-signed-out .acct-buttons .btn-provider,
+#bt-gsi-google {
+  width: 100%;
+  max-width: 400px;
+  margin-inline: auto;
+}
+#bt-gsi-google { display: flex; justify-content: center; }
 .btn-provider[disabled] { color: var(--ink-faint-aa); background: var(--paper); }
 /* ⚠️ AN AUTHOR `display` BEATS THE UA'S `[hidden] { display: none }` WHATEVER
    THE SPECIFICITY — author origin wins over user-agent origin — so the
