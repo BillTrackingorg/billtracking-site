@@ -55,6 +55,14 @@
 
 * { box-sizing: border-box; }
 
+/* An enabled button invites a press, so it shows the hand. The UA default for
+   <button> is the arrow (links get the hand for free), which is how the account
+   page's "Continue with…" buttons shipped without one (owner catch, 2026-08-23).
+   One base rule here rather than a cursor line per component — feed.css inherits
+   it too. [disabled] is excluded on purpose (a refused control must not invite),
+   and the .is-inert store badges are spans, untouched either way. */
+button:not([disabled]) { cursor: pointer; }
+
 html { scroll-behavior: smooth; }
 
 body {
