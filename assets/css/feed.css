@@ -1285,7 +1285,8 @@ button[disabled],
   border-top: 1px solid var(--line-soft);
 }
 .vb-row-head { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
-.vb-flag { font-size: 16px; line-height: 1; }
+/* .vb-flag retired 2026-08-23 with the emoji flags (owner ruling; geo.ts
+   header in the app repo) — every place-marker is the .vb-badge now. */
 .vb-badge {
   min-width: 26px;
   padding: 0 4px;
