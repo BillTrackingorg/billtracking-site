@@ -27,7 +27,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
 <link rel="stylesheet" href="/style.css?v=8">
-<link rel="stylesheet" href="/assets/css/feed.css?v=13">
+<link rel="stylesheet" href="/assets/css/feed.css?v=14">
 </head>
 <body>
 
@@ -134,10 +134,19 @@
              because renderButton's failure is observable and One Tap's is
              not; the full argument is in gsi.ts's header. A reader who never
              gets a Google button sees this page exactly as it was. -->
-        <div id="bt-gsi-google" hidden></div>
-        <button type="button" class="btn-provider" id="bt-signin-google">
-          Continue with Google
-        </button>
+        <!-- THE TWO GOOGLE DOORS STACK IN ONE GRID CELL (owner flicker catch
+             #2, 2026-08-23: the old swap was two visible layout jumps).
+             Google's button renders into the mount IN PLACE but invisible
+             (CSS visibility — the box exists, so measurement and the
+             appeared-check still work), and the runtime's .is-gsi class swaps
+             the pair in a single frame. No JS, no .is-gsi: the plain button
+             is the only door, exactly as before. -->
+        <div class="google-door">
+          <div id="bt-gsi-google"></div>
+          <button type="button" class="btn-provider" id="bt-signin-google">
+            Continue with Google
+          </button>
+        </div>
         <!-- The Apple glyph is the footer badge's own path (one glyph, two
              homes is fine for ARTWORK; copy law governs words) — inline SVG,
              no external script, no CSP change. Added 2026-08-23 for visual

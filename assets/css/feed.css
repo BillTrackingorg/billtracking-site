@@ -977,6 +977,18 @@ button[disabled],
   margin-inline: auto;
 }
 #bt-gsi-google { display: flex; justify-content: center; }
+/* The Google doors' single-slot stack (owner flicker catch #2, 2026-08-23:
+   the swap used to be two layout jumps — Google's button popping in below,
+   then the plain one collapsing away). Both doors share one grid cell;
+   Google's renders IN PLACE but invisible (visibility keeps the box, so the
+   width measurement and the appeared-check still work), and .is-gsi reveals
+   it in the same frame the plain one leaves — one repaint, zero shift. The
+   min-height pins the cell to the plain door's height so even the few-pixel
+   difference between the two buttons cannot move the page. */
+.google-door { display: grid; align-items: center; min-height: 44px; }
+.google-door > * { grid-area: 1 / 1; }
+#bt-gsi-google { visibility: hidden; }
+.google-door.is-gsi #bt-gsi-google { visibility: visible; }
 .btn-provider[disabled] { color: var(--ink-faint-aa); background: var(--paper); }
 /* ⚠️ AN AUTHOR `display` BEATS THE UA'S `[hidden] { display: none }` WHATEVER
    THE SPECIFICITY — author origin wins over user-agent origin — so the
