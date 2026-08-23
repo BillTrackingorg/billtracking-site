@@ -361,5 +361,11 @@ What's next: Presidential Review (±10 Days)</p>
   </div>
 </footer>
 
+<!-- The runtime on a static page (added 2026-08-23): the nav account pill
+     was dead HTML here, so a signed-in reader saw "Sign in" on every page
+     without a mount to boot — invisible until sign-in existed, found by its
+     first user. boot-web is mount-driven (D28): on this page it wires the
+     chrome (pill, notices bell) and no more. -->
+<script type="module" src="/assets/js/bt-web.js"></script>
 </body>
 </html>
