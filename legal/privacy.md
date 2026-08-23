@@ -14,7 +14,7 @@ updated: 23 August 2026
 
 The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — your reading preferences, and a sign-in session if you choose to vote — stays in your browser, on your device. The app needs no account to read anything. An account does exactly two things — it makes a vote count once per person, and it keeps your followed bills the same on every device you sign in on — and it can be deleted in two taps, from inside the app or from your account page on this website.
 
->! **What exists today.** The two X feeds, this website and its feed pages ([/us](/us) and [/eu](/eu)) are live — and voting, with Google sign-in, is live on this website. The BillTracking app is in closed testing and not yet in the app stores. Apple sign-in arrives with the iOS release; until then its button stays visibly switched off rather than hidden.
+>! **What exists today.** The two X feeds, this website and its feed pages ([/us](/us) and [/eu](/eu)) are live — and voting, with Google sign-in, is live on this website. The BillTracking app is in closed testing and not yet in the app stores. Apple sign-in arrives with the iOS release; until then, pressing the Apple button tells you it isn't available yet.
 
 ^This website
 ## billtracking.org collects nothing from you
@@ -89,7 +89,7 @@ BillTracking is an independent project run by one person, not a company. The dat
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
 
-**23 August 2026.** Voting, with Google sign-in, went live on this website, and the what-exists-today note now says so. The deletion section states the backup reality: we keep no working copy, and deleted data ages out of encrypted disaster-recovery backups within 90 days. The app's update check is also disclosed — it has worked this way since over-the-air updates were wired in; what changed is that we wrote it down. And we dropped a mention of notification settings, which the app does not ship yet.
+**23 August 2026.** Voting, with Google sign-in, went live on this website, and the what-exists-today note now says so. The note's Apple sentence was also corrected: the button is live and answers when pressed, not "visibly switched off". The deletion section states the backup reality: we keep no working copy, and deleted data ages out of encrypted disaster-recovery backups within 90 days. The app's update check is also disclosed — it has worked this way since over-the-air updates were wired in; what changed is that we wrote it down. And we dropped a mention of notification settings, which the app does not ship yet.
 
 **22 August 2026.** The "Who we are" section now names the data controller, Thomas Vanhoutte. Nothing about what is collected or how it is handled changed.
 
