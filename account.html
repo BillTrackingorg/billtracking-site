@@ -111,16 +111,17 @@
       account is created &mdash; and every press after that signs you in.</p>
       <div class="acct-buttons">
         <!-- MOUNT: Google's OWN sign-in button (app repo src/web/gsi.ts).
-             Ships EMPTY and HIDDEN — the bell's and the Settings groups'
-             precedent, and here also layout: .acct-buttons is a flex column
-             with a gap, so an empty-but-shown div would open a hole above the
-             plain button on every failure path. The runtime draws Google
-             Identity Services into it, unhides it, and hides the plain button
-             below ONLY once that has demonstrably worked; every failure — a
-             blocked script, a missing console origin, no WebCrypto, an empty
-             container — puts this div back to hidden and leaves the plain
-             button exactly as it is, so the worst case is the redirect flow
-             this page has always had.
+             Ships EMPTY and CSS-INVISIBLE inside the .google-door stack below
+             (the "EMPTY and HIDDEN" attribute mechanism this comment first
+             described lasted hours — the owner caught its appear-then-collapse
+             flicker the same evening, 2026-08-23, and the swap became one
+             frame: Google renders into an invisible box that shares the plain
+             button's grid cell, and .is-gsi reveals it exactly as the plain
+             button leaves). The plain button is retired ONLY once Google's has
+             demonstrably rendered; every failure — a blocked script, a missing
+             console origin, no WebCrypto, an empty container — leaves this div
+             invisible and the plain button exactly as it is, so the worst case
+             is the redirect flow this page has always had.
 
              WHY IT IS HERE AT ALL (owner ruling 2026-08-22): the redirect
              sends the reader through the Supabase project's address, so
