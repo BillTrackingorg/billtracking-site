@@ -157,6 +157,7 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
 <main class="account-page" id="bt-account">
   <section class="acct-region" id="bt-acct-loading"> … </section>
   <section class="acct-region" id="bt-acct-signed-out" hidden>
+      <div id="bt-gsi-google" hidden></div>             <!-- MOUNT: Google's own button; EMPTY + HIDDEN -->
       <button id="bt-signin-google" class="btn-provider">Continue with Google</button>
       <button id="bt-signin-apple"  class="btn-provider">Continue with Apple</button>
       <p id="bt-provider-note" class="acct-note"></p>   <!-- EMPTY; only a failed sign-in fills it -->
@@ -208,6 +209,57 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   no JavaScript never sees a live-looking button a missing script has made inert.
   `check:webauth` fails if a compile-time provider table comes back, if the probe
   is removed, or if a refusal message reverts to "coming soon".
+* **`#bt-gsi-google` — Google's OWN button, drawn in front of the plain one
+  (2026-08-23). A MOUNT, not markup: it ships EMPTY and HIDDEN.** Owner ruling
+  2026-08-22 (economics pass): the redirect flow sends the reader through the
+  Supabase project's address, so **Google's consent screen names
+  `skqngxvuncdavlshkepb.supabase.co`** — a hostname nobody has heard of, shown
+  at the exact moment a first-time reader is deciding whether to join. Google
+  Identity Services hands the signed `id_token` straight to this page, so
+  Google's UI names `billtracking.org` instead. It is **not a migration**:
+  Supabase keeps the database, the auth server, the accounts and the sessions,
+  and the token is spent with `signInWithIdToken` — the same call the phone has
+  always made. Only the front door changes.
+  * `src/web/gsi.ts` (app repo) loads `https://accounts.google.com/gsi/client`,
+    mints the nonce, calls `initialize` + `renderButton` into this div,
+    unhides it, and hands the credential to `src/web/auth.ts`
+    `signInWithGoogleIdToken`. It is fetched from the `/account` chunk and
+    **only for a reader who is actually signed out** — a signed-in reader
+    never causes a Google request.
+  * **THE REDIRECT BUTTON IS THE FALLBACK, AND IT IS AUTOMATIC.**
+    `#bt-signin-google` is hidden ONLY once Google's button has demonstrably
+    rendered (a child, with a box). Script blocked by CSP, script timed out,
+    API missing, `initialize`/`renderButton` threw, container still empty, no
+    WebCrypto, provider off — every one of those leaves the page **exactly as
+    it shipped**, and a credential Supabase then REFUSES brings the plain
+    button back and says `PROVIDER_FAILED.google` in `#bt-provider-note`. The
+    worst case of the whole feature is the flow this page had yesterday; it
+    can never be "no sign-in". The reason is written to `data-bt-gsi` on the
+    mount — inspectable in a browser, never prose, never shown to a reader.
+  * **It is a SIBLING mount, not a re-wiring of the existing button.** GIS has
+    no imperative trigger for the button flow; the only programmatic display is
+    `prompt()` (One Tap), which is FedCM-governed, silently suppressible by
+    Chrome's third-party-sign-in setting and undetectable from script.
+    `renderButton`'s failure is *observable*, and only an observable failure
+    can be fallen back from. One Tap is not used.
+  * **HIDDEN matters twice.** It is the bell's precedent (no reader meets a
+    dead control) and it is layout: `.acct-buttons` is a flex column with a
+    `gap`, so a shown-but-empty mount would open a hole above the plain button
+    on every failure path.
+  * ⚠️ **`account.html` is the ONE page whose CSP differs from every other
+    page's**, and the difference is exactly four Google source expressions:
+    `script-src …/gsi/client`, `style-src …/gsi/style`, `connect-src …/gsi/`,
+    and a `frame-src …/gsi/` no other page carries. Exact PATH prefixes, never
+    hosts and never wildcards. `check:webauth` parses this page's policy and
+    `us.html`'s and fails unless the first is the second plus precisely those
+    four — so this stays one page's deviation rather than the first of several.
+    The prior adversarial position against GSI (2026-08-17) is amended in place
+    in the app repo's `docs/history/WEB-PARITY-FINDINGS-2026-08-17.md`.
+  * 🔵 **OWNER STEP, INVISIBLE TO BOTH REPOS:** `https://billtracking.org` must
+    be listed under **Authorized JavaScript origins** on the Google Cloud
+    console's WEB client. Until it is, the button simply does not render and
+    every reader gets the redirect flow — no error, no breakage, no sign-in
+    lost.
 * Sign-out is `{ scope: 'local' }` — a browser sign-out must never kill the
   phone's session. **Settled, and not this file's to get right any more:** the
   bug was fixed in the app repo and the scoped call now lives in
@@ -1161,7 +1213,8 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   completely: probe the live URL at Gate B, before the provider config is
   written.
 * **The stylesheet is versioned by hand, and only on the shells.** The five
-  hand-authored pages ask for `/assets/css/feed.css?v=6`; the generated `/p/`
+  hand-authored pages ask for a versioned `/assets/css/feed.css?v=N` (v=12 as
+  of 2026-08-23); the generated `/p/`
   pages ask for `/assets/css/feed.css` with no query at all. Same file, two cache
   entries. It is harmless before the first publish (nothing holds either yet),
   but from the first publish on, ANY edit to `feed.css` needs the query bumped in
@@ -1174,6 +1227,14 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   `?v=4` the same evening** with the refusal pulse going gold (`--gold-wash`);
   **`?v=4` → `?v=5` the same night** with the desktop scroll-lock revert (the
   cap is phone-only now — owner ruling); **`?v=5` → `?v=6` right after** — the desktop panel cap (and its internal scrollbar) removed with it.
+  Bumps 7–11 went unrecorded here (the habit slipped during the web-overhaul
+  weeks; noticed by the 2026-08-23 GIS security pass — the numbers in the
+  shells are the truth, this ledger lagged). **`?v=11` → `?v=12` on
+  2026-08-23** with `.btn-provider[hidden] { display: none }` — load-bearing,
+  not cosmetic: a returning visitor's cached v11 sheet has no companion rule
+  for the `hidden` attribute, so when Google's own sign-in button renders on
+  `/account` they would see TWO "Continue with Google" doors, one of them the
+  redirect flow whose consent screen names supabase.co.
   ⚠️ A section of this file was once lost to `git checkout -- assets/js` run to
   reset the BUNDLE — this README lives in assets/js but is hand-maintained, so
   reset the chunk files by name, never the directory.

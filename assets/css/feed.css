@@ -964,6 +964,21 @@ button[disabled],
 }
 .btn-provider:hover:not([disabled]) { background: var(--wash); }
 .btn-provider[disabled] { color: var(--ink-faint-aa); background: var(--paper); }
+/* ⚠️ AN AUTHOR `display` BEATS THE UA'S `[hidden] { display: none }` WHATEVER
+   THE SPECIFICITY — author origin wins over user-agent origin — so the
+   `display: flex` above would keep a `hidden` provider button on screen. That
+   is the trap style.css already spells out for the notices bell in the site nav
+   — named by description, not by selector, because check-site-nav.js asserts
+   that bell's rules live in style.css by grepping THIS file for them, and a
+   comment that can break a guard is worse than one that can satisfy it. It is
+   also the companion rule every other hide-able component here already carries
+   (`.acct-region[hidden]`, `.geo-field[hidden]`, `.bt-backdrop[hidden]`).
+   It became load-bearing on 2026-08-23: when Google's OWN button renders,
+   src/web/account.ts hides `#bt-signin-google` — without this line the reader
+   would see TWO "Continue with Google" doors, one of them the redirect flow
+   whose consent screen names supabase.co, which is the exact thing that
+   change-set exists to remove. */
+.btn-provider[hidden] { display: none; }
 
 /* When no provider is configured the buttons are disabled and this line says
    so. Inviting a sign-in that does not exist is the dishonest-affordance

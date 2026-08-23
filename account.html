@@ -3,7 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
+<!-- ⚠️ THIS PAGE'S CSP IS THE SITE'S PLUS FOUR GOOGLE SOURCES, AND NOTHING
+     ELSE (2026-08-23). Every other page carries the policy in the app repo's
+     src/site/chrome.ts, byte for byte. /account is the one page that runs
+     Google Identity Services, which needs its library, its button iframe, its
+     XHRs and its stylesheet — so the four directives Google documents are
+     widened HERE and only here, by exact PATH prefixes rather than by host, so
+     nothing else on accounts.google.com becomes loadable. The floor is
+     untouched: default-src, img-src, font-src, object-src, base-uri and
+     form-action are the same characters they were, and no wildcard was added.
+     Why the widening was worth it at all — Google's consent screen naming
+     supabase.co to a first-time reader — is at the top of src/web/gsi.ts, and
+     the prior position it supersedes is amended in place in the app repo's
+     docs/history/WEB-PARITY-FINDINGS-2026-08-17.md. check:webauth compares
+     this attribute against us.html's and fails on any other difference. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; img-src 'self' data:; font-src 'self'; connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>Your account | BillTracking</title>
 <meta name="description" content="Your BillTracking account: the address you signed in with, the country your vote appears under, signing out, and deleting the account.">
 <meta name="robots" content="noindex">
@@ -13,7 +27,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
 <link rel="stylesheet" href="/style.css?v=8">
-<link rel="stylesheet" href="/assets/css/feed.css?v=11">
+<link rel="stylesheet" href="/assets/css/feed.css?v=12">
 </head>
 <body>
 
@@ -97,6 +111,31 @@
       <p>There is no separate sign-up. The first Continue creates your account,
       and every one after that signs you in.</p>
       <div class="acct-buttons">
+        <!-- MOUNT: Google's OWN sign-in button (app repo src/web/gsi.ts).
+             Ships EMPTY and HIDDEN — the bell's and the Settings groups'
+             precedent, and here also layout: .acct-buttons is a flex column
+             with a gap, so an empty-but-shown div would open a hole above the
+             plain button on every failure path. The runtime draws Google
+             Identity Services into it, unhides it, and hides the plain button
+             below ONLY once that has demonstrably worked; every failure — a
+             blocked script, a missing console origin, no WebCrypto, an empty
+             container — puts this div back to hidden and leaves the plain
+             button exactly as it is, so the worst case is the redirect flow
+             this page has always had.
+
+             WHY IT IS HERE AT ALL (owner ruling 2026-08-22): the redirect
+             sends the reader through the Supabase project's address, so
+             Google's consent screen names skqngxvuncdavlshkepb.supabase.co to
+             somebody who is deciding whether to join. With the token handed
+             straight to this page, Google names billtracking.org. Same
+             project, same accounts, same sessions — only the name on the way
+             in changes.
+
+             It is a SIBLING rather than a re-wiring of the button below
+             because renderButton's failure is observable and One Tap's is
+             not; the full argument is in gsi.ts's header. A reader who never
+             gets a Google button sees this page exactly as it was. -->
+        <div id="bt-gsi-google" hidden></div>
         <button type="button" class="btn-provider" id="bt-signin-google">
           Continue with Google
         </button>
