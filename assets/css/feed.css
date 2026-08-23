@@ -1404,6 +1404,19 @@ button[disabled],
 .geo-status { flex-basis: 100%; }
 .geo-status:empty { display: none; }
 
+/* The picker's type-ahead and the location disclosure under it (app repo
+   `src/web/geo-picker.ts`, 2026-08-23). The search field is deliberately a
+   `.geo-select` — same box, same type as the control it filters — and needs no
+   rule of its own; `.geo-block` is the wrapper that lets the note sit UNDER the
+   fields' flex line instead of inside it. What is left is the disclosure
+   toggle: every other <details> on this site names its own cursor
+   (`.resolver-archive > summary`, style.css `details.blurbs summary`), and the
+   open panel needs air under the word it came from. The summary's TYPE is
+   `.acct-note`'s, set in the markup — quieter than the sentence above it, which
+   is the point of a "more". */
+.geo-more summary { cursor: pointer; }
+.geo-more[open] summary { margin-bottom: 0.35rem; }
+
 /* Deleting an account is irreversible, so its card is marked - and its confirm
    button is the only red thing on the page. */
 .acct-delete { border-color: color-mix(in srgb, var(--red) 35%, var(--line)); }
