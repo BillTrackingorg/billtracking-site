@@ -985,7 +985,13 @@ button[disabled],
    it in the same frame the plain one leaves — one repaint, zero shift. The
    min-height pins the cell to the plain door's height so even the few-pixel
    difference between the two buttons cannot move the page. */
-.google-door { display: grid; align-items: center; min-height: 44px; }
+/* FIXED height + clip, not a minimum (owner catch #4, 2026-08-24: Google's
+   iframe transiently grew during its own re-render and pushed the Apple
+   button down for a beat — a min-height is a floor, and the wobble punched
+   through it). Every GIS button variant is 40px tall; a sealed 44px cell
+   means whatever happens inside Google's frame happens inside this box, and
+   the page below it physically cannot move. */
+.google-door { display: grid; align-items: center; height: 44px; overflow: hidden; }
 .google-door > * { grid-area: 1 / 1; }
 #bt-gsi-google { visibility: hidden; }
 .google-door.is-gsi #bt-gsi-google { visibility: visible; }
