@@ -74,7 +74,14 @@
        user and their Google web sign-in become two different accounts. -->
   <section class="acct-region" id="bt-acct-signed-out" hidden>
     <div class="acct-card">
-      <h2>Sign in</h2>
+      <!-- "or create your account" as of 2026-08-23 (owner ruling): OAuth-only
+           means one flow serves both, so the door names both. A separate
+           "Create an account" button was considered and rejected — it would be
+           a second door into the identical flow, the false-affordance class
+           this product bans. The sentence below the two-things line is the
+           other half of the same ruling: creation was never named anywhere,
+           which made "Delete your account" read as a counterpart to nothing. -->
+      <h2>Sign in or create your account</h2>
       <!-- "two things" as of 2026-08-20, and it is the privacy page's own lede
            ("An account does exactly two things"): the follow list moved to the
            account, so a card promising it does ONE is the first thing a
@@ -83,6 +90,8 @@
       <p>An account does two things: it makes your vote count once, and it keeps
       the bills you follow the same on every device. Reading never needs one, and
       never will.</p>
+      <p>There is no separate sign-up — the first Continue creates your account,
+      and every one after signs you in.</p>
       <div class="acct-buttons">
         <button type="button" class="btn-provider" id="bt-signin-google">
           Continue with Google
