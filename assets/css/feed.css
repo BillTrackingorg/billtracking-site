@@ -1801,7 +1801,30 @@ button[disabled],
    And a DESKTOP cap must pay the scrollbar gutter back (`--bt-scrollbar`,
    still measured by `dom.ts`) or the centred column jumps ~15px sideways at
    open — the payment rule left with the desktop cap and returns with it. A
-   phone has no classic scrollbar, so the sheet cap below pays nothing. */
+   phone has no classic scrollbar, so the sheet cap below pays nothing.
+
+   ⚠️ ON /us AND /eu THE DEBT IS PAID AT THE ROOT NOW, AND THE LAST SENTENCE
+   WAS HALF TRUE (2026-08-25). `style.css` gained
+   `html:has(main.feed-page) { scrollbar-gutter: stable }` — for the refresh
+   flicker, not for this — and a stable gutter stays reserved under
+   `overflow: hidden`, which is what the cap below is. Measured that day at 1280
+   with a classic scrollbar: capping <html> took the centred column 312.4 → 320
+   without the rule and 312.4 → 312.4 with it; and at 410px, with the real
+   Display panel driven open, `main.feed-page` went 395.2 → 410.4 without and
+   395.2 → 395.2 with. So on the feed pages a desktop cap would arrive with its
+   payment already made, by CSS rather than by a measured custom property.
+
+   The half that was wrong: "a phone has no classic scrollbar" is a fact about a
+   DEVICE, and the cap below lives in a WIDTH query (≤47.9375rem). A desktop
+   window dragged narrower than that has a classic scrollbar and did jump when
+   the sheet opened — no `padding-right: var(--bt-scrollbar)` rule has ever
+   existed in this file to pay it. That is now closed on the feed pages and
+   nowhere else, because the root rule is deliberately scoped: reserving a
+   gutter on a page that does not overflow leaves the full-bleed header 15px
+   short of the window with paper showing through, which an adversarial pass
+   caught on /auth/callback, /404 and /account. Nothing here is removed:
+   `--bt-scrollbar` is still published by `dom.ts` and is still what a desktop
+   cap would use on the pages the root rule does not reach. */
 
 .bt-backdrop { display: none; }
 

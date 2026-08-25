@@ -65,6 +65,57 @@ button:not([disabled]) { cursor: pointer; }
 
 html { scroll-behavior: smooth; }
 
+/* THE REFRESH FLICKER, fixed 2026-08-25 — owner-reported: every reload threw
+   the whole page ~7.5px right before it settled. Nothing was broken. A feed
+   page ships as a 20 KB shell and fills from `bt-web.js`, so every load has a
+   window where the document is SHORT, so there is no scrollbar, so the viewport
+   is 15px wider and the centred column sits half of that further right; the
+   cards land, the scrollbar appears, and the column snaps back. `stable`
+   reserves the space whether or not a scrollbar is there, so it never moves.
+   Measured on /us both ways — the column ran 312.4 → 320 → 312.4 across the
+   transient before this rule, and held 312.4 throughout after.
+
+   ⚠️ SCOPED TO THE FEED PAGES, AND THE SCOPE IS THE WHOLE POINT. This was
+   written as a bare `html { scrollbar-gutter: stable }` first, and an
+   adversarial pass caught what that costs: on a page that does NOT overflow,
+   the gutter is reserved and empty, the full-bleed navy header and dark footer
+   shrink from 1280 to 1264.8, and a 15px stripe of paper (the canvas takes
+   <body>'s background; <html> is transparent) runs down the right edge against
+   them. Reproduced at 1280×1000 on /auth/callback, /404 and /account. That is a
+   permanent blemish on the sign-in path traded for a transient on the feed —
+   the wrong way round.
+
+   So the rule asks which pages actually MOVE. Measured, all ten page types,
+   first paint (scripts stripped) vs settled: /us 1426 → 7845 and /eu 1426 →
+   5932; every other page grows by exactly 0. Only the feed pages have the
+   transient, and they are always tall once they have it, so on them the gutter
+   is space the scrollbar was going to occupy anyway and the stripe cannot
+   appear. `main.feed-page` is carried by /us, /eu and the template that
+   generates them, and by nothing else.
+
+   `:has()` on the root is the selector because the scroll container IS <html> —
+   the gutter has to be declared on the element that scrolls, and the only thing
+   distinguishing these two pages lives inside <body>. An engine without `:has()`
+   drops the whole rule and behaves exactly as this site did before, which is
+   also what an engine without `scrollbar-gutter` does. No fallback is owed
+   either way. Under overlay scrollbars — macOS, iOS, Android — the spec reserves
+   nothing at all ("In the case of overlay scrollbars, no scrollbar gutter is
+   present", css-overflow-3 §5.2), so the phone and the Mac never see this rule
+   work or cost. The older `overflow-y: scroll` was rejected: it fixes the same
+   flicker by painting a dead TRACK, which is the stripe again and more visible.
+
+   ⚠️ AND ON THESE PAGES IT PAYS A DEBT `web/dom.ts` HAS BEEN MEASURING BY HAND.
+   `lockScroll` caps <html> with `overflow: hidden` behind the filter/notices
+   sheet, and a cap removes the scrollbar exactly the way an unfilled page does —
+   which is what `--bt-scrollbar` is published for. A stable gutter stays
+   reserved under `hidden`: measured at 1280 with a classic scrollbar, the cap
+   took the column 312.4 → 320 without this rule and 312.4 → 312.4 with it.
+   That now holds on the feed pages and NOT on the rest of the site, which is a
+   narrowing of the claim the notes in `web/dom.ts` and `feed.css` carry — read
+   them. `--bt-scrollbar` stays published and unread; removing it is a separate
+   decision with the owner's paused desktop-clamp spec behind it. */
+html:has(main.feed-page) { scrollbar-gutter: stable; }
+
 body {
   margin: 0;
   font-family: var(--sans);
