@@ -40,7 +40,7 @@ The app also checks for updates when it starts. That request carries a random id
 You can mark a bill with a thumbs up or down. Because a reader's position on a bill is **a political opinion** — a specially protected category of personal data under EU law — we are deliberately narrow about this.
 
 - **Voting requires signing in with Google or Apple; reading never does.** The account is what makes one vote per person per bill possible. Without it, the counts would be meaningless.
-- **All we act on is an account identifier and an email address.** If you use Sign in with Apple and choose *Hide My Email*, we only ever see Apple's relay address.
+- **All we act on from the sign-in is an account identifier and an email address.** If you use Sign in with Apple and choose *Hide My Email*, we only ever see Apple's relay address.
 - **A vote record is: which bill, thumbs up or down, when, and — only if you choose to set it — a country and, for the US, a state.** That location is optional, you choose it yourself, and nobody verifies it. Leaving it unset is a normal and fully-supported way to use the app.
 - **Who voted which way is never published, shown to anyone, or attached to a profile.** There are no public profiles and no vote histories. What is published is counts: how many voted each way overall, and how many from each country or state.
 - **You can change or withdraw your vote at any time**, and deleting your account deletes every vote with it.
