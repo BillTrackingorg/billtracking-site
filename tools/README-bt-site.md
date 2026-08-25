@@ -173,3 +173,24 @@ node tools/bt-site.cjs --selftest
 are the bill's citations). The switch is ONE constant — `INDEX_BILL_PAGES` in the app
 repo's `src/site/chrome.ts` — and the renderer's selftest follows it. The remaining step
 is the owner's: submit the bill sitemap in Search Console.
+
+## ⚠️ Rebuilding this bundle is a DEPLOY, not a build step
+
+`bt-site.cjs` is a **compiled snapshot** of the app repo's `src/`. It does not track the app —
+it sits at whatever commit it was last built from, and the site renders correctly from it
+indefinitely. That is by design and it is not technical debt.
+
+**You cannot rebuild one part of it.** `npm run copy:site` recompiles from the app's CURRENT
+`src/` and copies the reader-facing `assets/js` bundle along with the renderer. So a rebuild
+ships *everything* the app has changed since the last one — straight to the public website, in
+whatever state it happens to be in.
+
+Recorded 2026-08-25, when a fix was proposed that needed a code change. The snapshot was 20
+commits and 489 lines behind, and most of that was unreleased push-notification work. The fix
+turned out not to need code, so nothing was rebuilt.
+
+**Before you rebuild: read `git diff <bundle core sha>..HEAD -- src/` in the app repo, line by
+line, and clear it as its own change-set.** The core sha is printed by every render
+(`bt-site: N post pages, M bill pages ... — core <sha>`). Never rebuild as a side effect of
+something else. The natural moment is when the work that is already queued up in `src/` is
+itself cleared to ship — then review once, ship once.
