@@ -40,7 +40,7 @@ The app also checks for updates when it starts. That request carries a random id
 You can mark a bill with a thumbs up or down. Because a reader's position on a bill is **a political opinion** — a specially protected category of personal data under EU law — we are deliberately narrow about this.
 
 - **Voting requires signing in with Google or Apple; reading never does.** The account is what makes one vote per person per bill possible. Without it, the counts would be meaningless.
-- **We ask for no contacts, no friends list, no date of birth.** What we act on is an account identifier and an email address. If you use Sign in with Apple and choose *Hide My Email*, we only ever see Apple's relay address.
+- **All we act on is an account identifier and an email address.** If you use Sign in with Apple and choose *Hide My Email*, we only ever see Apple's relay address.
 - **A vote record is: which bill, thumbs up or down, when, and — only if you choose to set it — a country and, for the US, a state.** That location is optional, you choose it yourself, and nobody verifies it. Leaving it unset is a normal and fully-supported way to use the app.
 - **Who voted which way is never published, shown to anyone, or attached to a profile.** There are no public profiles and no vote histories. What is published is counts: how many voted each way overall, and how many from each country or state.
 - **You can change or withdraw your vote at any time**, and deleting your account deletes every vote with it.
@@ -89,7 +89,7 @@ BillTracking is an independent project run by one person, not a company. The dat
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
 
-**26 August 2026.** The bullet above about signing in used to open "We ask for no profile. No name, no photo". That was not accurate and it has been removed. Nothing about what the product does changed and nothing new is collected — what changed is that this page no longer says something untrue.
+**26 August 2026.** The bullet above about signing in used to open "We ask for no profile. No name, no photo". That was not accurate and it has been removed, along with the list of things it went on to say we do not ask for. Nothing about what the product does changed and nothing new is collected — what changed is that this page no longer says something untrue, and says less.
 
 **23 August 2026.** Voting, with Google sign-in, went live on this website, and the what-exists-today note now says so. The note's Apple sentence was also corrected: the button is live and answers when pressed, not "visibly switched off". The deletion section states the backup reality: we keep no working copy, and deleted data ages out of encrypted disaster-recovery backups within 90 days. The app's update check is also disclosed — it has worked this way since over-the-air updates were wired in; what changed is that we wrote it down. And we dropped a mention of notification settings, which the app does not ship yet.
 
