@@ -7,6 +7,11 @@ desktop.ini
 # Python bytecode
 __pycache__/
 
+# Apple private keys — this repo is PUBLIC and served whole; a committed key is a
+# published key. Guard ordered by STORE-READINESS ("both repos"), added 2026-08-27.
+*.p8
+AuthKey_*
+
 # p/, b/ and view/ ARE committed here — but ONLY by THIS repo's own permalinks
 # workflow (.github/workflows/permalinks.yml + tools/bt-site.cjs), which renders
 # them from the REAL published feed on its built-in GITHUB_TOKEN, with no

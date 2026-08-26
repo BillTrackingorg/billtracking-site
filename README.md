@@ -38,6 +38,9 @@ whole of the app's private TypeScript, comments included.
    copy them to a served `/.well-known/` at THIS repo's root. Serving them
    malformed fails silently (links just open the browser). Full instructions:
    `app/site-build/well-known-pending/LAUNCH-README.md`.
+   *(2026-08-27: the Apple file is FILLED and final — Team ID issued; only the
+   Android file still carries placeholders, awaiting the Play App-Signing
+   SHA-256. Both stay in the app repo until launch.)*
 2. **Store URLs** once the listings exist — `STORE_URLS` now lives with the
    renderer, in the app repo's `src/site/chrome.ts`; fill it, rebuild, copy the
    bundle. The funnel under every post page then shows real store buttons (until
