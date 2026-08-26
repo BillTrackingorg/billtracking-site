@@ -21,7 +21,7 @@ The short version: **this website carries no analytics and no trackers of any ki
 
 There is no analytics anywhere on this site. No Google Analytics, no Cloudflare, no pixel, no tag manager, no advertising and no tracking SDKs — on any page, of any kind. We do not record what you read, what you search for or where you arrived from, we do not sell or share anything about you, and we build no profile of you.
 
-Some pages do keep things for you, deliberately — the feed pages ([/us](/us) and [/eu](/eu)) most of all. Whatever a page keeps — the posts it has already shown you, so that it opens quickly the next time, your display preferences, and your sign-in session if you choose to vote — stays **in your browser, on your device**, and none of it is transmitted to us. We are not told which pages you opened, what you read, or where you arrived from. From this website, the only things that ever leave your device are a vote you deliberately cast and — if you sign in — the bills you choose to follow, exactly as described below.
+Some pages do keep things for you, deliberately — the feed pages ([/us](/us) and [/eu](/eu)) most of all. Whatever a page keeps — the posts it has already shown you, so that it opens quickly the next time, your display preferences, your docket keywords, and your sign-in session if you choose to vote — stays **in your browser, on your device**, and none of it is transmitted to us. We are not told which pages you opened, what you read, or where you arrived from. From this website, the only things that ever leave your device are a vote you deliberately cast and — if you sign in — the bills you choose to follow, exactly as described below.
 
 One honest caveat, because the alternative would be a false claim: the site is hosted on **GitHub Pages**, and any web host necessarily handles your IP address at the network layer in order to send you a page. GitHub does not surface those logs to us and we have never seen them — but we will not tell you no IP address is processed anywhere, because that would not be true.
 
@@ -32,7 +32,7 @@ The feed and bill timelines all work without signing in. The app and this websit
 
 The app contains no advertising, no third-party analytics and no tracking SDKs.
 
-The app also checks for updates when it starts. That request carries a random identifier for the installation and the app's version — sent to Expo, the service that delivers our updates. It identifies the installation, not you.
+The app also checks for updates when it starts. That request carries a random identifier for the installation and the app's version — sent to Expo, the service that delivers our updates. It identifies the installation, not you. If the app failed to start the last time it ran, the request also carries the text of that error — the app's own crash message, shortened — so that a broken release can be spotted.
 
 ^The app — accounts and votes
 ## An account exists so your vote counts once
@@ -60,7 +60,7 @@ Our database provider is Supabase, acting as a processor on our instructions. If
 ^Deleting
 ## Deleting your account
 
-In the app: **You → Delete account**. On this website: your [account page](https://billtracking.org/account). It is immediate and permanent. Your account, every vote you cast and your follow list are erased; there is no recovery window. We keep no working copy — encrypted backups of the vote database exist so that a failure cannot destroy everyone's votes; a deleted vote ages out of every backup within 90 days, and backups are only ever read to recover from a failure.
+In the app: **You → Delete account**. On this website: your [account page](https://billtracking.org/account). It is immediate and permanent. Your account, every vote you cast and your follow list are erased; there is no recovery window. We keep no working copy. Backups exist so that a failure cannot destroy everyone's work — they hold the votes, the consent records and the follow lists, because our database provider's free tier keeps no backups of its own — and they are only ever read to recover from a failure. Deleting your account removes all of it from the live database at once. In the backups it is put beyond use on the rotation: we keep every snapshot from the last 90 days and never fewer than two, so a deleted vote is normally gone from the archive within 90 days, and a very quiet spell can hold the second-oldest snapshot a while longer.
 
 If you can no longer sign in in either place, use the [account deletion page](delete-account.html).
 
@@ -89,7 +89,7 @@ BillTracking is an independent project run by one person, not a company. The dat
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
 
-**26 August 2026.** The bullet above about signing in used to open "We ask for no profile. No name, no photo". That was not accurate and it has been removed, along with the list of things it went on to say we do not ask for. Nothing about what the product does changed and nothing new is collected — what changed is that this page no longer says something untrue, and says less.
+**26 August 2026.** The bullet above about signing in used to open "We ask for no profile. No name, no photo". That was not accurate and it has been removed, along with the list of things it went on to say we do not ask for. Nothing about what the product does changed and nothing new is collected — what changed is that this page no longer says something untrue, and says less. Later the same day, three more descriptions were corrected to match the product exactly: the update check's request also carries the previous run's crash message when there was one — it always did, and the page now says so; the deletion section describes the backups as they are — they hold the votes, the consent records and the follow lists, on a 90-day rotation that never keeps fewer than two snapshots, and a word about encryption that the pipeline does not support is gone; and the list of what a feed page keeps on your device now includes your docket keywords. As before, nothing about what the product does changed — the page stopped saying three things inexactly.
 
 **23 August 2026.** Voting, with Google sign-in, went live on this website, and the what-exists-today note now says so. The note's Apple sentence was also corrected: the button is live and answers when pressed, not "visibly switched off". The deletion section states the backup reality: we keep no working copy, and deleted data ages out of encrypted disaster-recovery backups within 90 days. The app's update check is also disclosed — it has worked this way since over-the-air updates were wired in; what changed is that we wrote it down. And we dropped a mention of notification settings, which the app does not ship yet.
 
