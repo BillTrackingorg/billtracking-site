@@ -190,7 +190,13 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   table is deleted.** Pressing a button now asks the Supabase project itself —
   GoTrue's public `/auth/v1/settings` (`external.google`, `external.apple`), one
   small `fetch`, no auth library — and:
-  * provider ON → `signInWithOAuth`, and the browser leaves for the provider;
+  * provider ON → `signInWithOAuth`, and the browser leaves for the provider — EXCEPT
+    Apple (2026-09-05): the web Apple door is closed BEFORE the probe by
+    `APPLE_WEB_CLIENT_CONFIGURED = false` in the app's `src/web/auth.ts`, because the
+    probe answers `apple: true` for the app's NATIVE flow while the WEB flow (a
+    Services ID + a six-month client secret) does not exist yet; the reader gets the
+    "isn't available on the website yet" sentence. It flips in the sitting that mints
+    the Services ID;
   * provider OFF → the button re-enables and `#bt-provider-note` says
     *"Google sign-in isn't available yet — we're still setting it up."*
     (`PROVIDER_UNAVAILABLE`, per provider);
@@ -329,7 +335,10 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   lane, AND IT STANDS** — the signed-in region carries an in-page
   `.acct-delete` card calling the same `deleteAccount()` the phone's sheet
   calls, with the same words, the same two-step arm, and the same Apple
-  "one more step" notice from `appleFallbackNotice()` (which is why it does
+  ~~"one more step" notice from `appleFallbackNotice()`~~ (REMOVED 2026-09-05, app
+  D13 amendment — nobody is asked to clean up Apple's list any more; the card still
+  does not redirect, because it is the one place the person is told, in words, that
+  an irreversible deletion is done) (which is why it does
   not redirect away on success — that notice is the only place a reader is
   told about a dead Apple ID entry; they leave by pressing **Done**).
   `/delete-account.html` stays exactly as it is; it is the route for somebody
@@ -1213,12 +1222,12 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   completely: probe the live URL at Gate B, before the provider config is
   written.
 * **The stylesheet is versioned by hand, and only on the shells.** The five
-  hand-authored pages ask for a versioned `/assets/css/feed.css?v=N` (v=12 as
+  hand-authored pages ask for a versioned `/assets/css/feed.css?v=N` (v=16 as of 2026-09-05; was v=12 as
   of 2026-08-23); the generated `/p/`
   pages ask for `/assets/css/feed.css` with no query at all. Same file, two cache
   entries. It is harmless before the first publish (nothing holds either yet),
   but from the first publish on, ANY edit to `feed.css` needs the query bumped in
-  the template + the four hand-authored shells, or returning visitors keep the
+  the template + the FIVE hand-authored shells (404, account, eu, us, auth/callback), or returning visitors keep the
   old sheet. **`?v=1` → `?v=2` on 2026-08-20** with the `.card-open` hit-area fix
   (estate review R2) — pre-publish, so it defeated nothing, and done anyway
   because the habit is what has to hold after the cut-over, not the arithmetic.
