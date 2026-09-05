@@ -190,13 +190,16 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   table is deleted.** Pressing a button now asks the Supabase project itself —
   GoTrue's public `/auth/v1/settings` (`external.google`, `external.apple`), one
   small `fetch`, no auth library — and:
-  * provider ON → `signInWithOAuth`, and the browser leaves for the provider — EXCEPT
-    Apple (2026-09-05): the web Apple door is closed BEFORE the probe by
-    `APPLE_WEB_CLIENT_CONFIGURED = false` in the app's `src/web/auth.ts`, because the
-    probe answers `apple: true` for the app's NATIVE flow while the WEB flow (a
-    Services ID + a six-month client secret) does not exist yet; the reader gets the
-    "isn't available on the website yet" sentence. It flips in the sitting that mints
-    the Services ID;
+  * provider ON → `signInWithOAuth`, and the browser leaves for the provider. (For
+    Apple there is one hand-set gate in front of the probe, `APPLE_WEB_CLIENT_CONFIGURED`
+    in the app's `src/web/auth.ts`: the probe answers `apple: true` for the app's NATIVE
+    flow whether or not the WEB flow — a Services ID + a six-month client secret — is
+    configured. It was `false` from the afternoon of 2026-09-05 until the evening, when
+    the Services ID and secret went in and it flipped to `true`; the door is open.)
+    After an APPLE sign-in comes back (`bt-signin-provider` in session storage, set by
+    `signInWith`), the callback page banks the `provider_refresh_token` GoTrue handed it
+    through the core's `bankAppleRefreshToken` BEFORE redirecting — best effort, bounded,
+    and the reason a web Apple account can be revoked at deletion;
   * provider OFF → the button re-enables and `#bt-provider-note` says
     *"Google sign-in isn't available yet — we're still setting it up."*
     (`PROVIDER_UNAVAILABLE`, per provider);
