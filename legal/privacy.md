@@ -14,7 +14,7 @@ updated: 26 August 2026
 
 The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — your reading preferences, and a sign-in session if you choose to vote — stays in your browser, on your device. The app needs no account to read anything. An account does exactly two things — it makes a vote count once per person, and it keeps your followed bills the same on every device you sign in on — and it can be deleted in two taps, from inside the app or from your account page on this website.
 
->! **What exists today.** The two X feeds, this website and its feed pages ([/us](/us) and [/eu](/eu)) are live — and voting, with Google sign-in, is live on this website. The BillTracking app is in closed testing and not yet in the app stores. Apple sign-in arrives with the iOS release; until then, pressing the Apple button tells you it isn't available yet.
+>! **What exists today.** The two X feeds, this website and its feed pages ([/us](/us) and [/eu](/eu)) are live — and voting, with Google sign-in, is live on this website. The BillTracking app is in closed testing and not yet in the app stores. Apple sign-in works in the app on iPhone; on this website, the Apple button still tells you it isn't available yet — the website's Apple flow is a separate setup we haven't finished.
 
 ^This website
 ## billtracking.org collects nothing from you
@@ -88,6 +88,8 @@ BillTracking is an independent project run by one person, not a company. The dat
 ### Changes
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
+
+**5 September 2026.** Sign in with Apple went live in the app on iPhone. Nothing new is collected by it beyond what this page already describes: an account identifier and an email address (Apple's relay address if you hide yours), and one token from Apple kept for a single purpose — to disconnect BillTracking from your Apple ID when you delete your account, as the deletion section says. The website's Apple button is unchanged: not available yet, and it says so when pressed.
 
 **26 August 2026.** The bullet above about signing in used to open "We ask for no profile. No name, no photo". That was not accurate and it has been removed, along with the list of things it went on to say we do not ask for. Nothing about what the product does changed and nothing new is collected — what changed is that this page no longer says something untrue, and says less. Later the same day, three more descriptions were corrected to match the product exactly: the update check's request also carries the previous run's crash message when there was one — it always did, and the page now says so; the deletion section describes the backups as they are — they hold the votes, the consent records and the follow lists, on a 90-day rotation that never keeps fewer than two snapshots, and a word about encryption that the pipeline does not support is gone; and the list of what a feed page keeps on your device now includes your docket keywords. As before, nothing about what the product does changed — the page stopped saying three things inexactly.
 
