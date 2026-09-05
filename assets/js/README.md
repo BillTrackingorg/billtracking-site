@@ -549,9 +549,6 @@ depends on it.
       <a class="pill-correction" data-kind="inaccurate" href="/p/…">Inaccurate</a>
       <!-- or --> <a class="pill-correction" data-kind="correction" href="/p/…">Correction</a>
       <!-- or --> <span class="flag-older">Older action</span>
-      <!-- or (2026-09-06) a REPEAT — this post says again what an earlier one
-           said (`post.repeatOf`, D17 amendment): a link to the survivor. -->
-      <!-- or --> <a class="pill-correction" data-kind="repeat" href="/p/…">Posted twice</a>
     </div>
     <!-- The head-right slot OPENS THE POST; it is not the app's ⋯ menu. -->
     <a class="card-open" href="/p/<id>" aria-label="Open this post">
@@ -619,21 +616,6 @@ depends on it.
   <div class="card-anchored">
     <p class="card-next"><span class="lead">What's next: </span>Policy adoption …</p>
     <p class="card-budget"><span class="lead">Budget impact: </span>…</p>
-    <!-- 3a. THE REPEAT BLOCK (2026-09-06, D17 amendment) — ONLY on a card that
-         repeats an earlier post (`post.repeatOf`; the head pill is then
-         `data-kind="repeat"`). ANCHORED, never clipped: the compact card's point
-         must not be decided by title length — the rule that put "What's next"
-         here. Such a card keeps its title, its meta line and (when flagged) the
-         older-action footer in `.card-deferred`; it draws NO source, NO annex,
-         NO summary and NO strip — the MODEL empties them (`card-model.ts`); this
-         renderer adds no rule of its own. No aria-label on the link: the note
-         and the link ARE its accessible name. When the survivor is not loaded
-         the block is a <div> with `.card-repeat-missing` instead of a link, and
-         the pill is a <span>. -->
-    <a class="card-repeat" href="/p/<survivorId>">
-      <p class="card-repeat-note">We posted this twice — the same bill, the same day, the same outcome. The earlier post is the one to read.</p>
-      <p class="card-repeat-link">Open the earlier post</p>
-    </a>
   </div>
 
   <!-- 4. DEFERRED — always behind the expander, never clipped. -->
@@ -1259,7 +1241,7 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   completely: probe the live URL at Gate B, before the provider config is
   written.
 * **The stylesheet is versioned by hand, and only on the shells.** The five
-  hand-authored pages ask for a versioned `/assets/css/feed.css?v=N` (v=17 as of 2026-09-06; was v=16 as
+  hand-authored pages ask for a versioned `/assets/css/feed.css?v=N` (v=18 as of 2026-09-06 — v=17 lived a few hours the same night; was v=16 as
   of 2026-09-05, v=12 as of 2026-08-23); the generated `/p/`
   pages ask for `/assets/css/feed.css` with no query at all. Same file, two cache
   entries. It is harmless before the first publish (nothing holds either yet),
