@@ -197,9 +197,13 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
     configured. It was `false` from the afternoon of 2026-09-05 until the evening, when
     the Services ID and secret went in and it flipped to `true`; the door is open.)
     After an APPLE sign-in comes back (`bt-signin-provider` in session storage, set by
-    `signInWith`), the callback page banks the `provider_refresh_token` GoTrue handed it
-    through the core's `bankAppleRefreshToken` BEFORE redirecting — best effort, bounded,
-    and the reason a web Apple account can be revoked at deletion;
+    `signInWith`), the callback page hands the `provider_refresh_token` GoTrue gave it to
+    the core's `bankAppleRefreshToken`, which sends it as a KEEP-ALIVE request that
+    outlives the page and is NOT awaited — the redirect follows the exchange at once
+    (the first cut awaited it and "felt broken"). A raw `fetch` on purpose: supabase-js's
+    functions client cannot pass `keepalive`. Accepted: a browser that drops keep-alive on
+    navigation (Firefox before 133) loses the bank and that account reads `no_token` at
+    deletion. It is the reason a web Apple account can be revoked at deletion;
   * provider OFF → the button re-enables and `#bt-provider-note` says
     *"Google sign-in isn't available yet — we're still setting it up."*
     (`PROVIDER_UNAVAILABLE`, per provider);
@@ -445,9 +449,21 @@ that is deliberate.** `src/web/feed-page.ts` builds it and inserts it after
   <p  id="bt-callback-status" class="auth-status" role="status"> … </p>
   <div id="bt-callback-error" class="acct-card" hidden>
       <p id="bt-callback-error-detail"></p>
+      <ul class="page-links"> … the three doors out (US feed, EU feed, account) … </ul>
   </div>
 </main>
 ```
+
+* **The three doors out live INSIDE the failure card.** On the success path the page
+  shows only the heading and the status line for the length of the exchange. They sat
+  outside the card until 2026-09-05 evening, stacked under "Signing you in…" — "it felt
+  broken" (owner).
+* **After an Apple sign-in, bank the token — and do not wait for it.** Read
+  `bt-signin-provider` from session storage (and clear it) BEFORE anything can return
+  early; if it says `apple`, the account has an Apple identity and the session carries
+  `provider_refresh_token`, hand it to the core's `bankAppleRefreshToken` (a keep-alive
+  request that outlives the page) and redirect at once. Nothing here waits for the
+  network; nothing here may interrupt a sign-in.
 
 * **The one page with `detectSessionInUrl: true`.** Everywhere else it is
   `false`. `flowType: 'pkce'` everywhere, always — with the supabase-js default
