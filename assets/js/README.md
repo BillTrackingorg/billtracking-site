@@ -1234,7 +1234,11 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   not cosmetic: a returning visitor's cached v11 sheet has no companion rule
   for the `hidden` attribute, so when Google's own sign-in button renders on
   `/account` they would see TWO "Continue with Google" doors, one of them the
-  redirect flow whose consent screen names supabase.co.
+  redirect flow whose consent screen names supabase.co. **`?v=12` → `?v=15`
+  went unrecorded again (2026-08-24 → 09-04; the shells are the truth).
+  `?v=15` → `?v=16` on 2026-09-05** with `.acct-card p.acct-callout` — the left
+  stripe on the account page's "Account deleted" sentence, which took it over
+  from the Apple clean-up note that no longer exists (app DECISIONS D13).
   ⚠️ A section of this file was once lost to `git checkout -- assets/js` run to
   reset the BUNDLE — this README lives in assets/js but is hand-maintained, so
   reset the chunk files by name, never the directory.

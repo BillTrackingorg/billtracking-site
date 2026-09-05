@@ -1020,6 +1020,13 @@ button[disabled],
    started (src/web/account.ts). Empty must take no room at all, or the page
    carries a gap that looks like a missing sentence. */
 .acct-note:empty { display: none; }
+/* The one emphasised sentence on the "Account deleted" screen. The phone's
+   sheet draws the same sentence with the same stripe (delete-account-sheet.tsx
+   `callout`); until 2026-09-05 the stripe belonged to an Apple clean-up note
+   that no longer exists (src/lib/auth-core.ts records why). Written with the
+   card and the type so it OUTWEIGHS `.acct-card p` above for colour — as a
+   bare class it would lose (one class < one class + one type). */
+.acct-card p.acct-callout { border-left: 2px solid var(--navy); padding-left: 10px; color: var(--ink); }
 
 .acct-danger { margin-top: 1.6rem; font-size: 0.9rem; }
 .acct-danger a { color: var(--navy); }
