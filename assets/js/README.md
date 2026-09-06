@@ -1241,7 +1241,7 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   completely: probe the live URL at Gate B, before the provider config is
   written.
 * **The stylesheet is versioned by hand, and only on the shells.** The five
-  hand-authored pages ask for a versioned `/assets/css/feed.css?v=N` (v=18 as of 2026-09-06 — v=17 lived a few hours the same night; was v=16 as
+  hand-authored pages ask for a versioned `/assets/css/feed.css?v=N` (v=18 as of 2026-09-06 — v=17 lived half an hour the same night; was v=16 as
   of 2026-09-05, v=12 as of 2026-08-23); the generated `/p/`
   pages ask for `/assets/css/feed.css` with no query at all. Same file, two cache
   entries. It is harmless before the first publish (nothing holds either yet),
