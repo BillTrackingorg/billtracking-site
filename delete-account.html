@@ -101,6 +101,18 @@
       <li>Any token held to disconnect BillTracking from your Apple ID.</li>
     </ul>
 
+    <!-- ⚠️ THESE TWO SENTENCES ARE PINNED (D33, 2026-09-06). They are the same words the
+         app's delete screen and the account page show at the final confirm; the source of
+         truth is the app repo's src/data/deletion-copy.ts, this file cannot import it, and
+         `check:votes-series` fails the build if the two ever stop matching character for
+         character. Edit them THERE and copy, never here alone.
+
+         There is no count on this page and there cannot be: it is the route for someone
+         who can no longer sign in, so we do not know whose account it is. The two doors
+         that DO know show "You have voted on N bills" beside these lines. -->
+    <p class="measure-wide muted">Deleting your account removes every vote you cast from the bills' totals, permanently.
+    Those votes count for something: each one is a person standing behind a number on a bill.</p>
+
     <h3>Not deleted, and why</h3>
     <ul class="principles">
       <li><strong>Vote counts that were already published.</strong> These are totals — "412 for,
@@ -143,7 +155,7 @@
     <p class="measure-wide muted">Details of what we hold and why are on the
     <a href="/privacy">privacy page</a>.</p>
 
-    <p class="muted"><em>Last updated 23 August 2026. Questions:
+    <p class="muted"><em>Last updated 6 September 2026. Questions:
     <a href="mailto:contact@billtracking.org">contact@billtracking.org</a>.</em></p>
   </div>
 </section>
