@@ -1,0 +1,1 @@
+var n="Deleting your account removes every vote you cast from the bills' totals, permanently.",t="Those votes count for something: each one is a person standing behind a number on a bill.";function r(e){return`You have voted on ${e} ${e===1?"bill":"bills"}.`}export{n as a,t as b,r as c};
