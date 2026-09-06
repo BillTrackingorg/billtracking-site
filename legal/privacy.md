@@ -9,7 +9,7 @@ htmlTitle: Privacy
 description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account makes a vote count once, and keeps your followed bills across your devices.
 ogTitle: Privacy — BillTracking
 ogDescription: What we collect, why, and how to delete it — in plain language.
-updated: 5 September 2026
+updated: 7 September 2026
 ---
 
 The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — your reading preferences, and a sign-in session if you choose to vote — stays in your browser, on your device. The app needs no account to read anything. An account does exactly two things — it makes a vote count once per person, and it keeps your followed bills the same on every device you sign in on — and it can be deleted in two taps, from inside the app or from your account page on this website.
@@ -60,7 +60,7 @@ Our database provider is Supabase, acting as a processor on our instructions. If
 ^Deleting
 ## Deleting your account
 
-In the app: **You → Delete account**. On this website: your [account page](https://billtracking.org/account). It is immediate and permanent. Your account, every vote you cast and your follow list are erased; there is no recovery window. We keep no working copy. Backups exist so that a failure cannot destroy everyone's work — they hold the votes, the consent records and the follow lists, because our database provider's free tier keeps no backups of its own — and they are only ever read to recover from a failure. Deleting your account removes all of it from the live database at once. In the backups it is put beyond use on the rotation: we keep every snapshot from the last 90 days and never fewer than two, so a deleted vote is normally gone from the archive within 90 days, and a very quiet spell can hold the second-oldest snapshot a while longer.
+In the app: **You → Delete account**. On this website: your [account page](https://billtracking.org/account). It is immediate and permanent. Your account, every vote you cast and your follow list are erased; there is no recovery window. We keep no working copy. Backups exist so that a failure cannot destroy everyone's work — they hold the votes, the consent records and the follow lists, because our database provider's free tier keeps no backups of its own — and they are only ever read to recover from a failure. Deleting your account removes all of it from the live database at once. In the backups it is put beyond use on the rotation: we keep every snapshot from the last 90 days and never fewer than two, so a deleted vote is normally gone from the archive within 90 days, and a very quiet spell can hold the second-oldest snapshot a while longer. When votes leave with a deleted account we record how many left each bill, from which place, and how many were for and against. It's a count with nothing that identifies a person, and it's there so a bill's history can say that votes left rather than that people changed their minds.
 
 If you can no longer sign in in either place, use the [account deletion page](delete-account.html).
 
@@ -88,6 +88,8 @@ BillTracking is an independent project run by one person, not a company. The dat
 ### Changes
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
+
+**7 September 2026.** The deletion section now says what we keep when votes leave with a deleted account: a count of how many left each bill, from which place, and how many were for and against. It is a count and nothing else — no account, no name, no time finer than the day — and it is there so that a bill's published history can show that votes left, instead of leaving a fall to be read as people changing their minds. Nothing about the erasure itself changed: your account and every vote you cast still go immediately and completely.
 
 **5 September 2026.** Sign in with Apple went live in the app on iPhone. Nothing new is collected by it beyond what this page already describes: an account identifier and an email address (Apple's relay address if you hide yours), and one token from Apple kept for a single purpose — to disconnect BillTracking from your Apple ID when you delete your account, as the deletion section says. Later the same day, Sign in with Apple went live on this website too — the same account, the same token, the same disconnect at deletion.
 
