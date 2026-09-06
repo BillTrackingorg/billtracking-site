@@ -10,6 +10,11 @@
 #    shows (parity proven by the app's scripts/check-permalinks.js). Post pages
 #    are its citations. Bill pages carry `noindex` until the owner's Gate-2 flip
 #    (INDEX_BILL_PAGES in the generator) — published now as citations only.
+#  • /corrections/ — the PUBLIC CORRECTIONS LOG (owner ruling 2026-09-06, "one
+#    card, not two"): one row per post the record carries a correction for, in the
+#    same words the card, the post page and the bill row use. Indexable, unlike
+#    everything else this job writes: site/legal/terms.md promises errors are
+#    "logged publicly" and site/accuracy.html points a reader straight at it.
 #
 # THE RENDERER IS THE APP'S OWN CODE. tools/bt-site.cjs is `bt-core` compiled
 # from the app repo's TypeScript (web-overhaul plan §12(1), D27): the adapter,
@@ -21,9 +26,9 @@
 #
 # THE BOTS ARE NEVER TOUCHED. This job PULLS the published feed files + the
 # per-bill path artifacts (public GitHub Pages, the same bytes the phones read),
-# runs tools/bt-site.cjs, and commits ONLY the generated p/ + b/ + view/ trees
-# and the bill sitemap. Nothing here can change a post, a tally, a path, or a
-# bot. b/ is SEPARATE from the app's own web export (bill/[ref].html) — never
+# runs tools/bt-site.cjs, and commits ONLY the generated p/ + b/ + corrections/ +
+# view/ trees and the bill sitemap. Nothing here can change a post, a tally, a
+# path, or a bot. b/ is SEPARATE from the app's own web export (bill/[ref].html) — never
 # touched here. view/ is the published packaged form of the same render (index,
 # shaped months, per-bill views, the legislature registry): data for any future
 # surface, written by this job alone.
@@ -191,6 +196,12 @@ jobs:
           echo "rendered $n post pages, $b bill pages"
           [ "$n" -gt 0 ] || { echo "::error::the renderer produced no post pages"; exit 1; }
           [ -d out/view/v1 ] || { echo "::error::the renderer produced no view/ tree"; exit 1; }
+          # The corrections log is written on EVERY run, empty or not — it is a
+          # standing promise (accuracy.html, terms.md), and a promise that 404s
+          # until the first correction is not one. Its ROWS are not guarded the
+          # way pages are: a row is a render of the record, and a `sever-revision`
+          # override legitimately removes one. The FILE is what must never vanish.
+          [ -f out/corrections/index.html ] || { echo "::error::the renderer produced no /corrections/ page — the accuracy page and the terms both point at it"; exit 1; }
 
       # Publish = replace p/, b/ AND view/ wholesale + the bill sitemap. All three
       # trees are TRACKED but written by this job alone (only generated files live
@@ -209,6 +220,11 @@ jobs:
           if [ -d b ]; then
             stray=$(find b -type f | grep -Ev '^b/[a-z0-9]{2,12}/([a-z0-9][a-z0-9-]*\.html|index\.html)$' || true)
             [ -z "$stray" ] || { echo "::error::b/ contains unexpected files — refusing to replace it: $stray"; exit 1; }
+          fi
+          # corrections/ is workflow-owned too, and holds exactly one file.
+          if [ -d corrections ]; then
+            stray=$(find corrections -type f | grep -Ev '^corrections/index\.html$' || true)
+            [ -z "$stray" ] || { echo "::error::corrections/ contains unexpected files — refusing to replace it: $stray"; exit 1; }
           fi
           # view/ is workflow-owned too — the published packaged form of this same
           # render (plan §12(1)). Same rule as p/ and b/: anything else in there
@@ -275,14 +291,15 @@ jobs:
           fi
           new=$(ls out/p/*.html | grep -vc index.html || true)
           newb=$(find out/b -type f -name '*.html' ! -name index.html | wc -l)
-          rm -rf p b view
+          rm -rf p b corrections view
           cp -r out/p p
           cp -r out/b b
+          cp -r out/corrections corrections
           cp -r out/view view
           cp out/bill-sitemap.xml bill-sitemap.xml
           git config user.name "billtracking-permalinks"
           git config user.email "permalinks@billtracking.org"
-          git add -A p b view bill-sitemap.xml
+          git add -A p b corrections view bill-sitemap.xml
           if git diff --cached --quiet; then echo "no page changes"; exit 0; fi
           # A quiet run still moves view/v1/index.json (its built_at heartbeat). A commit
           # whose ONLY change is that stamp would deploy the whole site every 15 minutes
@@ -310,9 +327,10 @@ jobs:
             echo "the view stamp names a new core (${was:-none} -> ${now:-none}) — publishing"
           fi
           git commit -q -m "permalinks: render $new post + $newb bill pages from the published feed"
-          # The repo also takes owner pushes; a race is ordinary. p/, b/ and view/
-          # are ours alone, so a rebase can never conflict with a hand-authored
-          # file. A 15-minute cadence makes the race commoner, not different.
+          # The repo also takes owner pushes; a race is ordinary. p/, b/,
+          # corrections/ and view/ are ours alone, so a rebase can never conflict
+          # with a hand-authored file. A 15-minute cadence makes the race
+          # commoner, not different.
           for attempt in 1 2 3; do
             if git push -q; then echo "published $new post + $newb bill pages"; exit 0; fi
             echo "push rejected (attempt $attempt) — rebasing onto the new head"
