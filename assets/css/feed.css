@@ -449,8 +449,8 @@ button[disabled],
 
 /* --- header pills -------------------------------------------------------- */
 
-/* One pill per header (correction flags win the slot; the older-action FOOTER
-   still renders below whether or not its pill did — COMPONENT-STYLE). */
+/* One pill per header (the correction flag wins the slot; the older-action
+   FOOTER still renders below whether or not its pill did — COMPONENT-STYLE). */
 .pill-correction,
 .flag-older {
   font-family: var(--sans);
@@ -466,11 +466,17 @@ button[disabled],
   flex: none;
   text-decoration: none;
 }
-/* "Inaccurate" names a problem, "Correction" names the fix — never a pair that
-   shares a stem (COMPONENT-STYLE, litigated). flagRed marks OUR mistake and is
-   not the negative-outcome rule breaking: a bill's fate is never coloured. */
-.pill-correction[data-kind="inaccurate"] { color: #A32D2D; }
-.pill-correction[data-kind="correction"] { color: #1A7F37; }
+/* ONE CORRECTION WORD, AND IT IS NOT RED (owner ruling 2026-09-06, the one-card
+   change). Only the CORRECTED post wears a pill now — the post that published
+   the fix is retired from every listing surface, so a second word would only
+   ever be the stem-sharing pair COMPONENT-STYLE rejected. The register is the
+   legislature's own accent, the colour this card already uses for the reference
+   link and for the values the correction changed: red said OUR MISTAKE about
+   corrections that are mostly the SOURCE revising (the EP re-publishing a
+   tally, Congress.gov amending an action). Amber stays advisory — being late is
+   not being wrong. The retired kinds were `inaccurate` (red) and `correction`
+   (green); `?v=19` is the bump that carried their removal. */
+.pill-correction[data-kind="corrected"] { color: var(--accent); }
 .flag-older { color: var(--gold-text); }
 
 /* --- collapsing body (D6) ------------------------------------------------ */
@@ -584,6 +590,14 @@ button[disabled],
 .card-action-date { font-family: var(--sans); color: var(--ink-soft); }
 .card-action-label { font-family: var(--sans); font-weight: 600; color: var(--ink); }
 .card-action-tally { font-family: var(--sans); color: var(--ink-soft); }
+/* THE VALUES A CORRECTION CHANGED (2026-09-06). The card carries the CORRECTED
+   label and tally — the post that published them is not listed any more — so
+   the accent is what keeps that from being a silent rewrite. Which fields wear
+   it is the model's call (`head.changed`), never this file's; the app paints
+   the same two fields in the same accent. Not red, and not a link colour with a
+   link's underline: it marks a value, it does not offer to go anywhere. */
+.card-action-label.is-corrected,
+.card-action-tally.is-corrected { color: var(--accent); }
 
 /* Badge-bearing glyphs (✅🏛️ passed a chamber, 📜 became law) carry a small
    green check at the corner; the badge overhangs, so the wrapper reserves
@@ -674,6 +688,30 @@ button[disabled],
   max-width: none;
 }
 .lead { font-weight: 600; }
+
+/* THE CORRECTION FOOTER — anchored, never deferred, and load-bearing since the
+   one-card change: this card is the only one a browsing reader meets, so the
+   pill's single word cannot be the whole account of what changed. Footnote
+   register, like `.card-older-note`, because it is meant to be READ; the tag
+   wears the same micro-caps the bill page's stamp and the `/p/` banner wear, in
+   ink rather than a colour of its own — the pill above already carries the
+   signal. The words are the model's `correctionStamp`, identical on every
+   surface. */
+.card-correction {
+  font-family: var(--sans);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--ink-soft);
+  margin: 6px 0 0;
+  max-width: none;
+}
+.card-correction-tag {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+.card-correction-link { font-weight: 600; color: var(--accent); }
 
 /* --- deferred: summary, older note, quote -------------------------------- */
 

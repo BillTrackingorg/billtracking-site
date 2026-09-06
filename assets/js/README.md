@@ -545,9 +545,13 @@ depends on it.
   <div class="card-head">
     <div class="card-ref-row">
       <a class="card-ref" href="/b/us/119-sres-815">S.Res. 815</a>
-      <!-- ONE pill max: a correction flag wins the slot over "Older action". -->
-      <a class="pill-correction" data-kind="inaccurate" href="/p/…">Inaccurate</a>
-      <!-- or --> <a class="pill-correction" data-kind="correction" href="/p/…">Correction</a>
+      <!-- ONE pill max: the correction flag wins the slot over "Older action".
+           ⚠️ ONE CORRECTION KIND SINCE 2026-09-06 (the one-card change): only the
+           CORRECTED post wears a pill, and it links to the post that carries the
+           fix — a page that still exists even though that post is no longer
+           listed in the feed, in search or in recently-active. The retired kinds
+           were `inaccurate` and `correction`; they went with `feed.css?v=19`. -->
+      <a class="pill-correction" data-kind="corrected" href="/p/…">Corrected</a>
       <!-- or --> <span class="flag-older">Older action</span>
     </div>
     <!-- The head-right slot OPENS THE POST; it is not the app's ⋯ menu. -->
@@ -588,6 +592,9 @@ depends on it.
         <svg class="glyph glyph-label" aria-hidden="true"><use href="#capitol"/></svg>
         <span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#check"/></svg></span>
       </span>
+      <!-- `is-corrected` on either span iff a correction changed that value
+           (the model's `head.changed`). The card carries the CORRECTED figure,
+           so the accent is what keeps the change from being silent. -->
       <span class="card-action-label">Agreed to</span>
       <span class="card-action-tally"> (unanimous consent)</span>
     </p>
@@ -616,6 +623,20 @@ depends on it.
   <div class="card-anchored">
     <p class="card-next"><span class="lead">What's next: </span>Policy adoption …</p>
     <p class="card-budget"><span class="lead">Budget impact: </span>…</p>
+    <!-- THE CORRECTION FOOTER — present iff the post was corrected, and ANCHORED
+         rather than deferred on purpose: since the one-card change this card is
+         the only one a browsing reader meets, so a reader who never opens the
+         expander must still be told the figures above were changed after we
+         published them. The words are the app's `correctionStamp` — the same
+         composition the bill page's row and the `/p/` banner draw — and
+         `Now reads:` is deliberately absent here, because the action line above
+         already holds the corrected value. -->
+    <p class="card-correction">
+      <span class="card-correction-tag">Corrected 5 August 2026</span> ·
+      The official record was later amended. — originally "🗳️ Cloture invoked (52-46)"
+      <a class="card-correction-link" href="/p/…">See the correction</a> ·
+      <a class="card-correction-link" href="https://…">Source</a>
+    </p>
   </div>
 
   <!-- 4. DEFERRED — always behind the expander, never clipped. -->
@@ -1241,7 +1262,8 @@ workflow-owned trees. Serve `/tmp/out` over the working tree to look at it.
   completely: probe the live URL at Gate B, before the provider config is
   written.
 * **The stylesheet is versioned by hand, and only on the shells.** The five
-  hand-authored pages ask for a versioned `/assets/css/feed.css?v=N` (v=18 as of 2026-09-06 — v=17 lived half an hour the same night; was v=16 as
+  hand-authored pages ask for a versioned `/assets/css/feed.css?v=N` (v=19 as of 2026-09-06, with the corrections one-card change — the correction pill's
+  new kind, the footer and the changed-value mark; v=18 earlier the same day, v=17 lived half an hour the night before; was v=16 as
   of 2026-09-05, v=12 as of 2026-08-23); the generated `/p/`
   pages ask for `/assets/css/feed.css` with no query at all. Same file, two cache
   entries. It is harmless before the first publish (nothing holds either yet),
