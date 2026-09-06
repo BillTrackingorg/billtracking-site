@@ -197,11 +197,31 @@ jobs:
           [ "$n" -gt 0 ] || { echo "::error::the renderer produced no post pages"; exit 1; }
           [ -d out/view/v1 ] || { echo "::error::the renderer produced no view/ tree"; exit 1; }
           # The corrections log is written on EVERY run, empty or not — it is a
-          # standing promise (accuracy.html, terms.md), and a promise that 404s
-          # until the first correction is not one. Its ROWS are not guarded the
-          # way pages are: a row is a render of the record, and a `sever-revision`
-          # override legitimately removes one. The FILE is what must never vanish.
-          [ -f out/corrections/index.html ] || { echo "::error::the renderer produced no /corrections/ page — the accuracy page and the terms both point at it"; exit 1; }
+          # standing promise (the accuracy page points a reader at it, and
+          # terms.md's "logged publicly" promise resolves through it), and a
+          # promise that 404s until the first correction is not one. Its ROWS are
+          # not guarded the way pages are: a row is a render of the record, and a
+          # `sever-revision` override legitimately removes one. The FILE is what
+          # must never vanish.
+          #
+          # ⚠️ LOUD, NOT FATAL — the loudness doctrine's shape for this class: omit
+          # the piece, `::error::` on a run that still publishes. It used to
+          # `exit 1`, and that had one real trigger and a blast radius nothing
+          # justified: `tools/bt-site.cjs` in THIS repo is a compiled artefact that
+          # lands in its own push, so a push of the app's site commits ahead of the
+          # renderer would have failed this line every 15 minutes forever —
+          # freezing /p/, /b/, /view/ and the bill sitemap, none of which is
+          # broken, while the accuracy page's link is equally 404 either way. The
+          # fix for the annotation is to rebuild and commit the renderer
+          # (`docs/PERMALINKS.md` "Traps": it must land in or before the push that
+          # needs it). The commit step leaves any already-published `corrections/`
+          # untouched when this render produced none — D17's rule for pages
+          # applies to it too.
+          if [ -f out/corrections/index.html ]; then
+            echo "rendered the corrections log"
+          else
+            echo "::error::the renderer produced no /corrections/ page — this repo's tools/bt-site.cjs predates it. Rebuild and commit the renderer. The other trees are published as normal and any already-published corrections/ is left as it is."
+          fi
 
       # Publish = replace p/, b/ AND view/ wholesale + the bill sitemap. All three
       # trees are TRACKED but written by this job alone (only generated files live
@@ -291,11 +311,17 @@ jobs:
           fi
           new=$(ls out/p/*.html | grep -vc index.html || true)
           newb=$(find out/b -type f -name '*.html' ! -name index.html | wc -l)
-          rm -rf p b corrections view
+          rm -rf p b view
           cp -r out/p p
           cp -r out/b b
-          cp -r out/corrections corrections
           cp -r out/view view
+          # corrections/ is replaced only when THIS render produced it. A renderer
+          # that predates the page (the ::error:: above) must not take the
+          # published log down with it: nothing published ever leaves.
+          if [ -f out/corrections/index.html ]; then
+            rm -rf corrections
+            cp -r out/corrections corrections
+          fi
           cp out/bill-sitemap.xml bill-sitemap.xml
           git config user.name "billtracking-permalinks"
           git config user.email "permalinks@billtracking.org"
