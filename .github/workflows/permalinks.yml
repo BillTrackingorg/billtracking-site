@@ -325,7 +325,16 @@ jobs:
           cp out/bill-sitemap.xml bill-sitemap.xml
           git config user.name "billtracking-permalinks"
           git config user.email "permalinks@billtracking.org"
-          git add -A p b corrections view bill-sitemap.xml
+          git add -A p b view bill-sitemap.xml
+          # corrections/ is OPTIONAL in this pathspec. `git add` treats a pathspec
+          # that matches nothing as fatal (exit 128), and under `set -euo pipefail`
+          # that would take the WHOLE publish down — freezing p/, b/, view/ and the
+          # bill sitemap every 15 minutes — for the one window where the committed
+          # renderer predates the corrections page. The `::error::` above is the loud
+          # half of that guard; this is the not-fatal half. When the page is rendered
+          # (or was published by an earlier run) the directory exists and is staged
+          # exactly as before.
+          if [ -d corrections ]; then git add -A corrections; fi
           if git diff --cached --quiet; then echo "no page changes"; exit 0; fi
           # A quiet run still moves view/v1/index.json (its built_at heartbeat). A commit
           # whose ONLY change is that stamp would deploy the whole site every 15 minutes
