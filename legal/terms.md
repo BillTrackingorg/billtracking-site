@@ -9,7 +9,7 @@ htmlTitle: Terms of use
 description: The terms for using BillTracking: what the service is, what it costs, what it does not promise, and the rules for voting and for reusing the content.
 ogTitle: Terms of use — BillTracking
 ogDescription: What the service is, what it costs, and what it does not promise.
-updated: 19 August 2026
+updated: 7 September 2026
 ---
 
 BillTracking republishes the official legislative record of the US Congress and the European Union. It is **free**, there is nothing to buy, and it is run by one person, not a company. These terms are short because the arrangement is simple.
@@ -36,7 +36,7 @@ It is a free service run by one person on free infrastructure. It may be interru
 - **One account per person.** Do not create multiple accounts to vote more than once, and do not use automated means to influence the counts. It corrupts the only thing the counts are for.
 - **Votes are reader sentiment, not a poll.** They are a show of hands among whoever happens to use this app — self-selected, unweighted and unrepresentative. Please do not present them as public opinion research, and be careful citing them as anything more than what they are.
 - **You may withdraw a vote or delete your account at any time** — from the You tab in the app, from your [account page](https://billtracking.org/account) on this website, or via the [deletion page](delete-account.html).
-- **We may remove votes we believe are automated or duplicated**, and may suspend an account doing it.
+- **We may remove votes we believe are not genuine**, cast by software or through accounts created to inflate a count, and may suspend the accounts involved.
 
 How votes are stored and published is set out on the [privacy page](privacy.html). In short: who voted which way is never published, shown or attached to a profile.
 
