@@ -151,6 +151,42 @@
     somebody who already knows a particular reader voted could guess how. That comes with publishing any
     aggregate at all — a minimum group size would move the line, not remove it — and it is why the
     location is optional in the first place.</p>
+
+    <!-- ⚠️ THE OWNER'S PEN, RULED WORD FOR WORD 2026-09-07, and it is an h3 inside the reader-vote
+         section rather than a section of its own: how the vote is counted and how it is protected are
+         one argument, and a second eyebrow would have made them read as two. It is mirrored sentence
+         for sentence in `src/app/accuracy.tsx` under the mirror law, and the phrase "nothing we keep
+         about a departed vote identifies anyone" is pinned in BOTH files by `scripts/check-site-nav.js`.
+
+         ⚠️ TWO THINGS ARE DELIBERATELY ABSENT AND MUST STAY ABSENT.
+         (1) Any claim that we monitor daily, watch for spikes or look for account cycling. The
+             monitoring is real (`docs/APP-MANUAL.md` §10 in the app repo) and it is INTERNAL: publishing
+             it would promise attention nobody can guarantee, hand a manipulator the cadence, and turn a
+             candid admission into reassurance. The owner cut it on 2026-09-07.
+         (2) Any claim that we keep nothing about a deleted account. That became FALSE on 2026-09-06,
+             when the departure counts shipped and this site's privacy page began saying we keep them.
+             "nothing we keep about a departed vote identifies anyone" is the accurate replacement; do
+             not let it drift back into the old, comfortable, wrong sentence. -->
+    <h3>How we protect the reader vote</h3>
+
+    <p class="measure-wide muted">Voting needs an account, and an account needs a Google or Apple
+    sign-in. One account casts one vote per bill. Tapping the other choice moves your vote; tapping the
+    one you already chose withdraws it. Deleting your account removes every vote you cast.</p>
+
+    <p class="measure-wide muted">Counts are exact. We never round them, and every split shows how many
+    people it is, so a one-person row reads as one person.</p>
+
+    <p class="measure-wide muted">We keep a daily history of each bill's counts, by place, and we count
+    the votes that leave with deleted accounts. That way a fall in a total can say votes left, rather
+    than people changed their minds.</p>
+
+    <p class="measure-wide muted">We don't fingerprint devices, we don't verify the location you give
+    us, and nothing we keep about a departed vote identifies anyone.</p>
+
+    <p class="measure-wide muted">Two limits worth knowing. One account is one vote, but nothing stops a
+    determined person creating several accounts across both platforms; what makes that hard is Google's
+    and Apple's own account constraints, not ours. And these are the readers who chose to vote, not a
+    sample of anyone's electorate.</p>
   </div>
 </section>
 
