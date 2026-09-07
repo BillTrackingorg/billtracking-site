@@ -101,22 +101,13 @@
       <li>Any token held to disconnect BillTracking from your Apple ID.</li>
     </ul>
 
-    <!-- ⚠️ THIS PARAGRAPH IS PINNED (D33, 2026-09-06; the owner ruled the wording
-         2026-09-07). It is the same paragraph the app's delete screen and the account page
-         show at the final confirm; the source of truth is the app repo's
-         src/data/deletion-copy.ts, this file cannot import it, and `check:votes-series`
-         fails the build if the two ever stop matching character for character. Edit it
-         THERE and copy, never here alone.
-
-         Two things that used to sit here went with the same ruling and must not come
-         back: a second sentence saying the votes count for something, and — on the two
-         doors that could know it — a "You have voted on N bills" line. Both read as a
-         nudge at the moment of an irreversible choice. This page could never show a count
-         anyway: it is the route for someone who can no longer sign in, so we do not know
-         whose account it is.
+    <!-- ⚠️ THIS PARAGRAPH IS PINNED. It is the same paragraph the app's delete screen and
+         the account page show at the final confirm; the words are owned in the app, this
+         file cannot import them, and a check fails the build if the two ever stop matching
+         character for character. Edit it there and copy, never here alone.
 
          The <strong> is this page's existing emphasis for a load-bearing line, not a new
-         style; the owner ruled against a label and against a coloured background. -->
+         style. -->
     <p class="measure-wide muted"><strong>Deleting your account permanently removes every vote you cast from the bills' totals. We delete your votes to protect your privacy and to ensure people can't easily manipulate vote totals by cycling through new accounts.</strong></p>
 
     <h3>Not deleted, and why</h3>
@@ -134,23 +125,12 @@
     </ul>
 
     <div class="callout">
-      <!-- Following split off the list on 2026-08-20. In the app it still works
-           signed out, on the device; on this website it does not, because a
-           browser has nowhere honest to keep a docket. Saying "still works
-           without one" of both would be false on the surface the reader is
-           standing on.
-
-           NOTIFICATIONS left the same list on 2026-08-23, and this time it is
-           false on BOTH surfaces. In the app a store build draws no notices tab
-           and no notification settings at all (the surface is gated to dev
-           builds, app `constants/features.ts`), so there is nothing that works
-           without an account because there is nothing. On this website the bell
-           panel is follows-driven and a web follow IS the account, so the panel
-           reports "signed out" as a state whose remedy is a link to /account.
-           The app's core had already made exactly this correction to its own
-           sentence and named this page while doing it ("the deletion list on
-           delete-account.html"); this is that sibling, caught up. Reading is
-           what is left, and reading really is free on both. -->
+      <!-- Following is not on this list. In the app it works signed out, on the device; on
+           this website it does not, because a browser has nowhere honest to keep a docket,
+           so "still works without one" would be false on the surface the reader is standing
+           on. Notifications are not on it either: here the bell panel is follows-driven and
+           a web follow IS the account. Reading is what is left, and reading really is free
+           on both. -->
       <p>Deleting your account does not stop you using BillTracking. Reading the feeds has never
       required an account, and still works without one. You can still
       follow bills in the app, where that list stays on your device; on this website, following
@@ -210,11 +190,8 @@
   </div>
 </footer>
 
-<!-- The runtime on a static page (added 2026-08-23): the nav account pill
-     was dead HTML here, so a signed-in reader saw "Sign in" on every page
-     without a mount to boot — invisible until sign-in existed, found by its
-     first user. boot-web is mount-driven (D28): on this page it wires the
-     chrome (pill, notices bell) and no more. -->
+<!-- The site runtime: on this page it wires the chrome — the account pill and the
+     notices bell — and no more. -->
 <script type="module" src="/assets/js/bt-web.js"></script>
 </body>
 </html>

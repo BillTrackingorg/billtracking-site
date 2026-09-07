@@ -3,20 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- ⚠️ THIS PAGE'S CSP IS THE SITE'S PLUS FOUR GOOGLE SOURCES, AND NOTHING
-     ELSE (2026-08-23). Every other page carries the policy in the app repo's
-     src/site/chrome.ts, byte for byte. /account is the one page that runs
-     Google Identity Services, which needs its library, its button iframe, its
-     XHRs and its stylesheet — so the four directives Google documents are
-     widened HERE and only here, by exact PATH prefixes rather than by host, so
-     nothing else on accounts.google.com becomes loadable. The floor is
-     untouched: default-src, img-src, font-src, object-src, base-uri and
-     form-action are the same characters they were, and no wildcard was added.
-     Why the widening was worth it at all — Google's consent screen naming
-     supabase.co to a first-time reader — is at the top of src/web/gsi.ts, and
-     the prior position it supersedes is amended in place in the app repo's
-     docs/history/WEB-PARITY-FINDINGS-2026-08-17.md. check:webauth compares
-     this attribute against us.html's and fails on any other difference. -->
+<!-- This page's Content-Security-Policy is the site's, plus the four sources Google
+     Identity Services needs and nothing else — by exact path prefixes rather than by
+     host. It is the only page that differs, and `check:webauth` compares it against a
+     feed page's and fails on any other difference. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; img-src 'self' data:; font-src 'self'; connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>Your account | BillTracking</title>
 <meta name="description" content="Your BillTracking account: the address you signed in with, the country your vote appears under, signing out, and deleting the account.">
@@ -72,114 +62,54 @@
     account has changed, and reading never needs one.</p>
   </section>
 
-  <!-- REGION: signed out. The buttons are LIVE — pressing one asks the Supabase
-       project itself whether that provider is switched on, and a refusal is said
-       in one sentence beneath them, at the moment it answers something the
-       reader actually did (src/web/account.ts `wireProviders`).
-
-       ⚠️ THIS COMMENT USED TO DESCRIBE THE OPPOSITE, and it outlived its code by
-       a day: the buttons shipped DISABLED under a "coming soon" note while a
-       compile-time `WEB_PROVIDERS` table said no provider was configured. That
-       table was deleted in the 2026-08-19/20 UX round — owner directive, "we
-       shouldn't be building as though things are coming soon" — and the honesty
-       moved to the point of action rather than being removed. The markup below
-       has carried no `disabled` since; only this note lagged (estate review,
-       2026-08-20). Same provider set on every surface, or a Hide-My-Email iPhone
-       user and their Google web sign-in become two different accounts. -->
+  <!-- REGION: signed out. The buttons are LIVE — pressing one asks whether that provider
+       is switched on, and a refusal is said in one sentence beneath them, at the moment
+       the reader actually asked for it. The same provider set has to be on every
+       surface, or one person's two sign-ins become two accounts. -->
   <section class="acct-region" id="bt-acct-signed-out" hidden>
     <div class="acct-card">
-      <!-- "or create your account" as of 2026-08-23 (owner ruling): OAuth-only
-           means one flow serves both, so the door names both. A separate
-           "Create an account" button was considered and rejected — it would be
-           a second door into the identical flow, the false-affordance class
-           this product bans. The sentence below the two-things line is the
-           other half of the same ruling: creation was never named anywhere,
-           which made "Delete your account" read as a counterpart to nothing. -->
+      <!-- The door names signing in and creating both: one flow serves both, so a separate
+           "Create an account" button would be a second door into the identical flow. -->
       <h2>Sign in or create your account</h2>
-      <!-- The sign-in card DOES; the "What an account is for" card below
-           EXPLAINS (owner's split, 2026-08-23, third ruling on this card that
-           evening — he caught the duplication between the two-things paragraph
-           here and the card below, and gave each card one job). The two-things
-           paragraph moved down there; this card keeps only the instruction
-           and the doors. -->
-      <!-- Wording round 2026-08-23 (late): the owner proposed the plainer
-           explicit-action form and delegated the final cut ("you can choose
-           this one") — chosen: "press" over "click or tap" (one word, every
-           device), the comma that kills the garden path, and the press as the
-           actor of the second half. -->
+      <!-- This card DOES; the "What an account is for" card below EXPLAINS. One job each —
+           the instruction and the doors stay here, the reasons stay there. -->
       <p>There's no separate sign-up. The first time you press Continue, your
       account is created &mdash; and every press after that signs you in.</p>
       <div class="acct-buttons">
-        <!-- MOUNT: Google's OWN sign-in button (app repo src/web/gsi.ts).
-             Ships EMPTY and CSS-INVISIBLE inside the .google-door stack below
-             (the "EMPTY and HIDDEN" attribute mechanism this comment first
-             described lasted hours — the owner caught its appear-then-collapse
-             flicker the same evening, 2026-08-23, and the swap became one
-             frame: Google renders into an invisible box that shares the plain
-             button's grid cell, and .is-gsi reveals it exactly as the plain
-             button leaves). The plain button is retired ONLY once Google's has
-             demonstrably rendered; every failure — a blocked script, a missing
-             console origin, no WebCrypto, an empty container — leaves this div
-             invisible and the plain button exactly as it is, so the worst case
-             is the redirect flow this page has always had.
-
-             WHY IT IS HERE AT ALL (owner ruling 2026-08-22): the redirect
-             sends the reader through the Supabase project's address, so
-             Google's consent screen names skqngxvuncdavlshkepb.supabase.co to
-             somebody who is deciding whether to join. With the token handed
-             straight to this page, Google names billtracking.org. Same
-             project, same accounts, same sessions — only the name on the way
-             in changes.
-
-             It is a SIBLING rather than a re-wiring of the button below
-             because renderButton's failure is observable and One Tap's is
-             not; the full argument is in gsi.ts's header. A reader who never
-             gets a Google button sees this page exactly as it was. -->
-        <!-- THE TWO GOOGLE DOORS STACK IN ONE GRID CELL (owner flicker catch
-             #2, 2026-08-23: the old swap was two visible layout jumps).
-             Google's button renders into the mount IN PLACE but invisible
-             (CSS visibility — the box exists, so measurement and the
-             appeared-check still work), and the runtime's .is-gsi class swaps
-             the pair in a single frame. No JS, no .is-gsi: the plain button
-             is the only door, exactly as before. -->
+        <!-- MOUNT: Google's own rendered sign-in button. Ships EMPTY and CSS-invisible inside
+             the .google-door stack below, sharing the plain button's grid cell, so the swap is
+             one frame rather than a layout jump. The plain button is retired ONLY once
+             Google's has demonstrably rendered; every failure — a blocked script, no
+             WebCrypto, an empty container — leaves this div invisible and the plain button
+             exactly as it is, so the worst case is the redirect flow this page has always had. -->
+        <!-- THE TWO GOOGLE DOORS SHARE ONE GRID CELL. Google's button renders into the mount
+             IN PLACE but invisible (CSS visibility — the box exists, so measurement and the
+             appeared-check still work), and .is-gsi swaps the pair in a single frame. No JS,
+             no .is-gsi: the plain button is the only door. -->
         <div class="google-door">
           <div id="bt-gsi-google"></div>
           <button type="button" class="btn-provider" id="bt-signin-google">
             Continue with Google
           </button>
         </div>
-        <!-- The Apple glyph is the footer badge's own path (one glyph, two
-             homes is fine for ARTWORK; copy law governs words) — inline SVG,
-             no external script, no CSP change. Added 2026-08-23 for visual
-             parity the day Google's rendered button brought its logo (owner:
-             "Will Apple get a logo also?"). When Apple sign-in becomes real
-             (post-Team-ID), whether to adopt Apple's own rendered button —
-             the GIS treatment — is that change-set's call. ✅ It became real on 2026-09-05 evening (the web flow shipped); the button question was NOT ruled in that change-set and is recorded as an owner call in the app's OPEN-ITEMS status index — the in-house button stays until then. -->
+        <!-- The Apple glyph is the footer badge's own path (one glyph, two homes is fine for
+             ARTWORK; copy law governs words) — inline SVG, no external script, no CSP change. -->
         <button type="button" class="btn-provider" id="bt-signin-apple">
           <svg class="btn-provider-logo" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
           Continue with Apple
         </button>
       </div>
-      <!-- The one line the JS ever writes on this page: what happened when a
-           provider could not be reached or is not switched on yet. It ships
-           EMPTY and collapses (`.acct-note:empty`) — a standing apology here would
-           be the page describing itself as unfinished to somebody who has just
-           decided to join (owner directive, 2026-08-19). -->
+      <!-- The one line the JS ever writes on this page: what happened when a provider could
+           not be reached or is not switched on. It ships EMPTY and collapses
+           (`.acct-note:empty`) — a standing apology here would be the page describing itself
+           as unfinished to somebody who has just decided to join. -->
       <p class="acct-note" id="bt-provider-note"></p>
     </div>
     <div class="acct-card">
       <h2>What an account is for</h2>
-      <!-- The two-things paragraph (owner's VERBATIM, litigated 2026-08-23:
-           "vote(s)" is his spelling; the cross-device clause and the "never
-           will" promise were his trims, both still on the privacy page). It
-           moved here from the sign-in card the same evening, answering this
-           heading directly and killing the duplication he caught. The
-           paragraph it REPLACED, preserved for the day it is missed (it was
-           the page's one WHY — the accuracy-doctrine voice; the privacy page
-           still carries the idea): "Votes are the one number on this site
-           that is ours rather than an institution's, so they are tied to an
-           account and counted once. Everything else you can see here you can
-           see signed out." -->
+      <!-- The two-things paragraph. It answers this heading directly, which is why it is
+           here and not in the sign-in card above — that card keeps only the instruction and
+           the doors. -->
       <p>An account does two things: it makes sure your vote(s) count once, and
       it keeps track of the bills you follow. Reading doesn't require an
       account.</p>
@@ -197,22 +127,13 @@
       never see the real one, and we do not need it.</p>
     </div>
 
-    <!-- MOUNT: the Country picker (app repo src/web/geo-picker.ts fills it —
-         ALWAYS editable, the app's own gate-free hold-and-apply semantics).
+    <!-- MOUNT: the Country picker — always editable, hold-and-apply.
 
-         ⚠️ SEMANTIC RULING (owner, 2026-08-22): the country is SELF-DECLARED
-         and deliberately unverifiable — the caption claims only what the
-         product DOES with it (where the vote appears in the public
-         geo-breakdown), never residence or origin; future copy must not
-         claim otherwise. The heading this card carried ("Where your vote is
-         counted from") died in the same ruling — the picker's own "Country"
-         row label is the name — and the caption below is owner-ruled
-         VERBATIM the same day (its closing sentence states the mutability
-         the removed first-vote lock made true). Follow-up owed, OUT of this
-         change's scope, recorded here at the copy's home: the APP's You-tab
-         caption ("Marks where you sit in the vote breakdown", you.tsx ~138)
-         should unify onto this same sentence from one core home in a later
-         app-side pass. -->
+         ⚠️ THE COUNTRY IS SELF-DECLARED AND DELIBERATELY UNVERIFIABLE. The caption claims
+         only what the product DOES with it (where the vote appears in the public
+         geo-breakdown), never residence or origin, and future copy must not claim
+         otherwise. The picker's own "Country" row label is the name; this card carries no
+         heading of its own. -->
     <div class="acct-card">
       <p>Decide where your vote appears in the public geo-breakdown. Leave it
       blank and your vote still counts, just without a place. Change it
@@ -220,46 +141,26 @@
       <div id="bt-geo-picker"></div>
     </div>
 
-    <!-- MOUNT: the consent VIEW (Art 9(2)(a) — app repo src/web/consent.ts
-         fills #bt-consent-body and unhides the card).
+    <!-- MOUNT: the consent VIEW (Art 9(2)(a)) — a reader must be able to see the consent
+         they gave and withdraw it as easily as they gave it.
 
-         A consent STATUS card stood here until 2026-08-22, when an owner
-         ruling removed it entirely ("completely unnecessary"): with no
-         provider and no votes possible, a status display about a thing that
-         cannot happen yet is noise. It returns the same day as a VIEW, in the
-         change-set that enabled a real sign-in provider — Art 7(3), a reader
-         must be able to see the consent they gave and withdraw it as easily
-         as they gave it (app repo STORE-READINESS, HARD GATE #4, second
-         duty).
-
-         ⚠️ THE CARD SHIPS HIDDEN AND THE RUNTIME UNHIDES IT — the bell's
-         precedent, and the only way the removal ruling stays honoured: it
-         renders ONLY for an account that actually HAS a consent record, so
-         "Not recorded yet" is never said again, and a failed read says
-         nothing here (the Country card above already says it, once, from the
-         same request). The HEADING is static, as everywhere on this page; the
-         words under it are the reader's own record and the policy's own
-         sentence, so they can only be the runtime's. The withdrawal path is
-         the page's, not this card's: the two-step delete card below and the
-         quiet Delete-account line beneath it are there whether this card
-         renders or not. -->
+         ⚠️ THE CARD SHIPS HIDDEN AND THE RUNTIME UNHIDES IT: it renders ONLY for an
+         account that actually HAS a consent record, so nobody meets a heading over an
+         empty box, and a failed read says nothing here (the Country card above already
+         says it, once, from the same request). The HEADING is static, as everywhere on
+         this page; the words under it are the reader's own record and the policy's own
+         sentence, so they can only be the runtime's. The withdrawal path is the page's,
+         not this card's. -->
     <div class="acct-card" id="bt-consent" hidden>
       <h2>Consent</h2>
       <div id="bt-consent-body"></div>
     </div>
 
-    <!-- THE TAIL — trimmed by the 2026-08-22 verbosity ruling, then CORRECTED
-         the same day. What the ruling changed: the sign-out card's two
-         explainer notes went, and the long danger link ("Delete your account
-         and everything in it") folded into the quiet line below — only the
-         words "Delete account" are the link. What it did NOT change (owner,
-         from the live page, after a misread briefly removed it: "where did
-         the delete account section go? It was so good? All I asked was to
-         change a link location"): the two-step DELETE CARD — the runtime
-         (app repo src/web/account.ts) mounts it between the sign-out card
-         and the for-more line, anchored on .acct-danger exactly as before.
-         It is also the withdrawal half of the consent card above: withdrawing
-         consent and deleting the account are one action (D13). -->
+    <!-- THE TAIL. The long delete link is folded into the quiet line below — only the
+         words "Delete account" are the link — and the two-step DELETE CARD is
+         runtime-mounted on .acct-danger, between the sign-out card and that line. The card
+         is also the withdrawal half of the consent card above: withdrawing consent and
+         deleting the account are one action. -->
     <div class="acct-card">
       <h2>Sign out</h2>
       <div class="acct-buttons">
@@ -269,42 +170,26 @@
 
     <p class="acct-danger">For more, see <a href="/delete-account">Delete account</a>.</p>
 
-    <!-- SECTION: Settings — the app's Settings screen, on the web (owner
-         commission 2026-08-22; module: src/web/settings.ts in the app repo).
+    <!-- SECTION: Settings — the app's Settings screen, on the web.
 
-         ⚠️ INSIDE THE SIGNED-IN REGION BY OWNER RULING (2026-08-22, from the
-         live page): the signed-out /account screen shows ONLY the sign-in
-         card and "What an account is for" — that screen has one job. This is
-         a DELIBERATE, RECORDED DEVIATION from the app, whose Settings screen
-         is reachable signed out: the bucket switches keep a signed-out home
-         in the feed pages' Display panel, while the two card-part switches
-         are signed-in-only on the web (they left that panel by owner ruling
-         the same day — reachability owner-accepted at zero users) — and for
-         signed-out or no-JS readers the Privacy, Terms and Delete-account
-         doors are in every page's FOOTER, which is the floor, so no honesty
-         is lost. The section renders whenever this region shows — which,
-         since the temporary signed-in preview was deleted with the sign-in
-         provider on 2026-08-22, means one thing only: a real session.
+         It sits INSIDE the signed-in region: the signed-out screen shows only the sign-in
+         card and "What an account is for", because that screen has one job. For
+         signed-out and no-JS readers the Privacy, Terms and Delete-account doors are in
+         every page's FOOTER, which is the floor, so no honesty is lost.
 
-         #bt-settings-groups still ships EMPTY and hidden. The switch states
-         live in this browser's storage, which no static page can know, so
-         the runtime fills the groups at mount — inside the hidden region,
-         cheap, ready the moment the region shows — and unhides them (the
-         notices bell's precedent: no reader ever meets a dead control). The
-         heading and the Privacy card are static; links are links. The group
-         ORDER (Shown in the feed → My docket → Display → Privacy) is the app
-         Settings screen's own, and the gaps — no Legislatures, no Notices
-         tree, no bucket rows, no follow list, no Hide comments — are each
-         recorded, with their reasons, at the render in settings.ts. -->
+         #bt-settings-groups ships EMPTY and hidden. The switch states live in this
+         browser's storage, which no static page can know, so the runtime fills the groups
+         at mount — inside the hidden region, cheap, ready the moment the region shows —
+         and unhides them: no reader ever meets a dead control. The heading and the
+         Privacy card are static; links are links. -->
     <section class="acct-settings" aria-labelledby="bt-settings-head">
       <h2 id="bt-settings-head">Settings</h2>
       <div id="bt-settings-groups" hidden></div>
       <h3 class="acct-eyebrow">Privacy</h3>
       <div class="acct-card">
-        <!-- The app's Settings ends with Privacy too. Its paragraph's one web
-             home is /privacy itself (D23 single-source) — this card is the
-             doors, never a second copy of the words. Link labels are the
-             footer Legal column's, so the site keeps one name per page. -->
+        <!-- The app's Settings ends with Privacy too. This card is the doors, never a second
+             copy of /privacy's words. Link labels are the footer Legal column's, so the site
+             keeps one name per page. -->
         <ul class="acct-links">
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms of use</a></li>

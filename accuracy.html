@@ -152,21 +152,10 @@
     aggregate at all — a minimum group size would move the line, not remove it — and it is why the
     location is optional in the first place.</p>
 
-    <!-- ⚠️ THE OWNER'S PEN, RULED WORD FOR WORD 2026-09-07, and it is an h3 inside the reader-vote
-         section rather than a section of its own: how the vote is counted and how it is protected are
-         one argument, and a second eyebrow would have made them read as two. It is mirrored sentence
-         for sentence in `src/app/accuracy.tsx` under the mirror law, and the phrase "nothing we keep
-         about a departed vote identifies anyone" is pinned in BOTH files by `scripts/check-site-nav.js`.
-
-         ⚠️ TWO THINGS ARE DELIBERATELY ABSENT AND MUST STAY ABSENT.
-         (1) Any claim that we monitor daily, watch for spikes or look for account cycling. The
-             monitoring is real (`docs/APP-MANUAL.md` §10 in the app repo) and it is INTERNAL: publishing
-             it would promise attention nobody can guarantee, hand a manipulator the cadence, and turn a
-             candid admission into reassurance. The owner cut it on 2026-09-07.
-         (2) Any claim that we keep nothing about a deleted account. That became FALSE on 2026-09-06,
-             when the departure counts shipped and this site's privacy page began saying we keep them.
-             "nothing we keep about a departed vote identifies anyone" is the accurate replacement; do
-             not let it drift back into the old, comfortable, wrong sentence. -->
+    <!-- The owner's ruled wording. It is an h3 inside the reader-vote section rather than a section
+         of its own, because how the vote is counted and how it is protected are one argument. The
+         app's accuracy screen carries the same paragraphs, and `check:sitenav` fails the build if
+         the two stop matching — edit both halves in one pass, or neither. -->
     <h3>How we protect the reader vote</h3>
 
     <p class="measure-wide muted">Voting needs an account, and an account needs a Google or Apple
@@ -181,7 +170,7 @@
     than people changed their minds.</p>
 
     <p class="measure-wide muted">We don't fingerprint devices, we don't verify the location you give
-    us, and nothing we keep about a departed vote identifies anyone.</p>
+    us, and the count we keep of a departed vote identifies nobody.</p>
 
     <p class="measure-wide muted">Two limits worth knowing. One account is one vote, but nothing stops a
     determined person creating several accounts across both platforms; what makes that hard is Google's
@@ -234,11 +223,8 @@
   </div>
 </footer>
 
-<!-- The runtime on a static page (added 2026-08-23): the nav account pill
-     was dead HTML here, so a signed-in reader saw "Sign in" on every page
-     without a mount to boot — invisible until sign-in existed, found by its
-     first user. boot-web is mount-driven (D28): on this page it wires the
-     chrome (pill, notices bell) and no more. -->
+<!-- The site runtime: on this page it wires the chrome — the account pill and the
+     notices bell — and no more. -->
 <script type="module" src="/assets/js/bt-web.js"></script>
 </body>
 </html>

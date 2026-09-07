@@ -85,22 +85,20 @@
   <div id="bt-status" class="feed-status" role="status">
     <h2>Loading&hellip;</h2>
     <p>Fetching the latest from the official record.</p>
-    <!-- THE FAILURE PATH, STATIC ON PURPOSE — the same reasoning as /account's
-         loading region. If bt-web.js 404s or throws, <noscript> does NOT fire
-         (scripts are enabled; one just didn't run) and this page would sit on
-         "Loading…" for ever, asserting an action nobody is performing. The JS
-         removes this line the moment it takes over (src/web/feed-page.ts), so
-         it is only ever seen while it is true — a slow fetch is a load that IS
-         happening, and leaves the sentence above standing alone. -->
+    <!-- THE FAILURE PATH, STATIC ON PURPOSE — the same reasoning as /account's loading
+         region. If bt-web.js 404s or throws, <noscript> does NOT fire (scripts are
+         enabled; one just didn't run) and this page would sit on "Loading…" for ever,
+         asserting an action nobody is performing. The JS removes this line the moment it
+         takes over, so it is only ever seen while it is true — a slow fetch is a load
+         that IS happening, and leaves the sentence above standing alone. -->
     <p class="feed-status-note" id="bt-boot-note">If this line is still here
     after a few seconds, this page's script did not load. Reloading usually
     fixes it — or read the plain pages in the <a href="/p/">post archive</a>.</p>
   </div>
 
-  <!-- "Show more POSTS". Every card carries its own "Show more" (app law,
-       collapsible-body.tsx — that wording does not change), so a pagination
-       control with the identical accessible name would give one page 26
-       controls called "Show more" doing two different things. The card's
+  <!-- "Show more POSTS". Every card carries its own "Show more", and that wording does
+       not change, so a pagination control with the identical accessible name would give
+       one page 26 controls called "Show more" doing two different things. The card's
        wording is fixed; this one is free. -->
   <button id="bt-more" class="btn btn-more" hidden>Show more posts</button>
 
@@ -109,13 +107,12 @@
       <p><strong>This feed is built in your browser</strong>, so with JavaScript
       switched off it stays empty. Nothing is hidden from you — the record is
       published as plain pages too.</p>
-      <!-- NO CADENCE IS CLAIMED HERE. It used to say "within about fifteen
-           minutes", which is the cron's REQUEST: GitHub schedules on a
-           best-effort basis and runs late under load, so the interval is
-           something we ask for and not something we can promise a reader
-           (.github/workflows/permalinks.yml says exactly that, and adds "no page
-           claims a cadence"). The honest shape is the mechanism plus the
-           consequence — estate review R7, 2026-08-20. -->
+      <!-- NO CADENCE IS CLAIMED HERE. It used to say "within about fifteen minutes", which
+           is the cron's REQUEST: GitHub schedules on a best-effort basis and runs late
+           under load, so the interval is something we ask for and not something we can
+           promise a reader (.github/workflows/permalinks.yml says exactly that, and adds
+           "no page claims a cadence"). The honest shape is the mechanism plus the
+           consequence. -->
       <p>Every post has its own page in the <a href="/p/">post archive</a>, and
       every bill has one in the <a href="/b/{{POLITY}}/">{{POLITY_NAME}} bill index</a>
       — a new post reaches those pages when the site next re-renders, so the
@@ -124,7 +121,7 @@
     </div>
   </noscript>
 
-  <!-- Build line: skew is observable, never assumed (plan §3). -->
+  <!-- Build line: skew is observable, never assumed. -->
   <p id="bt-build" class="feed-build"></p>
 
 </main>
