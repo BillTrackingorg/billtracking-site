@@ -7,6 +7,11 @@
    `app/COMPONENT-STYLE.md` — the card must look like the app's card, because
    it renders the same record. When the app changes, this changes with it.
 
+   THE DOM THIS FILE STYLES is the app repo's `docs/WEB-CONTRACT.md` (it was
+   this repo's `assets/js/README.md` until 2026-09-07, when it moved out of a
+   repo that is served whole to the public). "contract rule N" and "contract
+   section 2b" in the comments below are its §2 rules and its §2b.
+
    Structure:
      1. Scope tokens (incl. the AA fix for --ink-faint)
      2. Skip link + focus
@@ -815,7 +820,7 @@ button[disabled],
 /* Opposite edges on purpose: the breakdown glyph at the far left — the "see
    where it stands" anchor — and the chips at the far right, the action zone.
    On a post with no bill identity the glyph is ABSENT (there is no tally to
-   open — README rule 2), leaving .vote-chips as the strip's only child. It
+   open — contract rule 2), leaving .vote-chips as the strip's only child. It
    still lands in the same place: .vote-reason's `flex-basis: 100%` makes the
    chip row span the strip, and its own `justify-content: flex-end` holds the
    two pills at the right edge — measured identical to a keyed card's, to the
@@ -1161,7 +1166,7 @@ button[disabled],
 }
 
 /* --------------------------------------------------------------------------
-   6. What the vote island adds (README section 2b)
+   6. What the vote island adds (contract section 2b)
    -------------------------------------------------------------------------- */
 
 /* WRITTEN 2026-08-19 BY THE INTEGRATION LANE, against the DOM the island
@@ -1431,7 +1436,7 @@ button[disabled],
   overflow: hidden;
 }
 /* The width is DATA, so it arrives as a custom property on the element - the
-   same sanctioned exception as --glyph-stroke (README rule 11). */
+   same sanctioned exception as --glyph-stroke (contract rule 11). */
 .vb-fill { width: var(--vb-fill, 0%); height: 100%; background: var(--accent); }
 
 .vb-more { padding: 6px 0 2px; text-align: center; }

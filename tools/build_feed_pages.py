@@ -13,7 +13,7 @@ vocabulary, reference grammar, accent, explainer link, feed location — consume
 by the app, the web and the generator, so that adding a legislature is data
 rather than a fifth copy of the same table. This script is the web end of that:
 one template per registry entry, and the registry below is a placeholder that
-moves into `bt-core` when the core lands (see assets/js/README.md).
+moves into `bt-core` when the core lands (see the app repo's docs/WEB-CONTRACT.md).
 
 WHAT THE COPY IS ALLOWED TO SAY. Every claim here is checked against the
 published site pages:

@@ -54,8 +54,8 @@ one packager, many renderers). They are never edited here and never built here �
 the build refuses to emit unless the app's own `npm run check` is green, which is
 the whole reason a compiled bundle is allowed to sit in a public repo. `bt-web.js`
 is what the feed, account and callback pages load; `bt-site.cjs` is what the
-workflow runs. Build-and-copy commands: [`assets/js/README.md`](assets/js/README.md)
-§8. What the renderer writes and why: [`tools/README-bt-site.md`](tools/README-bt-site.md).
+workflow runs. Build-and-copy commands: the app repo's `docs/WEB-CONTRACT.md` §8.
+What the renderer writes and why: [`tools/README-bt-site.md`](tools/README-bt-site.md).
 
 `tools/generate.py`, the Python renderer the TypeScript one replaced, was deleted on
 2026-08-19 once the swap had been proven over the live corpus (page sets, canonicals, row

@@ -60,7 +60,7 @@ node tools/bt-site.cjs --selftest                   # the fixture assertions
 | `--overrides <file>` | repeatable. Omitted ⇒ every `--feed` directory is scanned for `*-overrides.jsonl`, which is how the bots publish the corrections sheets. |
 | `--paths <dir>` | the bill-path artifacts the workflow already fetched. Omitted ⇒ every bill renders posts-only, which is honest and is what the app shows when an artifact is missing. |
 | `--out <dir>` | **required for a render.** Pages go to `<out>/p/`, `<out>/b/`, `<out>/view/`. There is no default: a bare run used to default to this repo and render sample fixtures into the deploy tree (adversarial review 2026-08-16). There is no sample corpus at all now. |
-| `--sprite <file>` | defaults to `glyphs.svg` **beside this script**. The sprite is build input, inlined into every page that draws glyphs — never linked (`assets/js/README.md` §5). |
+| `--sprite <file>` | defaults to `glyphs.svg` **beside this script**. The sprite is build input, inlined into every page that draws glyphs — never linked (app repo `docs/WEB-CONTRACT.md` §5). |
 | `--list-paths` | print the artifact filenames the feed needs, one per line, and exit. |
 | `--selftest` | run the fixture assertions compiled into the bundle and exit. |
 
