@@ -1118,6 +1118,193 @@ button[disabled],
 .acct-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .acct-links a { font-size: 0.94rem; color: var(--navy); }
 
+/* --- the notifications table (the Settings section's first group) ---------
+   One column of controls over a tree of rows. The rows, their order, their
+   labels and their captions are all rendered; nothing about the table's shape
+   is written down here.
+
+   Three things this stylesheet is accountable for:
+
+   1. THE THREE ROW STATES ARE DRAWN FROM `data-state`, NOT FROM `:checked`.
+      A parent whose children are partly on is `partial`, and no native checkbox
+      has a third visual state. So the picture comes from an attribute that is
+      always rendered, and script supplies `indeterminate` for assistive
+      technology alone. A row that looks fully on while a child is off is the
+      screen lying about itself.
+   2. THE CAPTION IS ALIGNED WITH THE LABEL AT EVERY DEPTH. It is what carries
+      "any bill" against "only bills you follow", so it has to read as belonging
+      to its own row and not to the one above. `--bt-indent` is set per depth and
+      BOTH the row line and the caption are positioned from it.
+   3. THE INDENT IS ON THE LABEL SIDE, NEVER ON THE ROW. The box stays on the
+      right margin at every depth, so a nested row's control lines up with its
+      parent's rather than stepping in with the text.
+
+   A depth with no rule is a row with no indent, which reads as a top-level row.
+   Add the next `--bt-indent` step before adding a level. */
+
+.bt-notif .bt-tree { margin-top: 0.7rem; }
+/* The line under the table. `.acct-card p` zeroes a paragraph's top margin, so
+   without this it sits flush against the last row and reads as that row's
+   caption. Scoped for the specificity reason recorded further down. */
+.bt-notif .bt-tree + .bt-row-cap { margin-top: 0.9rem; }
+
+/* Per-legislature accent, the same content law the card and the feed page obey
+   ("the theme is the building"): the table under a legislature selector wears
+   that legislature's colour. THIRD carrier of this pair in this file — a new
+   legislature needs a rule on all three, or its accent is undefined and the
+   declaration that uses it is dropped entirely. */
+.bt-notif[data-polity="us"] { --accent: var(--navy); }
+.bt-notif[data-polity="eu"] { --accent: var(--royal); }
+
+/* The selector reuses the feed bar's segmented pill row — same shape, same
+   stylesheet — but its segments are BUTTONS, not links: switching legislature
+   here changes which rows the table holds, so there is nothing to navigate to
+   and nothing to link. */
+.bt-tseg { margin: 0 0 0.2rem; }
+.bt-tseg button {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0.36rem 0.78rem;
+  border-radius: 999px;
+  line-height: 1.25;
+}
+.bt-tseg button:hover { color: var(--navy-ink); }
+.bt-tseg button[aria-selected="true"] {
+  background: var(--card);
+  color: var(--accent);
+  box-shadow: 0 1px 2px rgba(10, 49, 97, 0.12);
+}
+
+/* ⚠️ THE TWO RULES BELOW ARE SCOPED UNDER `.bt-notif`, AND THE SPECIFICITY IS
+   THE WHOLE POINT — the fence at the top of this file, met from the other side.
+   `.acct-card p` is (0,1,1) and a bare `.bt-tcap` is (0,1,0), so inside a card
+   the card's own paragraph rule wins: the font size, the colour AND the margin
+   shorthand, which takes the caption's `margin-left` with it. That last one is
+   not cosmetic — the indent is accountability 2 above.
+
+   The group's own caption and foot are deliberately NOT raised: they are
+   page-level prose and they match the other groups' caption and foot on this
+   page, which is where a reader compares them. */
+
+/* One legislature in scope: no selector, but the table still says whose rows
+   these are — the app's own heading in the app's own words. */
+.bt-notif .bt-tsolo {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  margin: 0 0 0.2rem;
+  max-width: none;
+}
+
+.bt-trow { --bt-indent: 0px; padding: 7px 0; }
+.bt-trow[data-depth="1"] { --bt-indent: 18px; }
+.bt-trow[data-depth="2"] { --bt-indent: 36px; }
+.bt-trow[data-depth="3"] { --bt-indent: 54px; }
+/* The rule between top-level sections — the app's `sectionRule`. Not on the
+   first one: a line above the first row is a line under the caption. */
+.bt-trow[data-depth="0"] {
+  border-top: 1px solid var(--line-soft);
+  margin-top: 2px;
+  padding-top: 9px;
+}
+.bt-tree > .bt-trow:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+
+.bt-tline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: var(--bt-indent);
+}
+
+/* The chevron's column is reserved on EVERY row, expander or not, so the labels
+   line up whether or not a row can open. */
+.bt-tex {
+  flex: none;
+  width: 24px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink-faint-aa);
+  cursor: pointer;
+}
+span.bt-tex { cursor: default; }
+.bt-tex .glyph { width: 16px; height: 16px; }
+
+.bt-tlabel {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--sans);
+  font-size: 14.5px;
+  line-height: 20px;
+  color: var(--ink);
+  padding-right: 6px;
+}
+.bt-tlabel.is-section { font-weight: 600; }
+
+.bt-notif .bt-tcap {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  line-height: 16px;
+  color: var(--ink-faint-aa);
+  margin: 1px 0 0;
+  margin-left: calc(var(--bt-indent) + 24px + 6px);
+  max-width: none;
+}
+
+/* The box. `appearance: none` because the three states are painted here — see
+   accountability 1 above — and because a platform checkbox cannot take the
+   legislature's accent. */
+.bt-tbox {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  position: relative;
+  width: 21px;
+  height: 21px;
+  margin: 0;
+  border-radius: 4px;
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  cursor: pointer;
+}
+.bt-tbox[data-state="on"],
+.bt-tbox[data-state="partial"] { background: var(--accent); border-color: var(--accent); }
+/* The tick. */
+.bt-tbox[data-state="on"]::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 4px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+/* The dash — "some of what is under this row, not all of it". */
+.bt-tbox[data-state="partial"]::after {
+  content: "";
+  position: absolute;
+  left: 3.5px;
+  top: 8px;
+  width: 11px;
+  height: 2.5px;
+  border-radius: 1px;
+  background: #fff;
+}
+
 /* (The temporary signed-in preview's `.acct-linklike` rule stood here until
    2026-08-22. It was deleted with the module that drew the link, in the
    change-set that enabled a real sign-in provider — the trigger its own header
