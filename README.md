@@ -5,8 +5,8 @@ dependencies to install. `style.css` is the living style reference that the
 mobile app's design tokens are translated from — when the two disagree, this
 file wins.
 
-The feed, vote and account pages additionally run **one first-party script,
-`assets/js/bt-web.js`** — the app's own data layer, compiled. It is never
+Every page here additionally runs the **compiled core,
+`assets/js/bt-web.js`** — the app's own data layer. It is never
 written or built here: see "The compiled core" below and
 [`tools/README-bt-site.md`](tools/README-bt-site.md).
 
@@ -114,9 +114,21 @@ export is three separate pushes (`app/docs/WEB.md`).
 
 ⚠️ **This site carries no analytics and no tracking of any kind, and no
 third-party resources at all.** No GA, no pixel, no tag manager, no CDN, no
-remote fonts — fonts are self-hosted woff2 (`style.css:8-28`). The feed, vote and
-account pages run exactly ONE script, our own `assets/js/bt-web.js`, compiled from
-the app's code and served from this origin; every other page runs none.
+remote fonts — fonts are self-hosted woff2 (`style.css:8-28`). **Every script
+this site loads is our own, and is served from this origin.** Today that is two
+files: `assets/js/bt-web.js`, the compiled core, on every page; and
+`assets/js/frame-guard.js`, which blanks the page if it has been loaded inside
+a frame, on the three pages that carry account actions.
+
+*(Corrected 2026-09-08, twice over. It said "the feed, vote and account pages …
+every other page runs none": true when it was written, and false from 2026-08-23,
+when the static pages picked up the same bundle so a signed-in reader would stop
+being shown "Sign in" in the header. It also counted the scripts — "exactly ONE"
+— and that count had been wrong since the framing guard landed. A count is
+precisely the kind of claim the paragraph below warns about: it describes a
+mechanism, so it goes stale the first time a page gains a file, quietly and in
+the direction that reads as a promise. The sentence now states the outcome, and
+names today's files under it as a fact rather than as a cap.)*
 
 **This line used to say "no JavaScript at all"** (a full-file audit, 2026-07-19,
 true when it was written). It stopped being true on 2026-08-14 and is corrected

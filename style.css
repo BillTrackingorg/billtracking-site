@@ -105,7 +105,7 @@ html { scroll-behavior: smooth; }
    flicker by painting a dead TRACK, which is the stripe again and more visible.
 
    ⚠️ AND ON THESE PAGES IT PAYS A DEBT `web/dom.ts` HAS BEEN MEASURING BY HAND.
-   `lockScroll` caps <html> with `overflow: hidden` behind the filter/notices
+   `lockScroll` caps <html> with `overflow: hidden` behind the filter/notifications
    sheet, and a cap removes the scrollbar exactly the way an unfilled page does —
    which is what `--bt-scrollbar` is published for. A stable gutter stays
    reserved under `hidden`: measured at 1280 with a classic scrollbar, the cap
@@ -159,7 +159,7 @@ a:hover { color: var(--royal); }
   gap: 0.4rem 1.5rem;
   padding-top: 0.85rem;
   padding-bottom: 0.85rem;
-  /* THE NOTICES PANEL HANGS FROM THIS BOX. `src/web/notices.ts` appends the
+  /* THE NOTIFICATIONS PANEL HANGS FROM THIS BOX. `src/web/notices.ts` appends the
      dropdown here rather than to <body> so it scrolls away with the header it
      belongs to instead of floating over a page the reader has scrolled past;
      that only works if this is the positioned ancestor. It is also the right
@@ -229,7 +229,7 @@ a:hover { color: var(--royal); }
    and the header behind it is navy, so it reads at least as strongly. */
 .site-nav a.nav-signin:focus-visible { outline-color: #fff; }
 
-/* --- the notices bell ------------------------------------------------------
+/* --- the notifications bell ------------------------------------------------
    The header's SECOND account control (2026-08-20): what has happened on the
    bills you follow, reachable from every page of this site.
 
@@ -297,11 +297,11 @@ a:hover { color: var(--royal); }
 }
 .nav-bell-badge:empty { display: none; }
 
-/* --- the notices panel -----------------------------------------------------
-   A dropdown, not a page: there is no /notices address and this change-set does
-   not add one. It hangs from the header's wrap (see `.site-header .wrap`) and
-   it is a white card on navy chrome - the same card the rest of the site is
-   made of, so it reads as this site's own furniture rather than as a widget. */
+/* --- the notifications panel -----------------------------------------------
+   A dropdown, not a page: there is no /notifications address. It hangs from
+   the header's wrap (see `.site-header .wrap`) and it is a white card on navy
+   chrome - the same card the rest of the site is made of, so it reads as this
+   site's own furniture rather than as a widget. */
 .nav-panel {
   position: absolute;
   z-index: 60;
@@ -359,7 +359,7 @@ a:hover { color: var(--royal); }
 
 .nt-rows { list-style: none; margin: 0; padding: 0; }
 .nt-row + .nt-row { border-top: 1px solid var(--line-soft); }
-/* The whole row is the link - a notice is one thing to open, and a row this
+/* The whole row is the link - a notification is one thing to open, and a row this
    tall is a target a thumb can hit. */
 .nt-row a {
   display: block;

@@ -358,7 +358,7 @@ button[disabled],
 
 /* --- the follow bell ------------------------------------------------------
    ONE TAP TO PUT A BILL ON YOUR DOCKET, and on this surface what that buys is
-   the header's notices panel - there is no web push (spec, 2026-08-20). It sits
+   the header's notifications panel - there is no web push (spec, 2026-08-20). It sits
    immediately after the reference because that is the bill it is about: the
    accessible name says so too, and a bell floating at the other end of the row
    would be a control with no visible subject.
@@ -1042,7 +1042,7 @@ button[disabled],
 /* ⚠️ AN AUTHOR `display` BEATS THE UA'S `[hidden] { display: none }` WHATEVER
    THE SPECIFICITY — author origin wins over user-agent origin — so the
    `display: flex` above would keep a `hidden` provider button on screen. That
-   is the trap style.css already spells out for the notices bell in the site nav
+   is the trap style.css already spells out for the notifications bell in the site nav
    — named by description, not by selector, because check-site-nav.js asserts
    that bell's rules live in style.css by grepping THIS file for them, and a
    comment that can break a guard is worse than one that can satisfy it. It is
@@ -1209,7 +1209,7 @@ button[disabled],
 /* ONE sweep, 800 ms - the same 800 ms the island holds the class for, so the
    emphasis ends with it rather than being cut off mid-animation.
    GOLD, not the accent wash (owner, 2026-08-20): gold is the site's one visual
-   word for sign-in and the account (the nav pill, the notices panel's pill),
+   word for sign-in and the account (the nav pill, the notifications panel's pill),
    and this flash answers a press whose remedy IS sign-in — the pale accent
    wash read as "something happened" where it should say "the door is here". */
 @keyframes bt-caption-pulse {
