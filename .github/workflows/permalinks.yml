@@ -222,6 +222,35 @@ jobs:
           else
             echo "::error::the renderer produced no /corrections/ page — this repo's tools/bt-site.cjs predates it. Rebuild and commit the renderer. The other trees are published as normal and any already-published corrections/ is left as it is."
           fi
+          # ⚠️ AND THE SAME STALENESS, IN THE ONE PLACE IT CAN BE SEEN AT ALL
+          # (added 2026-09-09). On 2026-09-08 a commit added 187 lines to
+          # feed.css, bumped the six hand-written carriers to ?v=20, and never
+          # rebuilt the renderer — so every generated page kept asking for v19
+          # and the new rules reached a cached file that had no idea about them.
+          # Nothing went red: the app's carrier check reads `src/site/chrome.ts`,
+          # which already said 20. It was checking the INTENTION while the
+          # ARTEFACT that renders 122 pages disagreed with it.
+          #
+          # 👤 IT CANNOT BE MOVED INTO THE APP'S `npm run check`, AND THAT IS
+          # WORTH KNOWING BEFORE SOMEBODY TRIES. `build:core` refuses to emit
+          # unless that suite is green, so an assertion whose only fix is a
+          # rebuild would block the very build that fixes it — the deadlock the
+          # carrier check's own comment already describes for generated pages.
+          # Here there is no such loop: this compares two things that both exist
+          # in the checkout, and the fix (rebuild, commit the renderer) happens
+          # somewhere else entirely.
+          #
+          # LOUD, NOT FATAL, per the loudness doctrine's shape for this class:
+          # the pages are still trustworthy — they are the record, rendered
+          # correctly — and freezing /p/ and /b/ over a cache-buster would be a
+          # blast radius nothing justifies.
+          gen=$(grep -o 'feed[.]css?v=[0-9]*' out/p/*.html 2>/dev/null | head -1 | grep -o '[0-9]*$' || true)
+          carrier=$(grep -o 'feed[.]css?v=[0-9]*' us.html 2>/dev/null | head -1 | grep -o '[0-9]*$' || true)
+          if [ -n "$gen" ] && [ -n "$carrier" ] && [ "$gen" != "$carrier" ]; then
+            echo "::error::the renderer stamps feed.css?v=$gen while the hand-written pages ask for v=$carrier — tools/bt-site.cjs predates the stylesheet change. Rebuild it (npm run build:core && npm run copy:site in the app repo) and commit it. The pages published by this run are correct in every other respect; only their cache-buster is behind."
+          else
+            echo "stylesheet version: renderer v${gen:-?}, carriers v${carrier:-?}"
+          fi
 
       # Publish = replace p/, b/ AND view/ wholesale + the bill sitemap. All three
       # trees are TRACKED but written by this job alone (only generated files live
