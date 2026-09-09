@@ -1,66 +1,17 @@
-/* ==========================================================================
-   BillTracking — feed pages, cards, account.  Loaded AFTER style.css.
-
-   This file is the web half of ONE design. Every number in the card section
-   is the app's own number, lifted from `app/src/components/post-card.tsx`,
-   `vote-chips.tsx` and `collapsible-body.tsx` and governed by
-   `app/COMPONENT-STYLE.md` — the card must look like the app's card, because
-   it renders the same record. When the app changes, this changes with it.
-
-   THE DOM THIS FILE STYLES is the app repo's `docs/WEB-CONTRACT.md` (it was
-   this repo's `assets/js/README.md` until 2026-09-07, when it moved out of a
-   repo that is served whole to the public). "contract rule N" and "contract
-   section 2b" in the comments below are its §2 rules and its §2b.
-
-   Structure:
-     1. Scope tokens (incl. the AA fix for --ink-faint)
-     2. Skip link + focus
-     3. Feed page shell (head, freshness, feed, status, show-more)
-     4. The card
-     5. Account / callback / resolver pages
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   1. Scope tokens
-   -------------------------------------------------------------------------- */
-
-/* --ink-faint (#6B7C90) fails WCAG AA as text on every background this site
-   puts it on: 4.28 on white, 4.13 on paper, 3.87 on wash, 3.78 on the EU wash
-   (UNIFIED-WEB-SCOPE-2026-08-17, accessibility defect 1). None of the places
-   it is used are large text — 10 to 12.5 px — so AA-large does not rescue it.
-   Same hue family, three steps darker: 5.21 / 5.03 / 4.72 / 4.61. Used for
-   EVERY faint text in this file; --ink-faint itself is left alone so the rest
-   of the site is untouched. */
 .feed-page,
 .account-page,
 #bt-callback,
 #bt-resolver {
   --ink-faint-aa: #5E6E82;
   --card-radius: 12px;
-  --feed-measure: 640px;   /* ≈ ⅓ of 1920 — the site's article measure */
+  --feed-measure: 640px;
 }
 
-/* style.css's `main section { padding: 3.25rem 0 }` is right for the prose
-   pages, where a <section> IS a band of the page. Here a <section> is a
-   region — the feed, an account block — and that padding opens a 52 px hole
-   above the first card. Neutralised in scope only; style.css is untouched.
-   ⚠️ THE FENCE (found 2026-08-22, via the signed-in preview): at (0,1,1) this
-   reset also BEATS one-class component rules like `.acct-card` (0,1,0), so a
-   card-shaped <section> on these pages renders UNPADDED — it cost the delete
-   card its padding for three days. Card-shaped blocks here are DIVs
-   (`deleteCardIdleHtml` carries the same note); if a block must be a
-   <section>, give its padding a selector this reset cannot outrank. */
 .feed-page section,
 .account-page section,
 #bt-callback section,
 #bt-resolver section { padding: 0; }
 
-/* --------------------------------------------------------------------------
-   2. Skip link + focus
-   -------------------------------------------------------------------------- */
-
-/* The site had no skip link anywhere (accessibility defect 2). It is the
-   first focusable thing on the page and stays invisible until focused. */
 .skip-link {
   position: absolute;
   left: 0.75rem;
@@ -78,8 +29,6 @@
 }
 .skip-link:focus { transform: translateY(0); color: var(--navy-deep); }
 
-/* Buttons here are real <button>s; style.css's :focus-visible ring applies to
-   them, but they need the cursor and the site's font. */
 button.btn,
 .card-bell,
 .card-expander,
@@ -92,20 +41,11 @@ button.btn,
 button[disabled],
 .vote-chip[disabled] { cursor: default; }
 
-/* THE FOCUS RING NEEDS 3:1 AGAINST WHAT IT SITS ON (WCAG 2.2 SC 1.4.11).
-   style.css's ring is `3px solid var(--gold)` — 8.55:1 on the navy chrome it
-   was designed for, but 1.51:1 on a white card and 1.46:1 on paper. These four
-   pages are the first where nearly every focusable control (ref, pill, open,
-   expander, breakdown, both chips, Show more) sits on white, so the ring is
-   re-coloured in this scope only: navy is 12.0:1 on the card and 11.1:1 on
-   paper, and the chrome above and below keeps its gold. */
 .feed-page :focus-visible,
 .account-page :focus-visible,
 #bt-callback :focus-visible,
 #bt-resolver :focus-visible { outline-color: var(--navy); }
 
-/* Visually hidden, still announced. Used for the feed's announcement region —
-   see the note on #bt-feed below. */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -119,19 +59,11 @@ button[disabled],
   white-space: nowrap;
 }
 
-/* --------------------------------------------------------------------------
-   3. Feed page shell
-   -------------------------------------------------------------------------- */
-
 .feed-page {
   max-width: var(--feed-measure);
   margin: 0 auto;
-  padding: 0 1rem 3.5rem;   /* 16px gutters on narrow screens */
-  /* Reserve the first viewport before any card has rendered: the pre-hydration
-     page is only the head + the loading state, which put the FOOTER inside the
-     first paint — one visible frame of footer on every /us↔/eu hop (owner,
-     2026-08-20). The honest states still sit at the top; only the footer is
-     held below the fold. svh so a phone's collapsing URL bar doesn't overshoot. */
+  padding: 0 1rem 3.5rem;
+
   min-height: 100vh;
   min-height: 100svh;
 }
@@ -164,9 +96,6 @@ button[disabled],
   max-width: none;
 }
 
-/* The freshness line (mandatory — a page that cannot tell quiet from broken is
-   the honesty hole the 2026-08-17 scope flagged). Empty until the JS fills it,
-   so it must occupy no space when empty. */
 .feed-fresh {
   font-size: 0.8rem;
   line-height: 1.5;
@@ -185,11 +114,6 @@ button[disabled],
   margin-top: 1.4rem;
 }
 
-/* The honest empty / health states. Dashed border is the site's own honesty-box
-   grammar (style.css .log-empty), which COMPONENT-STYLE already names as the
-   app's honesty box. Six states, the app's order and the app's words — loading,
-   can't reach the feed, no matches, no posts yet, nothing on your docket,
-   filters, nothing recent — rendered by the JS into this element. */
 .feed-status {
   border: 1.5px dashed var(--line);
   border-radius: 10px;
@@ -215,16 +139,6 @@ button[disabled],
   max-width: none;
 }
 
-/* The static "this page's script did not load" line that ships inside the
-   loading state (#bt-boot-note). Quieter than the state's own sentence and
-   below it, because it is a note ABOUT the page rather than the page's answer —
-   the same weight `.acct-note` carries in the account page's loading region,
-   which is the pattern it was copied from. The JS removes it on boot, so a
-   reader only ever sees it when it is true.
-
-   Written as a descendant so it OUTWEIGHS `.feed-status p` above (two classes
-   beat one class + one type); as a bare class its margin and colour would both
-   lose to that rule and the note would sit flush against the sentence. */
 .feed-status .feed-status-note {
   font-size: 0.85rem;
   color: var(--ink-faint-aa);
@@ -241,8 +155,6 @@ button[disabled],
 .btn-more:hover { background: var(--wash); }
 .btn-more[hidden] { display: none; }
 
-/* The no-JavaScript fallback. Plain, honest, and pointing at the pages that
-   really are readable without scripts. */
 .feed-noscript {
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -256,8 +168,6 @@ button[disabled],
 .feed-noscript p { margin: 0 0 0.5rem; max-width: none; }
 .feed-noscript p:last-child { margin-bottom: 0; }
 
-/* Build line — "skew is observable, never assumed" (plan §3). Sits under the
-   feed, above the site footer. */
 .feed-build {
   font-size: 0.72rem;
   color: var(--ink-faint-aa);
@@ -267,24 +177,6 @@ button[disabled],
 }
 .feed-build:empty { display: none; }
 
-/* --------------------------------------------------------------------------
-   4. The card
-   -------------------------------------------------------------------------- */
-
-/* Glyphs. Stroke and stroke-width are inherited properties, so the referencing
-   <svg> decides weight and colour and the sprite carries geometry only.
-
-   ⚠️ WEIGHT COMES THROUGH `--glyph-stroke`, NOT A `stroke-width` ATTRIBUTE.
-   The label table carries per-glyph weights that are owner law — ❌ is a bold
-   `x` at 2.15 ("the most instantly-read no"), 🗳 ballot 1.95, 🤝 handshake
-   1.55, ✅ circle-check 2 — and a CSS rule beats an SVG presentation
-   attribute, so `svg.setAttribute('stroke-width', …)` is silently ignored
-   here and every glyph would render at the class default. A custom property
-   is the one channel that survives the cascade AND accepts a value the table
-   invents tomorrow. The JS sets it on that one <svg>:
-       svg.style.setProperty('--glyph-stroke', String(lp.stroke));
-   Set it on the <svg>, never on a wrapper: it inherits, and the green corner
-   badge lives in a sibling span. */
 .glyph {
   width: 20px;
   height: 20px;
@@ -306,11 +198,6 @@ button[disabled],
   box-shadow: 0 1px 4px rgba(10, 49, 97, 0.05);
 }
 
-/* Per-polity accents — the content law: a post keeps its OWN polity colours
-   forever, whatever page it is shown on (COMPONENT-STYLE, "the theme is the
-   building, posts are the residents"). --glyph-band paints the calendar
-   glyph's header band through the <use> shadow tree: US red, EU gold, the
-   twin-card hairline. */
 .card[data-polity="us"] {
   --accent: var(--navy);
   --accent-wash: var(--wash);
@@ -324,10 +211,7 @@ button[disabled],
   --glyph-band: var(--gold);
 }
 
-/* deep-linked / highlighted card */
 .card.is-highlighted { border-color: var(--accent); border-width: 1.5px; padding: 12.5px 14.5px; }
-
-/* --- head row ------------------------------------------------------------ */
 
 .card-head {
   display: flex;
@@ -356,23 +240,6 @@ button[disabled],
 }
 .card-ref:hover { color: var(--accent); }
 
-/* --- the follow bell ------------------------------------------------------
-   ONE TAP TO PUT A BILL ON YOUR DOCKET, and on this surface what that buys is
-   the header's notifications panel - there is no web push (spec, 2026-08-20). It sits
-   immediately after the reference because that is the bill it is about: the
-   accessible name says so too, and a bell floating at the other end of the row
-   would be a control with no visible subject.
-
-   THE SHAPE IS THE STATE, not the colour (owner, 2026-07-22): bell-plus when
-   you do not follow it, the filled bell when you do. The accent underneath is
-   an accompaniment, so nothing here depends on colour vision - the same two
-   glyphs the phone draws, out of the same sprite.
-
-   Geometry is `.card-open`'s law again ("padding P, margin -(P - 2)"): the
-   glyph draws at 18px, 9px of padding makes a 36px hit box, and -7px of margin
-   hands the layout back its 22px so the reference row keeps the rhythm it had.
-   The overhang stays inside the row's own 10px gaps, so pressing near the
-   reference link never lands on the bell. */
 .card-bell {
   display: inline-flex;
   align-items: center;
@@ -389,18 +256,9 @@ button[disabled],
 .card-bell .glyph { width: 18px; height: 18px; stroke-width: 1.7; }
 .card-bell[aria-pressed="true"] { color: var(--accent); }
 .card-bell:hover:not([disabled]) { color: var(--accent); }
-/* DISABLED IS A DIFFERENT STATEMENT HERE THAN ON A CHIP, so it is styled
-   differently on purpose. A disabled chip has to be READ - its words carry the
-   claim "we cannot key this post, so voting is off" - which is why feed.css
-   keeps it at AA rather than fading it. This control carries no claim at all:
-   an unkeyable post is drawn with NO bell (render/card.ts), so the only thing a
-   disabled bell ever says is "the page's JavaScript has not arrived", and the
-   one thing it must not look is pressable. Fading to the card's own hairline
-   ink is the honest shape - visibly present, visibly off - and WCAG exempts a
-   disabled control from contrast for exactly this case. */
+
 .card-bell[disabled] { color: var(--line); }
 
-/* Franchise / batch cards lead with the date instead of a reference. */
 .card-date-lead {
   display: flex;
   align-items: center;
@@ -412,35 +270,6 @@ button[disabled],
 }
 .card-date-lead .glyph { width: 17px; height: 17px; stroke-width: 1.7; }
 
-/* THE HEAD-RIGHT SLOT IS AN "OPEN", NOT A "MENU" — the one place this card
-   deliberately differs from the app's, and it differs because the surfaces
-   differ. In the app that slot is ⋯: it opens a sheet (share, report an error,
-   open the source). The web has no such sheet, and the plan gives the web its
-   own navigation instead (D27(f): "on the web a card opens /p/<id>"). Drawing
-   ⋯ for a control that navigates would be the dishonest-affordance pattern
-   this product refuses — an 18 px unlabelled menu glyph as the *only*
-   feed→post edge. Same slot, same size, same quiet ink; a disclosure chevron,
-   which is what it does. When the web grows a real overflow menu, ⋯ comes
-   back here and this moves. */
-/* ⚠️ THE PADDING AND THE NEGATIVE MARGIN ARE ONE NUMBER, AND THEY CANCEL.
-   The chevron DRAWS at 18 px and used to be TAPPED at 22 px (18 + 2 px padding
-   each side) — under WCAG 2.5.5's 44 px and, on the feed, the only edge from a
-   card to its post page (estate review R2, 2026-08-20). 13 px of padding takes
-   the hit box to 44 × 44; -11 px of margin takes the LAYOUT box back to the
-   22 × 22 it always occupied, so the glyph lands on exactly the pixel it landed
-   on before — the head row is `align-items: center` / `space-between`, and both
-   place the outer margin box, which is unchanged. Nothing above or below moves.
-
-   The 11 px it overhangs stays inside the card's own 13/15 px padding, so it
-   never reaches the card border and cannot widen the page. On its left it
-   claims the head row's 8 px gap; only a ref row that runs the full width puts
-   anything within the remaining 3 px, and what sits there is a pill's trailing
-   padding, never its text. Keep the two numbers in step: padding P, margin
-   -(P - 2).
-
-   One thing this does change on purpose: the focus ring now traces the 44 px
-   box rather than the glyph, because that is where the control actually is. A
-   ring that draws smaller than the target is a ring that describes it wrongly. */
 .card-open {
   background: none;
   border: 0;
@@ -452,10 +281,6 @@ button[disabled],
 }
 .card-open .glyph { width: 18px; height: 18px; }
 
-/* --- header pills -------------------------------------------------------- */
-
-/* One pill per header (the correction flag wins the slot; the older-action
-   FOOTER still renders below whether or not its pill did — COMPONENT-STYLE). */
 .pill-correction,
 .flag-older {
   font-family: var(--sans);
@@ -471,29 +296,14 @@ button[disabled],
   flex: none;
   text-decoration: none;
 }
-/* ONE CORRECTION WORD, AND IT IS NOT RED (owner ruling 2026-09-06, the one-card
-   change). Only the CORRECTED post wears a pill now — the post that published
-   the fix is retired from every listing surface, so a second word would only
-   ever be the stem-sharing pair COMPONENT-STYLE rejected. The register is the
-   legislature's own accent, the colour this card already uses for the reference
-   link and for the values the correction changed: red said OUR MISTAKE about
-   corrections that are mostly the SOURCE revising (the EP re-publishing a
-   tally, Congress.gov amending an action). Amber stays advisory — being late is
-   not being wrong. The retired kinds were `inaccurate` (red) and `correction`
-   (green); `?v=19` is the bump that carried their removal. */
+
 .pill-correction[data-kind="corrected"] { color: var(--accent); }
 .flag-older { color: var(--gold-text); }
 
-/* --- collapsing body (D6) ------------------------------------------------ */
-
-/* Only the BODY collapses. The head row above and the vote strip below stay
-   anchored — clipping either would make expanding the card the only way to
-   reach the ⋯ menu or vote. */
 .card-body { position: relative; }
 
 .card-body[data-clipped="1"] { max-height: 168px; overflow: hidden; }
 
-/* Softened clip edge — no hard cut through a line of text. */
 .card-body[data-clipped="1"]::after {
   content: "";
   position: absolute;
@@ -508,16 +318,9 @@ button[disabled],
 .card.is-open .card-body { max-height: none; overflow: visible; }
 .card.is-open .card-body::after { content: none; }
 
-/* Always behind the expander, never clipped (structure, not measurement: a
-   summary box is ~60-70px and never once fitted). */
 .card-deferred { display: none; }
 .card.is-open .card-deferred { display: block; }
 
-/* --- status card body ---------------------------------------------------- */
-
-/* font-weight is EXPLICIT: the card is a heading element here (§ card DOM), and
-   style.css's h2 rule would otherwise impose the site's 650 display weight. The
-   app's card serif is `SourceSerif4_600SemiBold` — 600. */
 .card-title {
   font-family: var(--serif);
   font-size: 17px;
@@ -528,17 +331,6 @@ button[disabled],
   max-width: none;
 }
 
-/* THE TITLE CLAMPS; THE STATUS LINE NEVER DOES. Bill titles are legal
-   boilerplate and run to 380 characters — on this product the status is the
-   news and the title is context, so the title is what gives way.
-
-   THE CONDITION IS "COLLAPSED", NOT "CLIPPED", and the app is the reason for
-   both halves: `numberOfLines={expanded ? undefined : 3}` (post-card.tsx) —
-   it clamps whenever the card is closed, whether or not the body overflows,
-   and it shows the FULL TITLE ON EXPAND. Keying the clamp to data-clipped got
-   the first half wrong; leaving it un-lifted got the second half wrong, and
-   the second is the serious one: the bottom half of a 382-character title was
-   unreachable on the web. */
 .card:not(.is-open) .card-title {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -564,18 +356,11 @@ button[disabled],
   max-width: none;
 }
 
-/* Glyphs ride INSIDE the text flow so wrapping uses the full card width.
-   :where() again — this rule must not out-specify the per-context ones below
-   that adjust the same properties. */
 :where(.card-action, .card-headline) .glyph {
   display: inline-block;
   vertical-align: -4px;
 }
-/* Context rules sit inside :where() so they carry the specificity of the class
-   alone (0,1,0). Written as plain descendants, `.card-headline .glyph-label`
-   (0,2,0) tied with `.glyph-label.is-green` and won on source order — the
-   green ✅ family rendered navy in a headline, and "colour only for the good
-   news" is a named law, not a nicety. */
+
 :where(.card-action) .glyph-cal {
   width: 18.5px;
   height: 18.5px;
@@ -588,25 +373,16 @@ button[disabled],
   --glyph-stroke: 1.7;
   color: var(--accent);
 }
-/* Colour only for the good news: passage/adoption may carry meaning through
-   colour; a rejection, veto or withdrawal stays neutral ink. Never red. */
+
 .glyph-label.is-green { color: #1A7F37; }
 
 .card-action-date { font-family: var(--sans); color: var(--ink-soft); }
 .card-action-label { font-family: var(--sans); font-weight: 600; color: var(--ink); }
 .card-action-tally { font-family: var(--sans); color: var(--ink-soft); }
-/* THE VALUES A CORRECTION CHANGED (2026-09-06). The card carries the CORRECTED
-   label and tally — the post that published them is not listed any more — so
-   the accent is what keeps that from being a silent rewrite. Which fields wear
-   it is the model's call (`head.changed`), never this file's; the app paints
-   the same two fields in the same accent. Not red, and not a link colour with a
-   link's underline: it marks a value, it does not offer to go anywhere. */
+
 .card-action-label.is-corrected,
 .card-action-tally.is-corrected { color: var(--accent); }
 
-/* Badge-bearing glyphs (✅🏛️ passed a chamber, 📜 became law) carry a small
-   green check at the corner; the badge overhangs, so the wrapper reserves
-   room before the text that follows. */
 .glyph-wrap { position: relative; display: inline-block; vertical-align: -4px; }
 .glyph-wrap.has-badge { padding-right: 5px; }
 .glyph-wrap .glyph { vertical-align: top; }
@@ -622,8 +398,7 @@ button[disabled],
   align-items: center;
   justify-content: center;
 }
-/* The badge's tick keeps a literal weight: it is fixed by the badge's own
-   geometry and must never inherit a label glyph's table weight. */
+
 .glyph-badge .glyph {
   width: 8px;
   height: 8px;
@@ -640,12 +415,10 @@ button[disabled],
   max-width: none;
 }
 
-/* --- franchise card body ------------------------------------------------- */
-
 .card-headline {
   font-family: var(--serif);
   font-size: 16.5px;
-  font-weight: 600;   /* the app's card serif — see .card-title */
+  font-weight: 600;
   line-height: 26px;
   color: var(--navy-ink);
   margin: 0 0 8px;
@@ -671,11 +444,6 @@ button[disabled],
   max-width: none;
 }
 
-/* --- anchored: what's next + budget -------------------------------------- */
-
-/* ANCHORED, NOT CLIPPED. "What's next" is the answer to the question a reader
-   of a legislative feed actually has, and it was being decided by title
-   length — short-titled bills showed it, three-line resolution titles ate it. */
 .card-next {
   font-family: var(--sans);
   font-size: 14px;
@@ -694,14 +462,6 @@ button[disabled],
 }
 .lead { font-weight: 600; }
 
-/* THE CORRECTION FOOTER — anchored, never deferred, and load-bearing since the
-   one-card change: this card is the only one a browsing reader meets, so the
-   pill's single word cannot be the whole account of what changed. Footnote
-   register, like `.card-older-note`, because it is meant to be READ; the tag
-   wears the same micro-caps the bill page's stamp and the `/p/` banner wear, in
-   ink rather than a colour of its own — the pill above already carries the
-   signal. The words are the model's `correctionStamp`, identical on every
-   surface. */
 .card-correction {
   font-family: var(--sans);
   font-size: 11px;
@@ -718,8 +478,6 @@ button[disabled],
 }
 .card-correction-link { font-weight: 600; color: var(--accent); }
 
-/* --- deferred: summary, older note, quote -------------------------------- */
-
 .card-summary {
   background: var(--accent-wash);
   border-left: 3px solid var(--accent);
@@ -735,7 +493,7 @@ button[disabled],
   margin: 0;
   max-width: none;
 }
-/* ALWAYS, with every summary. Not a conditional. */
+
 .card-summary .ai-tag {
   display: block;
   font-family: var(--sans);
@@ -745,8 +503,6 @@ button[disabled],
   margin-top: 4px;
 }
 
-/* Footnote register: inkSoft rather than faint, because this one is meant to
-   be READ. Cause-neutral wording is the bot's own house rule. */
 .card-older-note {
   font-family: var(--sans);
   font-size: 11px;
@@ -756,9 +512,6 @@ button[disabled],
   max-width: none;
 }
 
-/* The quote shape: an inset, left-ruled reference to the corrected post.
-   Single-sided border ⇒ NO radius (COMPONENT-STYLE) — rounded corners only
-   work with a full border. */
 .card-quote {
   display: block;
   border-left: 3px solid var(--accent);
@@ -799,8 +552,6 @@ button[disabled],
 .card-quote-tally { color: var(--ink-faint-aa); }
 .card-quote-missing { font-family: var(--sans); font-size: 12.5px; color: var(--ink-faint-aa); margin: 0; }
 
-/* --- expander ------------------------------------------------------------ */
-
 .card-expander {
   display: inline-flex;
   align-items: center;
@@ -815,17 +566,6 @@ button[disabled],
 .card-expander .glyph { width: 15px; height: 15px; stroke-width: 2.2; }
 .card-expander[hidden] { display: none; }
 
-/* --- action strip -------------------------------------------------------- */
-
-/* Opposite edges on purpose: the breakdown glyph at the far left — the "see
-   where it stands" anchor — and the chips at the far right, the action zone.
-   On a post with no bill identity the glyph is ABSENT (there is no tally to
-   open — contract rule 2), leaving .vote-chips as the strip's only child. It
-   still lands in the same place: .vote-reason's `flex-basis: 100%` makes the
-   chip row span the strip, and its own `justify-content: flex-end` holds the
-   two pills at the right edge — measured identical to a keyed card's, to the
-   pixel. So a refused card reads as the same card with its chips off, not as a
-   differently-built one. */
 .card-strip {
   display: flex;
   align-items: center;
@@ -847,9 +587,6 @@ button[disabled],
 }
 .card-strip-glyph .glyph { width: 16px; height: 16px; stroke-width: 1.7; }
 
-/* Vote chips — accuracy guard, owner-locked. "▲ Yea · ▼ Nay" (US) /
-   "▲ For · ▼ Against" (EU). Never hearts, never thumbs, never a net score,
-   and no counts on the chip on ANY surface. Text arrows, not icons. */
 .vote-chips {
   display: flex;
   align-items: center;
@@ -877,35 +614,9 @@ button[disabled],
   background: var(--accent-wash);
   color: var(--accent-chip-text);
 }
-/* DELIBERATE DIVERGENCE FROM THE APP, recorded so it is a decision and not
-   drift: `vote-chips.tsx` disables a chip with `opacity: 0.45`, which on this
-   palette lands around 2.4:1 — unreadable, and this is the one chip state that
-   has to be READ, because it is the state whose whole job is to say "we can't
-   key this post, so voting is off". The web keeps the same two signals (muted
-   text, softened border) at AA instead. If the app ever adopts a readable
-   disabled state, they converge here. */
+
 .vote-chip[disabled] { color: var(--ink-faint-aa); border-color: var(--line-soft); }
 
-/* The caption slot — ON THE CHIPS' ROW, left of them, after the breakdown glyph.
-
-   ⚠️ THIS MOVED ON 2026-08-19 AND THE OLD REASONING IS RECORDED BELOW, because
-   it was right about its own case and wrong about the one that matters. It used
-   to be a child of .vote-chips with `flex-basis: 100%`, taking a line of its own
-   UNDER the chips — argued for on the grounds that NO_IDENTITY_REASON is a full
-   sentence and squeezing it beside two pills makes it look like an error toast.
-   True of that sentence. But the caption a reader actually meets is four words,
-   "Sign in to vote", and it is the strip's primary invitation: owner directive,
-   2026-08-19 — "it should be 'Sign in to vote' and it should be on the same row
-   as the buttons". It is also where the APP has always put it (vote-chips.tsx
-   renders the caption as the third child of the chip ROW, shrinkable), so the
-   web was the outlier.
-
-   So the slot is now a child of .card-strip and the row reads
-   [glyph] [caption] … [chips]. `flex: 1` claims the gap between them, and
-   `min-width: 0` is what lets the long refusal WRAP inside that gap instead of
-   shoving the chips off the card — the same job `flexShrink: 1` does on the
-   phone. A two-line refusal simply makes the strip two lines tall, which is
-   what it does on the phone too. */
 .vote-reason {
   flex: 1 1 auto;
   min-width: 0;
@@ -918,21 +629,13 @@ button[disabled],
   text-align: left;
 }
 
-/* Nothing to say is a state, not a gap: an empty slot must claim no width at
-   all, or a signed-in reader's strip carries a hole where a caption was. */
 .vote-reason:empty { display: none; }
 
-/* Narrow phones: the strip stacks rather than squeezing the chips, and the
-   caption takes the first line on its own. */
 @media (max-width: 24rem) {
   .card-strip { flex-wrap: wrap; }
   .vote-reason { flex-basis: 100%; }
   .vote-chips { justify-content: flex-start; }
 }
-
-/* --------------------------------------------------------------------------
-   5. Account / callback / resolver
-   -------------------------------------------------------------------------- */
 
 .account-page,
 #bt-callback,
@@ -1006,13 +709,7 @@ button[disabled],
   color: var(--ink);
 }
 .btn-provider:hover:not([disabled]) { background: var(--wash); }
-/* One width for both doors (owner catch on the live page, 2026-08-23: Google
-   caps its rendered button at 400px, so it sat visibly narrower than the
-   full-width buttons around it). The whole sign-in column meets Google at its
-   ceiling: the mount is capped so the measured width handed to renderButton
-   IS 400, and the plain buttons wear the same cap — parity by agreement, not
-   by hoping. Scoped to the signed-out card; the signed-in tail and the delete
-   card keep their own widths. */
+
 #bt-acct-signed-out .acct-buttons .btn-provider,
 #bt-gsi-google {
   width: 100%;
@@ -1020,55 +717,19 @@ button[disabled],
   margin-inline: auto;
 }
 #bt-gsi-google { display: flex; justify-content: center; }
-/* The Google doors' single-slot stack (owner flicker catch #2, 2026-08-23:
-   the swap used to be two layout jumps — Google's button popping in below,
-   then the plain one collapsing away). Both doors share one grid cell;
-   Google's renders IN PLACE but invisible (visibility keeps the box, so the
-   width measurement and the appeared-check still work), and .is-gsi reveals
-   it in the same frame the plain one leaves — one repaint, zero shift. The
-   min-height pins the cell to the plain door's height so even the few-pixel
-   difference between the two buttons cannot move the page. */
-/* FIXED height + clip, not a minimum (owner catch #4, 2026-08-24: Google's
-   iframe transiently grew during its own re-render and pushed the Apple
-   button down for a beat — a min-height is a floor, and the wobble punched
-   through it). Every GIS button variant is 40px tall; a sealed 44px cell
-   means whatever happens inside Google's frame happens inside this box, and
-   the page below it physically cannot move. */
+
 .google-door { display: grid; align-items: center; height: 44px; overflow: hidden; }
 .google-door > * { grid-area: 1 / 1; }
 #bt-gsi-google { visibility: hidden; }
 .google-door.is-gsi #bt-gsi-google { visibility: visible; }
 .btn-provider[disabled] { color: var(--ink-faint-aa); background: var(--paper); }
-/* ⚠️ AN AUTHOR `display` BEATS THE UA'S `[hidden] { display: none }` WHATEVER
-   THE SPECIFICITY — author origin wins over user-agent origin — so the
-   `display: flex` above would keep a `hidden` provider button on screen. That
-   is the trap style.css already spells out for the notifications bell in the site nav
-   — named by description, not by selector, because check-site-nav.js asserts
-   that bell's rules live in style.css by grepping THIS file for them, and a
-   comment that can break a guard is worse than one that can satisfy it. It is
-   also the companion rule every other hide-able component here already carries
-   (`.acct-region[hidden]`, `.geo-field[hidden]`, `.bt-backdrop[hidden]`).
-   It became load-bearing on 2026-08-23: when Google's OWN button renders,
-   src/web/account.ts hides `#bt-signin-google` — without this line the reader
-   would see TWO "Continue with Google" doors, one of them the redirect flow
-   whose consent screen names supabase.co, which is the exact thing that
-   change-set exists to remove. */
+
 .btn-provider[hidden] { display: none; }
 
-/* When no provider is configured the buttons are disabled and this line says
-   so. Inviting a sign-in that does not exist is the dishonest-affordance
-   version of the very thing this product guards against. */
 .acct-note { font-size: 0.85rem; color: var(--ink-faint-aa); margin: 0.7rem 0 0; max-width: none; }
-/* #bt-provider-note ships empty and is filled only when a sign-in could not be
-   started (src/web/account.ts). Empty must take no room at all, or the page
-   carries a gap that looks like a missing sentence. */
+
 .acct-note:empty { display: none; }
-/* The one emphasised sentence on the "Account deleted" screen. The phone's
-   sheet draws the same sentence with the same stripe (delete-account-sheet.tsx
-   `callout`); until 2026-09-05 the stripe belonged to an Apple clean-up note
-   that no longer exists (src/lib/auth-core.ts records why). Written with the
-   card and the type so it OUTWEIGHS `.acct-card p` above for colour — as a
-   bare class it would lose (one class < one class + one type). */
+
 .acct-card p.acct-callout { border-left: 2px solid var(--navy); padding-left: 10px; color: var(--ink); }
 
 .acct-danger { margin-top: 1.6rem; font-size: 0.9rem; }
@@ -1077,22 +738,8 @@ button[disabled],
 .acct-status { font-size: 0.93rem; color: var(--ink-soft); margin: 0.9rem 0 0; }
 .acct-status:empty { display: none; }
 
-/* The Settings section — the app's Settings screen on /account (2026-08-22;
-   src/web/settings.ts renders the groups into #bt-settings-groups, reusing the
-   Display panel's own .bt-row/.bt-sw/.bt-chips tree, which this stylesheet
-   already styles above). Only what that reuse does not cover is added here. */
-
-/* The switches' checked colour. `--accent` is otherwise defined only by a
-   card's or a feed page's [data-polity] — the two display toggles here are
-   cross-legislature device prefs, so they wear the site's own chrome navy,
-   never one legislature's colour. Without this the checked track would paint
-   TRANSPARENT (an undefined custom property invalidates the declaration). */
 .account-page { --accent: var(--navy); }
 
-/* The section-padding reset above zeroes any padding-top given here (it
-   outranks one-class rules — see the fence at the top of this file), so the
-   gap under the rule line rides on the heading's own margin instead; the
-   section's border blocks margin collapse, so it holds. */
 .acct-settings { margin-top: 2.4rem; border-top: 1px solid var(--line); }
 .acct-settings > h2 {
   font-family: var(--serif);
@@ -1102,8 +749,6 @@ button[disabled],
   margin: 1.5rem 0 0;
 }
 
-/* The group eyebrows — the app Settings screen's own grammar (uppercase small
-   caps above a card), .acct-label's look freed from its in-card margins. */
 .acct-eyebrow {
   font-family: var(--sans);
   font-size: 0.72rem;
@@ -1114,52 +759,16 @@ button[disabled],
   margin: 1.3rem 0 0.45rem;
 }
 
-/* The Privacy card's quiet doors. */
 .acct-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .acct-links a { font-size: 0.94rem; color: var(--navy); }
 
-/* --- the notifications table (the Settings section's first group) ---------
-   One column of controls over a tree of rows. The rows, their order, their
-   labels and their captions are all rendered; nothing about the table's shape
-   is written down here.
-
-   Three things this stylesheet is accountable for:
-
-   1. THE THREE ROW STATES ARE DRAWN FROM `data-state`, NOT FROM `:checked`.
-      A parent whose children are partly on is `partial`, and no native checkbox
-      has a third visual state. So the picture comes from an attribute that is
-      always rendered, and script supplies `indeterminate` for assistive
-      technology alone. A row that looks fully on while a child is off is the
-      screen lying about itself.
-   2. THE CAPTION IS ALIGNED WITH THE LABEL AT EVERY DEPTH. It is what carries
-      "any bill" against "only bills you follow", so it has to read as belonging
-      to its own row and not to the one above. `--bt-indent` is set per depth and
-      BOTH the row line and the caption are positioned from it.
-   3. THE INDENT IS ON THE LABEL SIDE, NEVER ON THE ROW. The box stays on the
-      right margin at every depth, so a nested row's control lines up with its
-      parent's rather than stepping in with the text.
-
-   A depth with no rule is a row with no indent, which reads as a top-level row.
-   Add the next `--bt-indent` step before adding a level. */
-
 .bt-notif .bt-tree { margin-top: 0.7rem; }
-/* The line under the table. `.acct-card p` zeroes a paragraph's top margin, so
-   without this it sits flush against the last row and reads as that row's
-   caption. Scoped for the specificity reason recorded further down. */
+
 .bt-notif .bt-tree + .bt-row-cap { margin-top: 0.9rem; }
 
-/* Per-legislature accent, the same content law the card and the feed page obey
-   ("the theme is the building"): the table under a legislature selector wears
-   that legislature's colour. THIRD carrier of this pair in this file — a new
-   legislature needs a rule on all three, or its accent is undefined and the
-   declaration that uses it is dropped entirely. */
 .bt-notif[data-polity="us"] { --accent: var(--navy); }
 .bt-notif[data-polity="eu"] { --accent: var(--royal); }
 
-/* The selector reuses the feed bar's segmented pill row — same shape, same
-   stylesheet — but its segments are BUTTONS, not links: switching legislature
-   here changes which rows the table holds, so there is nothing to navigate to
-   and nothing to link. */
 .bt-tseg { margin: 0 0 0.2rem; }
 .bt-tseg button {
   font-family: var(--sans);
@@ -1181,19 +790,6 @@ button[disabled],
   box-shadow: 0 1px 2px rgba(10, 49, 97, 0.12);
 }
 
-/* ⚠️ THE TWO RULES BELOW ARE SCOPED UNDER `.bt-notif`, AND THE SPECIFICITY IS
-   THE WHOLE POINT — the fence at the top of this file, met from the other side.
-   `.acct-card p` is (0,1,1) and a bare `.bt-tcap` is (0,1,0), so inside a card
-   the card's own paragraph rule wins: the font size, the colour AND the margin
-   shorthand, which takes the caption's `margin-left` with it. That last one is
-   not cosmetic — the indent is accountability 2 above.
-
-   The group's own caption and foot are deliberately NOT raised: they are
-   page-level prose and they match the other groups' caption and foot on this
-   page, which is where a reader compares them. */
-
-/* One legislature in scope: no selector, but the table still says whose rows
-   these are — the app's own heading in the app's own words. */
 .bt-notif .bt-tsolo {
   font-family: var(--sans);
   font-size: 12.5px;
@@ -1208,8 +804,7 @@ button[disabled],
 .bt-trow[data-depth="1"] { --bt-indent: 18px; }
 .bt-trow[data-depth="2"] { --bt-indent: 36px; }
 .bt-trow[data-depth="3"] { --bt-indent: 54px; }
-/* The rule between top-level sections — the app's `sectionRule`. Not on the
-   first one: a line above the first row is a line under the caption. */
+
 .bt-trow[data-depth="0"] {
   border-top: 1px solid var(--line-soft);
   margin-top: 2px;
@@ -1224,8 +819,6 @@ button[disabled],
   padding-left: var(--bt-indent);
 }
 
-/* The chevron's column is reserved on EVERY row, expander or not, so the labels
-   line up whether or not a row can open. */
 .bt-tex {
   flex: none;
   width: 24px;
@@ -1263,9 +856,6 @@ span.bt-tex { cursor: default; }
   max-width: none;
 }
 
-/* The box. `appearance: none` because the three states are painted here — see
-   accountability 1 above — and because a platform checkbox cannot take the
-   legislature's accent. */
 .bt-tbox {
   appearance: none;
   -webkit-appearance: none;
@@ -1281,7 +871,7 @@ span.bt-tex { cursor: default; }
 }
 .bt-tbox[data-state="on"],
 .bt-tbox[data-state="partial"] { background: var(--accent); border-color: var(--accent); }
-/* The tick. */
+
 .bt-tbox[data-state="on"]::after {
   content: "";
   position: absolute;
@@ -1293,7 +883,7 @@ span.bt-tex { cursor: default; }
   border-width: 0 2.5px 2.5px 0;
   transform: rotate(45deg);
 }
-/* The dash — "some of what is under this row, not all of it". */
+
 .bt-tbox[data-state="partial"]::after {
   content: "";
   position: absolute;
@@ -1304,13 +894,6 @@ span.bt-tex { cursor: default; }
   border-radius: 1px;
   background: #fff;
 }
-
-/* (The temporary signed-in preview's `.acct-linklike` rule stood here until
-   2026-08-22. It was deleted with the module that drew the link, in the
-   change-set that enabled a real sign-in provider — the trigger its own header
-   carried. `check:webauth` proves the sweep, this file included: while the
-   module existed the rule had to exist, and now that it is gone the rule must
-   stay gone. No other class ever used it.) */
 
 #bt-callback .auth-status,
 #bt-resolver .resolver-status {
@@ -1324,9 +907,6 @@ span.bt-tex { cursor: default; }
 .page-links { list-style: none; padding: 0; margin: 1.2rem 0 0; }
 .page-links li { margin: 0.45rem 0; }
 
-/* The 404 resolver's own "As published" block. The archived text inside it is
-   `.post` / `.post-text`, which style.css already sets `white-space: pre-line`
-   on, so only the disclosure around it needs saying. */
 .resolver-archive {
   margin-top: 1rem;
   border: 1px solid var(--line);
@@ -1342,9 +922,6 @@ span.bt-tex { cursor: default; }
 }
 .resolver-archive .post { padding: 0 0.9rem 0.9rem; }
 
-/* The legacy `/bill/<ref>` pick, when a reference names more than one bill (a
-   rollover pair): the title under each row is what tells two "H.R. 3497" rows
-   apart, beside the Congress the link itself names. */
 .resolver-pick-title {
   display: block;
   font-size: 0.9rem;
@@ -1352,35 +929,6 @@ span.bt-tex { cursor: default; }
   color: var(--ink-soft);
 }
 
-/* --------------------------------------------------------------------------
-   6. What the vote island adds (contract section 2b)
-   -------------------------------------------------------------------------- */
-
-/* WRITTEN 2026-08-19 BY THE INTEGRATION LANE, against the DOM the island
-   actually emits (`src/web/{votes,consent,breakdown,geo-picker,account}.ts`).
-   README 2b specified these classes before the styling existed, and two of them
-   were reachable by any visitor the moment the bundle shipped, with nothing to
-   draw them:
-
-     - `.vote-caption.is-pulse` is the whole answer to a signed-out chip tap.
-       The island adds the class for 800 ms and does nothing else, deliberately
-       (the caption's words never change mid-tap, owner 2026-07-23). With no
-       rule the tap was SILENT, which is the one thing that state must not be.
-     - `.vote-breakdown` opens for every reader, signed in or not, and drew an
-       unstyled block of text under the card.
-
-   The look is the app's, not a new one: `vote-breakdown.tsx`'s track is
-   --line-soft with the polity accent as the fill, its "you" tag is gold, its
-   stats are bordered tiles. */
-
-/* --- the caption ---------------------------------------------------------- */
-
-/* It inherits size and colour from `.vote-reason`, the slot it lives in (one
-   slot, fixed precedence). Only the link-ness and the pulse are its own.
-
-   --gold-wash is the pulse's colour, derived here from the palette's --gold
-   the same way the underline below derives from --accent — the gold itself
-   stays written once, in style.css. */
 .vote-caption {
   color: var(--accent);
   font-weight: 600;
@@ -1393,12 +941,6 @@ span.bt-tex { cursor: default; }
 }
 .vote-caption:hover { border-bottom-color: var(--accent); }
 
-/* ONE sweep, 800 ms - the same 800 ms the island holds the class for, so the
-   emphasis ends with it rather than being cut off mid-animation.
-   GOLD, not the accent wash (owner, 2026-08-20): gold is the site's one visual
-   word for sign-in and the account (the nav pill, the notifications panel's pill),
-   and this flash answers a press whose remedy IS sign-in — the pale accent
-   wash read as "something happened" where it should say "the door is here". */
 @keyframes bt-caption-pulse {
   0%   { background: transparent; }
   25%  { background: var(--gold-wash); }
@@ -1406,18 +948,10 @@ span.bt-tex { cursor: default; }
 }
 .vote-caption.is-pulse { animation: bt-caption-pulse 800ms ease-out; }
 
-/* A reader who asked for less motion still has to SEE that the tap was
-   answered, so the emphasis stays and only the animation goes. The class is
-   removed after 800 ms either way, which is what makes a static wash read as a
-   flash rather than as a new permanent state. */
 @media (prefers-reduced-motion: reduce) {
   .vote-caption.is-pulse { animation: none; background: var(--gold-wash); }
 }
 
-/* --- the Article 9 consent step ------------------------------------------ */
-
-/* It appears INSIDE the strip that raised it, and it is a question - so it is
-   bordered like one and not styled like a banner. */
 .vote-consent {
   flex-basis: 100%;
   margin-top: 8px;
@@ -1446,18 +980,13 @@ span.bt-tex { cursor: default; }
   font-size: 12.5px;
   color: var(--ink-soft);
 }
-/* "Agree and vote" is the affirmative, so it carries the accent - but it is a
-   consent button, so it is not the loudest thing on the card. */
+
 .vote-consent-btn.is-agree {
   border-color: var(--accent);
   background: var(--accent-wash);
   color: var(--accent-chip-text);
 }
 
-/* --- the breakdown panel -------------------------------------------------- */
-
-/* A panel, not a dialog (README 2b): it opens in place after the strip, inside
-   the card, and takes the card's full width back from the strip's flex row. */
 .vote-breakdown {
   margin-top: 10px;
   padding: 11px 12px 12px;
@@ -1484,8 +1013,6 @@ span.bt-tex { cursor: default; }
   max-width: none;
 }
 
-/* The three states are kept visually apart on purpose: a failure must never be
-   mistaken for a result (`vote-breakdown-model.ts`). */
 .vb-message { padding: 6px 0 2px; text-align: center; }
 .vb-message-title {
   font-family: var(--serif);
@@ -1522,8 +1049,7 @@ span.bt-tex { cursor: default; }
   background: var(--card);
   padding: 8px 10px;
 }
-/* The reader's own place is pinned and never collapsed into the tail, so it is
-   the one tile that wears the accent. */
+
 .vb-stat.is-inpolity { border-color: var(--accent); background: var(--accent-wash); }
 .vb-stat-label {
   font-family: var(--sans);
@@ -1561,16 +1087,14 @@ span.bt-tex { cursor: default; }
 
 .vb-rows { list-style: none; padding: 0; margin: 0; }
 .vb-row { padding: 6px 2px; }
-/* A group boundary is a hairline, not a heading: the rows are one list and the
-   break only says "a different kind of place starts here". */
+
 .vb-row[data-group-start] {
   margin-top: 4px;
   padding-top: 9px;
   border-top: 1px solid var(--line-soft);
 }
 .vb-row-head { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
-/* .vb-flag retired 2026-08-23 with the emoji flags (owner ruling; geo.ts
-   header in the app repo) — every place-marker is the .vb-badge now. */
+
 .vb-badge {
   min-width: 26px;
   padding: 0 4px;
@@ -1585,8 +1109,7 @@ span.bt-tex { cursor: default; }
   text-align: center;
   color: var(--ink-soft);
 }
-/* A residual row ("Rest of world") stands for no place in particular, so its
-   marker is drawn as an absence rather than as another badge. */
+
 .vb-badge.is-residual { background: transparent; border-style: dashed; }
 .vb-label {
   flex: 1;
@@ -1603,11 +1126,10 @@ span.bt-tex { cursor: default; }
   text-transform: uppercase;
   color: var(--gold-text);
 }
-/* BOTH SIDES, ALWAYS - never a net score (D14, README 2b). */
+
 .vb-split { font-family: var(--sans); font-weight: 600; font-size: 12.5px; color: var(--ink); }
 .vb-split-down { font-weight: 400; color: var(--ink-faint-aa); }
-/* n IS NOT DECORATION. It is what keeps a one-person row honest; do not hide it
-   to tidy the row (D14). */
+
 .vb-total {
   font-family: var(--sans);
   font-weight: 700;
@@ -1622,8 +1144,7 @@ span.bt-tex { cursor: default; }
   background: var(--line-soft);
   overflow: hidden;
 }
-/* The width is DATA, so it arrives as a custom property on the element - the
-   same sanctioned exception as --glyph-stroke (contract rule 11). */
+
 .vb-fill { width: var(--vb-fill, 0%); height: 100%; background: var(--accent); }
 
 .vb-more { padding: 6px 0 2px; text-align: center; }
@@ -1650,8 +1171,7 @@ span.bt-tex { cursor: default; }
 .vb-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
 .vb-dot.is-up { background: var(--accent); }
 .vb-dot.is-down { background: var(--line-soft); border: 1px solid var(--line); }
-/* The legend is one line of "dot word dot word"; the second pair needs the gap
-   the first one gets from the flex `gap` alone. */
+
 .vb-legend .vb-dot ~ .vb-dot { margin-left: 8px; }
 
 .vb-foot {
@@ -1662,8 +1182,6 @@ span.bt-tex { cursor: default; }
   margin: 8px 0 0;
   max-width: none;
 }
-
-/* --- the account page's location picker and delete card ------------------- */
 
 .geo-picker { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 0.6rem; }
 .geo-field { display: flex; flex-direction: column; gap: 0.25rem; min-width: 11rem; flex: 1; }
@@ -1689,62 +1207,21 @@ span.bt-tex { cursor: default; }
 .geo-status { flex-basis: 100%; }
 .geo-status:empty { display: none; }
 
-/* The picker's type-ahead and the location disclosure under it (app repo
-   `src/web/geo-picker.ts`, 2026-08-23). The search field is deliberately a
-   `.geo-select` — same box, same type as the control it filters — and needs no
-   rule of its own; `.geo-block` is the wrapper that lets the note sit UNDER the
-   fields' flex line instead of inside it. What is left is the disclosure
-   toggle: every other <details> on this site names its own cursor
-   (`.resolver-archive > summary`, style.css `details.blurbs summary`), and the
-   open panel needs air under the word it came from. The summary's TYPE is
-   `.acct-note`'s, set in the markup — quieter than the sentence above it, which
-   is the point of a "more". */
 .geo-more summary { cursor: pointer; }
 .geo-more[open] summary { margin-bottom: 0.35rem; }
 
-/* Owner sizing pass, 2026-08-23 evening: "a bit more space between the
-   dropdown and the start of the text, and the font can be a touch smaller —
-   that also applies to the saved text." The whole note stack under the
-   controls — disclosure, its More layer, and the save status — steps down
-   together so the block reads as one quiet footer rather than three sizes. */
 .geo-disclosure { margin-top: 1.1rem; }
 .geo-disclosure,
 .geo-status,
 .geo-more summary,
 .geo-more p { font-size: 0.8rem; }
 
-/* Deleting an account is irreversible, so its card is marked - and its confirm
-   button is the only red thing on the page. */
 .acct-delete { border-color: color-mix(in srgb, var(--red) 35%, var(--line)); }
 .btn-provider.is-danger { border-color: var(--red); color: var(--red); }
 .btn-provider.is-danger:hover:not([disabled]) {
   background: color-mix(in srgb, var(--red) 7%, var(--card));
 }
 
-/* --------------------------------------------------------------------------
-   6. The feed bar — search, the legislature selector, the display controls
-      (SEARCH-JOB-SPEC-2026-08-20 §6-§8; drawn from the owner-reviewed mock)
-
-   ONE bar, and it STICKS. A searched or filtered feed that looks like the
-   plain feed is a lie by omission, so the query and the filtered-state strip
-   stay on screen while the reader scrolls. The site header deliberately does
-   not stick with it: one band of fixed chrome, never two.
-
-   No breakpoint decides the layout — `flex-wrap` plus `flex: 1 1 19rem` on the
-   search does. Wide enough and it is one line; narrow and the search drops
-   below the selector on its own. The ONE media query below is not a layout
-   breakpoint but a change of KIND: on a phone the selector becomes a chip row
-   that scrolls away and only the search line sticks, and the panel becomes the
-   bottom sheet the app already uses.
-
-   Everything here is `bt-` prefixed so it cannot collide with style.css or
-   with the card rules above. The one exception is `.card-hit`, which IS part
-   of a card.
-   -------------------------------------------------------------------------- */
-
-/* The page's accent, per legislature — the same content law the card obeys
-   ("the theme is the building, posts are the residents"): the CHROME of a feed
-   page wears the legislature's colour, and the cards inside it keep their own. */
 .feed-page[data-polity="us"] {
   --accent: var(--navy);
   --accent-soft: rgba(10, 49, 97, 0.10);
@@ -1766,8 +1243,7 @@ span.bt-tex { cursor: default; }
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
-  /* Bleeds into the page's own 1rem gutters so the bar reads as a band rather
-     than as a floating box, and so nothing scrolls through its edges. */
+
   margin: 1.25rem -1rem 0;
   padding: 0.5rem 1rem 0.55rem;
   background: var(--paper);
@@ -1782,11 +1258,6 @@ span.bt-tex { cursor: default; }
   min-width: 0;
 }
 
-/* --- the legislature selector -------------------------------------------- */
-
-/* Plain links in a pill row: switching legislature is NAVIGATION, so it works
-   without JavaScript, it is linkable, the back button is right, and it stores
-   nothing (spec §7). */
 .bt-seg {
   display: flex;
   gap: 2px;
@@ -1814,12 +1285,9 @@ span.bt-tex { cursor: default; }
   box-shadow: 0 1px 2px rgba(10, 49, 97, 0.12);
 }
 
-/* Past four legislatures the same slot is a button and a menu (spec §7). */
 .bt-picker { position: relative; flex: none; }
 .bt-picker-btn { font-weight: 700; }
-/* The picker's own menu hangs off the picker button, not off the whole bar —
-   restated after the shared rule above, which would otherwise stretch it across
-   the bar's full width. */
+
 .bt-menu { position: absolute; top: calc(100% + 0.4rem); left: 0; right: auto; z-index: 25; min-width: 20rem; }
 .bt-menu[hidden] { display: none; }
 .bt-menu .bt-search { margin-bottom: 0.6rem; }
@@ -1835,8 +1303,6 @@ span.bt-tex { cursor: default; }
 .bt-menu-list a:hover { background: var(--wash); color: var(--navy-ink); }
 .bt-menu-list a[aria-current="page"] { color: var(--navy-ink); font-weight: 700; }
 .bt-menu-list a[hidden] { display: none; }
-
-/* --- the search field ----------------------------------------------------- */
 
 .bt-search {
   display: flex;
@@ -1862,13 +1328,7 @@ span.bt-tex { cursor: default; }
   color: var(--ink);
 }
 .bt-search input::placeholder { color: var(--ink-faint-aa); }
-/* THE RING MOVES TO THE BOX, IT IS NOT REMOVED. The old two-pane search killed
-   the focus outline outright (`outlineStyle: 'none'`) and put nothing back, so
-   a keyboard reader could not tell whether they were in the field. Here the
-   input's own outline goes and the WRAPPER draws the ring instead — a border
-   in the page's accent plus a 3px soft halo, which is the whole control rather
-   than a rectangle inside it. Remove one of these two lines and the other is a
-   defect (WCAG 2.2 SC 2.4.7). */
+
 .bt-search input:focus { outline: none; }
 .bt-search.is-focus {
   border-color: var(--accent);
@@ -1885,8 +1345,6 @@ span.bt-tex { cursor: default; }
 }
 .bt-clear[hidden] { display: none; }
 .bt-clear .glyph { width: 15px; height: 15px; }
-
-/* --- the Display button --------------------------------------------------- */
 
 .bt-disp {
   display: flex;
@@ -1907,20 +1365,10 @@ span.bt-tex { cursor: default; }
 .bt-disp .glyph { width: 17px; height: 17px; }
 .bt-disp .glyph-sm { width: 14px; height: 14px; }
 .bt-disp[aria-expanded="true"] { background: var(--wash); border-color: var(--accent); }
-/* The state dot is a SIGNAL, never the message: the button's accessible name
-   carries the count in words, because a colour is not a sentence. */
+
 .bt-dot { width: 7px; height: 7px; border-radius: 99px; background: var(--accent-hair); flex: none; }
 .bt-dot[hidden] { display: none; }
 
-/* --- what drops out of the bar -------------------------------------------- */
-
-/* ⚠️ BOTH OF THESE HANG OFF THE BAR, NOT OFF THE PAGE. The bar is sticky, so a
-   panel in the page's flow sits where the page was when it was drawn — open
-   Display after scrolling a screen and the button expands onto nothing. They
-   are absolutely positioned inside `.bt-barwrap` (which is `position: sticky`
-   and therefore their containing block), so they follow the bar. `left`/`right`
-   are the bar's own gutter, undoing its bleed so the panel lines up with the
-   column rather than with the bleed. */
 .bt-drop,
 .bt-panel {
   position: absolute;
@@ -1930,7 +1378,6 @@ span.bt-tex { cursor: default; }
   z-index: 1;
 }
 
-/* The resting hint: what the box searches, shown on focus with an empty field. */
 .bt-drop {
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -1958,10 +1405,6 @@ span.bt-tex { cursor: default; }
 }
 .bt-count[hidden] { display: none; }
 
-/* The standing "you are looking at a filtered feed" strip. It is a flex child
-   of the sticky bar with a full-width basis, so it takes a line of its own
-   inside the band and travels with it — see the sticky note at the top of this
-   section. The band is one line taller only while something is hidden. */
 .bt-filtered {
   flex: 1 0 100%;
   display: flex;
@@ -1990,7 +1433,6 @@ span.bt-tex { cursor: default; }
   cursor: pointer;
 }
 
-/* The D25 transposition — the other feeds' matches, with a way to them. */
 .bt-elsewhere {
   font-family: var(--sans);
   font-size: 0.86rem;
@@ -2007,62 +1449,6 @@ span.bt-tex { cursor: default; }
 .bt-elsewhere p + p { margin-top: 0.35rem; }
 .bt-elsewhere a { font-weight: 600; }
 
-/* --- the display panel ---------------------------------------------------- */
-
-/* THE PAGE IS HELD STILL ONLY WHERE THE PANEL IS A SHEET (owner rulings:
-   locked everywhere 2026-08-20 morning, REVERTED for desktop the same evening
-   — "revert to how it originally was"). `dom.ts` `lockScroll` still writes
-   `html.bt-locked` from the one chokepoint every close path runs through; the
-   class is a STATE, and this stylesheet decides what it costs per surface:
-
-   * On a PHONE the panel is a bottom sheet with a scrim, and a sheet whose
-     page scrolls behind it is a broken sheet — the cap lives in the phone
-     media query at the end of this file.
-   * On a DESKTOP the panel is a dropdown and the class costs NOTHING: the
-     page scrolls freely, as it originally did. (The owner's fuller clamp spec
-     — scroll to the panel's bottom + a buffer, then stop — sits in the paused
-     stash, undiscussed; if it lands it replaces this paragraph.)
-
-   ⚠️ BOUGHT KNOWLEDGE, KEPT FOR THE DAY A DESKTOP CAP RETURNS. The cap goes on
-   <html> ONLY — measured live, 2026-08-20, at 1280×720 with the bar stuck:
-
-     html + body hidden → the bar's rect top is -609px. UNSTUCK.
-     html hidden        → 0px. sticky holds.
-     body hidden        → 0px. sticky holds.
-
-   Overflow PROPAGATION explains it: the viewport takes its overflow from
-   <html>, falling back to <body> only when <html> is `visible`; cap both and
-   <body> becomes the scroll container, the sticky bar's scrollport is then the
-   body box, and the bar (panel with it) drops off the top of the screen. The
-   `position: fixed` body pattern is refused for the same reason (`dom.ts`).
-   And a DESKTOP cap must pay the scrollbar gutter back (`--bt-scrollbar`,
-   still measured by `dom.ts`) or the centred column jumps ~15px sideways at
-   open — the payment rule left with the desktop cap and returns with it. A
-   phone has no classic scrollbar, so the sheet cap below pays nothing.
-
-   ⚠️ ON /us AND /eu THE DEBT IS PAID AT THE ROOT NOW, AND THE LAST SENTENCE
-   WAS HALF TRUE (2026-08-25). `style.css` gained
-   `html:has(main.feed-page) { scrollbar-gutter: stable }` — for the refresh
-   flicker, not for this — and a stable gutter stays reserved under
-   `overflow: hidden`, which is what the cap below is. Measured that day at 1280
-   with a classic scrollbar: capping <html> took the centred column 312.4 → 320
-   without the rule and 312.4 → 312.4 with it; and at 410px, with the real
-   Display panel driven open, `main.feed-page` went 395.2 → 410.4 without and
-   395.2 → 395.2 with. So on the feed pages a desktop cap would arrive with its
-   payment already made, by CSS rather than by a measured custom property.
-
-   The half that was wrong: "a phone has no classic scrollbar" is a fact about a
-   DEVICE, and the cap below lives in a WIDTH query (≤47.9375rem). A desktop
-   window dragged narrower than that has a classic scrollbar and did jump when
-   the sheet opened — no `padding-right: var(--bt-scrollbar)` rule has ever
-   existed in this file to pay it. That is now closed on the feed pages and
-   nowhere else, because the root rule is deliberately scoped: reserving a
-   gutter on a page that does not overflow leaves the full-bleed header 15px
-   short of the window with paper showing through, which an adversarial pass
-   caught on /auth/callback, /404 and /account. Nothing here is removed:
-   `--bt-scrollbar` is still published by `dom.ts` and is still what a desktop
-   cap would use on the pages the root rule does not reach. */
-
 .bt-backdrop { display: none; }
 
 .bt-panel {
@@ -2072,16 +1458,7 @@ span.bt-tex { cursor: default; }
   box-shadow: 0 8px 28px rgba(10, 49, 97, 0.12);
   padding: 0.9rem 1.1rem 1rem;
   margin: 0.5rem 0 0;
-  /* NO max-height AND NO INTERNAL SCROLL ON DESKTOP — the panel's own
-     scrollbar arrived WITH the page lock (a held page could not scroll to
-     reveal a tall panel) and left with it (owner, 2026-08-20 night: "desktop
-     did not used to have that scroll bar"). With the page scrolling freely
-     again, a tall panel is revealed the original way: by scrolling the page.
-     The phone's SHEET still carries its own overflow in the media query below
-     — a sheet is viewport-anchored and has no page scroll to lean on. The
-     `--bt-panel-max` measurement in feed-page.ts is currently UNCONSUMED;
-     it stays because the stashed clamp spec (held page, no panel scrollbar —
-     the owner's own design) would need it back. */
+
 }
 .bt-panel[hidden] { display: none; }
 .bt-panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
@@ -2152,9 +1529,7 @@ span.bt-tex { cursor: default; }
   margin-top: 1px;
   max-width: none;
 }
-/* The app's own `rowSuperseded` grammar: a control whose answer is currently
-   being decided by something else is dimmed rather than hidden, so the reader
-   can see what it would do. */
+
 .bt-row.is-superseded { opacity: 0.45; }
 .bt-row.is-disabled .bt-row-label { color: var(--ink-faint-aa); }
 .bt-note {
@@ -2177,9 +1552,6 @@ span.bt-tex { cursor: default; }
   max-width: none;
 }
 
-/* A real checkbox, painted as the app's BrandSwitch: it keeps the keyboard
-   behaviour, the role and the checked state a switch drawn out of <div>s would
-   have to reinvent badly. */
 .bt-sw {
   appearance: none;
   -webkit-appearance: none;
@@ -2209,7 +1581,6 @@ span.bt-tex { cursor: default; }
 .bt-sw:checked::after { left: 21px; }
 .bt-sw:disabled { opacity: 0.5; cursor: default; }
 
-/* The docket keywords: the reader's own words, in this browser. */
 .bt-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 0.6rem; }
 .bt-chip {
   display: inline-flex;
@@ -2258,10 +1629,6 @@ span.bt-tex { cursor: default; }
 }
 .bt-add .glyph { width: 16px; height: 16px; stroke-width: 2.4; }
 
-/* --- results: the tier dividers and the highlight ------------------------- */
-
-/* Drawn only when more than one group has hits — with one group there is
-   nothing to explain, and a divider would be noise. */
 .bt-tier {
   font-family: var(--sans);
   font-size: 0.66rem;
@@ -2278,10 +1645,6 @@ span.bt-tex { cursor: default; }
 .bt-tier::after { content: ""; flex: 1; height: 1px; background: var(--line-soft); }
 .bt-tier:first-child { margin-top: 0; }
 
-/* A GOLD TINT AND NOTHING ELSE. The record's words are never re-weighted or
-   re-coloured to show a match — a highlight says "this is why it is here", not
-   "this part matters more". Not `.card.is-highlighted`, which is the deep-link
-   class and means something entirely different. */
 mark.bt-hit {
   background: rgba(255, 204, 0, 0.45);
   color: inherit;
@@ -2291,16 +1654,6 @@ mark.bt-hit {
   -webkit-box-decoration-break: clone;
 }
 
-/* THE DISCLOSURE ROW (spec §4) — and the two selectors below are the whole of
-   its logic. It is the immediate next sibling of `.card-body`, so:
-     - a body the browser did NOT have to clip carries no `data-clipped`, and a
-       bodyLines match is therefore already on screen: the row collapses;
-     - an OPEN card shows its summary and its whole body, so the row collapses
-       there too.
-   What is left is exactly the case the row exists for: a match the reader
-   cannot see, on a card that looks like a false positive without it. No
-   JavaScript decides any of this — the one thing only a browser knows (did
-   this body overflow?) is already written on the element by `dom.ts`. */
 .card-hit {
   font-family: var(--sans);
   font-size: 12.5px;
@@ -2315,23 +1668,8 @@ mark.bt-hit {
 .card-body:not([data-clipped="1"]) + .card-hit[data-field="bodyLines"] { display: none; }
 .card.is-open .card-hit { display: none; }
 
-/* --- the phone ------------------------------------------------------------ */
-
-/* NOT A LAYOUT BREAKPOINT — a change of kind. On a phone two bands of sticky
-   chrome would eat the screen, so the selector becomes a chip row that scrolls
-   away with the page and only the search line stays. */
 @media (max-width: 47.9375rem) {
-  /* ⚠️ THE WRAP STAYS THE STICKY ELEMENT, PULLED UP BY THE CHIP ROW'S HEIGHT.
-     The obvious version — leave the wrap static and stick `.bt-bar` inside it —
-     does not work and looks like it does: a sticky element can only travel
-     inside its own PARENT's box, and the wrap's box ends a few pixels below the
-     bar, so the whole thing scrolled away on the first real phone test
-     (2026-08-20). Sticking the wrap with a NEGATIVE top of exactly the chip
-     row's height parks the chip row above the viewport and lands the search
-     line at 0, which is the spec's phone rule: the selector scrolls away, only
-     the search sticks. `min-height` rather than `height` so the failure is
-     graceful — a chip row that grows leaves a sliver of itself visible instead
-     of clipping. */
+
   .bt-barwrap {
     --bt-chiprow-h: 2.4rem;
     top: calc(-1 * var(--bt-chiprow-h));
@@ -2373,9 +1711,6 @@ mark.bt-hit {
   .bt-picker { width: 100%; }
   .bt-menu { min-width: 0; right: 0; }
 
-  /* The panel becomes the app's bottom sheet. The backdrop is a real element
-     rather than a pseudo one so that tapping it closes the sheet — a scrim you
-     cannot dismiss by tapping is a scrim that reads as a broken modal. */
   .bt-backdrop {
     display: block;
     position: fixed;
@@ -2389,22 +1724,16 @@ mark.bt-hit {
     inset: auto 0 0 0;
     z-index: 41;
     margin: 0;
-    /* A sheet is anchored to the VIEWPORT, not to the bar, so it keeps its own
-       height rather than the measured `--bt-panel-max` the dropdown uses. This
-       rule sits after the base one and wins. */
+
     max-height: 82vh;
     overflow-y: auto;
-    /* A flick that runs out of sheet must not carry on into the locked page
-       behind it — the one way it could still appear to move. */
+
     overscroll-behavior: contain;
     border: 0;
     border-radius: 14px 14px 0 0;
     box-shadow: 0 -6px 24px rgba(10, 49, 97, 0.18);
     padding: 1rem 1.1rem calc(1.2rem + env(safe-area-inset-bottom));
   }
-  /* The sheet holds the page still — a sheet whose page scrolls behind its
-     scrim is a broken sheet. PHONE-ONLY since the owner's desktop revert
-     (2026-08-20 evening); the why-html-only measurements live at the class's
-     main comment in the display-panel section. */
+
   html.bt-locked { overflow: hidden; }
 }
