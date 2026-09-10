@@ -637,6 +637,15 @@ button[disabled],
   .vote-chips { justify-content: flex-start; }
 }
 
+.card-posted {
+  font-family: var(--sans);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--ink-faint-aa);
+  margin: 6px 0 0;
+  max-width: none;
+}
+
 .account-page,
 #bt-callback,
 #bt-resolver {
