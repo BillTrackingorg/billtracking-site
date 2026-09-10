@@ -762,32 +762,69 @@ button[disabled],
 .acct-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .acct-links a { font-size: 0.94rem; color: var(--navy); }
 
+.bt-notif { --bt-col: 72px; }
+
 .bt-notif .bt-tree { margin-top: 0.7rem; }
 
 .bt-notif .bt-tree + .bt-row-cap { margin-top: 0.9rem; }
 
-.bt-notif[data-polity="us"] { --accent: var(--navy); }
-.bt-notif[data-polity="eu"] { --accent: var(--royal); }
+.bt-notif[data-polity="us"] {
+  --accent: var(--navy);
+  --accent-wash: var(--wash);
+  --accent-chip-border: #C7D8EC;
+  --accent-chip-text: var(--navy-ink);
+}
+.bt-notif[data-polity="eu"] {
+  --accent: var(--royal);
+  --accent-wash: var(--wash-eu);
+  --accent-chip-border: #C3CFEE;
+  --accent-chip-text: var(--royal-deep);
+}
 
-.bt-tseg { margin: 0 0 0.2rem; }
+.bt-tseg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
 .bt-tseg button {
+  flex: none;
   font-family: var(--sans);
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--ink-soft);
-  background: none;
-  border: 0;
-  cursor: pointer;
-  padding: 0.36rem 0.78rem;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-faint-aa);
+  background: var(--card);
+  border: 1px solid var(--line);
   border-radius: 999px;
+  cursor: pointer;
+  padding: 6px 14px;
   line-height: 1.25;
 }
 .bt-tseg button:hover { color: var(--navy-ink); }
 .bt-tseg button[aria-selected="true"] {
-  background: var(--card);
-  color: var(--accent);
-  box-shadow: 0 1px 2px rgba(10, 49, 97, 0.12);
+  background: var(--accent-wash);
+  border-color: var(--accent-chip-border);
+  color: var(--accent-chip-text);
+}
+
+.bt-thead {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  padding-bottom: 6px;
+}
+.bt-thgap { flex: 1 1 auto; min-width: 0; }
+.bt-thcol {
+  flex: none;
+  width: var(--bt-col);
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ink-faint-aa);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .bt-notif .bt-tsolo {
@@ -810,7 +847,9 @@ button[disabled],
   margin-top: 2px;
   padding-top: 9px;
 }
-.bt-tree > .bt-trow:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+
+.bt-tree > .bt-trow:first-child,
+.bt-tree > .bt-thead + .bt-trow { border-top: 0; margin-top: 0; padding-top: 0; }
 
 .bt-tline {
   display: flex;
@@ -854,6 +893,14 @@ span.bt-tex { cursor: default; }
   margin: 1px 0 0;
   margin-left: calc(var(--bt-indent) + 24px + 6px);
   max-width: none;
+}
+
+.bt-tcell {
+  flex: none;
+  width: var(--bt-col);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bt-tbox {
