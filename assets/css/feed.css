@@ -46,7 +46,8 @@ button[disabled],
 #bt-callback :focus-visible,
 #bt-resolver :focus-visible { outline-color: var(--navy); }
 
-.sr-only {
+.sr-only,
+.card-fix-toggle {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -383,6 +384,17 @@ button[disabled],
 .card-action-label.is-corrected,
 .card-action-tally.is-corrected { color: var(--accent); }
 
+.card-was { display: none; color: var(--ink-faint-aa); }
+.card-was s { text-decoration: line-through; }
+.card-fix-toggle:checked ~ * .card-was { display: inline; }
+.card-fix-toggle:checked ~ .card-anchored .card-correction { display: block; }
+
+.pill-correction[for] { cursor: pointer; }
+.card-fix-toggle:focus-visible ~ .card-head .pill-correction {
+  outline: 3px solid var(--navy);
+  outline-offset: 2px;
+}
+
 .glyph-wrap { position: relative; display: inline-block; vertical-align: -4px; }
 .glyph-wrap.has-badge { padding-right: 5px; }
 .glyph-wrap .glyph { vertical-align: top; }
@@ -463,6 +475,7 @@ button[disabled],
 .lead { font-weight: 600; }
 
 .card-correction {
+  display: none;
   font-family: var(--sans);
   font-size: 11px;
   line-height: 16px;
