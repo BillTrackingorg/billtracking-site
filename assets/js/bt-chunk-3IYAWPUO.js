@@ -1,0 +1,1 @@
+import{c as r}from"./bt-chunk-Y43YLNGG.js";async function u(){let{data:e,error:s}=await r().auth.getSession();if(s)return{ok:!1,message:s.message};let t=e.session?.user.id;return t?{ok:!0,userId:t}:{ok:!1,needsAuth:!0}}function n(e){return e.needsAuth?{ok:!1,needsAuth:!0}:{ok:!1,message:e.message}}export{u as a,n as b};
