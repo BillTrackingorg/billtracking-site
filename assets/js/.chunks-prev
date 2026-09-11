@@ -2,6 +2,28 @@
   "note": "The two most recent bt-core build generations copied into this repo, newest first. site-build/core/copy-to-site.mjs (app repo) writes it and reads generations[0] to decide which chunks a browser holding the PREVIOUS bt-web.js still needs. Deleting this file costs one generation of grace, nothing else.",
   "generations": [
     {
+      "appSha": "0fd3b02acb60",
+      "schemaV": 1,
+      "builtAt": "2026-09-11T10:08:59.942Z",
+      "copiedAt": "2026-09-11T10:09:02.982Z",
+      "files": [
+        "bt-account-WBVOFFON.js",
+        "bt-account-settings-Z4DNLHYB.js",
+        "bt-auth-core-OFS5LCFA.js",
+        "bt-callback-NIYJGGAD.js",
+        "bt-chunk-5LXA6SBF.js",
+        "bt-chunk-A22NLXPZ.js",
+        "bt-chunk-CYYAKOKF.js",
+        "bt-chunk-D5PXHZOT.js",
+        "bt-chunk-WMUN5RP3.js",
+        "bt-follows-3J2PYYMG.js",
+        "bt-supabase-core-PQ54FRM7.js",
+        "bt-voter-BEKRGMRN.js",
+        "bt-votes-C2RYASIT.js",
+        "bt-web.js"
+      ]
+    },
+    {
       "appSha": "fb1d1f6be244",
       "schemaV": 1,
       "builtAt": "2026-09-11T08:52:18.423Z",
@@ -20,28 +42,6 @@
         "bt-supabase-core-NAO7PJLD.js",
         "bt-voter-NSBAUPED.js",
         "bt-votes-DFBDWGWM.js",
-        "bt-web.js"
-      ]
-    },
-    {
-      "appSha": "46d6de6516f4",
-      "schemaV": 1,
-      "builtAt": "2026-09-10T22:10:56.467Z",
-      "copiedAt": "2026-09-10T22:10:58.429Z",
-      "files": [
-        "bt-account-V3EXJOVQ.js",
-        "bt-account-settings-ODF3BITA.js",
-        "bt-auth-core-CQLBOUBU.js",
-        "bt-callback-RG54DHZ3.js",
-        "bt-chunk-5CU7ME7A.js",
-        "bt-chunk-E5ORE4I2.js",
-        "bt-chunk-TDPHOQL3.js",
-        "bt-chunk-VZHBN4X5.js",
-        "bt-chunk-XZNZLVLM.js",
-        "bt-follows-M4VR2IHL.js",
-        "bt-supabase-core-6AXYRAVT.js",
-        "bt-voter-LDRNK5YT.js",
-        "bt-votes-MA7OHSLW.js",
         "bt-web.js"
       ]
     }
