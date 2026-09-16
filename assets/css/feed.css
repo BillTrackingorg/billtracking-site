@@ -912,7 +912,8 @@ span.bt-tex { cursor: default; }
   font-size: 11.5px;
   line-height: 16px;
   color: var(--ink-faint-aa);
-  margin: 1px 0 0;
+
+  margin: 4px 0 0;
   margin-left: calc(var(--bt-indent) + 24px + 6px);
   max-width: none;
 }
