@@ -49,6 +49,10 @@
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
     .row-tally { font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+    /* Its own line beneath the step, quieter than the label: this is a note
+       about EVIDENCE, not about what happened, so it must not compete with
+       the step itself. */
+    .row-source-note { display: block; font-size: .85em; color: var(--ink-soft); }
     .row-note { color: var(--ink-soft); font-style: italic; }
     .row-text { font-size: .96rem; color: var(--ink-soft); line-height: 1.55; }
     .row-corrected { display: block; font-family: var(--sans); font-size: .82rem;

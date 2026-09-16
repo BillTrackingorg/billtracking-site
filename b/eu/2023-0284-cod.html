@@ -49,6 +49,10 @@
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
     .row-tally { font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+    /* Its own line beneath the step, quieter than the label: this is a note
+       about EVIDENCE, not about what happened, so it must not compete with
+       the step itself. */
+    .row-source-note { display: block; font-size: .85em; color: var(--ink-soft); }
     .row-note { color: var(--ink-soft); font-style: italic; }
     .row-text { font-size: .96rem; color: var(--ink-soft); line-height: 1.55; }
     .row-corrected { display: block; font-family: var(--sans); font-size: .82rem;
@@ -183,9 +187,9 @@
   <p class="bill-asof">Record as of 24 July 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
   <li class="spine" data-key="eu-20230284cod-20260724235214-6bc96485" data-kind="post"><span class="row-date">24 July 2026</span> <span class="row-label"><a href="/p/eu-20260724-1d286686"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-scroll"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Published in the Official Journal</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>It&#39;s law. It enters into force on the date it specifies or, if none, the 20th day after publication in the Official Journal.</p></li>
-  <li class="spine" data-key="rec-2023/0284(COD)-16" data-kind="record"><span class="row-date">8 July 2026</span> <span class="row-label">Signed — publication next</span></li>
-  <li class="spine" data-key="rec-2023/0284(COD)-15" data-kind="record"><span class="row-date">29 June 2026</span> <span class="row-label">Adopted — Council gave the final green light</span></li>
-  <li class="spine" data-key="rec-2023/0284(COD)-12" data-kind="record"><span class="row-date">18 June 2026</span> <span class="row-label">Parliament adopted its 1st-reading position</span>
+  <li class="spine" data-key="rec-2023/0284(COD)-16" data-kind="record"><span class="row-date">8 July 2026</span> <span class="row-label">Signed by the European Parliament and the Council</span></li>
+  <li class="spine" data-key="rec-2023/0284(COD)-15" data-kind="record"><span class="row-date">29 June 2026</span> <span class="row-label">Adopted — Council gave the final green light<span class="row-source-note">Verified by one of two sources</span></span></li>
+  <li class="spine" data-key="rec-2023/0284(COD)-12" data-kind="record"><span class="row-date">18 June 2026</span> <span class="row-label">Parliament adopted its 1st-reading position <span class="row-tally">(437-112, 20 abstentions)</span></span>
     <details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2023/0284(COD)-14" data-kind="record"><span class="row-date">18 June 2026</span> <span class="row-label">Debate in Parliament</span></li>
