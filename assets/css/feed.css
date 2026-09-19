@@ -792,13 +792,15 @@ button[disabled],
 
 .bt-notif .bt-tree + .bt-row-cap { margin-top: 0.9rem; }
 
-.bt-notif[data-polity="us"] {
+.bt-notif[data-polity="us"],
+.bt-shown[data-polity="us"] {
   --accent: var(--navy);
   --accent-wash: var(--wash);
   --accent-chip-border: #C7D8EC;
   --accent-chip-text: var(--navy-ink);
 }
-.bt-notif[data-polity="eu"] {
+.bt-notif[data-polity="eu"],
+.bt-shown[data-polity="eu"] {
   --accent: var(--royal);
   --accent-wash: var(--wash-eu);
   --accent-chip-border: #C3CFEE;
@@ -851,7 +853,8 @@ button[disabled],
   text-overflow: ellipsis;
 }
 
-.bt-notif .bt-tsolo {
+.bt-notif .bt-tsolo,
+.bt-shown .bt-tsolo {
   font-family: var(--sans);
   font-size: 12.5px;
   font-weight: 700;
