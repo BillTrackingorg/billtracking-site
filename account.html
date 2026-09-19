@@ -187,9 +187,9 @@
          signed-out and no-JS readers the Privacy, Terms and Delete-account doors are in
          every page's FOOTER, which is the floor, so no honesty is lost.
 
-         #bt-settings-groups ships EMPTY and hidden. The switch states live in this
-         browser's storage, which no static page can know, so the runtime fills the groups
-         at mount — inside the hidden region, cheap, ready the moment the region shows —
+         #bt-settings-groups ships EMPTY and hidden. The switch states are saved to the
+         signed-in account, which no static page can know, so the runtime fills the groups
+         once the account has answered — inside the region that only a session shows —
          and unhides them: no reader ever meets a dead control. The heading and the
          Privacy card are static; links are links. -->
     <section class="acct-settings" aria-labelledby="bt-settings-head">
