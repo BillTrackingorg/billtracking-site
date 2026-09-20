@@ -120,8 +120,8 @@
            complete list, so leaving this at two left the site contradicting its own privacy
            page. The app's You tab carries the same sentence and moved with this one. -->
       <p>An account does three things: it makes sure your vote(s) count once, it
-      keeps track of the bills you follow, and it keeps your legislature choices
-      and notification settings the same on every device you sign in on. Reading
+      keeps track of the bills you follow and your docket keywords, and it keeps
+      your settings the same on every device you sign in on. Reading
       doesn't require an account.</p>
     </div>
   </section>
@@ -130,6 +130,9 @@
   <section class="acct-region" id="bt-acct-signed-in" hidden>
 
     <div class="acct-card">
+      <!-- The app's profile card carries the same mark: the glyph kit's "user", inlined
+           because this page carries no sprite. -->
+      <div class="acct-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg></div>
       <p class="acct-label">Signed in as</p>
       <p class="acct-value" id="bt-acct-email"></p>
       <p class="acct-note" id="bt-acct-email-note">If you signed in with Apple and
@@ -197,7 +200,7 @@
       <div id="bt-settings-groups" hidden></div>
       <h3 class="acct-eyebrow">Privacy</h3>
       <div class="acct-card">
-        <!-- The app's Settings ends with Privacy too. This card is the doors, never a second
+        <!-- This card is the doors, never a second
              copy of /privacy's words. Link labels are the footer Legal column's, so the site
              keeps one name per page. -->
         <ul class="acct-links">

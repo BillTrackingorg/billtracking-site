@@ -715,6 +715,19 @@ button[disabled],
 
 .acct-value { font-size: 0.98rem; color: var(--ink); margin: 0; word-break: break-word; }
 
+.acct-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--wash);
+  border: 1.5px solid var(--navy);
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 10px;
+}
+
 .acct-buttons { display: flex; flex-direction: column; gap: 0.65rem; margin-top: 0.9rem; }
 
 .btn-provider {
