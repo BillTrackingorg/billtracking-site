@@ -725,7 +725,8 @@ button[disabled],
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 0 10px;
+
+  margin: 0 auto 10px;
 }
 
 .acct-buttons { display: flex; flex-direction: column; gap: 0.65rem; margin-top: 0.9rem; }
