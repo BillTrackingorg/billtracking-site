@@ -2,6 +2,31 @@
   "note": "The two most recent bt-core build generations copied into this repo, newest first. site-build/core/copy-to-site.mjs (app repo) writes it and reads generations[0] to decide which chunks a browser holding the PREVIOUS bt-web.js still needs. Deleting this file costs one generation of grace, nothing else.",
   "generations": [
     {
+      "appSha": "f4f389d2c9d2",
+      "schemaV": 1,
+      "builtAt": "2026-09-20T06:30:47.947Z",
+      "copiedAt": "2026-09-20T06:33:54.526Z",
+      "files": [
+        "bt-account-WCLZ24OM.js",
+        "bt-account-prefs-SKF7XQ2X.js",
+        "bt-account-settings-FHYU5YQV.js",
+        "bt-auth-core-XFZO2XZL.js",
+        "bt-callback-MIFL73PW.js",
+        "bt-chunk-4F3R75OO.js",
+        "bt-chunk-6ZWEMJNZ.js",
+        "bt-chunk-DWN43W3F.js",
+        "bt-chunk-GKERGYGF.js",
+        "bt-chunk-H5W4H6MQ.js",
+        "bt-chunk-XPDXUV3M.js",
+        "bt-chunk-ZVFUTS5I.js",
+        "bt-follows-FQ627WFQ.js",
+        "bt-supabase-core-BATAF37C.js",
+        "bt-voter-LCXTQ3RJ.js",
+        "bt-votes-3JCIUCUN.js",
+        "bt-web.js"
+      ]
+    },
+    {
       "appSha": "7e669ab4cdca",
       "schemaV": 1,
       "builtAt": "2026-09-20T00:51:05.765Z",
@@ -22,28 +47,6 @@
         "bt-supabase-core-WFUT7M4E.js",
         "bt-voter-6WY7XLYI.js",
         "bt-votes-6L2BT4TY.js",
-        "bt-web.js"
-      ]
-    },
-    {
-      "appSha": "9080551f79e9",
-      "schemaV": 1,
-      "builtAt": "2026-09-16T23:55:57.894Z",
-      "copiedAt": "2026-09-17T00:07:14.603Z",
-      "files": [
-        "bt-account-FWRAYIW6.js",
-        "bt-account-settings-AMYFL24R.js",
-        "bt-auth-core-5ZN5SGW7.js",
-        "bt-callback-YETBU4O6.js",
-        "bt-chunk-4B2PGAQF.js",
-        "bt-chunk-5TIDVYHG.js",
-        "bt-chunk-BPV6DVL4.js",
-        "bt-chunk-IROXTPAO.js",
-        "bt-chunk-KQK6X3AX.js",
-        "bt-follows-M7ZRCWPI.js",
-        "bt-supabase-core-ARR6RFYA.js",
-        "bt-voter-P4UWYTAW.js",
-        "bt-votes-7ID77FNE.js",
         "bt-web.js"
       ]
     }
