@@ -2,6 +2,31 @@
   "note": "The two most recent bt-core build generations copied into this repo, newest first. site-build/core/copy-to-site.mjs (app repo) writes it and reads generations[0] to decide which chunks a browser holding the PREVIOUS bt-web.js still needs. Deleting this file costs one generation of grace, nothing else.",
   "generations": [
     {
+      "appSha": "03990cda3144",
+      "schemaV": 1,
+      "builtAt": "2026-09-29T17:06:01.550Z",
+      "copiedAt": "2026-09-29T17:06:25.473Z",
+      "files": [
+        "bt-account-2OICNMDI.js",
+        "bt-account-prefs-V2VZP6BZ.js",
+        "bt-account-settings-N6TFP5CD.js",
+        "bt-auth-core-L7SDAIOE.js",
+        "bt-callback-R2O3F7AO.js",
+        "bt-chunk-4UO4TURE.js",
+        "bt-chunk-C7A6UTP5.js",
+        "bt-chunk-H7QVK4NM.js",
+        "bt-chunk-LBCPPJ7X.js",
+        "bt-chunk-LHGY7RAN.js",
+        "bt-chunk-LVLAUQBE.js",
+        "bt-chunk-X56JWVZK.js",
+        "bt-follows-TO5WWWPD.js",
+        "bt-supabase-core-GCVBQPMW.js",
+        "bt-voter-CVXTAZ34.js",
+        "bt-votes-5TJHIAXX.js",
+        "bt-web.js"
+      ]
+    },
+    {
       "appSha": "8c881f7e3354",
       "schemaV": 1,
       "builtAt": "2026-09-27T22:16:35.896Z",
@@ -23,31 +48,6 @@
         "bt-supabase-core-SDEJ6UKI.js",
         "bt-voter-AWVCPBWH.js",
         "bt-votes-V3RQG4IV.js",
-        "bt-web.js"
-      ]
-    },
-    {
-      "appSha": "d439fb60d83d",
-      "schemaV": 1,
-      "builtAt": "2026-09-27T20:52:20.538Z",
-      "copiedAt": "2026-09-27T20:52:30.903Z",
-      "files": [
-        "bt-account-76TDWF7R.js",
-        "bt-account-prefs-EINCLDUZ.js",
-        "bt-account-settings-VKZTBMKR.js",
-        "bt-auth-core-S5HHJGCT.js",
-        "bt-callback-TKU3NGNZ.js",
-        "bt-chunk-2QZMCXUI.js",
-        "bt-chunk-73RLKP7G.js",
-        "bt-chunk-7CLDET7I.js",
-        "bt-chunk-BT4Q7PDB.js",
-        "bt-chunk-LBCPPJ7X.js",
-        "bt-chunk-LHGY7RAN.js",
-        "bt-chunk-NQZPG2MI.js",
-        "bt-follows-HQ2XZMQI.js",
-        "bt-supabase-core-6OGUX36B.js",
-        "bt-voter-PHAAZIDT.js",
-        "bt-votes-UNNU77MK.js",
         "bt-web.js"
       ]
     }

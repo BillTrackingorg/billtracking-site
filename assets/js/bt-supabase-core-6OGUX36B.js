@@ -1,1 +1,0 @@
-import{a as b,b as c,c as d}from"./bt-chunk-NQZPG2MI.js";import{e as a}from"./bt-chunk-2QZMCXUI.js";export{a as AUTH_STORAGE_KEY,b as createSupabaseClient,c as installSupabaseClient,d as supabaseClient};
