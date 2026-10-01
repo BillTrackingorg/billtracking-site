@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://billtracking.org/b/eu/2025-0059-cod</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-hr-9340</loc><lastmod>2026-09-30</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2026-0044-cod</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-hr-7008</loc><lastmod>2026-09-29</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-s-1055</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-hr-2400</loc><lastmod>2026-09-23</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-s-1514</loc><lastmod>2026-09-23</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-hr-7831</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-hr-837</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-s-2437</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-s-2498</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-s-2754</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-s-5249</loc><lastmod>2026-09-17</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-hr-9496</loc><lastmod>2026-09-16</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-hr-5235</loc><lastmod>2026-09-16</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-s-2273</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://billtracking.org/b/us/119-hr-1703</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2023-0441-cns</loc><lastmod>2026-09-30</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sres-926</loc><lastmod>2026-09-30</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sres-927</loc><lastmod>2026-09-30</lastmod></url>
@@ -9,7 +25,6 @@
   <url><loc>https://billtracking.org/b/us/119-s-195</loc><lastmod>2026-09-30</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2398</loc><lastmod>2026-09-30</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-766</loc><lastmod>2026-09-30</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-hr-9340</loc><lastmod>2026-09-30</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sjres-197</loc><lastmod>2026-09-30</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-3620</loc><lastmod>2026-09-30</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-5284</loc><lastmod>2026-09-30</lastmod></url>
@@ -30,10 +45,10 @@
   <url><loc>https://billtracking.org/b/us/119-hr-1550</loc><lastmod>2026-09-30</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-1744</loc><lastmod>2026-09-30</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-1945</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://billtracking.org/b/eu/2025-0258-cod</loc><lastmod>2026-10-01</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sres-914</loc><lastmod>2026-09-29</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sres-915</loc><lastmod>2026-09-29</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sres-916</loc><lastmod>2026-09-29</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-hr-7008</loc><lastmod>2026-09-29</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-239</loc><lastmod>2026-09-29</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-3923</loc><lastmod>2026-09-29</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-10167</loc><lastmod>2026-09-29</lastmod></url>
@@ -86,15 +101,12 @@
   <url><loc>https://billtracking.org/b/us/119-sres-895</loc><lastmod>2026-09-24</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sres-896</loc><lastmod>2026-09-24</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sres-897</loc><lastmod>2026-09-24</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-s-1055</loc><lastmod>2026-09-24</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-3313</loc><lastmod>2026-09-24</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2026-0085-cod</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0358-cod</loc><lastmod>2026-09-12</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sres-870</loc><lastmod>2026-09-23</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sres-871</loc><lastmod>2026-09-23</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-2302</loc><lastmod>2026-09-23</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-hr-2400</loc><lastmod>2026-09-23</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-s-1514</loc><lastmod>2026-09-23</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2735</loc><lastmod>2026-09-23</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-4429</loc><lastmod>2026-09-23</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9576</loc><lastmod>2026-09-17</lastmod></url>
@@ -127,19 +139,14 @@
   <url><loc>https://billtracking.org/b/us/119-hr-5254</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-5631</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-6365</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-hr-7831</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-hr-837</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-1257</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-1288</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-1321</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-1413</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2015</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2016</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-s-2437</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-s-2498</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2554</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2753</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-s-2754</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2767</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2801</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9497</loc><lastmod>2026-09-17</lastmod></url>
@@ -166,7 +173,6 @@
   <url><loc>https://billtracking.org/b/us/119-sres-861</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-5505</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-3135</loc><lastmod>2026-09-17</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-s-5249</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-307</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-32</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-7436</loc><lastmod>2026-09-17</lastmod></url>
@@ -190,7 +196,6 @@
   <url><loc>https://billtracking.org/b/us/119-hr-8278</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9332</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9339</loc><lastmod>2026-09-16</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-hr-9496</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9498</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9499</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9500</loc><lastmod>2026-09-16</lastmod></url>
@@ -281,7 +286,6 @@
   <url><loc>https://billtracking.org/b/us/119-hr-4662</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-4707</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-5058</loc><lastmod>2026-09-16</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-hr-5235</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-5773</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0052-cod</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-1431</loc><lastmod>2026-09-16</lastmod></url>
@@ -449,7 +453,6 @@
   <url><loc>https://billtracking.org/b/us/119-s-815</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-1981</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2102</loc><lastmod>2026-09-10</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-s-2273</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2546</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2787</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2881</loc><lastmod>2026-09-10</lastmod></url>
@@ -473,7 +476,6 @@
   <url><loc>https://billtracking.org/b/us/119-sres-810</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sres-809</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hres-1438</loc><lastmod>2026-09-10</lastmod></url>
-  <url><loc>https://billtracking.org/b/us/119-hr-1703</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-8790</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-3029</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0407-cod</loc><lastmod>2026-07-17</lastmod></url>
