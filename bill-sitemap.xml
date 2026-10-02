@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://billtracking.org/b/eu/2026-0294-cod</loc><lastmod>2026-10-01</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0223-cod</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://billtracking.org/b/eu/2025-0059-cod</loc><lastmod>2026-10-01</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2023-0131-cod</loc><lastmod>2026-09-28</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-2398</loc><lastmod>2026-10-01</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2026-0301-cod</loc><lastmod>2026-10-01</lastmod></url>
@@ -508,7 +509,6 @@
   <url><loc>https://billtracking.org/b/us/119-sjres-198</loc><lastmod>2026-07-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-629</loc><lastmod>2026-07-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sjres-185</loc><lastmod>2026-07-23</lastmod></url>
-  <url><loc>https://billtracking.org/b/eu/2025-0059-cod</loc><lastmod>2026-10-01</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0348-cns</loc><lastmod>2026-08-03</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0390-app</loc><lastmod>2026-07-17</lastmod></url>
 </urlset>
