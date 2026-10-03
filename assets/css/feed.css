@@ -604,7 +604,9 @@ button[disabled],
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
+
+  flex-wrap: nowrap;
+  flex: none;
   justify-content: flex-end;
 }
 
@@ -621,6 +623,7 @@ button[disabled],
   font-size: 12.5px;
   line-height: 1.5;
   color: var(--ink-soft);
+  white-space: nowrap;
 }
 .vote-chip[aria-pressed="true"] {
   border-color: var(--accent);
@@ -644,10 +647,32 @@ button[disabled],
 
 .vote-reason:empty { display: none; }
 
+.vote-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-left: auto;
+
+}
+.vote-stance {
+  margin: 0;
+  max-width: none;
+  font-family: var(--sans);
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+
+  white-space: nowrap;
+}
+
 @media (max-width: 24rem) {
   .card-strip { flex-wrap: wrap; }
   .vote-reason { flex-basis: 100%; }
   .vote-chips { justify-content: flex-start; }
+
+  .vote-group { flex: 1 1 0%; }
 }
 
 .card-posted {
