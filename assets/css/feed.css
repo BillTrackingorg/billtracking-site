@@ -581,6 +581,7 @@ button[disabled],
 
 .card-strip {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
@@ -608,6 +609,8 @@ button[disabled],
   flex-wrap: nowrap;
   flex: none;
   justify-content: flex-end;
+
+  margin-left: auto;
 }
 
 .vote-chip {
@@ -634,46 +637,22 @@ button[disabled],
 .vote-chip[disabled] { color: var(--ink-faint-aa); border-color: var(--line-soft); }
 
 .vote-reason {
-  flex: 1 1 auto;
+
+  flex: 0 1 auto;
   min-width: 0;
   font-family: var(--sans);
   font-size: 11px;
-  line-height: 1.45;
+
+  line-height: 16px;
   color: var(--ink-faint-aa);
-  margin: 0;
+  margin: 0 0 0 auto;
   max-width: none;
-  text-align: left;
+  text-align: right;
 }
+
+.vote-reason.is-stance { color: var(--ink-soft); }
 
 .vote-reason:empty { display: none; }
-
-.vote-group {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-left: auto;
-
-}
-.vote-stance {
-  margin: 0;
-  max-width: none;
-  font-family: var(--sans);
-  font-size: 11px;
-  line-height: 1.45;
-  color: var(--ink-soft);
-
-  white-space: nowrap;
-}
-
-@media (max-width: 24rem) {
-  .card-strip { flex-wrap: wrap; }
-  .vote-reason { flex-basis: 100%; }
-  .vote-chips { justify-content: flex-start; }
-
-  .vote-group { flex: 1 1 0%; }
-}
 
 .card-posted {
   font-family: var(--sans);
@@ -683,6 +662,16 @@ button[disabled],
   margin: 6px 0 0;
   max-width: none;
 }
+
+.card-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  column-gap: 12px;
+  row-gap: 2px;
+  margin-top: 6px;
+}
+.card-foot .card-posted { margin: 0; flex: none; }
 
 .account-page,
 #bt-callback,
