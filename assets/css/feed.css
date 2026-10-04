@@ -1655,6 +1655,8 @@ span.bt-tex { cursor: default; }
   max-width: none;
 }
 .bt-keyword-cap { margin: 0.35rem 0 0.6rem; }
+
+.acct-card .bt-keyword-count { margin-top: 0.65rem; }
 .bt-foot {
   font-family: var(--sans);
   font-size: 11.5px;
