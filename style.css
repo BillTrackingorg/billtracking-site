@@ -372,20 +372,6 @@ a:hover { color: var(--royal); }
 .nt-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.4rem; }
 .nt-ref { font-family: var(--sans); font-size: 0.85rem; font-weight: 700; color: var(--navy); }
 .nt-date { font-family: var(--sans); font-size: 0.74rem; color: var(--ink-faint); }
-/* A WORD, not a dot (src/web/notices.ts): gold says "look here" and the word
-   says what it means, so neither colour vision nor a screen reader is the only
-   way to receive it. */
-.nt-new {
-  padding: 0.05rem 0.4rem;
-  border-radius: 999px;
-  background: var(--gold);
-  color: var(--navy-deep);
-  font-family: var(--sans);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
 /* The label keeps the bot's emoji here - a `<use>` would paint nothing on a
    page with no sprite, which is most of this site (src/web/notices.ts). */
 .nt-label {
@@ -396,6 +382,98 @@ a:hover { color: var(--royal); }
   line-height: 1.45;
   color: var(--ink-soft);
 }
+
+/* The title and the list's two controls share one row (src/web/notices.ts
+   `toolsHtml`): Mark all as read, Clear all — and, while it waits for its
+   answer, the inline "Clear all notifications?" with Clear all and Cancel. */
+.nt-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.6rem;
+  margin: 0 0 0.45rem;
+}
+.nt-top .nt-title { margin: 0; }
+.nt-tools { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.15rem 0.7rem; }
+.nt-tool {
+  padding: 0.2rem 0.1rem;
+  background: none;
+  border: 0;
+  color: var(--navy);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.nt-tool:hover { text-decoration: underline; }
+.nt-tool-strong { font-weight: 700; }
+.nt-confirm { display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 0.2rem 0.6rem; }
+.nt-ask { font-family: var(--sans); font-size: 0.8rem; color: var(--ink); }
+
+/* A failed action's one line (`role="alert"`). Empty until there is one — and
+   then collapsed, as the badge is. */
+.nt-fail {
+  margin: 0.2rem 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.nt-fail:empty { display: none; }
+
+/* A row is TWO controls side by side: the link that opens it and its ×. The ×
+   sits outside the link — a button inside an <a> is invalid, and a press on it
+   would open the post too. */
+.nt-row { display: flex; align-items: flex-start; gap: 0.2rem; border-radius: 8px; }
+.nt-row a { flex: 1 1 auto; min-width: 0; }
+
+/* UNREAD — until the reader opens the notification (the owner's read model,
+   2026-10-05): a tint, a dot, and a hidden word (`.nt-sr`). Never the dot alone:
+   it is invisible to a screen reader and ambiguous to everyone else (the rule the
+   "New" pill had). The tint is the site's own wash; the dot is navy, because red
+   is a hairline and never a marker (COMPONENT-STYLE). */
+.nt-unread { background: var(--wash); }
+.nt-unread a:hover { background: var(--line-soft); }
+.nt-dot {
+  display: inline-block;
+  flex: none;
+  align-self: center;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--navy);
+}
+/* Visually hidden, still announced — `feed.css`'s `.sr-only`, which most pages
+   never load. */
+.nt-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Delete: Tabler's `x`, inline (no sprite on most pages), in a 32px hit area
+   that does not grow the row. */
+.nt-del {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-top: 0.3rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  color: var(--ink-faint);
+}
+.nt-del:hover { background: var(--wash); color: var(--ink); }
 
 /* --- the way back ----------------------------------------------------------
    ONE control, three page types (owner, 2026-08-19: "let's just use a large
