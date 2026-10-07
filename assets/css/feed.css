@@ -818,8 +818,6 @@ button[disabled],
 
 .bt-notif .bt-tree { margin-top: 0.7rem; }
 
-.bt-notif .bt-tree + .bt-row-cap { margin-top: 0.9rem; }
-
 .bt-notif[data-polity="us"],
 .bt-shown[data-polity="us"] {
   --accent: var(--navy);
