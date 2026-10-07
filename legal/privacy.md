@@ -32,6 +32,8 @@ The feed and bill timelines all work without signing in. The app and this websit
 
 **Notifications.** If you have an account, we keep your notifications for 30 days so you can see them wherever you sign in. We also store which ones you have read, when you last opened the list, and when you last turned on a notification setting or a legislature. A notification you delete is gone for good. Your notifications are not backed up, and they are deleted with your account.
 
+**Push notifications.** If you allow push notifications, we keep your phone's push address with your account, along with the type of phone, its time zone and when it was added. Pushes go through Expo and Apple or Google to reach your phone. We keep a delivery receipt for up to two days. Turning push off, signing out on that phone or deleting your account removes the address.
+
 The app contains no advertising, no third-party analytics and no tracking SDKs.
 
 The app also checks for updates when it starts. That request carries a random identifier for the installation and the app's version — sent to Expo, the service that delivers our updates. It identifies the installation, not you. If the app failed to start the last time it ran, the request also carries the text of that error — the app's own crash message, shortened — so that a broken release can be spotted.
@@ -91,7 +93,7 @@ BillTracking is an independent project run by one person, not a company. The dat
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
 
-**7 October 2026.** We now keep your notifications with your account for 30 days. We have kept when you last opened your notifications since August, and this page now says so.
+**7 October 2026.** We now keep your notifications with your account for 30 days. We have kept when you last opened your notifications since August, and this page now says so. This page now also says what we keep if you allow push notifications.
 
 **29 September 2026.** Our backups now also hold docket keywords and saved settings, on the same 90-day rotation as the rest. The account deletion screens in the app and on this website still called the backups encrypted, which our backup process does not do. That word is gone there too.
 
