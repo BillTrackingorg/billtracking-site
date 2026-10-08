@@ -9,7 +9,7 @@ htmlTitle: Privacy
 description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account makes a vote count once, and keeps your followed bills and settings across your devices.
 ogTitle: Privacy — BillTracking
 ogDescription: What we collect, why, and how to delete it — in plain language.
-updated: 9 October 2026
+updated: 8 October 2026
 ---
 
 The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — the filter you set on a feed page, and a sign-in session if you sign in — stays in your browser, on your device. The app needs no account to read anything. An account does three things — it makes a vote count once per person, it keeps your followed bills and docket keywords the same on every device you sign in on, and it keeps your settings the same on every device — and it can be deleted in two taps, from inside the app or from your account page on this website.
@@ -93,7 +93,7 @@ BillTracking is an independent project run by one person, not a company. The dat
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
 
-**9 October 2026.** Your votes have a page of their own now, in the app and on this website, listing every vote you have cast with the same controls to change or withdraw any of them, and a button that withdraws all of them at once, there and on the [delete some of your data](delete-data.html) page. The sentence above that said there are no vote histories now says there are no public ones. Nothing new is collected.
+**8 October 2026.** Your votes have a page of their own now, in the app and on this website, listing every vote you have cast with the same controls to change or withdraw any of them, and a button that withdraws all of them at once, there and on the [delete some of your data](delete-data.html) page. The sentence above that said there are no vote histories now says there are no public ones. Nothing new is collected.
 
 **8 October 2026.** Added that on Android, Google's push service registers the app when it first opens.
 
