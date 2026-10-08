@@ -1551,7 +1551,7 @@ span.bt-tex { cursor: default; }
 }
 .vl-row .vote-reason:empty { display: none; }
 
-.vl-tabs { margin-top: 1rem; }
+#bt-votes-list + .acct-card { margin-top: 4px; }
 
 .feed-page[data-polity="us"] {
   --accent: var(--navy);

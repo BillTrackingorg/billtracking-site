@@ -15,7 +15,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
 <link rel="stylesheet" href="/style.css?v=8">
-<link rel="stylesheet" href="/assets/css/feed.css?v=34">
+<link rel="stylesheet" href="/assets/css/feed.css?v=35">
 </head>
 <body>
 
@@ -56,12 +56,14 @@
     </div>
   </section>
 
-  <!-- REGION: signed in. MOUNTS, filled by the runtime: the withdraw-all
-       control, the legislature tabs, the list. -->
+  <!-- REGION: signed in. MOUNTS, filled by the runtime: the legislature tabs,
+       the list, then the withdraw-all control — BELOW the list since
+       2026-10-08 night (the owner), drawn only while there is something to
+       withdraw. -->
   <section class="acct-region" id="bt-votes-signed-in" hidden>
-    <div class="acct-card" id="bt-withdraw-all"></div>
     <div id="bt-votes-tabs"></div>
     <div id="bt-votes-list"></div>
+    <div class="acct-card" id="bt-withdraw-all" hidden></div>
   </section>
 
   <p class="acct-status" id="bt-votes-status" role="status"></p>
