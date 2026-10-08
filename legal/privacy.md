@@ -93,7 +93,7 @@ BillTracking is an independent project run by one person, not a company. The dat
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
 
-**9 October 2026.** Your votes have a page of their own now, in the app and on this website, listing every vote you have cast with the same controls to change or withdraw any of them, and a "Withdraw all my votes" button there and on the [delete some of your data](delete-data.html) page. The sentence above that said there are no vote histories now says there are no public ones. Nothing new is collected.
+**9 October 2026.** Your votes have a page of their own now, in the app and on this website, listing every vote you have cast with the same controls to change or withdraw any of them, and a button that withdraws all of them at once, there and on the [delete some of your data](delete-data.html) page. The sentence above that said there are no vote histories now says there are no public ones. Nothing new is collected.
 
 **8 October 2026.** Added that on Android, Google's push service registers the app when it first opens.
 
