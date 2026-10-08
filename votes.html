@@ -6,21 +6,20 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://billtrackingorg.github.io https://skqngxvuncdavlshkepb.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <!-- Framing guard: the first script, before the title and every link. -->
 <script src="/assets/js/frame-guard.js"></script>
-<title>Delete some of your data | BillTracking</title>
-<meta name="description" content="How to delete parts of your BillTracking data and keep your account.">
-<link rel="canonical" href="https://billtracking.org/delete-data">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://billtracking.org/delete-data">
-<meta property="og:title" content="Delete some of your BillTracking data">
-<meta property="og:description" content="Delete parts of your data and keep your account.">
-<meta property="og:image" content="https://billtracking.org/assets/us-banner.webp">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+<title>Your votes | BillTracking</title>
+<meta name="description" content="Your BillTracking votes: see, change or withdraw any vote.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://billtracking.org/votes">
+<meta name="theme-color" content="#0A3161">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
 <link rel="stylesheet" href="/style.css?v=8">
 <link rel="stylesheet" href="/assets/css/feed.css?v=30">
 </head>
 <body>
+
+<a class="skip-link" href="#bt-votes">Skip to content</a>
 
 <header class="site-header">
   <div class="wrap">
@@ -37,33 +36,42 @@
   </div>
 </header>
 
-<main>
+<main class="account-page" id="bt-votes" tabindex="-1">
 
-<div class="hero">
-  <div class="hero-inner">
-    <p class="eyebrow">BillTracking</p>
-    <h1>Delete some of your data</h1>
-    <p class="lede">You can delete parts of your data and keep your account.</p>
-  </div>
-</div>
+  <h1>Your votes</h1>
 
-<section>
-  <div class="wrap">
-    <p class="measure-wide muted">Signed in, in the app or on this website:</p>
-    <ul class="principles">
-      <li><strong>Votes:</strong> tap your vote again to withdraw it, or withdraw them all at once. <div id="bt-delete-data" hidden></div></li>
-      <li><strong>Followed bills:</strong> tap the bell to unfollow.</li>
-      <li><strong>Keywords:</strong> remove them in Settings.</li>
-      <li><strong>Notifications:</strong> delete them one at a time, or clear them all. They are also deleted automatically after 30 days.</li>
-    </ul>
-    <p class="measure-wide muted">Each is deleted right away, and leaves our backups within 90 days. Your votes leave the live counts at once. A count already posted or downloaded is not rewritten.</p>
-    <p class="measure-wide muted">Signed in, <a href="/votes">Your votes</a> lists every vote you have cast.</p>
-    <p class="measure-wide muted">For anything else, email
-    <a href="mailto:contact@billtracking.org">contact@billtracking.org</a> from the address you signed in with. We reply within 30 days.</p>
-    <p class="measure-wide muted">To delete everything, <a href="/delete-account">delete your account</a>.</p>
-    <p class="muted"><em>Last updated 8 October 2026.</em></p>
-  </div>
-</section>
+  <!-- REGION: checking. Replaced by the runtime as soon as it knows the session. -->
+  <section class="acct-region" id="bt-votes-loading">
+    <p class="acct-status">Checking whether you are signed in on this device…</p>
+    <p class="acct-note">If this line is still here after a few seconds, this
+    page's script did not load. Reloading usually fixes it. Nothing about your
+    account has changed, and reading never needs one.</p>
+  </section>
+
+  <!-- REGION: signed out. The runtime writes the line; the link is static. -->
+  <section class="acct-region" id="bt-votes-signed-out" hidden>
+    <div class="acct-card">
+      <p class="acct-status" id="bt-votes-signed-out-line"></p>
+      <p><a class="btn btn-outline" id="bt-votes-signin" href="/account?next=/votes">Sign in</a></p>
+    </div>
+  </section>
+
+  <!-- REGION: signed in. MOUNTS, filled by the runtime: the withdraw-all
+       control, the legislature tabs, the list. -->
+  <section class="acct-region" id="bt-votes-signed-in" hidden>
+    <div class="acct-card" id="bt-withdraw-all"></div>
+    <div id="bt-votes-tabs"></div>
+    <div id="bt-votes-list"></div>
+  </section>
+
+  <p class="acct-status" id="bt-votes-status" role="status"></p>
+
+  <noscript>
+    <div class="feed-noscript">
+      <p><strong>This page needs JavaScript</strong> — it asks the account
+      service for the votes you have cast. Reading never needs an account.</p>
+    </div>
+  </noscript>
 
 </main>
 
@@ -104,14 +112,12 @@
       </div>
     </div>
     <div class="footer-legal">
-      <p>BillTracking is an independent project · © 2026 billtracking.org</p>
+      <p>BillTracking is an independent project &middot; &copy; 2026 billtracking.org</p>
     </div>
   </div>
 </footer>
 
-<!-- The site runtime: on this page it wires the chrome — the account pill and the
-     notifications bell — and, for a signed-in reader, the "Withdraw all my votes"
-     control. -->
 <script type="module" src="/assets/js/bt-web.js"></script>
+
 </body>
 </html>
