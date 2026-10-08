@@ -9,7 +9,7 @@ htmlTitle: Privacy
 description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account makes a vote count once, and keeps your followed bills and settings across your devices.
 ogTitle: Privacy — BillTracking
 ogDescription: What we collect, why, and how to delete it — in plain language.
-updated: 8 October 2026
+updated: 9 October 2026
 ---
 
 The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — the filter you set on a feed page, and a sign-in session if you sign in — stays in your browser, on your device. The app needs no account to read anything. An account does three things — it makes a vote count once per person, it keeps your followed bills and docket keywords the same on every device you sign in on, and it keeps your settings the same on every device — and it can be deleted in two taps, from inside the app or from your account page on this website.
@@ -46,8 +46,8 @@ You can mark a bill with a thumbs up or down. Because a reader's position on a b
 - **Voting requires signing in with Google or Apple; reading never does.** The account is what makes one vote per person per bill possible. Without it, the counts would be meaningless.
 - **All we act on from the sign-in is an account identifier and an email address.** If you use Sign in with Apple and choose *Hide My Email*, we only ever see Apple's relay address.
 - **A vote record is: which bill, thumbs up or down, when, and — only if you choose to set it — a country and, for the US, a state.** That location is optional, you choose it yourself, and nobody verifies it. Leaving it unset is a normal and fully-supported way to use the app.
-- **Who voted which way is never published, shown to anyone, or attached to a profile.** There are no public profiles and no vote histories. What is published is counts: how many voted each way overall, and how many from each country or state.
-- **You can change or withdraw your vote at any time**, and deleting your account deletes every vote with it.
+- **Who voted which way is never published, shown to anyone, or attached to a profile.** There are no public profiles and no public vote histories: your own votes are shown to you alone, on the Your votes page in the app and on this website, where you can change or withdraw any of them. What is published is counts: how many voted each way overall, and how many from each country or state.
+- **You can change or withdraw your vote at any time, or withdraw all of your votes at once**, and deleting your account deletes every vote with it.
 
 ### What we ask you to understand about published counts
 
@@ -81,7 +81,7 @@ One thing we will not pretend about: counts that were already published — in a
 
 ### Your rights
 
-If you are in the EU or UK you have the right to access, correct, erase, restrict or object to our processing of your personal data, and to receive it in a portable form. **You also have the right to object to processing based on legitimate interests, at any time.** For votes, the fastest route to all of this is the app itself, which lets you see and withdraw your votes and delete your account outright.
+If you are in the EU or UK you have the right to access, correct, erase, restrict or object to our processing of your personal data, and to receive it in a portable form. **You also have the right to object to processing based on legitimate interests, at any time.** For votes, the fastest route to all of this is the app or your account page on this website: both let you see and withdraw your votes, all at once if you want, and delete your account outright.
 
 Otherwise, write to [contact@billtracking.org](mailto:contact@billtracking.org). We will respond within one month. If we refuse a request we will tell you why, and you can complain to your national data protection authority or go to court.
 
@@ -92,6 +92,8 @@ BillTracking is an independent project run by one person, not a company. The dat
 ### Changes
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
+
+**9 October 2026.** Your votes have a page of their own now, in the app and on this website, listing every vote you have cast with the same controls to change or withdraw any of them, and a "Withdraw all my votes" button there and on the [delete some of your data](delete-data.html) page. The sentence above that said there are no vote histories now says there are no public ones. Nothing new is collected.
 
 **8 October 2026.** Added that on Android, Google's push service registers the app when it first opens.
 
