@@ -1517,7 +1517,7 @@ span.bt-tex { cursor: default; }
 .vl-title {
   display: block;
 
-  margin-top: 6px;
+  margin-top: 4px;
   font-family: var(--serif);
   font-size: 15.5px;
   line-height: 1.35;
