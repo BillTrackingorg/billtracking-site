@@ -1453,6 +1453,7 @@ span.bt-tex { cursor: default; }
 .geo-more summary { cursor: pointer; }
 .geo-more[open] summary { margin-bottom: 0.35rem; }
 
+.acct-card .geo-disclosure,
 .geo-disclosure { margin-top: 1.1rem; }
 .geo-disclosure,
 .geo-status,
