@@ -921,7 +921,8 @@ button[disabled],
 
 .acct-note:empty { display: none; }
 
-.acct-card p.acct-callout { border-left: 2px solid var(--navy); padding-left: 10px; color: var(--ink); }
+.acct-card p.acct-callout,
+#bt-delete-data p.acct-callout { border-left: 2px solid var(--navy); padding-left: 10px; color: var(--ink); }
 
 .acct-danger { margin-top: 1.6rem; font-size: 0.9rem; }
 .acct-danger a { color: var(--navy); }
@@ -958,14 +959,18 @@ button[disabled],
 .bt-notif .bt-tree { margin-top: 0.7rem; }
 
 .bt-notif[data-polity="us"],
-.bt-shown[data-polity="us"] {
+.bt-shown[data-polity="us"],
+.vl-tabs[data-polity="us"],
+.vl-row[data-polity="us"] {
   --accent: var(--navy);
   --accent-wash: var(--wash);
   --accent-chip-border: #C7D8EC;
   --accent-chip-text: var(--navy-ink);
 }
 .bt-notif[data-polity="eu"],
-.bt-shown[data-polity="eu"] {
+.bt-shown[data-polity="eu"],
+.vl-tabs[data-polity="eu"],
+.vl-row[data-polity="eu"] {
   --accent: var(--royal);
   --accent-wash: var(--wash-eu);
   --accent-chip-border: #C3CFEE;
@@ -1458,6 +1463,66 @@ span.bt-tex { cursor: default; }
 .btn-provider.is-danger { border-color: var(--red); color: var(--red); }
 .btn-provider.is-danger:hover:not([disabled]) {
   background: color-mix(in srgb, var(--red) 7%, var(--card));
+}
+
+.vl-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.vl-link,
+.vl-link:hover {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.vl-ref {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--accent);
+}
+.vl-congress {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink-faint-aa);
+  margin-left: 6px;
+}
+.vl-title {
+  display: block;
+  font-family: var(--serif);
+  font-size: 15.5px;
+  line-height: 1.35;
+  color: var(--navy-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.vl-note {
+  display: block;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink-faint-aa);
+}
+
+.vl-row .card-strip {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+  flex: none;
+}
+.vl-row .vote-reason {
+  flex-basis: 100%;
+  text-align: right;
 }
 
 .feed-page[data-polity="us"] {
