@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
 <link rel="stylesheet" href="/style.css?v=8">
-<link rel="stylesheet" href="/assets/css/feed.css?v=27">
+<link rel="stylesheet" href="/assets/css/feed.css?v=28">
 </head>
 <body>
 
@@ -109,7 +109,10 @@
      minutes ago) is drawn client-side into #bt-resolver-mount, so a link works
      the instant it exists. A legacy /bill/<ref> resolves to the bill's key and
      redirects when that is unambiguous — and says so plainly when it is not.
-     If the resolver finds nothing, this page is already correct and stays. -->
+     If the resolver finds nothing, this page is already correct and stays.
+     [2026-10-08] When it does find something, everything inside main#bt-resolver
+     except the status line and the mount is hidden — a line added here belongs
+     to the not-found page alone. -->
 <main id="bt-resolver" data-path="" tabindex="-1">
 
   <p class="eyebrow on-light">404</p>
