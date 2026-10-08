@@ -1551,7 +1551,29 @@ span.bt-tex { cursor: default; }
 }
 .vl-row .vote-reason:empty { display: none; }
 
-#bt-votes-list + .acct-card { margin-top: 4px; }
+.vl-tabs-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 12px;
+}
+.vl-tabs-row .bt-tseg { margin: 0; }
+.vl-withdraw {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  margin-left: auto;
+  cursor: pointer;
+  line-height: 1.25;
+}
+.vl-withdraw:hover { text-decoration: underline; }
+
+#bt-withdraw-all { margin: 4px 0 14px; }
 
 .feed-page[data-polity="us"] {
   --accent: var(--navy);
