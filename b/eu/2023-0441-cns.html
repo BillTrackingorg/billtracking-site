@@ -90,6 +90,10 @@
     .bill-links { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 1.4rem;
       font-family: var(--sans); font-size: .9rem; }
     .bill-links a { color: var(--ink-soft); }
+    /* Visually hidden, still announced: the source link's new-tab note. This page
+       loads no feed.css, whose .sr-only this is. */
+    .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+      border: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; }
 </style>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Legislation","name":"Consular protection for unrepresented citizens of the Union in third countries","legislationIdentifier":"2023/0441(CNS)","inLanguage":"en","url":"https://billtracking.org/b/eu/2023-0441-cns","jurisdiction":"European Union","isBasedOn":{"@type":"WebPage","url":"https://oeil.europarl.europa.eu"},"legislationDate":"2023-12-06","dateModified":"2026-10-07"},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://billtracking.org/"},{"@type":"ListItem","position":2,"name":"EU files","item":"https://billtracking.org/b/eu/"},{"@type":"ListItem","position":3,"name":"2023/0441(CNS)","item":"https://billtracking.org/b/eu/2023-0441-cns"}]}]</script>
 </head>
@@ -210,7 +214,7 @@
   <div class="honesty"><strong>This path starts where the file does — the legislative proposal in the official record.</strong> Routine procedural steps sit in the “more actions” rows above rather than on the main line.</div>
   <p class="bill-links">
     <a href="/eu">Read the live feed — on the site or in the app</a>
-    <a href="https://oeil.europarl.europa.eu">Look up 2023/0441(CNS) on OEIL</a>
+    <a href="https://oeil.europarl.europa.eu" target="_blank" rel="noopener" data-find-ref="2023/0441(CNS)" data-find-a11y="Find it on OEIL — copies the reference, opens in a new tab">Find it on OEIL<span class="sr-only"> (opens in a new tab)</span></a>
     <a href="/b/eu/">All EU files</a>
   </p>
 </main>
