@@ -9,7 +9,7 @@ htmlTitle: Privacy
 description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account makes a vote count once, and keeps your followed bills and settings across your devices.
 ogTitle: Privacy — BillTracking
 ogDescription: What we collect, why, and how to delete it — in plain language.
-updated: 7 October 2026
+updated: 8 October 2026
 ---
 
 The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — the filter you set on a feed page, and a sign-in session if you sign in — stays in your browser, on your device. The app needs no account to read anything. An account does three things — it makes a vote count once per person, it keeps your followed bills and docket keywords the same on every device you sign in on, and it keeps your settings the same on every device — and it can be deleted in two taps, from inside the app or from your account page on this website.
@@ -32,7 +32,7 @@ The feed and bill timelines all work without signing in. The app and this websit
 
 **Notifications.** If you have an account, we keep your notifications for 30 days so you can see them wherever you sign in. We also store which ones you have read, when you last opened the list, and when you last turned on a notification setting or a legislature. A notification you delete is gone for good. Your notifications are not backed up, and they are deleted with your account.
 
-**Push notifications.** If you allow push notifications, we keep your phone's push address with your account, along with the type of phone, its time zone and when it was added. Pushes go through Expo and Apple or Google to reach your phone. We keep a delivery receipt for up to two days. Turning push off, signing out on that phone or deleting your account removes the address.
+**Push notifications.** If you allow push notifications, we keep your phone's push address with your account, along with the type of phone, its time zone and when it was added. Pushes go through Expo and Apple or Google to reach your phone. We keep a delivery receipt for up to two days. Turning push off, signing out on that phone or deleting your account removes the address. On Android, Google's push service registers the app when it first opens, even if you never allow push.
 
 The app contains no advertising, no third-party analytics and no tracking SDKs.
 
@@ -92,6 +92,8 @@ BillTracking is an independent project run by one person, not a company. The dat
 ### Changes
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
+
+**8 October 2026.** Added that on Android, Google's push service registers the app when it first opens.
 
 **7 October 2026.** We now keep your notifications with your account for 30 days. We have kept when you last opened your notifications since August, and this page now says so. This page now also says what we keep if you allow push notifications.
 

@@ -205,12 +205,14 @@ button[disabled],
   --accent-wash: var(--wash);
   --accent-chip-text: var(--navy-ink);
   --glyph-band: var(--red);
+  --accent-chip-border: #C7D8EC;
 }
 .card[data-polity="eu"] {
   --accent: var(--royal);
   --accent-wash: var(--wash-eu);
   --accent-chip-text: var(--royal-deep);
   --glyph-band: var(--gold);
+  --accent-chip-border: #C3CFEE;
 }
 
 .card.is-highlighted { border-color: var(--accent); border-width: 1.5px; padding: 12.5px 14.5px; }
@@ -358,6 +360,50 @@ button[disabled],
 }
 .card-menu-done[hidden] { display: none; }
 .card-menu-done .glyph { width: 13px; height: 13px; stroke-width: 2.4; color: var(--gold-text); }
+
+.card-menu-list .card-menu-src {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 10px 12px 12px;
+  padding: 2px 4px;
+  border: 1px solid var(--accent-chip-border);
+  border-bottom: 3px solid var(--glyph-band);
+  border-radius: 10px;
+  background: var(--accent-wash);
+}
+
+.card-menu-src .card-menu-item {
+  width: auto;
+  min-height: 44px;
+  padding: 0 8px;
+  border-radius: 8px;
+  color: var(--accent);
+}
+.card-menu-src .card-menu-item:hover,
+.card-menu-src .card-menu-item:focus-visible { background: var(--card); color: var(--accent); }
+.card-menu-ref {
+  flex: 0 1 auto;
+  min-width: 0;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.card-menu-ref-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.card-menu-ref .card-menu-word { flex: none; line-height: 0; }
+.card-menu-ref .card-menu-done { margin-left: 0; }
+.card-menu-src .card-menu-ref .glyph { width: 15px; height: 15px; stroke-width: 2; color: var(--accent); }
+.card-menu-find { flex: none; gap: 8px; }
+.card-menu-src .card-menu-find .glyph { width: 18px; height: 18px; stroke-width: 1.5; color: var(--accent); }
+.card-menu-find-words { display: flex; flex-direction: column; line-height: 1.15; }
+.card-menu-find-lead {
+  margin-top: 2px;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.card-menu-find-site { font-family: var(--serif); font-size: 15.5px; font-weight: 400; }
 
 .card-title-link,
 .card-title-link:hover { color: inherit; text-decoration: none; }
@@ -1124,16 +1170,14 @@ span.bt-tex { cursor: default; }
 }
 
 .vote-caption {
-  color: var(--accent);
-  font-weight: 600;
+  color: inherit;
   border-radius: 5px;
   padding: 1px 4px;
   margin: -1px -4px;
   text-decoration: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
   --gold-wash: color-mix(in srgb, var(--gold) 45%, transparent);
 }
-.vote-caption:hover { border-bottom-color: var(--accent); }
+.vote-caption:hover { color: inherit; text-decoration: underline; }
 
 @keyframes bt-caption-pulse {
   0%   { background: transparent; }
