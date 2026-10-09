@@ -1461,9 +1461,9 @@ span.bt-tex { cursor: default; }
 .geo-more p { font-size: 0.8rem; }
 
 .acct-delete { border-color: color-mix(in srgb, var(--red) 35%, var(--line)); }
-.btn-provider.is-danger { border-color: var(--red); color: var(--red); }
+.btn-provider.is-danger { border-color: var(--navy); color: var(--navy); }
 .btn-provider.is-danger:hover:not([disabled]) {
-  background: color-mix(in srgb, var(--red) 7%, var(--card));
+  background: color-mix(in srgb, var(--navy) 7%, var(--card));
 }
 
 .vl-row {
