@@ -373,7 +373,10 @@ a:hover { color: var(--royal); }
 .nt-ref { font-family: var(--sans); font-size: 0.85rem; font-weight: 700; color: var(--navy); }
 .nt-date { font-family: var(--sans); font-size: 0.74rem; color: var(--ink-faint); }
 /* The label keeps the bot's emoji here - a `<use>` would paint nothing on a
-   page with no sprite, which is most of this site (src/web/notices.ts). */
+   page with no sprite, which is most of this site (src/web/notices.ts).
+   [2026-10-09, the owner's ruling: no longer - the row prints the label as plain
+   words, the same words as the push, with no emoji and no glyph; no sprite is
+   needed on any page. The rule below is unchanged.] */
 .nt-label {
   display: block;
   margin-top: 0.15rem;
