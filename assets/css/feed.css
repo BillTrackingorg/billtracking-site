@@ -1272,17 +1272,22 @@ span.bt-tex { cursor: default; }
   margin: 0 auto;
   max-width: 30rem;
 }
+
 .vb-retry {
-  margin-top: 9px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 4px 13px;
-  background: var(--card);
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: 12.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  background: none;
   color: var(--accent);
+  cursor: pointer;
 }
+.vb-retry .glyph { width: 22px; height: 22px; }
 
 .vb-stats { display: flex; gap: 9px; margin-bottom: 11px; }
 .vb-stat {
