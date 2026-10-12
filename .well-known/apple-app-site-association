@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "5TP38V2GKF.org.billtracking.app",
+        "paths": ["/p/*", "/b/*"]
+      }
+    ]
+  }
+}
