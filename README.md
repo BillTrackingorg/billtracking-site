@@ -25,12 +25,18 @@ the workflow-rendered `p/`, `b/` and `view/` trees, and in `assets/js/` +
 for the workflow — public by design so this repo's own workflow can run with no
 credentials; the app's DATA layer, not its screens, and nothing secret in it).
 The legal generator and the launch-time deep-link files live in the PRIVATE app
-repo at `app/site-build/`.
+repo at `app/site-build/` *(the deep-link files: served from this repo's
+`/.well-known/` since 2026-10-12)*.
 
 ⚠️ **Never copy a `*.map` in with the bundles.** esbuild's source maps embed the
 whole of the app's private TypeScript, comments included.
 
-**Two launch-time steps still pending:**
+**~~Two~~ One launch-time step still pending** *(2026-10-12, app OPEN-ITEMS
+OI-0217: step 1 is DONE — both files were filled and are served from THIS repo's
+`/.well-known/` since bd1168bf7, the Android file with both signing fingerprints;
+`app/site-build/well-known-pending/` is now the pre-fill history and its
+LAUNCH-README the record of how they were filled. Step 2, the store URLs, is the
+one still pending.)*
 
 1. **Deep-link association files.** `app/site-build/well-known-pending/` holds
    `apple-app-site-association` and `assetlinks.json` with placeholders
@@ -41,6 +47,7 @@ whole of the app's private TypeScript, comments included.
    *(2026-08-27: the Apple file is FILLED and final — Team ID issued; only the
    Android file still carries placeholders, awaiting the Play App-Signing
    SHA-256. Both stay in the app repo until launch.)*
+   *(2026-10-12: both are served from this repo now, see above.)*
 2. **Store URLs** once the listings exist — `STORE_URLS` now lives with the
    renderer, in the app repo's `src/site/chrome.ts`; fill it, rebuild, copy the
    bundle. The funnel under every post page then shows real store buttons (until
