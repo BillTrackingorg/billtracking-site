@@ -31,6 +31,7 @@
 
 button.btn,
 .card-bell,
+.card-collapse,
 .card-expander,
 .card-menu-btn,
 .card-tail-more,
@@ -727,14 +728,34 @@ button[disabled],
   background: none;
   border: 0;
   padding: 9px 10px 7px;
-  margin: 0 -10px -6px 22px;
+  margin: 0 -10px -6px;
   font-weight: 600;
   font-size: 13px;
   color: var(--accent);
 }
 .card-tail-more .glyph { width: 15px; height: 15px; stroke-width: 2.2; }
 .card-tail-more[hidden],
+.card-collapse[hidden],
 .card-body-lines p[hidden] { display: none; }
+
+.card-controls {
+  position: relative;
+  padding-right: 56px;
+}
+.card-collapse {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  bottom: -6px;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: 0;
+  padding: 9px 10px 7px 19px;
+  margin: 0;
+  color: var(--accent);
+}
+.card-collapse .glyph { width: 15px; height: 15px; stroke-width: 2.2; }
 
 .card-body-lines .card-caveat { color: var(--ink-faint-aa); }
 
