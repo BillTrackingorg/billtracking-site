@@ -40,14 +40,28 @@
 # private app repo with a fine-grained PAT; the owner rightly asked for the
 # cleaner shape, 2026-08-16.) Public repo ⇒ Actions minutes are free.
 #
-# Cadence: every 15 minutes. This repo is PUBLIC, so Actions minutes are free
-# and the cost of a run is the fetch itself. The web is no longer a 2-hourly
-# shadow of the app: the feed pages read the published record live, and a shared
-# link should land on a real page rather than on the 404 resolver's client-side
-# render — so the gap between "the bot posted" and "the page exists" is worth
-# closing. GitHub schedules on a best-effort basis and runs late under load; the
-# cron is a request, not a promise, and no page claims a cadence.
-# Manual dispatch re-renders now.
+# Cadence: AFTER EVERY PUBLISH, and every 15 minutes as the backstop. The feed
+# repository (BillTrackingorg/billtracking-feed, .github/workflows/render-site.yml)
+# dispatches this workflow once GitHub Pages serves a push the bots made there,
+# so a page follows its post by minutes. The cron stays because GitHub drops
+# most of its slots (13 Oct 2026: three scheduled runs in sixteen hours, while
+# fresh posts sat on the 404 resolver's read-only fallback for hours) and is a
+# request, not a promise; no page claims a cadence. This repo is PUBLIC, so
+# Actions minutes are free and the cost of a run is the fetch itself. The web
+# is no longer a 2-hourly shadow of the app: the feed pages read the published
+# record live, and a shared link should land on a real page rather than on the
+# 404 resolver's client-side render. Manual dispatch re-renders now.
+#
+# ONE RUN AT A TIME, AND A QUEUED RUN STARTS FROM THE TIP. The concurrency group
+# below queues a run that arrives while one is rendering (a dispatch beside the
+# cron, two bots publishing minutes apart). But actions/checkout pins a run to
+# github.sha, which is fixed when the run is CREATED, so a queued run used to
+# start from the commit BEFORE the previous render's, re-render every
+# view/v1/bills/*.json with a new built_at, and then rebase its commit onto the
+# previous render's: a conflict on every one of those files, a red run and a
+# failure mail for nothing (2026-10-01 and 2026-10-04). The checkout therefore
+# asks for `main` by name, which is resolved when the step runs, so a queued
+# render begins where the previous one ended.
 #
 # Failure posture (loudness doctrine): any fetch/render error fails the run
 # and nothing is committed. A partial or SHRUNKEN tree is never published:
@@ -76,7 +90,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      # `ref: main`, by name: see "ONE RUN AT A TIME" in the header. Without it a
+      # run queued in the concurrency group checks out the commit the branch was
+      # at when the run was created, not when it starts.
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       # Node 20 — the runtime the committed bundle targets (esbuild
       # `target: node20`; app repo site-build/core/build.mjs).
