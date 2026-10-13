@@ -105,9 +105,11 @@
 <!-- STATIC FIRST, RESOLVED SECOND.
      What renders without any JavaScript is a plain, true 404. The resolver
      then runs: a /p/<id> or /b/<polity>/<slug> that exists in the published
-     record but has not been rendered to a static page yet (the bot posted it
-     minutes ago) is drawn client-side into #bt-resolver-mount, so a link works
-     the instant it exists. A legacy /bill/<ref> resolves to the bill's key and
+     record but has not been rendered to a static page yet (the permalinks
+     render has not followed the post yet) is drawn client-side into
+     #bt-resolver-mount, so a link works the instant it exists, and the drawn
+     view loads the generated page by itself once it exists (2026-10-13, app
+     OPEN-ITEMS OI-0305). A legacy /bill/<ref> resolves to the bill's key and
      redirects when that is unambiguous — and says so plainly when it is not.
      If the resolver finds nothing, this page is already correct and stays.
      [2026-10-08] When it does find something, everything inside main#bt-resolver
