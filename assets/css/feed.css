@@ -711,7 +711,8 @@ button[disabled],
   gap: 4px;
   background: none;
   border: 0;
-  padding: 9px 0 1px;
+  padding: 9px 10px 7px;
+  margin: 0 -10px -6px;
   font-weight: 600;
   font-size: 13px;
   color: var(--accent);
@@ -721,12 +722,12 @@ button[disabled],
 
 .card-tail-more {
   display: inline-flex;
-  align-self: flex-start;
   align-items: center;
   gap: 4px;
   background: none;
   border: 0;
-  padding: 6px 0;
+  padding: 9px 10px 7px;
+  margin: 0 -10px -6px 22px;
   font-weight: 600;
   font-size: 13px;
   color: var(--accent);
@@ -734,7 +735,8 @@ button[disabled],
 .card-tail-more .glyph { width: 15px; height: 15px; stroke-width: 2.2; }
 .card-tail-more[hidden],
 .card-body-lines p[hidden] { display: none; }
-.card-tail-more:last-child { margin-bottom: 12px; }
+
+.card-body-lines .card-caveat { color: var(--ink-faint-aa); }
 
 .card-strip {
   display: flex;
