@@ -71,9 +71,11 @@ orders and JSON-LD equal). Its history is in git.
 ## Permalink + bill pages
 
 `tools/bt-site.cjs` renders, from the bots' PUBLISHED feed + per-bill path
-artifacts, in one workflow run (`.github/workflows/permalinks.yml`, every 15 min
-+ manual, built-in token — no credentials; the run starts by making the bundle
-prove itself with `--selftest`):
+artifacts, in one workflow run (`.github/workflows/permalinks.yml`: after every
+publish, dispatched by the feed repo's `render-site.yml` once Pages serves the
+push — since 2026-10-14, app OPEN-ITEMS OI-0305 — plus every 15 min as the
+backstop and manual; built-in token, no credentials of its own; the run starts
+by making the bundle prove itself with `--selftest`):
 
 - **`/p/<id>`** — one static page per delivered post (the shared artifact +
   funnel), plus `p/sitemap.xml` and a `/p/` browse index. Post pages are
