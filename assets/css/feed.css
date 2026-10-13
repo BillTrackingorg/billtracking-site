@@ -33,6 +33,7 @@ button.btn,
 .card-bell,
 .card-expander,
 .card-menu-btn,
+.card-tail-more,
 .card-strip-glyph,
 .vote-chip {
   font-family: var(--sans);
@@ -717,6 +718,23 @@ button[disabled],
 }
 .card-expander .glyph { width: 15px; height: 15px; stroke-width: 2.2; }
 .card-expander[hidden] { display: none; }
+
+.card-tail-more {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--accent);
+}
+.card-tail-more .glyph { width: 15px; height: 15px; stroke-width: 2.2; }
+.card-tail-more[hidden],
+.card-body-lines p[hidden] { display: none; }
+.card-tail-more:last-child { margin-bottom: 12px; }
 
 .card-strip {
   display: flex;
@@ -2028,7 +2046,10 @@ mark.bt-hit {
 }
 .card-hit .lead { font-weight: 700; color: var(--ink); }
 .card-body:not([data-clipped="1"]) + .card-hit[data-field="bodyLines"] { display: none; }
-.card.is-open .card-hit { display: none; }
+
+.card.is-open .card-hit:not([data-field="moreItems"]) { display: none; }
+.card[data-depth="2"] .card-hit[data-field="moreItems"],
+.card[data-depth="1"] .card-hit[data-field="moreItems"][data-step="1"] { display: none; }
 
 @media (max-width: 47.9375rem) {
 
