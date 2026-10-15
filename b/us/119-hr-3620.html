@@ -61,6 +61,11 @@
        glyph centres on that line structurally, as the phone's top:0/bottom:0/centre does; the
        sizes are the phone's: 18 on a milestone row, 14 inside a run. */
     .path li { position: relative; padding-right: 1.6rem; }
+    /* [2026-10-15, the owner, from a screenshot of an opened run] A row's last line must not be one
+       stranded word (a lone "195." or "5667)"): the browser may pick its breaks so the last line
+       holds more than one word. A browser that does not know the property drops it and wraps as
+       before; nothing else reads it, and the record's words are untouched. */
+    .path li { text-wrap: pretty; }
     .glyph.row-open { position: absolute; right: .3rem; top: .75rem; height: 1.8rem; width: 18px;
       color: var(--ink-faint); }
     .path-run .glyph.row-open { width: 14px; }
@@ -70,7 +75,15 @@
     .path-run .row-label { font-size: .875rem; color: var(--ink-soft); }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
-    .row-label a { color: var(--navy); }
+    /* [2026-10-15, OPEN-ITEMS OI-0283, closed the same day] The link is the WHOLE ROW (the owner's
+       rule for the phone, "be generous with the tappable area"): a block anchor that looks like
+       plain text, while the label words inside it keep the site's link look (style.css a, a:hover)
+       so nothing visible changed. The hand cursor and the focus ring now cover the row. */
+    .row-link { display: block; color: inherit; text-decoration: none; }
+    .row-link:hover { color: inherit; }
+    .row-link .row-opens { color: var(--navy); text-decoration: underline;
+      text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .row-link:hover .row-opens { color: var(--royal); }
     .row-tally { font-variant-numeric: tabular-nums; color: var(--ink-soft); }
     /* Its own line beneath the step, quieter than the label: this is a note
        about EVIDENCE, not about what happened, so it must not compete with
@@ -213,8 +226,8 @@
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (unanimous consent)</span> <span class="st-date">29 September 2026</span></div>
   <p class="bill-asof">Record as of 29 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
-  <li class="spine" data-key="rec-H.R. 3620-20" data-kind="record"><span class="row-date">29 September 2026</span> <span class="row-label"><a href="/p/us-20260930-61e9c830"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (unanimous consent)<svg class="glyph row-open" aria-hidden="true"><use href="#ic-chevron-right"/></svg></a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Presidential review (±10 days)</p></li>
-  <li class="spine" data-key="rec-H.R. 3620-18" data-kind="record"><span class="row-date">3 August 2026</span> <span class="row-label"><a href="/p/us-20260910-0e0e6fc4"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee<svg class="glyph row-open" aria-hidden="true"><use href="#ic-chevron-right"/></svg></a></span></li>
+  <li class="spine" data-key="rec-H.R. 3620-20" data-kind="record"><a class="row-link" href="/p/us-20260930-61e9c830"><span class="row-date">29 September 2026</span> <span class="row-label"><span class="row-opens"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (unanimous consent)</span></span><p class="row-next"><span class="lead">What&#39;s next: </span>Presidential review (±10 days)</p><svg class="glyph row-open" aria-hidden="true"><use href="#ic-chevron-right"/></svg></a></li>
+  <li class="spine" data-key="rec-H.R. 3620-18" data-kind="record"><a class="row-link" href="/p/us-20260910-0e0e6fc4"><span class="row-date">3 August 2026</span> <span class="row-label"><span class="row-opens"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span></span><svg class="glyph row-open" aria-hidden="true"><use href="#ic-chevron-right"/></svg></a></li>
   <li class="spine" data-key="rec-H.R. 3620-19" data-kind="record"><span class="row-date">3 August 2026</span> <span class="row-label">Placed on calendar (Senate)</span></li>
   <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
