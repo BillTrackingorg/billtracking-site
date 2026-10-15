@@ -363,6 +363,11 @@ button[disabled],
 .card-menu-done[hidden] { display: none; }
 .card-menu-done .glyph { width: 13px; height: 13px; stroke-width: 2.4; color: var(--gold-text); }
 
+.card-menu-copy .card-menu-word { flex: none; line-height: 0; }
+.card-menu-copy .card-menu-done { margin-left: 0; }
+.card-menu-copy .card-menu-done .glyph { width: 19px; height: 19px; stroke-width: 1.8; color: var(--ink-soft); }
+.card-menu-label { flex: 1; }
+
 .card-menu-list .card-menu-src {
   display: flex;
   align-items: center;
