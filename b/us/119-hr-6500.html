@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -193,8 +199,8 @@
   <li class="spine" data-key="rec-H.R. 6500-39" data-kind="record"><span class="row-date">2 September 2026</span> <span class="row-label"><a href="/p/us-20260903-0bcecabf"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-scroll"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Signed by Pres. Trump</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Takes effect (on enactment unless the text sets other dates)</p></li>
   <li class="spine" data-key="rec-H.R. 6500-38" data-kind="record"><span class="row-date">2 September 2026</span> <span class="row-label"><a href="/p/us-20260903-95d53fdb"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-send"/></svg></span>Presented to President</a></span></li>
   <li class="spine" data-key="rec-H.R. 6500-40" data-kind="record"><span class="row-date">2 September 2026</span> <span class="row-label">Became Public Law</span></li>
-  <li class="spine" data-key="rec-H.R. 6500-35" data-kind="record"><span class="row-date">1 September 2026</span> <span class="row-label"><a href="/p/us-20260910-c79f16a1"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Agreed to other chamber&#39;s amendments (370-48)</a></span>
-    <details class="row-run"><summary>5 more actions</summary>
+  <li class="spine" data-key="rec-H.R. 6500-35" data-kind="record"><span class="row-date">1 September 2026</span> <span class="row-label"><a href="/p/us-20260910-c79f16a1"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Agreed to other chamber&#39;s amendments (370-48)</a></span></li>
+  <li class="run"><details class="row-run"><summary>5 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 6500-37" data-kind="record"><span class="row-date">1 September 2026</span> <span class="row-label">Motion to reconsider laid on the table Agreed to without objection.</span></li>
       <li class="detail" data-key="rec-H.R. 6500-34" data-kind="record"><span class="row-date">1 September 2026</span> <span class="row-label">At the conclusion of debate, the Yeas and Nays were demanded and ordered. Pursuant to the provisions of clause 8, rule XX, the chair announced that further proceedings on the motion would be postponed.</span></li>
@@ -202,41 +208,37 @@
       <li class="detail" data-key="rec-H.R. 6500-32" data-kind="record"><span class="row-date">1 September 2026</span> <span class="row-label">Mr. Cole moved that the House suspend the rules and agree to the Senate amendments. (consideration: CR H5377-5385)</span></li>
       <li class="detail" data-key="rec-H.R. 6500-31" data-kind="record"><span class="row-date">10 August 2026</span> <span class="row-label">Message on Senate action sent to the House.</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-H.R. 6500-29" data-kind="record"><span class="row-date">8 August 2026</span> <span class="row-label"><a href="/p/us-20260808-25681a79"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate with amendment (90-6)</a></span>
-    <details class="row-run"><summary>2 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-H.R. 6500-29" data-kind="record"><span class="row-date">8 August 2026</span> <span class="row-label"><a href="/p/us-20260808-25681a79"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate with amendment (90-6)</a></span></li>
+  <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 6500-28" data-kind="record"><span class="row-date">7 August 2026</span> <span class="row-label">Motion by Senator Thune to commit to Senate Committee on Appropriations with instructions to report back forthwith with the following amendment SA 6740 fell when cloture on amendment SA 6732 was invoked in Senate.</span></li>
       <li class="detail" data-key="rec-H.R. 6500-27" data-kind="record"><span class="row-date">7 August 2026</span> <span class="row-label">Considered by Senate. (consideration: CR S4542, S4546-4547, S4553-4555)</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-H.R. 6500-26" data-kind="record"><span class="row-date">5 August 2026</span> <span class="row-label"><a href="/p/us-20260806-8f1f169c"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clock"/></svg></span>Cloture motion filed</a></span></li>
-  <li class="spine" data-key="rec-H.R. 6500-23" data-kind="record"><span class="row-date">5 August 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Motion to proceed agreed to (voice vote)</span>
-    <details class="row-run"><summary>2 more actions</summary>
+  <li class="spine" data-key="rec-H.R. 6500-23" data-kind="record"><span class="row-date">5 August 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Motion to proceed agreed to (voice vote)</span></li>
+  <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 6500-25" data-kind="record"><span class="row-date">5 August 2026</span> <span class="row-label">Motion by Senator Thune to commit to Senate Committee on Appropriations with instructions to report back forthwith with the following amendment SA 6740 made in Senate.</span></li>
       <li class="detail" data-key="rec-H.R. 6500-24" data-kind="record"><span class="row-date">5 August 2026</span> <span class="row-label">Measure laid before Senate by motion. (consideration: CR S4448-4449)</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-H.R. 6500-22" data-kind="record"><span class="row-date">5 August 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Motion to proceed filed</span></li>
   <li class="spine" data-key="rec-H.R. 6500-21" data-kind="record"><span class="row-date">4 August 2026</span> <span class="row-label"><a href="/p/us-20260805-1957d98b"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Motion to proceed filed</a></span></li>
   <li class="spine" data-key="rec-H.R. 6500-20" data-kind="record"><span class="row-date">3 August 2026</span> <span class="row-label"><a href="/p/us-20260804-3db38b6e"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Motion to proceed filed</a></span></li>
   <li class="spine" data-key="rec-H.R. 6500-19" data-kind="record"><span class="row-date">3 August 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clock"/></svg></span>Cloture invoked (on taking up the bill) (89-4)</span></li>
   <li class="spine" data-key="rec-H.R. 6500-18" data-kind="record"><span class="row-date">30 July 2026</span> <span class="row-label"><a href="/p/us-20260731-e3557aad"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clock"/></svg></span>Cloture motion filed</a></span></li>
   <li class="spine" data-key="rec-H.R. 6500-17" data-kind="record"><span class="row-date">30 July 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Motion to proceed filed</span></li>
-  <li class="spine" data-key="rec-H.R. 6500-16" data-kind="record"><span class="row-date">10 February 2026</span> <span class="row-label">Placed on calendar (Senate)</span>
-    <details class="row-run"><summary>2 more actions</summary>
+  <li class="spine" data-key="rec-H.R. 6500-16" data-kind="record"><span class="row-date">10 February 2026</span> <span class="row-label">Placed on calendar (Senate)</span></li>
+  <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 6500-15" data-kind="record"><span class="row-date">9 February 2026</span> <span class="row-label">Read the first time. Placed on Senate Legislative Calendar under Read the First Time.</span></li>
       <li class="detail" data-key="rec-H.R. 6500-14" data-kind="record"><span class="row-date">13 January 2026</span> <span class="row-label">Received in the Senate.</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-H.R. 6500-11" data-kind="record"><span class="row-date">12 January 2026</span> <span class="row-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House with amendment (340-54)</span>
-    <details class="row-run"><summary>6 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-H.R. 6500-11" data-kind="record"><span class="row-date">12 January 2026</span> <span class="row-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House with amendment (340-54)</span></li>
+  <li class="run"><details class="row-run"><summary>6 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 6500-13" data-kind="record"><span class="row-date">12 January 2026</span> <span class="row-label">Motion to reconsider laid on the table Agreed to without objection.</span></li>
       <li class="detail" data-key="rec-H.R. 6500-10" data-kind="record"><span class="row-date">12 January 2026</span> <span class="row-label">Considered as unfinished business. (consideration: CR H646)</span></li>
@@ -245,17 +247,15 @@
       <li class="detail" data-key="rec-H.R. 6500-7" data-kind="record"><span class="row-date">12 January 2026</span> <span class="row-label">Considered under suspension of the rules. (consideration: CR H637-642)</span></li>
       <li class="detail" data-key="rec-H.R. 6500-6" data-kind="record"><span class="row-date">12 January 2026</span> <span class="row-label">Mr. Smith (MO) moved to suspend the rules and pass the bill, as amended.</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-H.R. 6500-4" data-kind="record"><span class="row-date">30 December 2025</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span></li>
-  <li class="spine" data-key="rec-H.R. 6500-5" data-kind="record"><span class="row-date">30 December 2025</span> <span class="row-label">Placed on calendar (House)</span>
-    <details class="row-run"><summary>2 more actions</summary>
+  <li class="spine" data-key="rec-H.R. 6500-5" data-kind="record"><span class="row-date">30 December 2025</span> <span class="row-label">Placed on calendar (House)</span></li>
+  <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 6500-3" data-kind="record"><span class="row-date">10 December 2025</span> <span class="row-label">Ordered to be Reported in the Nature of a Substitute (Amended) by the Yeas and Nays: 37 - 3.</span></li>
       <li class="detail" data-key="rec-H.R. 6500-2" data-kind="record"><span class="row-date">10 December 2025</span> <span class="row-label">Committee Consideration and Mark-up Session Held</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-H.R. 6500-1" data-kind="record"><span class="row-date">9 December 2025</span> <span class="row-label">Referred to committee</span></li>
   <li class="spine" data-key="rec-H.R. 6500-0" data-kind="record"><span class="row-date">9 December 2025</span> <span class="row-label">Introduced in House</span></li>
   </ol>

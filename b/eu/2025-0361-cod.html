@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -191,16 +197,15 @@
   <p class="bill-asof">Record as of 7 October 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
   <li class="spine" data-key="rec-2025/0361(COD)-16" data-kind="record"><span class="row-date">7 October 2026</span> <span class="row-label"><a href="/p/eu-20261007-29ff250f"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-compass"/></svg></span>Committee decision to enter into interinstitutional negotiations confirmed by plenary (Rule 72)</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Trilogue talks with the Council can begin once the Council side has its own mandate. Closed-door rounds follow; timing is not published.</p></li>
-  <li class="spine" data-key="rec-2025/0361(COD)-15" data-kind="record"><span class="row-date">5 October 2026</span> <span class="row-label">Committee decision to enter into interinstitutional negotiations announced in plenary (Rule 72)</span>
-    <details class="row-run"><summary>1 more action</summary>
+  <li class="spine" data-key="rec-2025/0361(COD)-15" data-kind="record"><span class="row-date">5 October 2026</span> <span class="row-label">Committee decision to enter into interinstitutional negotiations announced in plenary (Rule 72)</span></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2025/0361(COD)-14" data-kind="record"><span class="row-date">15 September 2026</span> <span class="row-label">Committee report tabled for plenary, 1st reading</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2025/0361(COD)-13" data-kind="record"><span class="row-date">10 September 2026</span> <span class="row-label"><a href="/p/eu-20260910-043ba487"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-compass"/></svg></span>Committee decision to open interinstitutional negotiations with report adopted in committee</a></span></li>
-  <li class="spine" data-key="rec-2025/0361(COD)-12" data-kind="record"><span class="row-date">10 September 2026</span> <span class="row-label"><a href="/p/eu-20260911-7e12ebc1"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Lead committee adopted its report</a></span>
-    <details class="row-run"><summary>11 more actions</summary>
+  <li class="spine" data-key="rec-2025/0361(COD)-12" data-kind="record"><span class="row-date">10 September 2026</span> <span class="row-label"><a href="/p/eu-20260911-7e12ebc1"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Lead committee adopted its report</a></span></li>
+  <li class="run"><details class="row-run"><summary>11 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2025/0361(COD)-11" data-kind="record"><span class="row-date">24 June 2026</span> <span class="row-label">Adoption of negotiating mandate by Coreper</span></li>
       <li class="detail" data-key="rec-2025/0361(COD)-10" data-kind="record"><span class="row-date">11 June 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
@@ -214,8 +219,7 @@
       <li class="detail" data-key="rec-2025/0361(COD)-2" data-kind="record"><span class="row-date">20 January 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2025/0361(COD)-1" data-kind="record"><span class="row-date">9 December 2025</span> <span class="row-label">Deliberations in Council working party</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2025/0361(COD)-0" data-kind="record"><span class="row-date">20 November 2025</span> <span class="row-label">New legislative proposal</span></li>
   </ol>
 

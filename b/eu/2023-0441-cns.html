@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -190,25 +196,23 @@
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Decision by Parliament</span> <span class="st-date">7 October 2026</span></div>
   <p class="bill-asof">Record as of 7 October 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
-  <li class="spine" data-key="rec-2023/0441(CNS)-8" data-kind="record"><span class="row-date">7 October 2026</span> <span class="row-label"><a href="/p/eu-20261008-b03c0400"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Decision by Parliament</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Now in the Council&#39;s hands: it can adopt the act (usually by unanimity), amend it, or park it indefinitely — consultation sets no deadline.</p>
-    <details class="row-run"><summary>2 more actions</summary>
+  <li class="spine" data-key="rec-2023/0441(CNS)-8" data-kind="record"><span class="row-date">7 October 2026</span> <span class="row-label"><a href="/p/eu-20261008-b03c0400"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Decision by Parliament</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Now in the Council&#39;s hands: it can adopt the act (usually by unanimity), amend it, or park it indefinitely — consultation sets no deadline.</p></li>
+  <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2023/0441(CNS)-9" data-kind="record"><span class="row-date">7 October 2026</span> <span class="row-label">Results of vote in Parliament</span></li>
       <li class="detail" data-key="rec-2023/0441(CNS)-7" data-kind="record"><span class="row-date">29 September 2026</span> <span class="row-label">Committee report tabled for plenary, reconsultation</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2023/0441(CNS)-6" data-kind="record"><span class="row-date">28 September 2026</span> <span class="row-label"><a href="/p/eu-20260930-8f0aed47"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Lead committee adopted its report</a></span></li>
   <li class="spine" data-key="rec-2023/0441(CNS)-5" data-kind="record"><span class="row-date">11 February 2026</span> <span class="row-label">Amended legislative proposal for reconsultation published</span></li>
   <li class="spine" data-key="rec-2023/0441(CNS)-4" data-kind="record"><span class="row-date">11 February 2026</span> <span class="row-label">Formal reconsultation of Parliament</span></li>
-  <li class="spine" data-key="rec-2023/0441(CNS)-2" data-kind="record"><span class="row-date">24 April 2024</span> <span class="row-label">Decision by Parliament</span>
-    <details class="row-run"><summary>2 more actions</summary>
+  <li class="spine" data-key="rec-2023/0441(CNS)-2" data-kind="record"><span class="row-date">24 April 2024</span> <span class="row-label">Decision by Parliament</span></li>
+  <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2023/0441(CNS)-3" data-kind="record"><span class="row-date">24 April 2024</span> <span class="row-label">Results of vote in Parliament</span></li>
       <li class="detail" data-key="rec-2023/0441(CNS)-1" data-kind="record"><span class="row-date">14 March 2024</span> <span class="row-label">Committee referral announced in Parliament</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2023/0441(CNS)-0" data-kind="record"><span class="row-date">6 December 2023</span> <span class="row-label">New legislative proposal</span></li>
   </ol>
 

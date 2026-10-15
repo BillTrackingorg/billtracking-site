@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -193,25 +199,23 @@
   <li class="spine" data-key="rec-S. 603-15" data-kind="record"><span class="row-date">25 September 2026</span> <span class="row-label"><a href="/p/us-20260925-21e0d892"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-scroll"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Signed by Pres. Trump</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Takes effect (on enactment unless the text sets other dates)</p></li>
   <li class="spine" data-key="rec-S. 603-16" data-kind="record"><span class="row-date">25 September 2026</span> <span class="row-label">Became Public Law</span></li>
   <li class="spine" data-key="rec-S. 603-14" data-kind="record"><span class="row-date">22 September 2026</span> <span class="row-label"><a href="/p/us-20260923-e28a5453"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-send"/></svg></span>Presented to President</a></span></li>
-  <li class="spine" data-key="rec-S. 603-11" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label"><a href="/p/us-20260915-61e4d473"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House (voice vote)</a></span>
-    <details class="row-run"><summary>4 more actions</summary>
+  <li class="spine" data-key="rec-S. 603-11" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label"><a href="/p/us-20260915-61e4d473"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House (voice vote)</a></span></li>
+  <li class="run"><details class="row-run"><summary>4 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-S. 603-13" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label">Motion to reconsider laid on the table Agreed to without objection.</span></li>
       <li class="detail" data-key="rec-S. 603-10" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label">DEBATE - The House proceeded with forty minutes of debate on S. 603.</span></li>
       <li class="detail" data-key="rec-S. 603-9" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label">Considered under suspension of the rules. (consideration: CR H5581-5582)</span></li>
       <li class="detail" data-key="rec-S. 603-8" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label">Mr. Westerman moved to suspend the rules and pass the bill.</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-S. 603-3" data-kind="record"><span class="row-date">20 May 2026</span> <span class="row-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (unanimous consent)</span>
-    <details class="row-run"><summary>3 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-S. 603-3" data-kind="record"><span class="row-date">20 May 2026</span> <span class="row-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (unanimous consent)</span></li>
+  <li class="run"><details class="row-run"><summary>3 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-S. 603-7" data-kind="record"><span class="row-date">20 May 2026</span> <span class="row-label">Held at the desk.</span></li>
       <li class="detail" data-key="rec-S. 603-6" data-kind="record"><span class="row-date">20 May 2026</span> <span class="row-label">Received in the House.</span></li>
       <li class="detail" data-key="rec-S. 603-5" data-kind="record"><span class="row-date">20 May 2026</span> <span class="row-label">Message on Senate action sent to the House.</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-S. 603-2" data-kind="record"><span class="row-date">20 May 2026</span> <span class="row-label">Discharged from committee (Senate)</span></li>
   <li class="spine" data-key="rec-S. 603-1" data-kind="record"><span class="row-date">13 February 2025</span> <span class="row-label">Referred to committee</span></li>
   <li class="spine" data-key="rec-S. 603-0" data-kind="record"><span class="row-date">13 February 2025</span> <span class="row-label">Introduced in Senate</span></li>

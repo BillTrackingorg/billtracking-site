@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -191,24 +197,22 @@
   <p class="bill-asof">Record as of 16 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
   <li class="spine" data-key="rec-2025/0052(COD)-9" data-kind="record"><span class="row-date">16 September 2026</span> <span class="row-label">Committee decision to enter into interinstitutional negotiations confirmed by plenary (Rule 72)</span></li>
-  <li class="spine" data-key="rec-2025/0052(COD)-8" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label"><a href="/p/eu-20260916-94f974ab"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-compass"/></svg></span>Committee decision to enter into interinstitutional negotiations announced in plenary (Rule 72)</a></span>
-    <details class="row-run"><summary>1 more action</summary>
+  <li class="spine" data-key="rec-2025/0052(COD)-8" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label"><a href="/p/eu-20260916-94f974ab"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-compass"/></svg></span>Committee decision to enter into interinstitutional negotiations announced in plenary (Rule 72)</a></span></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2025/0052(COD)-7" data-kind="record"><span class="row-date">23 July 2026</span> <span class="row-label">Committee report tabled for plenary, 1st reading</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2025/0052(COD)-6" data-kind="record"><span class="row-date">15 July 2026</span> <span class="row-label">Committee decision to open interinstitutional negotiations with report adopted in committee</span></li>
-  <li class="spine" data-key="rec-2025/0052(COD)-5" data-kind="record"><span class="row-date">15 July 2026</span> <span class="row-label">Lead committee adopted its report</span>
-    <details class="row-run"><summary>4 more actions</summary>
+  <li class="spine" data-key="rec-2025/0052(COD)-5" data-kind="record"><span class="row-date">15 July 2026</span> <span class="row-label">Lead committee adopted its report</span></li>
+  <li class="run"><details class="row-run"><summary>4 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2025/0052(COD)-4" data-kind="record"><span class="row-date">15 October 2025</span> <span class="row-label">Adoption of negotiating mandate by Coreper</span></li>
       <li class="detail" data-key="rec-2025/0052(COD)-3" data-kind="record"><span class="row-date">24 September 2025</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2025/0052(COD)-2" data-kind="record"><span class="row-date">23 July 2025</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2025/0052(COD)-1" data-kind="record"><span class="row-date">31 March 2025</span> <span class="row-label">Committee referral announced in Parliament, 1st reading</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2025/0052(COD)-0" data-kind="record"><span class="row-date">11 March 2025</span> <span class="row-label">New legislative proposal</span></li>
   </ol>
 

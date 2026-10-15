@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -190,8 +196,8 @@
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-x"/></svg></span>Tabled (232-147)</span> <span class="st-date">15 September 2026</span></div>
   <p class="bill-asof">Record as of 15 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
-  <li class="spine" data-key="rec-H.Res. 1486-6" data-kind="record"><span class="row-date">15 September 2026</span> <span class="row-label"><a href="/p/us-20260916-63a8009c"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-x"/></svg></span>Tabled (232-147)</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Effectively dead (a new motion could revive it)</p>
-    <details class="row-run"><summary>5 more actions</summary>
+  <li class="spine" data-key="rec-H.Res. 1486-6" data-kind="record"><span class="row-date">15 September 2026</span> <span class="row-label"><a href="/p/us-20260916-63a8009c"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-x"/></svg></span>Tabled (232-147)</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Effectively dead (a new motion could revive it)</p></li>
+  <li class="run"><details class="row-run"><summary>5 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.Res. 1486-7" data-kind="record"><span class="row-date">15 September 2026</span> <span class="row-label">Motion to reconsider laid on the table Agreed to without objection.</span></li>
       <li class="detail" data-key="rec-H.Res. 1486-5" data-kind="record"><span class="row-date">15 September 2026</span> <span class="row-label">Mr. Fry moved to table the measure.</span></li>
@@ -199,8 +205,7 @@
       <li class="detail" data-key="rec-H.Res. 1486-3" data-kind="record"><span class="row-date">15 September 2026</span> <span class="row-label">QUESTION OF THE PRIVILEGES OF THE HOUSE - Mr. Green (TX) rose to a question of the privileges of the House and offered the resolution. The Chair directed the Clerk to report the resolution. Upon examination of the resolution, the Chair determined that the resolution did constitute a question of the privileges of the House.</span></li>
       <li class="detail" data-key="rec-H.Res. 1486-2" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label">NOTIFICATION OF INTENT TO OFFER RESOLUTION - Mr. Green (TX) notified the House of his intent to offer a privileged resolution pursuant to clause 2(a)(1) of rule IX. The Chair announced that a determination will be made at the time designated for consideration of the resolution.</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-H.Res. 1486-1" data-kind="record"><span class="row-date">24 August 2026</span> <span class="row-label">Referred to committee</span></li>
   <li class="spine" data-key="rec-H.Res. 1486-0" data-kind="record"><span class="row-date">24 August 2026</span> <span class="row-label">Submitted in House</span></li>
   </ol>

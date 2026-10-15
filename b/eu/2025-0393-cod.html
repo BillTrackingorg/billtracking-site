@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -190,16 +196,15 @@
   <div class="bill-status"><span class="st-label">Parliament adopted its 1st-reading position</span> <span class="st-date">6 October 2026</span></div>
   <p class="bill-asof">Record as of 6 October 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
-  <li class="spine" data-key="rec-2025/0393(COD)-18" data-kind="record"><span class="row-date">6 October 2026</span> <span class="row-label">Parliament adopted its 1st-reading position</span>
-    <details class="row-run"><summary>2 more actions</summary>
+  <li class="spine" data-key="rec-2025/0393(COD)-18" data-kind="record"><span class="row-date">6 October 2026</span> <span class="row-label">Parliament adopted its 1st-reading position</span></li>
+  <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2025/0393(COD)-19" data-kind="record"><span class="row-date">6 October 2026</span> <span class="row-label">Results of vote in Parliament</span></li>
       <li class="detail" data-key="rec-2025/0393(COD)-17" data-kind="record"><span class="row-date">15 September 2026</span> <span class="row-label">Committee report tabled for plenary, 1st reading</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-2025/0393(COD)-16" data-kind="record"><span class="row-date">10 September 2026</span> <span class="row-label"><a href="/p/eu-20260910-c0d39dca"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Lead committee adopted its report</a></span>
-    <details class="row-run"><summary>15 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-2025/0393(COD)-16" data-kind="record"><span class="row-date">10 September 2026</span> <span class="row-label"><a href="/p/eu-20260910-c0d39dca"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Lead committee adopted its report</a></span></li>
+  <li class="run"><details class="row-run"><summary>15 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2025/0393(COD)-15" data-kind="record"><span class="row-date">1 July 2026</span> <span class="row-label">Deliberations in Coreper</span></li>
       <li class="detail" data-key="rec-2025/0393(COD)-14" data-kind="record"><span class="row-date">24 June 2026</span> <span class="row-label">Adoption of negotiating mandate by Coreper</span></li>
@@ -217,8 +222,7 @@
       <li class="detail" data-key="rec-2025/0393(COD)-2" data-kind="record"><span class="row-date">19 January 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2025/0393(COD)-1" data-kind="record"><span class="row-date">9 January 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2025/0393(COD)-0" data-kind="record"><span class="row-date">10 December 2025</span> <span class="row-label">New legislative proposal</span></li>
   </ol>
 

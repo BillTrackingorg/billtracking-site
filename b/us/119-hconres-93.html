@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -191,8 +197,8 @@
   <p class="bill-asof">Record as of 16 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
   <li class="detail" data-key="rec-H.Con.Res. 93-12" data-kind="record"><span class="row-date">16 September 2026</span> <span class="row-label">Received in the Senate and referred to the Committee on Foreign Relations.</span></li>
-  <li class="spine" data-key="rec-H.Con.Res. 93-9" data-kind="record"><span class="row-date">15 September 2026</span> <span class="row-label"><a href="/p/us-20260916-1f2d891a"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House (220-204)</a></span>
-    <details class="row-run"><summary>8 more actions</summary>
+  <li class="spine" data-key="rec-H.Con.Res. 93-9" data-kind="record"><span class="row-date">15 September 2026</span> <span class="row-label"><a href="/p/us-20260916-1f2d891a"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House (220-204)</a></span></li>
+  <li class="run"><details class="row-run"><summary>8 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.Con.Res. 93-11" data-kind="record"><span class="row-date">15 September 2026</span> <span class="row-label">Motion to reconsider laid on the table Agreed to without objection.</span></li>
       <li class="detail" data-key="rec-H.Con.Res. 93-8" data-kind="record"><span class="row-date">15 September 2026</span> <span class="row-label">Considered as unfinished business. (consideration: CR H5826-5827)</span></li>
@@ -203,8 +209,7 @@
       <li class="detail" data-key="rec-H.Con.Res. 93-3" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label">Consideration initiated pursuant to a previous order of the House.</span></li>
       <li class="detail" data-key="rec-H.Con.Res. 93-2" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label">ORDER OF PROCEDURE - Mr. Mast asked unanimous consent that, it be in order at any time to consider H. Con. Res. 93 in the House if called up by the chair of the Committee on Foreign Affairs or his designee; that the concurrent resolution be considered as read; and that the previous question be considered as ordered on the concurrent resolution to adoption without intervening motion except for one hour of debate equally divided and controlled by Representative Mast of Florida and Representative Moulton of Massachusetts or their respective designees. Agreed to without objection.</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-H.Con.Res. 93-1" data-kind="record"><span class="row-date">28 April 2026</span> <span class="row-label">Referred to committee</span></li>
   <li class="spine" data-key="rec-H.Con.Res. 93-0" data-kind="record"><span class="row-date">28 April 2026</span> <span class="row-label">Submitted in House</span></li>
   </ol>

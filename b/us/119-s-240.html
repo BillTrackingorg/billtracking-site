@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -190,22 +196,20 @@
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-send"/></svg></span>Presented to President</span> <span class="st-date">5 October 2026</span></div>
   <p class="bill-asof">Record as of 5 October 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
-  <li class="spine" data-key="rec-S. 240-20" data-kind="record"><span class="row-date">5 October 2026</span> <span class="row-label"><a href="/p/us-20261006-d6ce7f47"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-send"/></svg></span>Presented to President</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>President has 10 days (Sundays excepted): sign, veto, or it becomes law unsigned (pocket veto if adjournment prevents return)</p>
-    <details class="row-run"><summary>1 more action</summary>
+  <li class="spine" data-key="rec-S. 240-20" data-kind="record"><span class="row-date">5 October 2026</span> <span class="row-label"><a href="/p/us-20261006-d6ce7f47"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-send"/></svg></span>Presented to President</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>President has 10 days (Sundays excepted): sign, veto, or it becomes law unsigned (pocket veto if adjournment prevents return)</p></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-S. 240-19" data-kind="record"><span class="row-date">28 September 2026</span> <span class="row-label">Message on Senate action sent to the House.</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-S. 240-17" data-kind="record"><span class="row-date">24 September 2026</span> <span class="row-label"><a href="/p/us-20260925-2ecbac8c"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Agreed to other chamber&#39;s amendments (unanimous consent)</a></span>
-    <details class="row-run"><summary>1 more action</summary>
+    </details></li>
+  <li class="spine" data-key="rec-S. 240-17" data-kind="record"><span class="row-date">24 September 2026</span> <span class="row-label"><a href="/p/us-20260925-2ecbac8c"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Agreed to other chamber&#39;s amendments (unanimous consent)</a></span></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-S. 240-16" data-kind="record"><span class="row-date">15 September 2026</span> <span class="row-label">Message on House action received in Senate and at desk: House amendment to Senate bill.</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-S. 240-13" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label"><a href="/p/us-20260915-d288d5a3"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House with amendment (voice vote)</a></span>
-    <details class="row-run"><summary>7 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-S. 240-13" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label"><a href="/p/us-20260915-d288d5a3"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House with amendment (voice vote)</a></span></li>
+  <li class="run"><details class="row-run"><summary>7 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-S. 240-15" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label">Motion to reconsider laid on the table Agreed to without objection.</span></li>
       <li class="detail" data-key="rec-S. 240-12" data-kind="record"><span class="row-date">14 September 2026</span> <span class="row-label">DEBATE - The House proceeded with forty minutes of debate on S. 240.</span></li>
@@ -215,17 +219,15 @@
       <li class="detail" data-key="rec-S. 240-8" data-kind="record"><span class="row-date">15 December 2025</span> <span class="row-label">Received in the House.</span></li>
       <li class="detail" data-key="rec-S. 240-7" data-kind="record"><span class="row-date">15 December 2025</span> <span class="row-label">Message on Senate action sent to the House.</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-S. 240-5" data-kind="record"><span class="row-date">11 December 2025</span> <span class="row-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (unanimous consent)</span></li>
   <li class="spine" data-key="rec-S. 240-3" data-kind="record"><span class="row-date">4 November 2025</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span></li>
-  <li class="spine" data-key="rec-S. 240-4" data-kind="record"><span class="row-date">4 November 2025</span> <span class="row-label">Placed on calendar (Senate)</span>
-    <details class="row-run"><summary>1 more action</summary>
+  <li class="spine" data-key="rec-S. 240-4" data-kind="record"><span class="row-date">4 November 2025</span> <span class="row-label">Placed on calendar (Senate)</span></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-S. 240-2" data-kind="record"><span class="row-date">5 March 2025</span> <span class="row-label">Committee on Indian Affairs. Ordered to be reported without amendment favorably.</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-S. 240-1" data-kind="record"><span class="row-date">24 January 2025</span> <span class="row-label">Referred to committee</span></li>
   <li class="spine" data-key="rec-S. 240-0" data-kind="record"><span class="row-date">24 January 2025</span> <span class="row-label">Introduced in Senate</span></li>
   </ol>

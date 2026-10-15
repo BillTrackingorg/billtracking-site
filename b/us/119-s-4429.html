@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -191,13 +197,12 @@
   <p class="bill-asof">Record as of 22 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
   <li class="spine" data-key="rec-S. 4429-3" data-kind="record"><span class="row-date">22 September 2026</span> <span class="row-label"><a href="/p/us-20260923-d842bdd3"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Floor scheduling (leadership decides if and when it gets a vote)</p></li>
-  <li class="spine" data-key="rec-S. 4429-4" data-kind="record"><span class="row-date">22 September 2026</span> <span class="row-label">Placed on calendar (Senate)</span>
-    <details class="row-run"><summary>1 more action</summary>
+  <li class="spine" data-key="rec-S. 4429-4" data-kind="record"><span class="row-date">22 September 2026</span> <span class="row-label">Placed on calendar (Senate)</span></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-S. 4429-2" data-kind="record"><span class="row-date">22 July 2026</span> <span class="row-label">Committee on Commerce, Science, and Transportation. Ordered to be reported with an amendment in the nature of a substitute favorably.</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-S. 4429-1" data-kind="record"><span class="row-date">29 April 2026</span> <span class="row-label">Referred to committee</span></li>
   <li class="spine" data-key="rec-S. 4429-0" data-kind="record"><span class="row-date">29 April 2026</span> <span class="row-label">Introduced in Senate</span></li>
   </ol>

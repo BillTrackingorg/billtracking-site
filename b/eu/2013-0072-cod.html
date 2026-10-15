@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -193,38 +199,35 @@
   <li class="spine" data-key="rec-2013/0072(COD)-75" data-kind="record"><span class="row-date">2 October 2026</span> <span class="row-label"><a href="/p/eu-20261002-52494c2a"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-scroll"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Published in the Official Journal</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>It&#39;s law. It enters into force on the date it specifies or, if none, the 20th day after publication in the Official Journal.</p></li>
   <li class="spine" data-key="rec-2013/0072(COD)-74" data-kind="record"><span class="row-date">16 September 2026</span> <span class="row-label"><a href="/p/eu-20260916-f832ec21"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-signature"/></svg></span>Signed by the European Parliament and the Council</a></span></li>
   <li class="spine" data-key="rec-2013/0072(COD)-73" data-kind="record"><span class="row-date">13 July 2026</span> <span class="row-label">The Council&#39;s third-reading decision on the joint text</span></li>
-  <li class="spine" data-key="rec-2013/0072(COD)-71" data-kind="record"><span class="row-date">7 July 2026</span> <span class="row-label">Parliament&#39;s third-reading decision on the joint text</span>
-    <details class="row-run"><summary>2 more actions</summary>
+  <li class="spine" data-key="rec-2013/0072(COD)-71" data-kind="record"><span class="row-date">7 July 2026</span> <span class="row-label">Parliament&#39;s third-reading decision on the joint text</span></li>
+  <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2013/0072(COD)-72" data-kind="record"><span class="row-date">7 July 2026</span> <span class="row-label">Results of vote in Parliament</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-70" data-kind="record"><span class="row-date">6 July 2026</span> <span class="row-label">Debate in Parliament</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2013/0072(COD)-69" data-kind="record"><span class="row-date">1 July 2026</span> <span class="row-label">Report tabled for plenary, 3rd reading</span></li>
   <li class="spine" data-key="rec-2013/0072(COD)-68" data-kind="record"><span class="row-date">15 June 2026</span> <span class="row-label">Joint text approved by Conciliation Committee co-chairs</span></li>
-  <li class="spine" data-key="rec-2013/0072(COD)-67" data-kind="record"><span class="row-date">15 June 2026</span> <span class="row-label">Final decision by Conciliation Committee</span>
-    <details class="row-run"><summary>4 more actions</summary>
+  <li class="spine" data-key="rec-2013/0072(COD)-67" data-kind="record"><span class="row-date">15 June 2026</span> <span class="row-label">Final decision by Conciliation Committee</span></li>
+  <li class="run"><details class="row-run"><summary>4 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2013/0072(COD)-66" data-kind="record"><span class="row-date">20 May 2026</span> <span class="row-label">Deliberations in Coreper</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-65" data-kind="record"><span class="row-date">13 May 2026</span> <span class="row-label">Deliberations in Coreper</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-64" data-kind="record"><span class="row-date">7 May 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-63" data-kind="record"><span class="row-date">23 April 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-2013/0072(COD)-62" data-kind="record"><span class="row-date">20 April 2026</span> <span class="row-label">Formal meeting of Conciliation Committee</span>
-    <details class="row-run"><summary>4 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-2013/0072(COD)-62" data-kind="record"><span class="row-date">20 April 2026</span> <span class="row-label">Formal meeting of Conciliation Committee</span></li>
+  <li class="run"><details class="row-run"><summary>4 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2013/0072(COD)-61" data-kind="record"><span class="row-date">9 April 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-60" data-kind="record"><span class="row-date">31 March 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-59" data-kind="record"><span class="row-date">26 March 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-58" data-kind="record"><span class="row-date">25 March 2026</span> <span class="row-label">Deliberations in Coreper</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-2013/0072(COD)-57" data-kind="record"><span class="row-date">24 March 2026</span> <span class="row-label">Parliament&#39;s amendments rejected by Council</span>
-    <details class="row-run"><summary>7 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-2013/0072(COD)-57" data-kind="record"><span class="row-date">24 March 2026</span> <span class="row-label">Parliament&#39;s amendments rejected by Council</span></li>
+  <li class="run"><details class="row-run"><summary>7 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2013/0072(COD)-56" data-kind="record"><span class="row-date">13 March 2026</span> <span class="row-label">Deliberations in Coreper</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-55" data-kind="record"><span class="row-date">12 March 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
@@ -234,19 +237,17 @@
       <li class="detail" data-key="rec-2013/0072(COD)-51" data-kind="record"><span class="row-date">19 February 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-50" data-kind="record"><span class="row-date">29 January 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-2013/0072(COD)-48" data-kind="record"><span class="row-date">21 January 2026</span> <span class="row-label">Parliament decided at 2nd reading</span>
-    <details class="row-run"><summary>3 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-2013/0072(COD)-48" data-kind="record"><span class="row-date">21 January 2026</span> <span class="row-label">Parliament decided at 2nd reading</span></li>
+  <li class="run"><details class="row-run"><summary>3 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2013/0072(COD)-49" data-kind="record"><span class="row-date">21 January 2026</span> <span class="row-label">Results of vote in Parliament</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-47" data-kind="record"><span class="row-date">20 January 2026</span> <span class="row-label">Debate in Parliament</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-46" data-kind="record"><span class="row-date">13 January 2026</span> <span class="row-label">Committee recommendation tabled for plenary, 2nd reading</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-2013/0072(COD)-45" data-kind="record"><span class="row-date">12 January 2026</span> <span class="row-label">Lead committee adopted its 2nd-reading recommendation</span>
-    <details class="row-run"><summary>16 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-2013/0072(COD)-45" data-kind="record"><span class="row-date">12 January 2026</span> <span class="row-label">Lead committee adopted its 2nd-reading recommendation</span></li>
+  <li class="run"><details class="row-run"><summary>16 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2013/0072(COD)-44" data-kind="record"><span class="row-date">12 December 2025</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-43" data-kind="record"><span class="row-date">3 December 2025</span> <span class="row-label">Deliberations in Coreper</span></li>
@@ -265,10 +266,9 @@
       <li class="detail" data-key="rec-2013/0072(COD)-30" data-kind="record"><span class="row-date">10 October 2025</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-29" data-kind="record"><span class="row-date">9 October 2025</span> <span class="row-label">Committee referral announced in Parliament, 2nd reading</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-2013/0072(COD)-28" data-kind="record"><span class="row-date">2 October 2025</span> <span class="row-label">Council adopted its 1st-reading position</span>
-    <details class="row-run"><summary>14 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-2013/0072(COD)-28" data-kind="record"><span class="row-date">2 October 2025</span> <span class="row-label">Council adopted its 1st-reading position</span></li>
+  <li class="run"><details class="row-run"><summary>14 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2013/0072(COD)-27" data-kind="record"><span class="row-date">11 September 2025</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-26" data-kind="record"><span class="row-date">16 July 2025</span> <span class="row-label">Deliberations in Council working party</span></li>
@@ -285,27 +285,24 @@
       <li class="detail" data-key="rec-2013/0072(COD)-15" data-kind="record"><span class="row-date">3 April 2025</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-14" data-kind="record"><span class="row-date">27 November 2024</span> <span class="row-label">Deliberations in Coreper</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2013/0072(COD)-13" data-kind="record"><span class="row-date">13 November 2024</span> <span class="row-label">Resumption of business from the previous parliamentary term</span></li>
-  <li class="spine" data-key="rec-2013/0072(COD)-12" data-kind="record"><span class="row-date">9 October 2019</span> <span class="row-label">Negotiating mandate for trilogue talks</span>
-    <details class="row-run"><summary>1 more action</summary>
+  <li class="spine" data-key="rec-2013/0072(COD)-12" data-kind="record"><span class="row-date">9 October 2019</span> <span class="row-label">Negotiating mandate for trilogue talks</span></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2013/0072(COD)-11" data-kind="record"><span class="row-date">5 June 2014</span> <span class="row-label">Debate in Council</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-2013/0072(COD)-8" data-kind="record"><span class="row-date">5 February 2014</span> <span class="row-label">Parliament adopted its 1st-reading position</span>
-    <details class="row-run"><summary>3 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-2013/0072(COD)-8" data-kind="record"><span class="row-date">5 February 2014</span> <span class="row-label">Parliament adopted its 1st-reading position</span></li>
+  <li class="run"><details class="row-run"><summary>3 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2013/0072(COD)-10" data-kind="record"><span class="row-date">5 February 2014</span> <span class="row-label">Debate in Parliament</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-9" data-kind="record"><span class="row-date">5 February 2014</span> <span class="row-label">Results of vote in Parliament</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-7" data-kind="record"><span class="row-date">22 January 2014</span> <span class="row-label">Committee report tabled for plenary, 1st reading</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-2013/0072(COD)-6" data-kind="record"><span class="row-date">17 December 2013</span> <span class="row-label">Lead committee adopted its report</span>
-    <details class="row-run"><summary>5 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-2013/0072(COD)-6" data-kind="record"><span class="row-date">17 December 2013</span> <span class="row-label">Lead committee adopted its report</span></li>
+  <li class="run"><details class="row-run"><summary>5 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2013/0072(COD)-5" data-kind="record"><span class="row-date">5 December 2013</span> <span class="row-label">Debate in Council</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-4" data-kind="record"><span class="row-date">10 October 2013</span> <span class="row-label">Debate in Council</span></li>
@@ -313,8 +310,7 @@
       <li class="detail" data-key="rec-2013/0072(COD)-2" data-kind="record"><span class="row-date">6 June 2013</span> <span class="row-label">Debate in Council</span></li>
       <li class="detail" data-key="rec-2013/0072(COD)-1" data-kind="record"><span class="row-date">16 April 2013</span> <span class="row-label">Committee referral announced in Parliament, 1st reading</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2013/0072(COD)-0" data-kind="record"><span class="row-date">13 March 2013</span> <span class="row-label">New legislative proposal</span></li>
   </ol>
 

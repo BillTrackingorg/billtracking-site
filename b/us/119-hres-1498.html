@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -190,8 +196,8 @@
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Agreed to (413-2)</span> <span class="st-date">1 September 2026</span></div>
   <p class="bill-asof">Record as of 1 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
-  <li class="spine" data-key="rec-H.Res. 1498-8" data-kind="record"><span class="row-date">1 September 2026</span> <span class="row-label"><a href="/p/us-20260910-a68f44c6"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Agreed to (413-2)</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Policy adoption (resolutions don&#39;t become law)</p>
-    <details class="row-run"><summary>7 more actions</summary>
+  <li class="spine" data-key="rec-H.Res. 1498-8" data-kind="record"><span class="row-date">1 September 2026</span> <span class="row-label"><a href="/p/us-20260910-a68f44c6"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Agreed to (413-2)</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Policy adoption (resolutions don&#39;t become law)</p></li>
+  <li class="run"><details class="row-run"><summary>7 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.Res. 1498-10" data-kind="record"><span class="row-date">1 September 2026</span> <span class="row-label">Motion to reconsider laid on the table Agreed to without objection.</span></li>
       <li class="detail" data-key="rec-H.Res. 1498-7" data-kind="record"><span class="row-date">1 September 2026</span> <span class="row-label">Considered as unfinished business. (consideration: CR H5409-5410)</span></li>
@@ -201,8 +207,7 @@
       <li class="detail" data-key="rec-H.Res. 1498-3" data-kind="record"><span class="row-date">1 September 2026</span> <span class="row-label">Consideration initiated pursuant to a previous order. (consideration: CR H5389-5393)</span></li>
       <li class="detail" data-key="rec-H.Res. 1498-2" data-kind="record"><span class="row-date">1 September 2026</span> <span class="row-label">ORDER OF PROCEDURE - Mr. Guest asked unanimous consent that it be in order at any time to consider H. Res. 1498 in the House without intervention of any point of order if called up by the chair of the Committee on Ethics or his designee; that the resolution be considered as read; and that the previous question be considered as ordered on the resolution to adoption without intervening motion or demand for division of the question except for one hour of debate equally divided and controlled by Representative Guest of Mississippi and Representative Edwards of North Carolina, or their respective designees. Agreed to without objection.</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-H.Res. 1498-0" data-kind="record"><span class="row-date">3 August 2026</span> <span class="row-label"><a href="/p/us-20260910-1b8f0ab0"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</a></span></li>
   <li class="spine" data-key="rec-H.Res. 1498-1" data-kind="record"><span class="row-date">3 August 2026</span> <span class="row-label">Placed on calendar (House)</span></li>
   </ol>

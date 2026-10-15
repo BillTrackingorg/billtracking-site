@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -191,15 +197,14 @@
   <p class="bill-asof">Record as of 28 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
   <li class="spine" data-key="rec-H.R. 997-16" data-kind="record"><span class="row-date">28 September 2026</span> <span class="row-label"><a href="/p/us-20260929-4dc1d275"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (unanimous consent)</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Presidential review (±10 days)</p></li>
-  <li class="spine" data-key="rec-H.R. 997-15" data-kind="record"><span class="row-date">28 September 2026</span> <span class="row-label">Discharged from committee (Senate)</span>
-    <details class="row-run"><summary>1 more action</summary>
+  <li class="spine" data-key="rec-H.R. 997-15" data-kind="record"><span class="row-date">28 September 2026</span> <span class="row-label">Discharged from committee (Senate)</span></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 997-14" data-kind="record"><span class="row-date">1 April 2025</span> <span class="row-label">Received in the Senate and Read twice and referred to the Committee on Finance.</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-H.R. 997-11" data-kind="record"><span class="row-date">31 March 2025</span> <span class="row-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House with amendment (385-0)</span>
-    <details class="row-run"><summary>6 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-H.R. 997-11" data-kind="record"><span class="row-date">31 March 2025</span> <span class="row-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House with amendment (385-0)</span></li>
+  <li class="run"><details class="row-run"><summary>6 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 997-13" data-kind="record"><span class="row-date">31 March 2025</span> <span class="row-label">Motion to reconsider laid on the table Agreed to without objection.</span></li>
       <li class="detail" data-key="rec-H.R. 997-10" data-kind="record"><span class="row-date">31 March 2025</span> <span class="row-label">Considered as unfinished business. (consideration: CR H1356-1357)</span></li>
@@ -208,17 +213,15 @@
       <li class="detail" data-key="rec-H.R. 997-7" data-kind="record"><span class="row-date">31 March 2025</span> <span class="row-label">Considered under suspension of the rules. (consideration: CR H1349-1351)</span></li>
       <li class="detail" data-key="rec-H.R. 997-6" data-kind="record"><span class="row-date">31 March 2025</span> <span class="row-label">Mr. Smith (MO) moved to suspend the rules and pass the bill, as amended.</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-H.R. 997-4" data-kind="record"><span class="row-date">27 March 2025</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span></li>
-  <li class="spine" data-key="rec-H.R. 997-5" data-kind="record"><span class="row-date">27 March 2025</span> <span class="row-label">Placed on calendar (House)</span>
-    <details class="row-run"><summary>2 more actions</summary>
+  <li class="spine" data-key="rec-H.R. 997-5" data-kind="record"><span class="row-date">27 March 2025</span> <span class="row-label">Placed on calendar (House)</span></li>
+  <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 997-3" data-kind="record"><span class="row-date">12 February 2025</span> <span class="row-label">Ordered to be Reported in the Nature of a Substitute (Amended) by the Yeas and Nays: 43 - 0.</span></li>
       <li class="detail" data-key="rec-H.R. 997-2" data-kind="record"><span class="row-date">12 February 2025</span> <span class="row-label">Committee Consideration and Mark-up Session Held</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-H.R. 997-1" data-kind="record"><span class="row-date">5 February 2025</span> <span class="row-label">Referred to committee</span></li>
   <li class="spine" data-key="rec-H.R. 997-0" data-kind="record"><span class="row-date">5 February 2025</span> <span class="row-label">Introduced in House</span></li>
   </ol>

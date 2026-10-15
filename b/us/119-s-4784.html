@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -191,22 +197,20 @@
   <p class="bill-asof">Record as of 27 July 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
   <li class="spine" data-key="rec-S. 4784-10" data-kind="record"><span class="row-date">27 July 2026</span> <span class="row-label"><a href="/p/us-20260728-b6cc4d82"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Motion to proceed filed</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>The Senate votes on taking it up (the motion can be withdrawn)</p></li>
-  <li class="spine" data-key="rec-S. 4784-8" data-kind="record"><span class="row-date">23 July 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Motion to proceed filed</span>
-    <details class="row-run"><summary>1 more action</summary>
+  <li class="spine" data-key="rec-S. 4784-8" data-kind="record"><span class="row-date">23 July 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Motion to proceed filed</span></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-S. 4784-9" data-kind="record"><span class="row-date">23 July 2026</span> <span class="row-label">Motion to proceed to consideration of measure withdrawn in Senate.</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-S. 4784-7" data-kind="record"><span class="row-date">20 July 2026</span> <span class="row-label"><a href="/p/us-20260721-31bc01c9"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Motion to proceed filed</a></span></li>
   <li class="spine" data-key="rec-S. 4784-6" data-kind="record"><span class="row-date">14 July 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Motion to proceed filed</span></li>
-  <li class="spine" data-key="rec-S. 4784-4" data-kind="record"><span class="row-date">14 July 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clock"/></svg></span>Cloture not invoked (on taking up the bill) (50-46)</span>
-    <details class="row-run"><summary>1 more action</summary>
+  <li class="spine" data-key="rec-S. 4784-4" data-kind="record"><span class="row-date">14 July 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clock"/></svg></span>Cloture not invoked (on taking up the bill) (50-46)</span></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-S. 4784-5" data-kind="record"><span class="row-date">14 July 2026</span> <span class="row-label">Motion by Senator Thune to reconsider the vote by which cloture on the motion to proceed to the measure was not invoked (Record Vote No. 195) entered in Senate.</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-S. 4784-3" data-kind="record"><span class="row-date">24 June 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clock"/></svg></span>Cloture motion filed</span></li>
   <li class="spine" data-key="rec-S. 4784-2" data-kind="record"><span class="row-date">24 June 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Motion to proceed filed</span></li>
   <li class="spine" data-key="rec-S. 4784-0" data-kind="record"><span class="row-date">15 June 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span></li>

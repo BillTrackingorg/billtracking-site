@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -193,19 +199,18 @@
   <li class="spine" data-key="rec-2025/0359(COD)-34" data-kind="record"><span class="row-date">24 July 2026</span> <span class="row-label"><a href="/p/eu-20260725-3b6b648f"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-scroll"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Published in the Official Journal</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>It&#39;s law. It enters into force on the date it specifies or, if none, the 20th day after publication in the Official Journal.</p></li>
   <li class="spine" data-key="rec-2025/0359(COD)-33" data-kind="record"><span class="row-date">8 July 2026</span> <span class="row-label">Signed by the European Parliament and the Council</span></li>
   <li class="spine" data-key="rec-2025/0359(COD)-32" data-kind="record"><span class="row-date">29 June 2026</span> <span class="row-label">Adopted — Council gave the final green light</span></li>
-  <li class="spine" data-key="rec-2025/0359(COD)-30" data-kind="record"><span class="row-date">16 June 2026</span> <span class="row-label">Parliament adopted its 1st-reading position <span class="row-tally">(423-57, 174 abstentions)</span></span>
-    <details class="row-run"><summary>4 more actions</summary>
+  <li class="spine" data-key="rec-2025/0359(COD)-30" data-kind="record"><span class="row-date">16 June 2026</span> <span class="row-label">Parliament adopted its 1st-reading position <span class="row-tally">(423-57, 174 abstentions)</span></span></li>
+  <li class="run"><details class="row-run"><summary>4 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2025/0359(COD)-31" data-kind="record"><span class="row-date">16 June 2026</span> <span class="row-label">Results of vote in Parliament</span></li>
       <li class="detail" data-key="rec-2025/0359(COD)-29" data-kind="record"><span class="row-date">15 June 2026</span> <span class="row-label">Debate in Parliament</span></li>
       <li class="detail" data-key="rec-2025/0359(COD)-28" data-kind="record"><span class="row-date">12 June 2026</span> <span class="row-label">Deliberations in Coreper</span></li>
       <li class="detail" data-key="rec-2025/0359(COD)-27" data-kind="record"><span class="row-date">10 June 2026</span> <span class="row-label">Deliberations in Coreper</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2025/0359(COD)-26" data-kind="record"><span class="row-date">2 June 2026</span> <span class="row-label">Lead committee approved the trilogue deal</span></li>
-  <li class="spine" data-key="rec-2025/0359(COD)-25" data-kind="record"><span class="row-date">13 May 2026</span> <span class="row-label">Endorsement of the provisional agreement by Coreper</span>
-    <details class="row-run"><summary>6 more actions</summary>
+  <li class="spine" data-key="rec-2025/0359(COD)-25" data-kind="record"><span class="row-date">13 May 2026</span> <span class="row-label">Endorsement of the provisional agreement by Coreper</span></li>
+  <li class="run"><details class="row-run"><summary>6 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2025/0359(COD)-24" data-kind="record"><span class="row-date">7 May 2026</span> <span class="row-label">European Committee of the Regions’ opinion</span></li>
       <li class="detail" data-key="rec-2025/0359(COD)-23" data-kind="record"><span class="row-date">6 May 2026</span> <span class="row-label">Deliberations in Coreper</span></li>
@@ -214,19 +219,17 @@
       <li class="detail" data-key="rec-2025/0359(COD)-20" data-kind="record"><span class="row-date">20 April 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2025/0359(COD)-19" data-kind="record"><span class="row-date">1 April 2026</span> <span class="row-label">Deliberations in Council working party</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2025/0359(COD)-18" data-kind="record"><span class="row-date">26 March 2026</span> <span class="row-label">Plenary sent the file back to committee</span></li>
-  <li class="spine" data-key="rec-2025/0359(COD)-16" data-kind="record"><span class="row-date">26 March 2026</span> <span class="row-label">Decision by Parliament, 1st reading</span>
-    <details class="row-run"><summary>2 more actions</summary>
+  <li class="spine" data-key="rec-2025/0359(COD)-16" data-kind="record"><span class="row-date">26 March 2026</span> <span class="row-label">Decision by Parliament, 1st reading</span></li>
+  <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2025/0359(COD)-17" data-kind="record"><span class="row-date">26 March 2026</span> <span class="row-label">Results of vote in Parliament</span></li>
       <li class="detail" data-key="rec-2025/0359(COD)-15" data-kind="record"><span class="row-date">19 March 2026</span> <span class="row-label">Committee report tabled for plenary, 1st reading</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-2025/0359(COD)-13" data-kind="record"><span class="row-date">18 March 2026</span> <span class="row-label">Lead committee adopted its report</span>
-    <details class="row-run"><summary>13 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-2025/0359(COD)-13" data-kind="record"><span class="row-date">18 March 2026</span> <span class="row-label">Lead committee adopted its report</span></li>
+  <li class="run"><details class="row-run"><summary>13 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2025/0359(COD)-14" data-kind="record"><span class="row-date">18 March 2026</span> <span class="row-label">European Economic and Social Committee opinion</span></li>
       <li class="detail" data-key="rec-2025/0359(COD)-12" data-kind="record"><span class="row-date">13 March 2026</span> <span class="row-label">Adoption of negotiating mandate by Coreper</span></li>
@@ -242,8 +245,7 @@
       <li class="detail" data-key="rec-2025/0359(COD)-2" data-kind="record"><span class="row-date">12 December 2025</span> <span class="row-label">Deliberations in Council working party</span></li>
       <li class="detail" data-key="rec-2025/0359(COD)-1" data-kind="record"><span class="row-date">5 December 2025</span> <span class="row-label">Deliberations in Coreper</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2025/0359(COD)-0" data-kind="record"><span class="row-date">19 November 2025</span> <span class="row-label">New legislative proposal</span></li>
   </ol>
 

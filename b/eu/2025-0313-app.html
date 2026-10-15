@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -189,21 +195,19 @@
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Parliament voted on consent</span> <span class="st-date">6 October 2026</span></div>
   <p class="bill-asof">Record as of 6 October 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
-  <li class="spine" data-key="rec-2025/0313(APP)-5" data-kind="record"><span class="row-date">6 October 2026</span> <span class="row-label"><a href="/p/eu-20261007-20200e58"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Parliament voted on consent</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>With Parliament&#39;s consent given, the Council can conclude/adopt the act; without it, the act cannot be adopted as-is.</p>
-    <details class="row-run"><summary>2 more actions</summary>
+  <li class="spine" data-key="rec-2025/0313(APP)-5" data-kind="record"><span class="row-date">6 October 2026</span> <span class="row-label"><a href="/p/eu-20261007-20200e58"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-ballot"/></svg></span>Parliament voted on consent</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>With Parliament&#39;s consent given, the Council can conclude/adopt the act; without it, the act cannot be adopted as-is.</p></li>
+  <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2025/0313(APP)-6" data-kind="record"><span class="row-date">6 October 2026</span> <span class="row-label">Results of vote in Parliament</span></li>
       <li class="detail" data-key="rec-2025/0313(APP)-4" data-kind="record"><span class="row-date">22 July 2026</span> <span class="row-label">Committee report tabled for plenary, 1st reading/single reading</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-2025/0313(APP)-3" data-kind="record"><span class="row-date">15 July 2026</span> <span class="row-label">Lead committee adopted its recommendation</span>
-    <details class="row-run"><summary>1 more action</summary>
+    </details></li>
+  <li class="spine" data-key="rec-2025/0313(APP)-3" data-kind="record"><span class="row-date">15 July 2026</span> <span class="row-label">Lead committee adopted its recommendation</span></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-2025/0313(APP)-2" data-kind="record"><span class="row-date">15 June 2026</span> <span class="row-label">Committee referral announced in Parliament</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-2025/0313(APP)-1" data-kind="record"><span class="row-date">21 May 2026</span> <span class="row-label">New legislative proposal</span></li>
   <li class="spine" data-key="rec-2025/0313(APP)-0" data-kind="record"><span class="row-date">2 October 2025</span> <span class="row-label">Preparatory document</span></li>
   </ol>

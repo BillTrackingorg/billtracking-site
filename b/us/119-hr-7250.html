@@ -45,6 +45,12 @@
       border-left: 2px solid transparent; }
     .path li.spine { border-left-color: var(--line); }
     .path li.detail { padding-left: 2rem; background: #FCFDFF; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283] The hidden run as its own row after its milestone, as the
+       app's HiddenRun: no spine line, a slimmer row, the summary where the app puts its toggle. */
+    .path li.run { padding: .45rem 0 .45rem 1.1rem; }
+    .path li.run .row-run { margin-top: 0; }
+    /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
+    .path li.detail + li.run { padding-left: 2rem; }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -193,47 +199,42 @@
   <li class="spine" data-key="rec-H.R. 7250-22" data-kind="record"><span class="row-date">25 September 2026</span> <span class="row-label"><a href="/p/us-20260925-5d420195"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-scroll"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Signed by Pres. Trump</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Takes effect (on enactment unless the text sets other dates)</p></li>
   <li class="spine" data-key="rec-H.R. 7250-23" data-kind="record"><span class="row-date">25 September 2026</span> <span class="row-label">Became Public Law</span></li>
   <li class="spine" data-key="rec-H.R. 7250-21" data-kind="record"><span class="row-date">17 September 2026</span> <span class="row-label"><a href="/p/us-20260918-9ea297ea"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-send"/></svg></span>Presented to President</a></span></li>
-  <li class="spine" data-key="rec-H.R. 7250-18" data-kind="record"><span class="row-date">16 September 2026</span> <span class="row-label"><a href="/p/us-20260917-5b5b7452"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (voice vote)</a></span>
-    <details class="row-run"><summary>1 more action</summary>
+  <li class="spine" data-key="rec-H.R. 7250-18" data-kind="record"><span class="row-date">16 September 2026</span> <span class="row-label"><a href="/p/us-20260917-5b5b7452"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (voice vote)</a></span></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 7250-20" data-kind="record"><span class="row-date">16 September 2026</span> <span class="row-label">Message on Senate action sent to the House.</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-H.R. 7250-17" data-kind="record"><span class="row-date">16 September 2026</span> <span class="row-label">Discharged from committee (Senate)</span>
-    <details class="row-run"><summary>2 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-H.R. 7250-17" data-kind="record"><span class="row-date">16 September 2026</span> <span class="row-label">Discharged from committee (Senate)</span></li>
+  <li class="run"><details class="row-run"><summary>2 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 7250-16" data-kind="record"><span class="row-date">29 July 2026</span> <span class="row-label">Committee on Energy and Natural Resources. Ordered to be reported without amendment favorably.</span></li>
       <li class="detail" data-key="rec-H.R. 7250-15" data-kind="record"><span class="row-date">3 June 2026</span> <span class="row-label">Received in the Senate and Read twice and referred to the Committee on Energy and Natural Resources.</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-H.R. 7250-12" data-kind="record"><span class="row-date">2 June 2026</span> <span class="row-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House (voice vote)</span>
-    <details class="row-run"><summary>1 more action</summary>
+    </details></li>
+  <li class="spine" data-key="rec-H.R. 7250-12" data-kind="record"><span class="row-date">2 June 2026</span> <span class="row-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House (voice vote)</span></li>
+  <li class="run"><details class="row-run"><summary>1 more action</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 7250-14" data-kind="record"><span class="row-date">2 June 2026</span> <span class="row-label">Motion to reconsider laid on the table Agreed to without objection.</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-H.R. 7250-7" data-kind="record"><span class="row-date">2 June 2026</span> <span class="row-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span></li>
-  <li class="spine" data-key="rec-H.R. 7250-8" data-kind="record"><span class="row-date">2 June 2026</span> <span class="row-label">Placed on calendar (House)</span>
-    <details class="row-run"><summary>3 more actions</summary>
+  <li class="spine" data-key="rec-H.R. 7250-8" data-kind="record"><span class="row-date">2 June 2026</span> <span class="row-label">Placed on calendar (House)</span></li>
+  <li class="run"><details class="row-run"><summary>3 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 7250-11" data-kind="record"><span class="row-date">2 June 2026</span> <span class="row-label">DEBATE - The House proceeded with forty minutes of debate on H.R. 7250.</span></li>
       <li class="detail" data-key="rec-H.R. 7250-10" data-kind="record"><span class="row-date">2 June 2026</span> <span class="row-label">Considered under suspension of the rules. (consideration: CR H3766-3767)</span></li>
       <li class="detail" data-key="rec-H.R. 7250-9" data-kind="record"><span class="row-date">2 June 2026</span> <span class="row-label">Mr. Westerman moved to suspend the rules and pass the bill.</span></li>
     </ol>
-    </details>
-  </li>
-  <li class="spine" data-key="rec-H.R. 7250-4" data-kind="record"><span class="row-date">14 May 2026</span> <span class="row-label">Discharged from committee (House)</span>
-    <details class="row-run"><summary>3 more actions</summary>
+    </details></li>
+  <li class="spine" data-key="rec-H.R. 7250-4" data-kind="record"><span class="row-date">14 May 2026</span> <span class="row-label">Discharged from committee (House)</span></li>
+  <li class="run"><details class="row-run"><summary>3 more actions</summary>
     <ol class="path-run">
       <li class="detail" data-key="rec-H.R. 7250-6" data-kind="record"><span class="row-date">14 May 2026</span> <span class="row-label">Ordered to be Reported by Unanimous Consent.</span></li>
       <li class="detail" data-key="rec-H.R. 7250-5" data-kind="record"><span class="row-date">14 May 2026</span> <span class="row-label">Committee Consideration and Mark-up Session Held</span></li>
       <li class="detail" data-key="rec-H.R. 7250-3" data-kind="record"><span class="row-date">26 March 2026</span> <span class="row-label">Subcommittee Hearings Held</span></li>
     </ol>
-    </details>
-  </li>
+    </details></li>
   <li class="spine" data-key="rec-H.R. 7250-2" data-kind="record"><span class="row-date">19 March 2026</span> <span class="row-label">Referred to the Subcommittee on Water</span></li>
   <li class="spine" data-key="rec-H.R. 7250-1" data-kind="record"><span class="row-date">27 January 2026</span> <span class="row-label">Referred to committee</span></li>
   <li class="spine" data-key="rec-H.R. 7250-0" data-kind="record"><span class="row-date">27 January 2026</span> <span class="row-label">Introduced in House</span></li>
