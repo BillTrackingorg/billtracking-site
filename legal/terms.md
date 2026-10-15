@@ -7,8 +7,8 @@ title: The deal, in plain words
 eyebrow: Terms of use
 htmlTitle: Terms of use
 description: The terms for using BillTracking: what the service is, what it costs, what it does not promise, and the rules for voting and for reusing the content.
-ogTitle: Terms of use — BillTracking
-ogDescription: What the service is, what it costs, and what it does not promise.
+ogTitle: Terms of use
+ogDescription: A live, source-linked record of lawmaking
 updated: 8 October 2026
 ---
 

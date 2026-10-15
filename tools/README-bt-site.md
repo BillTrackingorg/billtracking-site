@@ -118,6 +118,9 @@ to be asserted across two languages; it is now true by construction.
    "As published" block (owner call). The Python page showed the archived text
    alone. The card ships open and draws no expander: a static page has no script
    to operate one, and a dead control is a fabricated affordance.
+   *[2026-10-15, app OPEN-ITEMS OI-0290: the "As published" block, the link row
+   and the grey note are gone from `/p/` by the owner's ruling; the page is the
+   card, then the app offer. The record files still keep the text as it went out.]*
 2. **Bill pages collapse routine runs** in `<details>` with the app's own
    "N more actions" wording, and carry **What's next** on the tip.
 3. **Glyphs are always SVG.** The `--glyphs emoji|svg` switch is gone; the emoji

@@ -7,8 +7,8 @@ title: What we hold, and how to make us stop
 eyebrow: Privacy
 htmlTitle: Privacy
 description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account makes a vote count once, and keeps your followed bills and settings across your devices.
-ogTitle: Privacy — BillTracking
-ogDescription: What we collect, why, and how to delete it — in plain language.
+ogTitle: Privacy
+ogDescription: A live, source-linked record of lawmaking
 updated: 15 October 2026
 ---
 

@@ -24,6 +24,10 @@ published site pages:
   * no "complete path", no notification promises.
   * titles, descriptions and OG carry no "live"/"real time" superlative;
     "as it moves" is the house phrase.
+    [2026-10-15, app OPEN-ITEMS OI-0315 — the owner's site line "A live, source-linked
+    record of lawmaking" is the OG description of every feed page (the template), by his
+    ruling that night ("keep the word live"); this file's own titles said "A live feed"
+    before that. The rule holds otherwise.]
   * THE WINDOW CLAIMS (D30, owner 2026-08-20). The intro names the session
     window the feed covers, and the tracking-start date scopes what is IN it —
     the two sentences travel together, because we joined mid-session and
@@ -88,7 +92,15 @@ SPRITE_PAGES = ["404.html"]
 # The mapping, so the two tables can be read side by side:
 #     polity_name  = names.formal      eyebrow      = f"{names.short} tracker"
 #     h1           = f"The {names.short} feed"      accent  = theme C[accent.blue]
-#     explainer_url = explainerPath                 og_image = SITE/assets/<id>-banner.webp
+#     explainer_url = explainerPath
+#
+# THE LINK PREVIEW IS NOT A ROW FIELD (the owner's ruling, 2026-10-15; app
+# OPEN-ITEMS OI-0315: one card for every page, every legislature). Each row
+# carried `og_image` (SITE/assets/<id>-banner.webp, the legislature's banner)
+# until then; the card, its size and alt text, `og:site_name` and the site line
+# (`og:description`) are written in the template, the same on every feed page,
+# and the app's check:sitenav holds them to the app's `src/data/share-card.ts`.
+# The row's `description` stays the page's meta description, the search snippet.
 # --------------------------------------------------------------------------
 
 LEGISLATURES: dict[str, dict[str, str]] = {
@@ -119,7 +131,6 @@ LEGISLATURES: dict[str, dict[str, str]] = {
             "official record at Congress.gov. Covering the 119th Congress; "
             "tracking since 16 July 2026."
         ),
-        "og_image": "https://billtracking.org/assets/us-banner.webp",
     },
     "eu": {
         # The registry's `names.formal` — the institution, formally, which is the
@@ -152,7 +163,6 @@ LEGISLATURES: dict[str, dict[str, str]] = {
             "registers. Covering the 10th parliamentary term; tracking "
             "since 17 July 2026."
         ),
-        "og_image": "https://billtracking.org/assets/eu-banner.webp",
     },
 }
 
@@ -202,7 +212,6 @@ def render(polity: str, entry: dict[str, str], template: str) -> str:
         "TITLE": esc(entry["title"]),
         "OG_TITLE": esc(entry["og_title"]),
         "DESCRIPTION": esc(entry["description"]),
-        "OG_IMAGE": esc(entry["og_image"]),
         # ONE "Feed" nav entry, and EVERY page this script renders is a feed
         # page, so it always carries aria-current (SEARCH-JOB-SPEC section 7).
         # The link's href is the FIRST registry entry's feed for every one of
