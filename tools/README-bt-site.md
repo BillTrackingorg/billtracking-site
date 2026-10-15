@@ -11,7 +11,7 @@ rule were held equal by one check (`scripts/check-permalinks.js` in the app
 repo), and that check earned its keep — it caught an id scheme that would have
 404'd every share link ever copied. But a check that proves two implementations
 equal has to be extended every time either one learns something. The answer to
-two implementations is one (web-overhaul plan §12(1), `DECISIONS.md` D27).
+two implementations is one (web-overhaul plan §12(1), `DECISIONS.md` D28).
 
 **`generate.py` was deleted on 2026-08-19** (phase 2 of the cut-over) after the swap was
 proven over the live corpus — page sets, canonicals, row orders and JSON-LD equal; the
