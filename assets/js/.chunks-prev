@@ -2,6 +2,37 @@
   "note": "The two most recent bt-core build generations copied into this repo, newest first. site-build/core/copy-to-site.mjs (app repo) writes it and reads generations[0] to decide which chunks a browser holding the PREVIOUS bt-web.js still needs. Deleting this file costs one generation of grace, nothing else.",
   "generations": [
     {
+      "appSha": "5d22f9b4f484",
+      "schemaV": 1,
+      "builtAt": "2026-10-15T12:15:51.903Z",
+      "copiedAt": "2026-10-15T12:15:53.373Z",
+      "files": [
+        "bt-account-ND6HYA5K.js",
+        "bt-account-prefs-GMR6JXZZ.js",
+        "bt-account-settings-6Z2XLHPO.js",
+        "bt-auth-core-5AWPT5MB.js",
+        "bt-callback-VYNQRFGU.js",
+        "bt-chunk-42KI25GS.js",
+        "bt-chunk-6VIVI2BR.js",
+        "bt-chunk-CJWJPATS.js",
+        "bt-chunk-GMOOKDAW.js",
+        "bt-chunk-HD77ND7U.js",
+        "bt-chunk-J4KW2YLH.js",
+        "bt-chunk-P46BQBBO.js",
+        "bt-chunk-PQG4TL3O.js",
+        "bt-chunk-Q4JQG3MF.js",
+        "bt-chunk-URZCWJF5.js",
+        "bt-chunk-YGMUANHC.js",
+        "bt-follows-Q255S6OM.js",
+        "bt-notices-list-KSAWNNID.js",
+        "bt-supabase-core-XSN4P5QZ.js",
+        "bt-voter-MR2QUVUK.js",
+        "bt-votes-66UOQRRP.js",
+        "bt-votes-page-22XYJPNV.js",
+        "bt-web.js"
+      ]
+    },
+    {
       "appSha": "fa291a06c495",
       "schemaV": 1,
       "builtAt": "2026-10-15T11:22:21.950Z",
@@ -29,37 +60,6 @@
         "bt-voter-PRDOYABY.js",
         "bt-votes-EFLWP53K.js",
         "bt-votes-page-BU6QMHT3.js",
-        "bt-web.js"
-      ]
-    },
-    {
-      "appSha": "cf6ae94c0b33",
-      "schemaV": 1,
-      "builtAt": "2026-10-15T10:55:25.723Z",
-      "copiedAt": "2026-10-15T10:55:53.216Z",
-      "files": [
-        "bt-account-YLN4WSCI.js",
-        "bt-account-prefs-B7VAXQPM.js",
-        "bt-account-settings-NGGVUGTW.js",
-        "bt-auth-core-TF3T5SOE.js",
-        "bt-callback-GTPVDUP7.js",
-        "bt-chunk-7QANDONE.js",
-        "bt-chunk-DG53SNM5.js",
-        "bt-chunk-FQDG36PV.js",
-        "bt-chunk-GMOOKDAW.js",
-        "bt-chunk-GQPY2LEM.js",
-        "bt-chunk-HD77ND7U.js",
-        "bt-chunk-J4KW2YLH.js",
-        "bt-chunk-NNMERN42.js",
-        "bt-chunk-OBIME7LL.js",
-        "bt-chunk-SNRQOF2F.js",
-        "bt-chunk-Z6UTXXUZ.js",
-        "bt-follows-EU4ZGHO4.js",
-        "bt-notices-list-6SWJTPYB.js",
-        "bt-supabase-core-JG3ZN6AJ.js",
-        "bt-voter-O7BEZLY6.js",
-        "bt-votes-ASTUWHXO.js",
-        "bt-votes-page-AK6FFE5B.js",
         "bt-web.js"
       ]
     }
