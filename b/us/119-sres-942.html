@@ -51,6 +51,23 @@
     .path li.run .row-run { margin-top: 0; }
     /* A run after a detail row (a newest row that is not a milestone) keeps that row's indent. */
     .path li.detail + li.run { padding-left: 2rem; }
+    /* [2026-10-15, OPEN-ITEMS OI-0283 follow-up, the owner: "we should be consistent"] A row that opens
+       a post shows the phone's "this opens" glyph at its right edge (chevron-right, the faint ink;
+       OpensPost on the phone), inside the row's own link. The row makes room for it, linked or not,
+       so the text keeps one width down the path. TWO CLASSES ON PURPOSE: the general .glyph rule
+       below sets width, height and colour too, and with one class it would win by coming later
+       (the review of 2026-10-15 caught the first cut drawing an 18 px navy chevron). The box is as
+       tall as the row's first line (the body strut, 1.0625rem x 1.7) and starts at its top, so the
+       glyph centres on that line structurally, as the phone's top:0/bottom:0/centre does; the
+       sizes are the phone's: 18 on a milestone row, 14 inside a run. */
+    .path li { position: relative; padding-right: 1.6rem; }
+    .glyph.row-open { position: absolute; right: .3rem; top: .75rem; height: 1.8rem; width: 18px;
+      color: var(--ink-faint); }
+    .path-run .glyph.row-open { width: 14px; }
+    /* ...and the steps inside an opened run are SECONDARY, as on the phone (12.5 against the
+       card's label; "the difference shouldn't be too big, but it should be visible"): smaller,
+       the soft ink. The milestones keep their weight. (No line-height here: the li's strut sets it.) */
+    .path-run .row-label { font-size: .875rem; color: var(--ink-soft); }
     .row-date { font-family: var(--sans); font-size: .78rem; color: var(--ink-faint); }
     .row-label { font-size: 1rem; color: var(--ink); line-height: 1.5; }
     .row-label a { color: var(--navy); }
@@ -196,7 +213,7 @@
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Agreed to (unanimous consent)</span> <span class="st-date">30 September 2026</span></div>
   <p class="bill-asof">Record as of 30 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
-  <li class="spine" data-key="rec-S.Res. 942-0" data-kind="record"><span class="row-date">30 September 2026</span> <span class="row-label"><a href="/p/us-20261001-05fbb612"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Agreed to (unanimous consent)</a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Policy adoption (resolutions don&#39;t become law)</p></li>
+  <li class="spine" data-key="rec-S.Res. 942-0" data-kind="record"><span class="row-date">30 September 2026</span> <span class="row-label"><a href="/p/us-20261001-05fbb612"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Agreed to (unanimous consent)<svg class="glyph row-open" aria-hidden="true"><use href="#ic-chevron-right"/></svg></a></span><p class="row-next"><span class="lead">What&#39;s next: </span>Policy adoption (resolutions don&#39;t become law)</p></li>
   </ol>
 
   <div class="honesty"><strong>This path starts where the bill does — its first action in the official record.</strong></div>
