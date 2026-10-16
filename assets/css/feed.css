@@ -1794,7 +1794,6 @@ span.bt-tex { cursor: default; }
   margin: 0.5rem 0 0;
 }
 .bt-drop[hidden] { display: none; }
-.bt-drop .bt-eyebrow { margin-bottom: 0.35rem; }
 .bt-drop p {
   font-size: 0.88rem;
   line-height: 1.6;
@@ -2064,23 +2063,6 @@ mark.bt-hit {
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
-
-.card-hit {
-  font-family: var(--sans);
-  font-size: 12.5px;
-  line-height: 1.55;
-  color: var(--ink-soft);
-  margin: 0.55rem 0 0;
-  padding-left: 0.7rem;
-  border-left: 2px solid var(--accent-hair, var(--line));
-  max-width: none;
-}
-.card-hit .lead { font-weight: 700; color: var(--ink); }
-.card-body:not([data-clipped="1"]) + .card-hit[data-field="bodyLines"] { display: none; }
-
-.card.is-open .card-hit:not([data-field="moreItems"]) { display: none; }
-.card[data-depth="2"] .card-hit[data-field="moreItems"],
-.card[data-depth="1"] .card-hit[data-field="moreItems"][data-step="1"] { display: none; }
 
 @media (max-width: 47.9375rem) {
 
