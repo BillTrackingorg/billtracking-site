@@ -1811,6 +1811,20 @@ span.bt-tex { cursor: default; }
 }
 .bt-count[hidden] { display: none; }
 
+.bt-freshrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 1rem;
+  margin: 0.9rem 0 0;
+}
+.bt-freshrow .feed-fresh { margin: 0; }
+.bt-freshrow .bt-count {
+  margin: 0 0 0 auto;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
 .bt-filtered {
   flex: 1 0 100%;
   display: flex;
