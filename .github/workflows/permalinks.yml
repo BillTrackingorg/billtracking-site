@@ -195,15 +195,19 @@ jobs:
           # [2026-10-16, OPEN-ITEMS OI-0097 — THE SUMMARY BUILD, S1] THE SUMMARY FILES.
           # Each bot publishes, beside paths/, one small index per legislature
           # ({FEED}/summaries/index-<bot>.json) and one HOME per bill under the SAME
-          # name as its path artifact ({FEED}/summaries/<name>) — one name per bill,
-          # the one --list-paths prints. The index lists only bills with a real
-          # summary, so a home is fetched only for a name its index lists: ~0 files
-          # today, never one per bill. Same rules as the artifacts above:
+          # name as its path artifact ({FEED}/summaries/<name>). The index lists only
+          # bills with a real summary, so a home is fetched only for a bill its index
+          # lists: ~0 files today, never one per bill. WHICH homes is the RENDERER's
+          # answer, as it is for paths: --list-summaries reads the indexes fetched
+          # here with the app's own reader and matches each bill of the feed to its
+          # line with the app's own key, so this step parses neither the index nor a
+          # bill's key (ONE derivation, the app's). Same rules as the artifacts above:
           #  • 200 → use it.  • 404 → nothing published (every summary file 404s
           #    until the bots write them, S5) — NORMAL; the pages render as before.
           #  • anything else → FAIL the run (it may exist; a page drawn without it
           #    would show a placeholder the record already replaced).
-          # The renderer reads these with --summaries (next step).
+          # The renderer reads these with --summaries (next step). A renderer older
+          # than the two flags lists nothing here, and the next step says so.
           mkdir -p summaries
           for bot in us eu; do
             code=$(curl -sS --retry 3 --retry-all-errors --max-time 60 -o "summaries/index-$bot.json" -w '%{http_code}' "$FEED/summaries/index-$bot.json" 2>/dev/null || echo 000)
@@ -211,18 +215,19 @@ jobs:
             elif [ "$code" = "404" ]; then rm -f "summaries/index-$bot.json"
             else echo "::error::summary index index-$bot.json returned $code — refusing to render without it (it may exist)"; exit 1; fi
           done
+          : > summaries.txt
+          if grep -qF -- '--list-summaries' tools/bt-site.cjs; then
+            node tools/bt-site.cjs --feed feed --summaries summaries --list-summaries > summaries.txt
+          fi
+          echo "bills whose summary home is listed: $(grep -c . summaries.txt || true)"
           while read -r name; do
             [ -n "$name" ] || continue
-            case "$name" in */*|*..*) echo "::error::refusing suspicious artifact name: $name"; exit 1;; esac
-            stem="${name%.json}"
-            # Listed? A key of an index is the name's stem, quoted ("119-hr-2481":).
-            # A look-alike match only costs one more request, which 404s.
-            grep -qF "\"$stem\":" summaries/index-*.json 2>/dev/null || continue
+            case "$name" in */*|*..*|index-*) echo "::error::refusing suspicious summary home name: $name"; exit 1;; esac
             code=$(curl -sS --retry 3 --retry-all-errors --max-time 60 -o "summaries/$name" -w '%{http_code}' "$FEED/summaries/$name" 2>/dev/null || echo 000)
             if [ "$code" = "200" ]; then :
             elif [ "$code" = "404" ]; then rm -f "summaries/$name"
             else echo "::error::summary home $name returned $code — refusing to render without it (it may exist)"; exit 1; fi
-          done < paths.txt
+          done < summaries.txt
           echo "fetched $(ls summaries 2>/dev/null | grep -vc '^index-' || true) summary homes, $(ls summaries/index-*.json 2>/dev/null | wc -l) index file(s)"
 
       # The renderer scans the feed dir for *-overrides.jsonl itself. It renders
@@ -249,10 +254,10 @@ jobs:
           # and freezing /p/ and /b/ every 15 minutes is a blast radius nothing
           # justifies). The fix is to rebuild and commit the renderer. The line read
           # `node tools/bt-site.cjs --feed feed --paths paths --out out`.
-          if grep -qF -- '--summaries' tools/bt-site.cjs; then
+          if grep -qF -- '--list-summaries' tools/bt-site.cjs; then
             node tools/bt-site.cjs --feed feed --paths paths --summaries summaries --out out
           else
-            echo "::error::tools/bt-site.cjs predates --summaries — rendering without the published summaries. Rebuild it (npm run build:core && npm run copy:site in the app repo) and commit it."
+            echo "::error::tools/bt-site.cjs predates --summaries and --list-summaries — rendering without the published summaries. Rebuild it (npm run build:core && npm run copy:site in the app repo) and commit it."
             node tools/bt-site.cjs --feed feed --paths paths --out out
           fi
           n=$(ls out/p/*.html | grep -vc 'index.html' || true)
