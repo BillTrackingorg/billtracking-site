@@ -9,7 +9,7 @@ htmlTitle: Terms of use
 description: The terms for using BillTracking: what the service is, what it costs, what it does not promise, and the rules for voting and for reusing the content.
 ogTitle: Terms of use
 ogDescription: A live, source-linked record of lawmaking
-updated: 8 October 2026
+updated: 16 October 2026
 ---
 
 BillTracking republishes the official legislative record of the US Congress and the European Union. It is **free**, there is nothing to buy, and it is run by one person, not a company. These terms are short because the arrangement is simple.
@@ -17,13 +17,15 @@ BillTracking republishes the official legislative record of the US Congress and 
 ^What this is
 ## What you're getting
 
-Automated feeds and an app that report steps in the legislative process, taken from official sources — Congress.gov, the European Parliament's open data, the Publications Office and the OEIL Legislative Observatory. Plain-English summaries are AI-written and labelled **[AI-Generated]**. Procedural facts, dates and vote tallies are copied from the record and are not AI-written.
+Automated feeds and an app that report steps in the legislative process, taken from official sources — Congress.gov, the European Parliament's open data, the Publications Office and the OEIL Legislative Observatory. Plain-English summaries are AI-written and labelled **[AI-Generated]**. A summary is a short description, not the bill: it can simplify or leave out details that matter. Procedural facts, dates and vote tallies are copied from the record and are not AI-written.
 
 >! **This is not legal advice, and it is not the official record.** It is a convenience layer over public sources. Every post links to its source. **If a decision matters — legally, professionally, financially — read the source, not us.**
 
 ### It will contain errors
 
 Automatically classifying legislative stages is genuinely difficult, and the record itself is sometimes amended after the fact. We do not promise accuracy; we promise that errors are corrected in the open and logged publicly. See [Accuracy & corrections](accuracy.html), and please report anything that looks wrong to [accuracy@billtracking.org](mailto:accuracy@billtracking.org).
+
+Keywords and notifications are a convenience. A keyword matches the words a post contains, so it will not catch every bill about a topic, and a notification can arrive late or not at all. If you must not miss something, follow the bill and check the source.
 
 ### No guarantee it keeps running
 
@@ -57,6 +59,8 @@ The service is provided as-is. To the extent the law allows, we are not liable f
 > **What we do not exclude, because it cannot be and should not be:** liability for death or personal injury caused by negligence, for fraud, for damage caused intentionally, and any liability that the law of your country does not permit to be excluded. **If you are a consumer in the EU or UK, nothing here takes away rights you have under your own national law, including the right to bring a claim in your own courts.**
 
 We may update these terms. If we change something that matters we will say so on this page and update the date. If you keep using the service after a change, that is acceptance; if you would rather not, you can stop, and delete your account.
+
+**16 October 2026.** Two additions: under “What you're getting”, a summary is a short description, not the bill, and can simplify or leave out details that matter; and under “It will contain errors”, keywords and notifications are a convenience and can miss things. Nothing else here changed.
 
 **19 August 2026.** Signing in, voting and deleting an account are built into this website as well as the app, and switch on when sign-in is enabled. Nothing else here changed.
 
