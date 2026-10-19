@@ -229,6 +229,7 @@
   <url><loc>https://billtracking.org/b/us/119-hjres-213</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-10326</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2026-0229-cod</loc><lastmod>2026-07-29</lastmod></url>
+  <url><loc>https://billtracking.org/b/eu/2026-0211-cod</loc><lastmod>2026-10-19</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9382</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9394</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9723</loc><lastmod>2026-09-17</lastmod></url>
@@ -272,7 +273,6 @@
   <url><loc>https://billtracking.org/b/us/119-hr-4646</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-6633</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0052-cod</loc><lastmod>2026-09-16</lastmod></url>
-  <url><loc>https://billtracking.org/b/eu/2026-0211-cod</loc><lastmod>2026-07-17</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0418-cod</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-388</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-7083</loc><lastmod>2026-09-16</lastmod></url>
@@ -540,7 +540,9 @@
   <url><loc>https://billtracking.org/b/us/119-sjres-198</loc><lastmod>2026-07-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-629</loc><lastmod>2026-07-17</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0381-cod</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://billtracking.org/b/eu/2025-0227-cod</loc><lastmod>2026-10-19</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-sjres-185</loc><lastmod>2026-07-23</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0348-cns</loc><lastmod>2026-08-03</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0390-app</loc><lastmod>2026-07-17</lastmod></url>
+  <url><loc>https://billtracking.org/b/eu/2025-0255-cod</loc><lastmod>2026-10-19</lastmod></url>
 </urlset>
