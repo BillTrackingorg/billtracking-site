@@ -656,6 +656,8 @@ button[disabled],
   max-width: none;
 }
 
+.card-summary .card-summary-note { color: var(--ink-soft); }
+
 .card-summary .ai-tag {
   display: block;
   font-family: var(--sans);

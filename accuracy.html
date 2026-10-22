@@ -61,9 +61,11 @@
       <li><strong>Official sources only.</strong> Posts are generated from Congress.gov and from
       the EU's official registers (the European Parliament's open-data service, the Publications
       Office, and the OEIL Legislative Observatory) — never from news coverage or social media.</li>
-      <li><strong>Numbers are never written by AI.</strong> Vote tallies, dates, bill numbers and
-      budget figures are copied from the record verbatim. If the record lacks a number, the
-      line is omitted — not estimated.</li>
+      <li><strong>Numbers come from the record.</strong> Vote tallies, dates and bill numbers in
+      a post are copied from the record verbatim. An AI summary may repeat a figure or a date from
+      its source, sometimes rounded; a check in our code withholds any summary that gives a figure
+      its source does not contain. If the record lacks a number, the line is omitted, not
+      estimated.</li>
       <li><strong>Fail closed.</strong> When an action in the record is ambiguous — a procedural
       step the classifier can't confidently place — the system logs it and stays silent rather
       than guessing on air.</li>
@@ -76,6 +78,22 @@
       <li><strong>AI is labeled.</strong> The plain-English summaries are AI-written and carry an
       explicit <strong>[AI-Generated]</strong> tag, positioned so it can never be misread as
       labeling the procedural facts, which are not AI-written.</li>
+      <li><strong>Where summaries come from.</strong> Each summary is written by AI from an
+      official source for the bill at the time: an official summary where one exists (the Library
+      of Congress's in the US, the Legislative Observatory's in the EU), otherwise the bill's own
+      text, and until either is available, its official title. When the text changes or an
+      official summary appears, later posts carry the new summary; earlier posts keep the one they
+      were published with. When a summary fails our checks (for example, it gives a figure its
+      source does not contain), the post goes out without one. A summary simplifies and can leave
+      things out; the official text is what counts.</li>
+      <li><strong>Summaries can be wrong.</strong> AI makes mistakes. In our testing, summaries
+      written from an official summary were accurate; of those written from a bill's own text,
+      roughly 3 to 5 in every 100 contained a mistake, more on long or complicated bills. Legal
+      text is hard to read, and to give every bill a summary we use a small, fast model. We tested
+      having AI check and correct its own summaries; it caught some mistakes but introduced others,
+      so we don't use it. Once a bill's official summary is published, later updates on that bill
+      use it. If you spot a mistake, tell us at
+      <a href="mailto:accuracy@billtracking.org">accuracy@billtracking.org</a>.</li>
       <li><strong>Non-binding means saying so.</strong> Parliamentary resolutions that change no
       law always carry "non-binding" in the post; a political agreement is never called a law,
       and "in force" is never conflated with "applies to you now".</li>

@@ -9,7 +9,7 @@ htmlTitle: Privacy
 description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account makes a vote count once, and keeps your followed bills and settings across your devices.
 ogTitle: Privacy
 ogDescription: A live, source-linked record of lawmaking
-updated: 15 October 2026
+updated: 22 October 2026
 ---
 
 The short version: **this website carries no analytics and no trackers of any kind, and we receive no visitor logs.** Whatever a page keeps for you — the filter you set on a feed page, and a sign-in session if you sign in — stays in your browser, on your device. The app needs no account to read anything. An account does three things — it makes a vote count once per person, it keeps your followed bills and docket keywords the same on every device you sign in on, and it keeps your settings the same on every device — and it can be deleted in two taps, from inside the app or from your account page on this website.
@@ -77,7 +77,7 @@ One thing we will not pretend about: counts that were already published — in a
 - **Legislators.** The feeds republish the official legislative record, which names Members of Congress and MEPs and records how they voted and what they sponsored. That is public record information, republished on the basis of legitimate interest in making the legislative process followable.
 - **We sell nothing and share nothing.** No advertisers, no sponsors, no data brokers, no "partners". There is no revenue.
 - **Children.** The app is not directed at children and we do not knowingly collect anything from them.
-- **AI.** Plain-English bill summaries are AI-written and carry an explicit **[AI-Generated]** label. Dates, vote tallies, bill numbers and procedural facts are copied from the official record and are never AI-written.
+- **AI.** Plain-English bill summaries are AI-written and carry an explicit **[AI-Generated]** label. The dates, vote tallies, bill numbers and procedural facts in a post's own lines are copied from the official record and are never AI-written; a summary may repeat figures and dates from its source.
 
 ### Your rights
 
@@ -92,6 +92,8 @@ BillTracking is an independent project run by one person, not a company. The dat
 ### Changes
 
 If we change how any of this works we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
+
+**22 October 2026.** The AI line now says what is true of summaries: they may repeat figures and dates from their source. Nothing about what is collected or how it is handled changed.
 
 **15 October 2026.** Our backups are encrypted now. The weekly copy is locked before it is stored, with a key that only we hold and that is kept outside the service storing the copy. The deletion sentence in the app and on this website says "encrypted backups" again, as it did before 29 September, because it is true now.
 
