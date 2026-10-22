@@ -102,6 +102,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+          check-latest: true   # the newest Node 24, not the runner's cached one (24.21.0 lacked the 21 Oct 2026 fixes)
 
       # The renderer is a COMMITTED artifact, not something this job builds: it
       # is produced in the (private) app repo by a green `npm run check` and
