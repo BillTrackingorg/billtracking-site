@@ -78,14 +78,6 @@
       <li><strong>AI is labeled.</strong> The plain-English summaries are AI-written and carry an
       explicit <strong>[AI-Generated]</strong> tag, positioned so it can never be misread as
       labeling the procedural facts, which are not AI-written.</li>
-      <li><strong>Where summaries come from.</strong> Each summary is written by AI from an
-      official source for the bill at the time: an official summary where one exists (the Library
-      of Congress's in the US, the Legislative Observatory's in the EU), otherwise the bill's own
-      text, and until either is available, its official title. When the text changes or an
-      official summary appears, later posts carry the new summary; earlier posts keep the one they
-      were published with. When a summary fails our checks (for example, it gives a figure its
-      source does not contain), the post goes out without one. A summary simplifies and can leave
-      things out; the official text is what counts.</li>
       <li><strong>Summaries can be wrong.</strong> AI makes mistakes. In our testing, summaries
       written from an official summary were accurate; of those written from a bill's own text,
       about 3 in every 50 contained a mistake, more on long or complicated bills. Legal
@@ -102,6 +94,47 @@
 </section>
 
 <section class="alt">
+  <div class="wrap">
+    <p class="eyebrow on-light">AI summaries</p>
+    <h2>How a summary is made</h2>
+    <p class="measure-wide muted">For a bill's first summary, we use the first of these that is
+    available:</p>
+
+    <ul class="principles">
+      <li><strong>1. The legislature's own summary.</strong> If the legislature has published its own
+      summary of the bill's current text (the Library of Congress in the US, the Legislative Observatory
+      in the EU), we write ours from that.</li>
+      <li><strong>2. Otherwise, the bill's text.</strong> We write ours from the bill's own text, read in
+      full; we never summarise part of a bill. Legal text is hard to read, and summaries written this way
+      carry a small error rate we can't fully remove: in our testing, about 3 in every 50 contained a
+      mistake (see "Summaries can be wrong" above).</li>
+      <li><strong>3. Otherwise, the title.</strong> If neither can be used, we write a short placeholder
+      from the bill's official title, until a real summary can be written.</li>
+      <li><strong>4. Otherwise, nothing.</strong> The post goes out without a summary.</li>
+    </ul>
+
+    <p class="measure-wide muted">As the bill moves:</p>
+
+    <ul class="principles">
+      <li><strong>Its text changes.</strong> We check what changed. If the substance changed, later posts
+      carry a new summary. If the new text can't be read and there's no official summary for it, posts go
+      out without a summary until one can be made.</li>
+      <li><strong>The legislature's own summary appears.</strong> For a bill we summarised from its text,
+      later posts switch to a summary written from it.</li>
+      <li><strong>It takes effect for certain.</strong> Once it is signed into law or otherwise takes
+      effect, the summary speaks of it as law. Before that, it says what the bill would do.</li>
+    </ul>
+
+    <p class="measure-wide muted"><strong>What stays fixed.</strong> Each post keeps the summary it went
+    out with. A bill's page shows the summary of its latest post, and a post that went out without one
+    shows it once it exists.</p>
+    <p class="measure-wide muted"><strong>Before anything is published.</strong> Every figure in a
+    summary must appear in what it was written from; if one doesn't, we ask once more, then publish none.
+    If we can't make a summary we trust, the post goes out without one.</p>
+  </div>
+</section>
+
+<section>
   <div class="wrap">
     <p class="eyebrow on-light">When we get it wrong</p>
     <h2>Corrections are visible, never silent</h2>
@@ -138,7 +171,7 @@
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap">
     <p class="eyebrow on-light">Reader votes</p>
     <h2>How the reader vote is counted</h2>
