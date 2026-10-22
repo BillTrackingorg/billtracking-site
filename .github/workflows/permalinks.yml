@@ -197,13 +197,17 @@ jobs:
           # ({FEED}/summaries/index-<bot>.json) and one HOME per bill under the SAME
           # name as its path artifact ({FEED}/summaries/<name>). The index lists only
           # bills with a real summary, so a home is fetched only for a bill its index
-          # lists: ~0 files today, never one per bill. WHICH homes is the RENDERER's
+          # lists, never one for every bill in the feed. WHICH homes is the RENDERER's
           # answer, as it is for paths: --list-summaries reads the indexes fetched
           # here with the app's own reader and matches each bill of the feed to its
           # line with the app's own key, so this step parses neither the index nor a
           # bill's key (ONE derivation, the app's). Same rules as the artifacts above:
-          #  • 200 → use it.  • 404 → nothing published (every summary file 404s
-          #    until the bots write them, S5) — NORMAL; the pages render as before.
+          #  • 200 → use it.  • 404 → nothing published under that name. The step
+          #    drops the file without an error, and the pages render without it, so
+          #    each post shows its own summary. Both bots have published their indexes
+          #    since 22 October 2026. Turning summaries off rewrites an index as an
+          #    empty one rather than removing it, so a 404 here means a file is
+          #    missing, not a normal state.
           #  • anything else → FAIL the run (it may exist; a page drawn without it
           #    would show a placeholder the record already replaced).
           # The renderer reads these with --summaries (next step). A renderer older
