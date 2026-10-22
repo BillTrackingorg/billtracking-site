@@ -61,11 +61,7 @@
       <li><strong>Official sources only.</strong> Posts are generated from Congress.gov and from
       the EU's official registers (the European Parliament's open-data service, the Publications
       Office, and the OEIL Legislative Observatory) — never from news coverage or social media.</li>
-      <li><strong>Numbers come from the record.</strong> Vote tallies, dates and bill numbers in
-      a post are copied from the record verbatim. An AI summary may repeat a figure or a date from
-      its source, sometimes rounded; a check in our code withholds any summary that gives a figure
-      its source does not contain. If the record lacks a number, the line is omitted, not
-      estimated.</li>
+      <li><strong>Numbers come from the official record.</strong> Vote counts, dates and bill numbers are copied exactly as published. A summary can repeat a figure from its source, sometimes rounded, but a summary with a figure its source doesn't contain is never published. If the record has no number, the line is left out rather than estimated.</li>
       <li><strong>Fail closed.</strong> When an action in the record is ambiguous — a procedural
       step the classifier can't confidently place — the system logs it and stays silent rather
       than guessing on air.</li>
@@ -78,14 +74,7 @@
       <li><strong>AI is labeled.</strong> The plain-English summaries are AI-written and carry an
       explicit <strong>[AI-Generated]</strong> tag, positioned so it can never be misread as
       labeling the procedural facts, which are not AI-written.</li>
-      <li><strong>Summaries can be wrong.</strong> AI makes mistakes. In our testing, summaries
-      written from an official summary were accurate; of those written from a bill's own text,
-      about 3 in every 50 contained a mistake, more on long or complicated bills. Legal
-      text is hard to read, and to give every bill a summary we use a small, fast model. We tested
-      having AI check and correct its own summaries; it caught some mistakes but introduced others,
-      so we don't use it. Once a bill's official summary is published, later updates on that bill
-      use it. If you spot a mistake, tell us at
-      <a href="mailto:accuracy@billtracking.org">accuracy@billtracking.org</a>.</li>
+      <li><strong>Summaries can be wrong.</strong> Summaries are written by AI, and AI makes mistakes. In our testing, summaries based on an official summary held up. Of those based on a bill's own text, about 3 in 50 had a mistake, more often on long or complex bills. To keep the service free, we use a small, fast AI model. We also tested having AI check and correct its own work. It caught some mistakes but introduced others, so we don't use it. Spot a mistake? Email <a href="mailto:accuracy@billtracking.org">accuracy@billtracking.org</a>.</li>
       <li><strong>Non-binding means saying so.</strong> Parliamentary resolutions that change no
       law always carry "non-binding" in the post; a political agreement is never called a law,
       and "in force" is never conflated with "applies to you now".</li>
@@ -97,25 +86,25 @@
   <div class="wrap">
     <p class="eyebrow on-light">AI summaries</p>
     <h2>How a summary is made</h2>
-    <p class="measure-wide muted">Every summary is written by an AI model, automatically. For a bill's first summary, the system uses the first of these that is available:</p>
+    <p class="measure-wide muted">Every summary is written automatically by an AI model. For a bill's first summary, it uses the first source available:</p>
 
     <ul class="principles">
-      <li><strong>1. The legislature's own summary.</strong> If the legislature has published its own summary of the bill's current text (the Library of Congress in the US, the Legislative Observatory in the EU), the AI writes the summary from that.</li>
-      <li><strong>2. Otherwise, the bill's text.</strong> If the bill's text can be processed (some very long bills are too large), the AI writes the summary from it. Legal text is hard for an AI to read, and summaries written this way carry a small error rate that we cannot remove at a cost this free service can sustain: in our testing, about 3 in every 50 contained a mistake (see “Summaries can be wrong” above).</li>
-      <li><strong>3. Otherwise, the title.</strong> If neither can be used, the AI writes a short placeholder from the bill's official title, until a real summary can be written.</li>
-      <li><strong>4. Otherwise, nothing.</strong> The post goes out without a summary.</li>
+      <li><strong>1. The official summary.</strong> If the legislature has summarized the bill's current text (the Library of Congress in the US, the Legislative Observatory in the EU), the summary is based on that.</li>
+      <li><strong>2. The bill's text.</strong> If not, the summary is based on the bill itself. Very long bills can be too large to process. Legal text is hard for AI to read, and at a cost a free service can sustain, some mistakes can't be avoided: in our testing, about 3 in 50 summaries based on bill text had one.</li>
+      <li><strong>3. The bill's title.</strong> If neither is available, a short placeholder is written from the title until a full summary can be made.</li>
+      <li><strong>4. Nothing.</strong> If none of these work, the post goes out without a summary.</li>
     </ul>
 
     <p class="measure-wide muted">As the bill moves:</p>
 
     <ul class="principles">
-      <li><strong>Its text changes.</strong> The system compares the new text with the old. If the substance changed, the AI writes a new summary for later posts. If the new text cannot be processed and there is no official summary for it, posts go out without a summary until one can be written.</li>
-      <li><strong>The legislature's own summary arrives later.</strong> If the summary was written from the bill's text, later posts switch to a summary the AI writes from the official one.</li>
-      <li><strong>It takes effect for certain.</strong> Once the record shows it signed into law or otherwise in effect, the summary speaks of it as law. Before that, it says what the bill would do.</li>
+      <li><strong>New text.</strong> The new version is compared with the last one. If the substance changed, later posts get a new summary. If the new text can't be processed and there's no official summary for it, posts go out without one until a summary can be made.</li>
+      <li><strong>An official summary arrives later.</strong> If a summary was based on the bill's text, later posts switch to one based on the official summary.</li>
+      <li><strong>It becomes law.</strong> Once the record shows the bill has taken effect, its summary describes it as law. Until then, it describes what the bill would do.</li>
     </ul>
 
-    <p class="measure-wide muted"><strong>What stays fixed.</strong> Each post keeps the summary it went out with. A bill's page shows the summary of its latest post, and a post that went out without one shows it once it exists.</p>
-    <p class="measure-wide muted"><strong>Before anything is published.</strong> Automated checks run on every summary. Every figure must appear in what the summary was written from; if one does not, the AI is asked once more, and if it fails again, no summary is published. A summary that does not pass the checks is not published, and the post goes out without one. No person writes, edits or reviews a summary before it is published.</p>
+    <p class="measure-wide muted"><strong>What stays the same.</strong> Each post keeps the summary it was published with. A bill's page shows the summary from its latest post. Posts published without a summary get one once it exists.</p>
+    <p class="measure-wide muted"><strong>Before anything is published.</strong> Every summary goes through automated checks. Any figure in it must appear in its source. If one doesn't, the AI gets one more try, and if it fails again, nothing is published. No person writes, edits or reviews summaries before they go out.</p>
   </div>
 </section>
 
