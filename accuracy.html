@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Accuracy &amp; corrections | BillTracking</title>
-<meta name="description" content="How BillTracking keeps its feeds accurate: official sources only, verbatim numbers, labeled AI, a fail-closed rule against guessing — and a public log of every correction.">
+<meta name="description" content="How BillTracking keeps its feeds accurate: official sources only, numbers copied exactly, labeled AI, no guessing when the record is unclear, and a public log of every correction.">
 <link rel="canonical" href="https://billtracking.org/accuracy">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BillTracking">
@@ -45,39 +45,40 @@
   <div class="hero-inner">
     <p class="eyebrow">Accuracy &amp; corrections</p>
     <h1>A record is only worth what its errors cost it</h1>
-    <p class="lede">The feeds exist to be a <strong>trustworthy record</strong>, which means the
-    accuracy rules aren't a policy page written after the fact — they are how the
-    system is built. The governing principle, verbatim from the project's engineering
-    docs: <strong>a wrong claim is worse than a hedged or omitted one.</strong></p>
+    <p class="lede">The feeds exist to be a <strong>trustworthy record</strong>. So the accuracy
+    rules aren't a policy page written after the fact. They are how the system is built. The
+    governing principle comes word for word from our engineering docs: <strong>a wrong claim is
+    worse than a hedged or omitted one.</strong></p>
   </div>
 </div>
 
 <section>
   <div class="wrap">
-    <p class="eyebrow on-light">The rules the pipeline enforces</p>
+    <p class="eyebrow on-light">The rules the system enforces</p>
     <h2>How posts stay honest</h2>
 
     <ul class="principles">
       <li><strong>Official sources only.</strong> Posts are generated from Congress.gov and from
-      the EU's official registers (the European Parliament's open-data service, the Publications
-      Office, and the OEIL Legislative Observatory) — never from news coverage or social media.</li>
+      the EU's official registers: the European Parliament's open-data service, the Publications
+      Office and the Legislative Observatory (OEIL). They never come from news coverage or social
+      media.</li>
       <li><strong>Numbers come from the official record.</strong> Vote counts, dates and bill numbers are copied exactly as published. A summary can repeat a figure from its source, sometimes rounded, but a summary with a figure its source doesn't contain is never published. If the record has no number, the line is left out rather than estimated.</li>
-      <li><strong>Fail closed.</strong> When an action in the record is ambiguous — a procedural
-      step the classifier can't confidently place — the system logs it and stays silent rather
-      than guessing on air.</li>
-      <li><strong>Real clocks only.</strong> "The President has ten days (Sundays excepted)" is a
+      <li><strong>When in doubt, stay silent.</strong> If an action in the record is ambiguous,
+      the system logs it and stays silent instead of posting a guess. Ambiguous means a procedural
+      step the system can't confidently classify.</li>
+      <li><strong>Real deadlines only.</strong> "The President has ten days (Sundays excepted)" is a
       constitutional fact, so the feed states it. Trilogue timing is not published, so the feed
       says <em>that</em> instead of inventing a timetable.</li>
-      <li><strong>Uncertainty stays in words.</strong> Genuine branch points are marked
-      "expected", "possible", "if and when" — likelihood claims always carry their basis, and
-      never dress a guess as a fact.</li>
-      <li><strong>AI is labeled.</strong> The plain-English summaries are AI-written and carry an
-      explicit <strong>[AI-Generated]</strong> tag, positioned so it can never be misread as
-      labeling the procedural facts, which are not AI-written.</li>
+      <li><strong>Uncertainty stays in words.</strong> Where a bill's path could genuinely go more
+      than one way, the feed says so with "expected", "possible" or "if and when". A claim about
+      likelihood always gives its basis. A guess is never presented as a fact.</li>
+      <li><strong>AI is labeled.</strong> Plain-English summaries are written by AI and carry an
+      explicit <strong>[AI-Generated]</strong> tag. The tag is placed so it can never be mistaken
+      for a label on the procedural facts, which are not written by AI.</li>
       <li><strong>Summaries can be wrong.</strong> Summaries are written by AI, and AI makes mistakes. In our testing, summaries based on an official summary held up. Of those based on a bill's own text, about 3 in 50 had a mistake, more often on long or complex bills. To keep the service free, we use a small, fast AI model. Spot a mistake? Email <a href="mailto:accuracy@billtracking.org">accuracy@billtracking.org</a>.</li>
-      <li><strong>Non-binding means saying so.</strong> Parliamentary resolutions that change no
-      law always carry "non-binding" in the post; a political agreement is never called a law,
-      and "in force" is never conflated with "applies to you now".</li>
+      <li><strong>Non-binding means saying so.</strong> When a parliamentary resolution changes no
+      law, the post always says "non-binding". A political agreement is never called a law. And
+      "in force" is never confused with "applies to you now".</li>
     </ul>
   </div>
 </section>
@@ -112,35 +113,35 @@
   <div class="wrap">
     <p class="eyebrow on-light">When we get it wrong</p>
     <h2>Corrections are visible, never silent</h2>
-    <p class="measure-wide muted">Automated systems reading government databases will
-    sometimes be wrong — because of our own bugs, and sometimes because the record itself is
-    amended after the fact. What we promise is not perfection; it's that <strong>no error is
+    <p class="measure-wide muted">Automated systems that read government databases will
+    sometimes be wrong. Sometimes that is because of our own bugs. Sometimes it is because the
+    record itself is amended after the fact. We don't promise perfection. We promise that <strong>no error is
     fixed quietly</strong>. An erroneous post is corrected in the open. The post itself carries
     a Corrected flag, the values that changed are marked, and a footer says what it used to say,
     when it changed and why. On X the correction goes out as a reply to the original post.
     Every correction is listed in our <a href="/corrections/">public corrections log</a>.</p>
 
     <h3>Report an error</h3>
-    <p class="muted">Spotted a discrepancy between a post and the official record? Email
+    <p class="muted">Spot a post that doesn't match the official record? Email
     <a href="mailto:accuracy@billtracking.org"><strong>accuracy@billtracking.org</strong></a> with
     a link to the post and to the official source. Every report is read.</p>
 
     <div class="callout gold">
-      <p><strong>Credit, if you want it.</strong> Confirmed reports are credited in the log
-      entry — your name or your X handle, your choice, and only if you explicitly opt in.
-      Reports are otherwise anonymous. (For students: a credited correction to a public
-      record is a nice thing to be able to link to. Instructors — there's a
-      <a href="/educators">ready-made exercise</a> built on exactly this.)</p>
+      <p><strong>Credit, if you want it.</strong> If you explicitly opt in, a confirmed report is
+      credited in its log entry, with your name or your X handle. You choose which. Otherwise,
+      reports are anonymous. Students: a credited correction to a public record is a nice thing
+      to be able to link to. Instructors: there's a <a href="/educators">ready-made exercise</a>
+      built on exactly this.</p>
     </div>
 
     <h3>Corrections log</h3>
     <div class="log-empty">
       <p style="margin:0">Every confirmed correction is listed at
-      <a href="/corrections/"><strong>billtracking.org/corrections</strong></a> — what the post
-      used to say, what it says now, the date it changed, why, and, where a correction has one,
-      its source. That page is
-      generated from the published record itself, so it cannot fall behind the posts it
-      describes, and it says so plainly when there is nothing to log.</p>
+      <a href="/corrections/"><strong>billtracking.org/corrections</strong></a>. Each entry shows
+      what the post used to say, what it says now, the date it changed and why. It also shows the
+      source, where a correction has one. That page is generated from the published record itself,
+      so it can't fall behind the posts it describes. When there is nothing to log, it says so
+      plainly.</p>
     </div>
   </div>
 </section>
@@ -150,63 +151,65 @@
     <p class="eyebrow on-light">Reader votes</p>
     <h2>How the reader vote is counted</h2>
     <p class="measure-wide muted">Readers can vote Yea or Nay on a bill. It is reader sentiment,
-    <strong>not a poll of anyone's electorate</strong> — the people who voted are the people who
-    happened to read the post, and they are not a sample of anything. The method is published here so
-    that a figure taken from this site can be checked against how it was produced.</p>
+    <strong>not a poll of anyone's electorate</strong>. The people who voted are the people who
+    happened to read the post. They are not a sample of anything. The method is published here so a
+    figure taken from this site can be checked against how it was produced.</p>
 
     <ul class="principles">
       <li><strong>One account, one vote per bill.</strong> That is the only reason voting asks you to
-      sign in — it is what stops the same account counting twice. Change your mind and your vote changes;
-      withdraw it and it leaves the count.</li>
-      <li><strong>Counts are exact.</strong> Never rounded, banded or jittered. A cited number is the
-      number.</li>
-      <li><strong>Every place inside the bill's own legislature is named, with its count.</strong> US
-      states on a US bill, member countries on an EU one. There is no minimum below which one of them is
-      hidden or merged into "other", and every split shows how many people it is — so "Wyoming, 1 vote,
-      100% Yea" reads as one person rather than as a percentage. Votes from outside that legislature are
-      counted together in one row, and votes with no country in another, so no vote is dropped.</li>
-      <li><strong>Location is optional, self-reported and coarse.</strong> Country, and US state — never
-      finer, never verified, and never derived from your IP address. A place row means "readers who
-      selected Belgium", not "readers in Belgium". Votes with no location still count in the overall
-      total.</li>
-      <li><strong>A vote carries the location you had when you last cast it.</strong> It is recorded on
-      the vote itself,
-      so a reader who later moves country does not silently rewrite figures already published.</li>
+      sign in. It is what stops the same account counting twice. Change your mind and your vote changes.
+      Withdraw it and it leaves the count.</li>
+      <li><strong>Counts are exact.</strong> They are never rounded, grouped into ranges or blurred with
+      random noise. A cited number is the real count.</li>
+      <li><strong>Every place inside the bill's own legislature is named, with its count.</strong> That
+      means US states on a US bill and member countries on an EU one. There is no minimum size. No place
+      is hidden or merged into "other", however few votes it has. Every split shows how many people it
+      is, so "Wyoming, 1 vote, 100% Yea" reads as one person, not as a percentage. Votes from outside
+      that legislature are counted together in one row. Votes with no country go in another. So no vote
+      is dropped.</li>
+      <li><strong>Location is optional, self-reported and coarse.</strong> It is never finer than country
+      and US state. It is never verified, and never worked out from your IP address. A place row means
+      "readers who selected Belgium", not "readers in Belgium". Votes with no location still count in the
+      overall total.</li>
+      <li><strong>A vote carries the location you had when you last cast it.</strong> The location is
+      recorded on the vote itself. That way, a reader who later moves country does not silently rewrite
+      figures already published.</li>
       <li><strong>Who voted which way is never published.</strong> It is never shown to anyone or
-      attached to a profile — there are no public profiles and no
-      public vote histories, and only counts are published. Deleting your account removes your votes from
-      every future count.</li>
+      attached to a profile. There are no public profiles and no public vote histories. Only counts are
+      published. Deleting your account removes your votes from every future count.</li>
     </ul>
 
-    <p class="measure-wide muted">What this cannot promise: in a very small or very lopsided place row,
-    somebody who already knows a particular reader voted could guess how. That comes with publishing any
-    aggregate at all — a minimum group size would move the line, not remove it — and it is why the
-    location is optional in the first place.</p>
+    <p class="measure-wide muted"><strong>What this cannot promise.</strong> In a very small or very
+    lopsided place row, someone who already knows that a particular reader voted could guess how.
+    Publishing any totals at all carries that risk. A minimum group size would move the line, not
+    remove it. That risk is why location is optional in the first place.</p>
 
-    <!-- The owner's ruled wording. It is an h3 inside the reader-vote section rather than a section
-         of its own, because how the vote is counted and how it is protected are one argument. The
-         app's accuracy screen carries the same paragraphs, and `check:sitenav` fails the build if
-         the two stop matching — edit both halves in one pass, or neither. -->
+    <!-- The owner's ruled wording (2026-09-07), restyled into the page's one voice at his request on
+         2026-10-22: sentence breaks only, every claim unchanged. It is an h3 inside the reader-vote
+         section rather than a section of its own, because how the vote is counted and how it is
+         protected are one argument. The app's accuracy screen carries the same paragraphs, and
+         `check:sitenav` fails the build if the two stop matching — edit both halves in one pass, or
+         neither. -->
     <h3>How we protect the reader vote</h3>
 
     <p class="measure-wide muted">Voting needs an account, and an account needs a Google or Apple
-    sign-in. One account casts one vote per bill. Tapping the other choice moves your vote; tapping the
+    sign-in. One account casts one vote per bill. Tapping the other choice moves your vote. Tapping the
     one you already chose withdraws it. Deleting your account removes every vote you cast.</p>
 
-    <p class="measure-wide muted">Counts are exact. We never round them, and every split shows how many
+    <p class="measure-wide muted">Counts are exact. We never round them. Every split shows how many
     people it is, so a one-person row reads as one person.</p>
 
-    <p class="measure-wide muted">We keep a daily history of each bill's counts, by place, and we count
+    <p class="measure-wide muted">We keep a daily history of each bill's counts, by place. We also count
     the votes that leave with deleted accounts. That way a fall in a total can say votes left, rather
     than people changed their minds.</p>
 
-    <p class="measure-wide muted">We don't fingerprint devices, we don't verify the location you give
-    us, and the count we keep of a departed vote identifies nobody.</p>
+    <p class="measure-wide muted">We don't fingerprint devices. We don't verify the location you give
+    us. And the count we keep of a departed vote identifies nobody.</p>
 
     <p class="measure-wide muted">Two limits worth knowing. One account is one vote, but nothing stops a
-    determined person creating several accounts across both platforms; what makes that hard is Google's
-    and Apple's own account constraints, not ours. And these are the readers who chose to vote, not a
-    sample of anyone's electorate.</p>
+    determined person from creating several accounts across both platforms. What makes that hard is
+    Google's and Apple's own account constraints, not ours. And these are the readers who chose to vote,
+    not a sample of anyone's electorate.</p>
   </div>
 </section>
 
