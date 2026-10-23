@@ -1014,6 +1014,7 @@ button[disabled],
 
 .bt-notif[data-polity="us"],
 .bt-shown[data-polity="us"],
+.bt-docket[data-polity="us"],
 .vl-tabs[data-polity="us"],
 .vl-row[data-polity="us"] {
   --accent: var(--navy);
@@ -1023,6 +1024,7 @@ button[disabled],
 }
 .bt-notif[data-polity="eu"],
 .bt-shown[data-polity="eu"],
+.bt-docket[data-polity="eu"],
 .vl-tabs[data-polity="eu"],
 .vl-row[data-polity="eu"] {
   --accent: var(--royal);
@@ -1078,7 +1080,8 @@ button[disabled],
 }
 
 .bt-notif .bt-tsolo,
-.bt-shown .bt-tsolo {
+.bt-shown .bt-tsolo,
+.bt-docket .bt-tsolo {
   font-family: var(--sans);
   font-size: 12.5px;
   font-weight: 700;
@@ -1967,7 +1970,6 @@ span.bt-tex { cursor: default; }
 }
 .bt-keyword-cap { margin: 0.35rem 0 0.6rem; }
 
-.acct-card .bt-keyword-count { margin-top: 0.65rem; }
 .bt-foot {
   font-family: var(--sans);
   font-size: 11.5px;
