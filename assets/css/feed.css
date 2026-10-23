@@ -657,10 +657,18 @@ button[disabled],
 }
 
 .card-summary .summary-label,
-.card-summary .summary-heading { font-weight: 600; }
-.card-summary .summary-gap-tight { margin-top: 4px; }
-.card-summary .summary-gap-para { margin-top: 8px; }
-.card-summary .summary-gap-section { margin-top: 16px; }
+.card-summary .summary-heading,
+.bill-summary .summary-label,
+.bill-summary .summary-heading { font-weight: 600; }
+.card-summary .summary-gap-tight { margin-top: 5px; }
+.card-summary .summary-gap-para { margin-top: 20px; }
+.card-summary .summary-gap-section { margin-top: 30px; }
+
+.bill-summary { line-height: 1.65; max-width: 62ch; }
+.bill-summary p { margin: 0; max-width: none; }
+.bill-summary .summary-gap-tight { margin-top: calc(0.25 * 1.65em); }
+.bill-summary .summary-gap-para { margin-top: calc(1 * 1.65em); }
+.bill-summary .summary-gap-section { margin-top: calc(1.5 * 1.65em); }
 
 .card-older-note {
   font-family: var(--sans);
