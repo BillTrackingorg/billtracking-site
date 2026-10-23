@@ -711,7 +711,6 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
 .post .post-head .at { color: var(--ink-faint); font-weight: 400; font-size: 0.84rem; }
 
 .post .post-text { white-space: pre-line; margin: 0; max-width: none; }
-.post .post-text .ai-tag { color: var(--ink-faint); font-size: 0.8rem; }
 
 .post-caption {
   font-size: 0.8rem;
