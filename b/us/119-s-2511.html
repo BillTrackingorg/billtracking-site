@@ -39,6 +39,16 @@
     /* The official summary's lead-in, naming its source and version, in the weight of the
        card's lead-ins (D42). */
     .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
+    /* Its blocks (summaryBlocksHtml), as the card draws them: a section's label and a
+       heading line in the lead's weight, the gap before a block by its class, in lines of
+       the box's 1.65 (SUMMARY_GAP_LINES). The box keeps the 62ch measure and its paragraphs
+       fill it. */
+    .bill-summary { max-width: 62ch; }
+    .bill-summary p { margin: 0; max-width: none; }
+    .bill-summary .summary-label, .bill-summary .summary-heading { font-weight: 600; }
+    .bill-summary .summary-gap-tight { margin-top: calc(0.25 * 1.65em); }
+    .bill-summary .summary-gap-para { margin-top: calc(1 * 1.65em); }
+    .bill-summary .summary-gap-section { margin-top: calc(1.5 * 1.65em); }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -226,7 +236,7 @@
   <h1 class="bill-ref">S. 2511</h1>
   <h2 class="bill-title">College Transparency Act</h2>
   <p class="bill-meta">Health, Education, Labor, and Pensions Committee · Sen. Bill Cassidy (R-LA)</p>
-  <p class="bill-summary"><span class="lead">Official summary (Congressional Research Service, Reported to Senate): </span>College Transparency Act<br><br>This bill requires the National Center for Education Statistics (NCES) to establish a secure and privacy-protected data system that contains information about postsecondary students.<br><br>Specifically, the data system must<br><br>evaluate student enrollment patterns, progression, completion, and postcollegiate outcomes, and higher education costs and financial aid;<br><br>provide complete and customizable information for students and families making decisions about postsecondary education;<br><br>reduce the requirements for reporting by institutions of higher education; and<br><br>periodically match with other federal systems of data.<br><br>The bill also establishes a postsecondary student data system advisory committee.<br><br>The Department of Education (ED) and NCES must (1) provide dedicated and adequate staffing at ED to implement the bill&#39;s requirements, and (2) report to Congress on a quarterly basis regarding the progress of implementing the bill&#39;s requirements.</p>
+  <div class="bill-summary"><p class="summary-para"><span class="lead">Official summary (Congressional Research Service, Reported to Senate): </span>College Transparency Act</p><p class="summary-para summary-gap-para">This bill requires the National Center for Education Statistics (NCES) to establish a secure and privacy-protected data system that contains information about postsecondary students.</p><p class="summary-para summary-gap-para">Specifically, the data system must</p><p class="summary-para summary-gap-para">evaluate student enrollment patterns, progression, completion, and postcollegiate outcomes, and higher education costs and financial aid;</p><p class="summary-para summary-gap-para">provide complete and customizable information for students and families making decisions about postsecondary education;</p><p class="summary-para summary-gap-para">reduce the requirements for reporting by institutions of higher education; and</p><p class="summary-para summary-gap-para">periodically match with other federal systems of data.</p><p class="summary-para summary-gap-para">The bill also establishes a postsecondary student data system advisory committee.</p><p class="summary-para summary-gap-para">The Department of Education (ED) and NCES must (1) provide dedicated and adequate staffing at ED to implement the bill&#39;s requirements, and (2) report to Congress on a quarterly basis regarding the progress of implementing the bill&#39;s requirements.</p></div>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span> <span class="st-date">4 August 2026</span></div>
   <p class="bill-asof">Record as of 4 August 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

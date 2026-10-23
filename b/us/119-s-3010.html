@@ -39,6 +39,16 @@
     /* The official summary's lead-in, naming its source and version, in the weight of the
        card's lead-ins (D42). */
     .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
+    /* Its blocks (summaryBlocksHtml), as the card draws them: a section's label and a
+       heading line in the lead's weight, the gap before a block by its class, in lines of
+       the box's 1.65 (SUMMARY_GAP_LINES). The box keeps the 62ch measure and its paragraphs
+       fill it. */
+    .bill-summary { max-width: 62ch; }
+    .bill-summary p { margin: 0; max-width: none; }
+    .bill-summary .summary-label, .bill-summary .summary-heading { font-weight: 600; }
+    .bill-summary .summary-gap-tight { margin-top: calc(0.25 * 1.65em); }
+    .bill-summary .summary-gap-para { margin-top: calc(1 * 1.65em); }
+    .bill-summary .summary-gap-section { margin-top: calc(1.5 * 1.65em); }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -226,7 +236,7 @@
   <h1 class="bill-ref">S. 3010</h1>
   <h2 class="bill-title">21st Century Dyslexia Act</h2>
   <p class="bill-meta">Health, Education, Labor, and Pensions Committee · Sen. Bill Cassidy (R-LA)</p>
-  <p class="bill-summary"><span class="lead">Official summary (Congressional Research Service, Introduced in Senate): </span>21st Century Dyslexia Act<br><br>This bill addresses the education of children with disabilities, with a particular focus on children with dyslexia.<br><br>Currently, dyslexia is listed as one of the disabilities under the definition of specific learning disability in the Individuals with Disabilities Education Act (IDEA). This bill instead removes dyslexia from the definition of specific learning disability and establishes a stand-alone definition for dyslexia within the IDEA.<br><br>Specifically, the bill defines dyslexia for purposes of the IDEA as an unexpected difficulty in reading for an individual who has the intelligence to be a much better reader, most commonly caused by a difficulty in the phonological processing (the appreciation of the individual sounds of spoken language), which affects the ability of an individual to speak, read, and spell.<br><br>Additionally, the bill requires a local educational agency or other agency, in determining eligibility for or providing an accommodation or service under the IDEA, to provide equal access to (1) children from low-income families, (2) children from families with low socioeconomic status, and (3) children who are limited English proficient.</p>
+  <div class="bill-summary"><p class="summary-para"><span class="lead">Official summary (Congressional Research Service, Introduced in Senate): </span>21st Century Dyslexia Act</p><p class="summary-para summary-gap-para">This bill addresses the education of children with disabilities, with a particular focus on children with dyslexia.</p><p class="summary-para summary-gap-para">Currently, dyslexia is listed as one of the disabilities under the definition of specific learning disability in the Individuals with Disabilities Education Act (IDEA). This bill instead removes dyslexia from the definition of specific learning disability and establishes a stand-alone definition for dyslexia within the IDEA.</p><p class="summary-para summary-gap-para">Specifically, the bill defines dyslexia for purposes of the IDEA as an unexpected difficulty in reading for an individual who has the intelligence to be a much better reader, most commonly caused by a difficulty in the phonological processing (the appreciation of the individual sounds of spoken language), which affects the ability of an individual to speak, read, and spell.</p><p class="summary-para summary-gap-para">Additionally, the bill requires a local educational agency or other agency, in determining eligibility for or providing an accommodation or service under the IDEA, to provide equal access to (1) children from low-income families, (2) children from families with low socioeconomic status, and (3) children who are limited English proficient.</p></div>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span> <span class="st-date">5 August 2026</span></div>
   <p class="bill-asof">Record as of 5 August 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

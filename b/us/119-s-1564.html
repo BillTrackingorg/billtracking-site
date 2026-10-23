@@ -39,6 +39,16 @@
     /* The official summary's lead-in, naming its source and version, in the weight of the
        card's lead-ins (D42). */
     .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
+    /* Its blocks (summaryBlocksHtml), as the card draws them: a section's label and a
+       heading line in the lead's weight, the gap before a block by its class, in lines of
+       the box's 1.65 (SUMMARY_GAP_LINES). The box keeps the 62ch measure and its paragraphs
+       fill it. */
+    .bill-summary { max-width: 62ch; }
+    .bill-summary p { margin: 0; max-width: none; }
+    .bill-summary .summary-label, .bill-summary .summary-heading { font-weight: 600; }
+    .bill-summary .summary-gap-tight { margin-top: calc(0.25 * 1.65em); }
+    .bill-summary .summary-gap-para { margin-top: calc(1 * 1.65em); }
+    .bill-summary .summary-gap-section { margin-top: calc(1.5 * 1.65em); }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -226,7 +236,7 @@
   <h1 class="bill-ref">S. 1564</h1>
   <h2 class="bill-title">Floodplain Enhancement and Recovery Act</h2>
   <p class="bill-meta">Banking, Housing, and Urban Affairs Committee · Sen. Patty Murray (D-WA)</p>
-  <p class="bill-summary"><span class="lead">Official summary (Congressional Research Service, Passed Senate): </span>Floodplain Enhancement and Recovery Act<br><br>This bill eases restrictions for ecosystem restoration projects in designated floodways that meet certain risk criteria.<br><br>Under current National Flood Insurance Program requirements, such projects are generally prohibited in a designated floodway if the project would increase the area’s base flood elevation.<br><br>The bill establishes conditions under which a community may permit an ecosystem restoration project within a designated floodway that would result in an increase in base flood elevations. Specifically, the project may be permitted if (1) a professional engineer determines that the cumulative effect of the increase will be not more than 1 foot; (2) no insurable structure or critical infrastructure is located in an impacted area; and (3) the community submits an analysis to the Federal Emergency Management Agency on the project’s effects after the project is complete.<br><br>An ecosystem restoration project is defined by the bill as a project that manipulates the physical, chemical, or biological characteristics of a site with a goal of recovering, reclaiming, or improving the functions of an aquatic resource or floodplain.</p>
+  <div class="bill-summary"><p class="summary-para"><span class="lead">Official summary (Congressional Research Service, Passed Senate): </span>Floodplain Enhancement and Recovery Act</p><p class="summary-para summary-gap-para">This bill eases restrictions for ecosystem restoration projects in designated floodways that meet certain risk criteria.</p><p class="summary-para summary-gap-para">Under current National Flood Insurance Program requirements, such projects are generally prohibited in a designated floodway if the project would increase the area’s base flood elevation.</p><p class="summary-para summary-gap-para">The bill establishes conditions under which a community may permit an ecosystem restoration project within a designated floodway that would result in an increase in base flood elevations. Specifically, the project may be permitted if (1) a professional engineer determines that the cumulative effect of the increase will be not more than 1 foot; (2) no insurable structure or critical infrastructure is located in an impacted area; and (3) the community submits an analysis to the Federal Emergency Management Agency on the project’s effects after the project is complete.</p><p class="summary-para summary-gap-para">An ecosystem restoration project is defined by the bill as a project that manipulates the physical, chemical, or biological characteristics of a site with a goal of recovering, reclaiming, or improving the functions of an aquatic resource or floodplain.</p></div>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (unanimous consent)</span> <span class="st-date">30 September 2026</span></div>
   <p class="bill-asof">Record as of 5 October 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

@@ -39,6 +39,16 @@
     /* The official summary's lead-in, naming its source and version, in the weight of the
        card's lead-ins (D42). */
     .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
+    /* Its blocks (summaryBlocksHtml), as the card draws them: a section's label and a
+       heading line in the lead's weight, the gap before a block by its class, in lines of
+       the box's 1.65 (SUMMARY_GAP_LINES). The box keeps the 62ch measure and its paragraphs
+       fill it. */
+    .bill-summary { max-width: 62ch; }
+    .bill-summary p { margin: 0; max-width: none; }
+    .bill-summary .summary-label, .bill-summary .summary-heading { font-weight: 600; }
+    .bill-summary .summary-gap-tight { margin-top: calc(0.25 * 1.65em); }
+    .bill-summary .summary-gap-para { margin-top: calc(1 * 1.65em); }
+    .bill-summary .summary-gap-section { margin-top: calc(1.5 * 1.65em); }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -226,7 +236,7 @@
   <h1 class="bill-ref">H.R. 9394</h1>
   <h2 class="bill-title">Civil Preparedness for Agroterrorism Exercise Act of 2026</h2>
   <p class="bill-meta">Homeland Security and Governmental Affairs Committee, Homeland Security Committee · Rep. Dale Strong (R-AL)</p>
-  <p class="bill-summary"><span class="lead">Official summary (Congressional Research Service, Introduced in House): </span>Civil Preparedness for Agroterrorism Exercise Act of 2026<br><br>This bill requires the Department of Homeland Security (DHS), within four years after the bill’s enactment, to conduct an exercise to enhance collective domestic prevention, response, and recovery regarding acts of agroterrorism (i.e., terrorism targeting or threatening agriculture and food systems of vital importance to national security, public health, or safety). The scenario in the exercise must involve agroterrorists transporting and deploying in the United States a biological agent (e.g., microorganism or infectious substance) capable of harming critical agriculture and food operations and must address how relevant public and private entities can coordinate to develop preparedness and mitigate widespread disruption.<br><br>Within 180 days after completion of the exercise, DHS must submit to Congress an after-action report including the findings of the exercise, plans for incorporating lessons learned into future operations, and recommended legislative actions.</p>
+  <div class="bill-summary"><p class="summary-para"><span class="lead">Official summary (Congressional Research Service, Introduced in House): </span>Civil Preparedness for Agroterrorism Exercise Act of 2026</p><p class="summary-para summary-gap-para">This bill requires the Department of Homeland Security (DHS), within four years after the bill’s enactment, to conduct an exercise to enhance collective domestic prevention, response, and recovery regarding acts of agroterrorism (i.e., terrorism targeting or threatening agriculture and food systems of vital importance to national security, public health, or safety). The scenario in the exercise must involve agroterrorists transporting and deploying in the United States a biological agent (e.g., microorganism or infectious substance) capable of harming critical agriculture and food operations and must address how relevant public and private entities can coordinate to develop preparedness and mitigate widespread disruption.</p><p class="summary-para summary-gap-para">Within 180 days after completion of the exercise, DHS must submit to Congress an after-action report including the findings of the exercise, plans for incorporating lessons learned into future operations, and recommended legislative actions.</p></div>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House (voice vote)</span> <span class="st-date">16 September 2026</span></div>
   <p class="bill-asof">Record as of 16 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

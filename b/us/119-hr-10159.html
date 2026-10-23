@@ -39,6 +39,16 @@
     /* The official summary's lead-in, naming its source and version, in the weight of the
        card's lead-ins (D42). */
     .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
+    /* Its blocks (summaryBlocksHtml), as the card draws them: a section's label and a
+       heading line in the lead's weight, the gap before a block by its class, in lines of
+       the box's 1.65 (SUMMARY_GAP_LINES). The box keeps the 62ch measure and its paragraphs
+       fill it. */
+    .bill-summary { max-width: 62ch; }
+    .bill-summary p { margin: 0; max-width: none; }
+    .bill-summary .summary-label, .bill-summary .summary-heading { font-weight: 600; }
+    .bill-summary .summary-gap-tight { margin-top: calc(0.25 * 1.65em); }
+    .bill-summary .summary-gap-para { margin-top: calc(1 * 1.65em); }
+    .bill-summary .summary-gap-section { margin-top: calc(1.5 * 1.65em); }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -226,7 +236,7 @@
   <h1 class="bill-ref">H.R. 10159</h1>
   <h2 class="bill-title">To authorize the Secretary of the Army to convey to the State of North Carolina a certain parcel of real property located at Fort Bragg, North Carolina, on which the State shall construct a veterans’ State home, and for other purposes.</h2>
   <p class="bill-meta">Armed Services Committee · Rep. Richard Hudson (R-NC)</p>
-  <p class="bill-summary"><span class="lead">Official summary (Congressional Research Service, Introduced in House): </span>This bill authorizes the Department of the Army to transfer, without compensation or other consideration, all right, title, and interest to a specified 20-acre parcel of land on Fort Bragg to the State of North Carolina for the purpose of constructing a state home under the jurisdiction of the North Carolina Department of Military and Veterans Affairs. (A state home is a home established by a state for veterans who are disabled by age, disease, or otherwise and are incapable of earning a living because of such disability. The term also includes a home that furnishes nursing home care for veterans.)<br><br>Specifically, the bill authorizes the conveyance of a 20-acre parcel of land situated on the Fort Bragg Training Area in Harnett County, North Carolina, that is commonly referred to as Parcel 3B.<br><br>The State of North Carolina must cover all costs to carry out the conveyance.<br><br>If the Department of the Army determines the property is not being used for activities related to a state home, all right, title, and interest in the property may revert to the United States.</p>
+  <div class="bill-summary"><p class="summary-para"><span class="lead">Official summary (Congressional Research Service, Introduced in House): </span>This bill authorizes the Department of the Army to transfer, without compensation or other consideration, all right, title, and interest to a specified 20-acre parcel of land on Fort Bragg to the State of North Carolina for the purpose of constructing a state home under the jurisdiction of the North Carolina Department of Military and Veterans Affairs. (A state home is a home established by a state for veterans who are disabled by age, disease, or otherwise and are incapable of earning a living because of such disability. The term also includes a home that furnishes nursing home care for veterans.)</p><p class="summary-para summary-gap-para">Specifically, the bill authorizes the conveyance of a 20-acre parcel of land situated on the Fort Bragg Training Area in Harnett County, North Carolina, that is commonly referred to as Parcel 3B.</p><p class="summary-para summary-gap-para">The State of North Carolina must cover all costs to carry out the conveyance.</p><p class="summary-para summary-gap-para">If the Department of the Army determines the property is not being used for activities related to a state home, all right, title, and interest in the property may revert to the United States.</p></div>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (unanimous consent)</span> <span class="st-date">29 September 2026</span></div>
   <p class="bill-asof">Record as of 14 October 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

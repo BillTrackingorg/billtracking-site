@@ -39,6 +39,16 @@
     /* The official summary's lead-in, naming its source and version, in the weight of the
        card's lead-ins (D42). */
     .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
+    /* Its blocks (summaryBlocksHtml), as the card draws them: a section's label and a
+       heading line in the lead's weight, the gap before a block by its class, in lines of
+       the box's 1.65 (SUMMARY_GAP_LINES). The box keeps the 62ch measure and its paragraphs
+       fill it. */
+    .bill-summary { max-width: 62ch; }
+    .bill-summary p { margin: 0; max-width: none; }
+    .bill-summary .summary-label, .bill-summary .summary-heading { font-weight: 600; }
+    .bill-summary .summary-gap-tight { margin-top: calc(0.25 * 1.65em); }
+    .bill-summary .summary-gap-para { margin-top: calc(1 * 1.65em); }
+    .bill-summary .summary-gap-section { margin-top: calc(1.5 * 1.65em); }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -226,7 +236,7 @@
   <h1 class="bill-ref">S. 1525</h1>
   <h2 class="bill-title">Common Cents Act</h2>
   <p class="bill-meta">Banking, Housing, and Urban Affairs Committee · Sen. Cynthia Lummis (R-WY)</p>
-  <p class="bill-summary"><span class="lead">Official summary (Congressional Research Service, Passed Senate): </span>Common Cents Act<br><br>This bill ends the production of the penny for general circulation, requires rounding to an amount divisible by five for the payment or transfer of cash, and allows the nickel to be composed of different material.<br><br>The Department of the Treasury must stop producing the penny, except to meet collector needs. The penny shall continue to be legal tender.<br><br>Any person selling goods or services in a cash transaction, entering into other transfers of cash, or paying cash wages to an employee must round the payment up or down in accordance with the bill.<br><br>The bill also allows Treasury to discontinue the minting for circulation of any coin if Treasury follows procedures as outlined by the bill, including providing notice and a briefing to Congress.<br><br>The Federal Reserve Board must periodically report on a strategic plan for the acceptance of penny orders and deposits at commercial coin terminals that provide services under agreements with Federal Reserve banks.<br><br>Finally, the bill allows for a different material composition of the nickel. In addition to being made from an alloy of copper and nickel, the nickel may also be clad with an inner core of zinc and an outer layer of nickel.</p>
+  <div class="bill-summary"><p class="summary-para"><span class="lead">Official summary (Congressional Research Service, Passed Senate): </span>Common Cents Act</p><p class="summary-para summary-gap-para">This bill ends the production of the penny for general circulation, requires rounding to an amount divisible by five for the payment or transfer of cash, and allows the nickel to be composed of different material.</p><p class="summary-para summary-gap-para">The Department of the Treasury must stop producing the penny, except to meet collector needs. The penny shall continue to be legal tender.</p><p class="summary-para summary-gap-para">Any person selling goods or services in a cash transaction, entering into other transfers of cash, or paying cash wages to an employee must round the payment up or down in accordance with the bill.</p><p class="summary-para summary-gap-para">The bill also allows Treasury to discontinue the minting for circulation of any coin if Treasury follows procedures as outlined by the bill, including providing notice and a briefing to Congress.</p><p class="summary-para summary-gap-para">The Federal Reserve Board must periodically report on a strategic plan for the acceptance of penny orders and deposits at commercial coin terminals that provide services under agreements with Federal Reserve banks.</p><p class="summary-para summary-gap-para">Finally, the bill allows for a different material composition of the nickel. In addition to being made from an alloy of copper and nickel, the nickel may also be clad with an inner core of zinc and an outer layer of nickel.</p></div>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate with amendment (unanimous consent)</span> <span class="st-date">7 August 2026</span></div>
   <p class="bill-asof">Record as of 10 August 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

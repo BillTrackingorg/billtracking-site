@@ -39,6 +39,16 @@
     /* The official summary's lead-in, naming its source and version, in the weight of the
        card's lead-ins (D42). */
     .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
+    /* Its blocks (summaryBlocksHtml), as the card draws them: a section's label and a
+       heading line in the lead's weight, the gap before a block by its class, in lines of
+       the box's 1.65 (SUMMARY_GAP_LINES). The box keeps the 62ch measure and its paragraphs
+       fill it. */
+    .bill-summary { max-width: 62ch; }
+    .bill-summary p { margin: 0; max-width: none; }
+    .bill-summary .summary-label, .bill-summary .summary-heading { font-weight: 600; }
+    .bill-summary .summary-gap-tight { margin-top: calc(0.25 * 1.65em); }
+    .bill-summary .summary-gap-para { margin-top: calc(1 * 1.65em); }
+    .bill-summary .summary-gap-section { margin-top: calc(1.5 * 1.65em); }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -226,7 +236,7 @@
   <h1 class="bill-ref">H.R. 8476</h1>
   <h2 class="bill-title">No Antisemitism in Education Act of 2026</h2>
   <p class="bill-meta">Judiciary Committee, Education and Workforce Committee · Rep. Randy Fine (R-FL)</p>
-  <p class="bill-summary"><span class="lead">Official summary (Congressional Research Service, Reported to House): </span>No Antisemitism in Education Act of 2026<br><br>This bill requires local educational agencies (LEAs) and institutions of higher education (IHEs), as a condition of receiving federal funds, to treat discrimination that is motivated by antisemitism as vigorously as the LEA or IHE treats all other forms of discrimination prohibited by Title VI of the Civil Rights Act of 1964. (Title VI of the Civil Rights Act of 1964 prohibits discrimination based on race, color, or national origin in federally funded programs or activities.)<br><br>The bill requires federal agencies, LEAs, and IHEs to consider the definition of antisemitism contained in a December 11, 2019, executive order when reviewing or investigating whether a discriminatory act or omission was motivated by discriminatory antisemitic intent. The executive order incorporates the International Holocaust Remembrance Alliance&#39;s (IHRA&#39;s) working definition of antisemitism. According to the IHRA&#39;s working definition, antisemitism is a certain perception of Jews, which may be expressed as hatred toward Jews.</p>
+  <div class="bill-summary"><p class="summary-para"><span class="lead">Official summary (Congressional Research Service, Reported to House): </span>No Antisemitism in Education Act of 2026</p><p class="summary-para summary-gap-para">This bill requires local educational agencies (LEAs) and institutions of higher education (IHEs), as a condition of receiving federal funds, to treat discrimination that is motivated by antisemitism as vigorously as the LEA or IHE treats all other forms of discrimination prohibited by Title VI of the Civil Rights Act of 1964. (Title VI of the Civil Rights Act of 1964 prohibits discrimination based on race, color, or national origin in federally funded programs or activities.)</p><p class="summary-para summary-gap-para">The bill requires federal agencies, LEAs, and IHEs to consider the definition of antisemitism contained in a December 11, 2019, executive order when reviewing or investigating whether a discriminatory act or omission was motivated by discriminatory antisemitic intent. The executive order incorporates the International Holocaust Remembrance Alliance&#39;s (IHRA&#39;s) working definition of antisemitism. According to the IHRA&#39;s working definition, antisemitism is a certain perception of Jews, which may be expressed as hatred toward Jews.</p></div>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span> <span class="st-date">20 August 2026</span></div>
   <p class="bill-asof">Record as of 20 August 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
