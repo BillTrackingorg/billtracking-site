@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://billtracking.org/b/eu/2026-0324-cod</loc><lastmod>2026-10-22</lastmod></url>
+  <url><loc>https://billtracking.org/b/eu/2026-0211-cod</loc><lastmod>2026-10-19</lastmod></url>
+  <url><loc>https://billtracking.org/b/eu/2025-0222-cod</loc><lastmod>2026-10-15</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2026-0078-cod</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0232-cod</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0227-cod</loc><lastmod>2026-10-22</lastmod></url>
@@ -21,6 +23,7 @@
   <url><loc>https://billtracking.org/b/us/119-hr-2388</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-2481</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0255-cod</loc><lastmod>2026-10-20</lastmod></url>
+  <url><loc>https://billtracking.org/b/eu/2026-0325-cod</loc><lastmod>2026-10-14</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2026-0294-cod</loc><lastmod>2026-10-01</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2026-0290-cod</loc><lastmod>2026-09-28</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2026-0289-cod</loc><lastmod>2026-09-21</lastmod></url>
@@ -29,7 +32,6 @@
   <url><loc>https://billtracking.org/b/us/119-s-283</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-7022</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0059-cod</loc><lastmod>2026-10-15</lastmod></url>
-  <url><loc>https://billtracking.org/b/eu/2026-0325-cod</loc><lastmod>2026-10-14</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-952</loc><lastmod>2026-10-15</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9496</loc><lastmod>2026-10-01</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-1703</loc><lastmod>2026-10-01</lastmod></url>
@@ -108,7 +110,6 @@
   <url><loc>https://billtracking.org/b/us/119-s-4668</loc><lastmod>2026-09-29</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-s-4974</loc><lastmod>2026-09-29</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2026-0259-cod</loc><lastmod>2026-09-10</lastmod></url>
-  <url><loc>https://billtracking.org/b/eu/2025-0222-cod</loc><lastmod>2026-10-15</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2026-0302-cod</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2013-0072-cod</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2025-0258-cod</loc><lastmod>2026-10-01</lastmod></url>
@@ -240,7 +241,6 @@
   <url><loc>https://billtracking.org/b/us/119-hjres-213</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-10326</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/eu/2026-0229-cod</loc><lastmod>2026-07-29</lastmod></url>
-  <url><loc>https://billtracking.org/b/eu/2026-0211-cod</loc><lastmod>2026-10-19</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9382</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9394</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://billtracking.org/b/us/119-hr-9723</loc><lastmod>2026-09-17</lastmod></url>
