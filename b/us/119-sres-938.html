@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">S.Res. 938</h1>
   <h2 class="bill-title">A resolution to honor the Americans killed by Hamas terrorists and their affiliates on and after October 7, 2023, to reaffirm the commitment of the United States to seek legal justice on behalf of their families, and for other purposes.</h2>
   <p class="bill-meta">Sen. Rick Scott (R-FL)</p>
-  <p class="bill-summary">The resolution honors and mourns Americans murdered by Hamas and its affiliates on and after October 7, 2023, and expresses condolences to the hostages and to the families and loved ones of the American victims. It condemns Hamas and its affiliates for the killings and hostage-taking of October 7, 2023, and commends the diplomatic efforts of successive U.S. administrations that helped secure the release of 12 Americans taken hostage. It urges the U.S. government to keep using every available diplomatic and legal tool on behalf of Americans held hostage anywhere in the world, and to continue engaging with the victims and their families. It also directs that a copy of the resolution be sent to the Secretary of State for delivery to the families of the American victims and to the Americans who were held hostage and later released, along with their families.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Agreed to (unanimous consent)</span> <span class="st-date">30 September 2026</span></div>
   <p class="bill-asof">Record as of 30 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

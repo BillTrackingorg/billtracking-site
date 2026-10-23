@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">H.R. 10167</h1>
   <h2 class="bill-title">Common Cents Act</h2>
   <p class="bill-meta">Banking, Housing, and Urban Affairs Committee, Financial Services Committee · Rep. Lisa McClain (R-MI)</p>
-  <p class="bill-summary">The bill would stop the U.S. Treasury from producing new pennies for everyday circulation, except to meet the needs of coin collectors, while keeping the penny legal money. It would require cash payments and transfers, such as sales and cash wages, to be rounded up or down to an amount divisible by five. The bill would also let Treasury stop minting any coin for circulation if it follows set procedures, including notifying and briefing Congress. It would require the Federal Reserve Board to report periodically on a plan for accepting penny orders and deposits at commercial coin terminals. Finally, it would allow the nickel to be made from a different material, a zinc core with a nickel outer layer, in addition to the current copper-nickel alloy.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate (unanimous consent)</span> <span class="st-date">28 September 2026</span></div>
   <p class="bill-asof">Record as of 14 October 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

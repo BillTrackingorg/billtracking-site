@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">H.R. 6021</h1>
   <h2 class="bill-title">Archie Cavanaugh Migratory Bird Treaty Clarification Act</h2>
   <p class="bill-meta">Natural Resources Committee · Rep. Nicholas Begich (R-AK)</p>
-  <p class="bill-summary">The bill would clarify how authentic Alaska Native handicrafts that contain parts of migratory birds may be offered for sale under the existing migratory bird treaty with Japan. It would require the State Department and the Interior Department, within 180 days of enactment, to work with Japan on bilateral procedures for these items, and would let the Interior Department adjust related regulations, including rules on resale, certification of authenticity, and species of conservation concern. The Interior Department would also be able to remove a species from this exception if its population shows significant decline or it is designated a bird of conservation concern. Finally, the bill would direct the Interior Department to develop outreach materials explaining the sale rules, and would define key terms such as Alaska Native, authentic handicraft, and Indian Tribe.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House with amendment (voice vote)</span> <span class="st-date">14 September 2026</span></div>
   <p class="bill-asof">Record as of 15 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

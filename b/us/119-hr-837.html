@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">H.R. 837</h1>
   <h2 class="bill-title">To require the Secretary of Agriculture to convey the Pleasant Valley Ranger District Administrative Site to Gila County, Arizona.</h2>
   <p class="bill-meta">Energy and Natural Resources Committee, Natural Resources Committee · Rep. Elijah Crane (R-AZ)</p>
-  <p class="bill-summary">The law requires the Forest Service, which manages national forest land, to transfer about 232.9 acres of Tonto National Forest land in Arizona, known as the Gila County Area, to Gila County once the county submits a written request. The county must use the land to serve and support veterans, and if it stops doing so, the land returns to the United States at the Forest Service&#39;s discretion. The transfer is made by quitclaim deed at no cost, without any promises or warranties from the Forest Service, and the county pays all related costs, including surveys and required environmental and historic-preservation reviews.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-scroll"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Signed by Pres. Trump</span> <span class="st-date">20 October 2026</span></div>
   <p class="bill-asof">Record as of 20 October 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">H.R. 6633</h1>
   <h2 class="bill-title">High-Capacity Grid Act</h2>
   <p class="bill-meta">Energy and Commerce Committee · Rep. Julie Fedorchak (R-ND)</p>
-  <p class="bill-summary">The bill would amend the Federal Power Act to require electric utilities, when building new transmission lines or making major changes to existing ones, to use conductors from a designated group of the best-available transmission conductors. The Federal Energy Regulatory Commission would have one year after enactment to write rules, in consultation with the Secretary of Energy, setting out how conductors are chosen based on energy-carrying capacity, electrical efficiency, and mechanical performance, weighed against reliability, safety, and affordability. The requirement would not apply to projects already permitted or with conductors already bought before enactment, to emergency repairs after disasters or other declared emergencies, or where use would hurt safety, violate a reliability standard, or significantly raise the cost per kilowatt-hour without a matching gain in performance. The Commission could also periodically review and update the designation method and the list of conductors as technology improves.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House with amendment (voice vote)</span> <span class="st-date">15 September 2026</span></div>
   <p class="bill-asof">Record as of 16 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

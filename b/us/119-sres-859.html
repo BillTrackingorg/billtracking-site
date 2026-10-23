@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">S.Res. 859</h1>
   <h2 class="bill-title">A resolution recognizing the 25th anniversary of the terrorist attacks of September 11, 2001, honoring the memory of the victims, recognizing the courage and sacrifice of the heroes who answered the call to serve, acknowledging the charitable organizations that continue to support survivors and victims&#39; families, and reaffirming the enduring commitment of the United States to never forget.</h2>
   <p class="bill-meta">Sen. Kirsten Gillibrand (D-NY)</p>
-  <p class="bill-summary">The resolution recognizes the 25th anniversary of the September 11, 2001 terrorist attacks and honors the memory of the victims killed in New York, at the Pentagon, and in Shanksville, Pennsylvania, including the passengers and crew of United Airlines Flight 93 for their heroism. It expresses gratitude to firefighters, police, emergency workers, military members, intelligence professionals, and volunteers who responded, and recognizes the service and sacrifice of military members, veterans, and Gold Star families in the years since. It urges people across the country to carry forward the unity, service, and compassion shown after the attacks, encourages solemn observances, and reaffirms the nation&#39;s commitment to never forget that day.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Agreed to (unanimous consent)</span> <span class="st-date">16 September 2026</span></div>
   <p class="bill-asof">Record as of 16 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

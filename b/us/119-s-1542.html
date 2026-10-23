@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">S. 1542</h1>
   <h2 class="bill-title">Uyghur Policy Act of 2026</h2>
   <p class="bill-meta">Foreign Relations Committee · Sen. John Curtis (R-UT)</p>
-  <p class="bill-summary">The bill would express the sense of Congress that China should protect the distinct ethnic, cultural, religious and linguistic identity of Uyghurs and other minority groups in Xinjiang, end detentions and transnational repression, allow access by the press, international organizations and foreign delegations, and release prisoners held for their identities or beliefs. It would require the Secretary of State to take actions supporting Uyghurs, including promoting their rights with partner countries, pressing China to close detention facilities, and tracking transnational repression, and to report to Congress within 180 days and annually for three years, with the requirements ending after five years. It would also allow the State Department to provide Uyghur language training and staff certain posts, require a report on those steps within one year, direct the U.S. United Nations representative to oppose efforts to block discussion of Xinjiang abuses and to support a special rapporteur for the region, and authorize no additional funds.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span> <span class="st-date">27 July 2026</span></div>
   <p class="bill-asof">Record as of 27 July 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

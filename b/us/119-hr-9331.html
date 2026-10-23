@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">H.R. 9331</h1>
   <h2 class="bill-title">STOP Payments Fraud Act of 2026</h2>
   <p class="bill-meta">Financial Services Committee · Rep. Young Kim (R-CA)</p>
-  <p class="bill-summary">The bill would let banks temporarily hold deposited checks and wire transfers they reasonably suspect are fraudulent, with an initial hold of up to 10 days that could be extended to 45 days. The bill would also bar overdraft fees on accounts that go negative because of a wire-transfer hold when the depositor did not receive written notice. It would let the Federal Reserve Board and the Consumer Financial Protection Bureau decide when extra safeguards apply to accounts at greater risk of fraud, for no more than 60 days each time. The changes would take effect 60 days after implementing rules are issued, and those rules would have to be issued within one year of enactment. The bill would also direct the regulators to consider whether Treasury checks and cashier&#39;s checks should lose their expedited availability because of large fraud losses, and would require a Government Accountability Office report on funds availability and fraud protection.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span> <span class="st-date">1 September 2026</span></div>
   <p class="bill-asof">Record as of 1 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

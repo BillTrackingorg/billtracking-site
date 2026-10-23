@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">H.R. 9203</h1>
   <h2 class="bill-title">Student Protection and University Accountability Act</h2>
   <p class="bill-meta">Education and Workforce Committee · Rep. Elise Stefanik (R-NY)</p>
-  <p class="bill-summary">The bill would require colleges and universities that take part in federal student aid programs to investigate alleged violations of Title VI of the Civil Rights Act of 1964, which bars discrimination based on race, color, or national origin in federally funded programs. Each school would have to create and widely share complaint investigation procedures with students and their families, appoint at least one Title VI coordinator, and keep records of complaints. A school that fails these requirements for two consecutive award years would lose eligibility for federal student aid for at least two later award years, though it could regain eligibility by showing it complies. The Department of Education&#39;s Office for Civil Rights would have to brief Congress every two months on the number of complaints, how it plans to handle them, and how long investigations take. The bill would also change how that office investigates these complaints, including barring it from closing a complaint merely because another complaint with the same allegations against the same school has been filed under certain circumstances.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span> <span class="st-date">8 September 2026</span></div>
   <p class="bill-asof">Record as of 8 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

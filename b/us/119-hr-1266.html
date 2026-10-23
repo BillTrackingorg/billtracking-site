@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">H.R. 1266</h1>
   <h2 class="bill-title">Combating Illicit Xylazine Act</h2>
   <p class="bill-meta">Judiciary Committee, Energy and Commerce Committee · Rep. Jimmy Panetta (D-CA)</p>
-  <p class="bill-summary">The bill would add xylazine, an animal sedative that is sometimes misused, to the federal list of controlled substances in Schedule III of the Controlled Substances Act, and would define the term xylazine for that law. It would exempt most manufacturers from installing the security standards that apply to Schedule III drugs for xylazine production. It would delay the labeling, packaging, and distribution rules for xylazine by one year, and the practitioner registration, inventory, and recordkeeping rules by 60 days after enactment. It would let veterinarians, pharmacies, and certain government and wildlife programs hold xylazine for animal use as &quot;ultimate users,&quot; and would include xylazine in the federal drug tracking system known as ARCOS. It would direct the U.S. Sentencing Commission to review penalties for xylazine offenses. It would also require the Attorney General to report to Congress on illicit xylazine use, its sources, and related substances, with an initial report and a later update.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label">Placed on calendar (Senate)</span> <span class="st-date">16 September 2026</span></div>
   <p class="bill-asof">Record as of 16 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

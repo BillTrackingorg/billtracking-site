@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">S. 1321</h1>
   <h2 class="bill-title">Moab UMTRA Project Transition Act of 2025</h2>
   <p class="bill-meta">Energy and Natural Resources Committee · Sen. John Curtis (R-UT)</p>
-  <p class="bill-summary">The bill would direct the Secretary of Energy to transfer the former Moab uranium mill site in Utah to Grand County at no cost once cleanup reaches a stage suitable for land transfer, with the government keeping water rights needed for ongoing responsibilities and barring the county from passing the land to private or nonprofit owners. It would also require the Secretary to give the Grand County Water Conservancy District, at no cost, a water pipeline, pumps, easements, a holding pond, and a water right tied to the same cleanup, on the condition that the district use them to address local water shortages and not pass them to private or nonprofit owners.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span> <span class="st-date">17 September 2026</span></div>
   <p class="bill-asof">Record as of 17 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

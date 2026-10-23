@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">H.R. 227</h1>
   <h2 class="bill-title">Clergy Act</h2>
   <p class="bill-meta">Finance Committee, Ways and Means Committee · Rep. Vince Fong (R-CA)</p>
-  <p class="bill-summary">The law lets ordained, commissioned, or licensed ministers of a church, members of religious orders, and Christian Science practitioners who previously chose to be exempt from Social Security coverage on their self-employment earnings revoke that exemption by filing an application with the Internal Revenue Service by the due date of their federal income tax return for their second taxable year beginning after December 31, 2028. Once revoked, the exemption cannot be claimed again, and the revocation takes effect from the first or second taxable year beginning after that date, as the applicant specifies. Applicants who file late must pay in full the taxes that are owed on their self-employment income for that year. The law also requires the Commissioner of Internal Revenue, in consultation with the Commissioner of Social Security, to present Congress with a plan within 90 days informing these individuals of their right to revoke the exemption.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-scroll"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Signed by Pres. Trump</span> <span class="st-date">20 October 2026</span></div>
   <p class="bill-asof">Record as of 20 October 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

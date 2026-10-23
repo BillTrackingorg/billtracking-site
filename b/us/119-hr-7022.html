@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">H.R. 7022</h1>
   <h2 class="bill-title">Mystic Alerts Act</h2>
   <p class="bill-meta">Commerce, Science, and Transportation Committee, Energy and Commerce Committee · Rep. August Pfluger (R-TX)</p>
-  <p class="bill-summary">The bill would require mobile phone providers that offer satellite voice and data service to decide whether they will also send emergency alerts to their customers by satellite, and to notify the Federal Communications Commission of that choice. Providers that opt in would have to follow technical rules set by the Commission and could not charge an extra fee for satellite alerts. Customers who choose to opt out of receiving emergency alerts would be blocked from getting them by satellite. The Commission would have to propose rules within six months and issue a final rule within 18 months, in consultation with the Department of Homeland Security and the Federal Emergency Management Agency, with those rules designed to minimize the impact on other voice and data communications, including 9–1–1 communications. Providers that follow the law would be shielded from liability for satellite alert transmissions and for sharing subscriber information with public safety agencies.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-send"/></svg></span>Presented to President</span> <span class="st-date">15 October 2026</span></div>
   <p class="bill-asof">Record as of 15 October 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

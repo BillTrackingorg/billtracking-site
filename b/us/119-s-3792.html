@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">S. 3792</h1>
   <h2 class="bill-title">Water Project Navigators Act</h2>
   <p class="bill-meta">Energy and Natural Resources Committee · Sen. John Hickenlooper (D-CO)</p>
-  <p class="bill-summary">The bill would create a Water Project Navigators Program run by the Secretary of the Interior through the Bureau of Reclamation, which would give grants or cooperative agreements to eligible entities such as states, Tribes, local water agencies, and nonprofit conservation groups to fund staff positions that help plan and carry out multi-benefit water projects. These projects are designed to improve water supply and efficiency, protect ecosystems and watersheds, and serve communities in eligible western states, Alaska, Hawaii, and Puerto Rico. Priority would go to applicants serving Tribes, disadvantaged and rural communities, and groups with limited resources, and grants would generally last up to three years with possible extensions. Federal funding would cover up to 75 percent of project costs, with possible waivers for certain groups facing financial hardship, and the Secretary would report to Congress within five years on the program&#39;s results. The bill would also cap federal spending under the Act at $15,000,000 in any one fiscal year.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span> <span class="st-date">17 September 2026</span></div>
   <p class="bill-asof">Record as of 17 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

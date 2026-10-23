@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">S. 5249</h1>
   <h2 class="bill-title">MORE American Fuel Act of 2026</h2>
   <p class="bill-meta">Environment and Public Works Committee · Sen. Mark Kelly (D-AZ)</p>
-  <p class="bill-summary">The bill would allow the construction of a uranium enrichment facility to begin before the Nuclear Regulatory Commission issues the license to operate it, as long as construction starts after the application is docketed, follows all applicable federal laws and regulations, and is entirely at the applicant&#39;s risk. It would require applicants to certify that they will notify the governor of the state, local governments, and certain Indian Tribes at least 15 days before starting construction. It would also require the Commission to update its regulations within 180 days of enactment and allow it to exempt pending applications from new rules. The bill would not limit the Commission&#39;s authority to regulate construction, deny licenses, or affect judicial review of its decisions. It would also remove the requirement for a single combined hearing on construction and operation, instead granting a hearing on request to any person whose interests may be affected.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate with amendment (unanimous consent)</span> <span class="st-date">30 September 2026</span></div>
   <p class="bill-asof">Record as of 5 October 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">H.Con.Res. 113</h1>
   <h2 class="bill-title">Establishing the congressional budget for the United States Government for fiscal year 2027 and setting forth the appropriate budgetary levels for fiscal years 2028 through 2036.</h2>
   <p class="bill-meta">Budget Committee · Rep. Jodey Arrington (R-TX)</p>
-  <p class="bill-summary">The concurrent resolution would set Congress&#39;s budget framework for the federal government for fiscal year 2027, with planned spending, revenue, deficit, and debt levels for fiscal years 2028 through 2036. It would also direct four House committees, on agriculture, armed services, intelligence, and administration, to recommend reconciliation legislation that increases the deficit by not more than specified amounts, with their recommendations due to the House Budget Committee by September 11, 2026. The resolution would create a reserve fund to allow adjustments that accommodate that reconciliation legislation. It would also set budget enforcement rules covering committee allocations, the budgetary treatment of administrative expenses for the Social Security Administration and the U.S. Postal Service, emergency spending, and added adjustments for disaster relief, wildfire suppression, health care fraud and abuse control, and certain disability and reemployment reviews.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label">Placed on calendar (Senate)</span> <span class="st-date">23 July 2026</span></div>
   <p class="bill-asof">Record as of 23 July 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

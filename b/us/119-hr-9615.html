@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">H.R. 9615</h1>
   <h2 class="bill-title">BRACE Act</h2>
   <p class="bill-meta">Energy and Commerce Committee · Rep. Mariannette Miller-Meeks (R-IA)</p>
-  <p class="bill-summary">The bill would require facilities that store lithium-ion batteries before recycling them to follow hazardous waste handling rules for large quantity handlers of universal waste until the EPA issues a new rule on lithium-ion batteries. It would direct the EPA Administrator to issue that rule within 18 months of enactment, considering tailored requirements, support for recycling and recovery of critical minerals, and additional safety measures. It would also update a reference in the Mercury-Containing and Rechargeable Battery Management Act to point to part 273 of title 40 of the Code of Federal Regulations.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed House with amendment (voice vote)</span> <span class="st-date">15 September 2026</span></div>
   <p class="bill-asof">Record as of 16 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

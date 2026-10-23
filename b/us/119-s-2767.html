@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">S. 2767</h1>
   <h2 class="bill-title">Gateway Partnership Act</h2>
   <p class="bill-meta">Energy and Natural Resources Committee · Sen. Eric Schmitt (R-MO)</p>
-  <p class="bill-summary">The bill would let the Secretary of the Interior make a one-time agreement lasting up to five years with the Gateway Arch Park Foundation, a nonprofit partner of the Gateway Arch National Park, so the foundation could host private events at the park, including in certain park buildings such as the Arch Visitor Center and the Old Courthouse. The agreement would have to protect the park, limiting the number of events each month, setting staffing levels for safety, requiring liability insurance naming the United States as an additional insured, and shielding the federal government from liability for injuries or deaths linked to the foundation&#39;s use of the buildings. Events would have to fit the park&#39;s purposes, avoid damaging it, and not disrupt public access, and the Secretary would charge fees to cover wear and tear and could recover the costs of the events. The National Park Service could still host its own events and issue permits to others, and the authority would end seven years after enactment. The Secretary would also have to report to Congress within four years on how the arrangement affects visitors, security, staffing, and finances.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span> <span class="st-date">17 September 2026</span></div>
   <p class="bill-asof">Record as of 17 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

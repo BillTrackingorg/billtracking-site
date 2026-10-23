@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">S. 4723</h1>
   <h2 class="bill-title">Eliminate PRC Organized Crime Act</h2>
   <p class="bill-meta">Foreign Relations Committee · Sen. John Cornyn (R-TX)</p>
-  <p class="bill-summary">The bill would allow the Secretary of State to set up a program that helps law enforcement agencies in Latin America and the Caribbean go after transnational criminal groups linked to the People&#39;s Republic of China that are involved in drug trafficking, money laundering, illegal finance, transnational repression, illegal fishing, and foreign interference. The help could include consultation with U.S. law enforcement, training in financial investigations and asset forfeiture, technical assistance such as digital forensics and intelligence sharing, and support for screening programs so that foreign agencies receiving aid are not compromised by these groups. The bill would let such aid go to a country even if it has been found to be failing its counternarcotics obligations, as long as the Secretary determines it is in the national interest of the United States and notifies Congress at least 15 days in advance. It would also require the Director of National Intelligence, working with the Secretary of State, to submit a report to Congress within one year on the aid provided, known criminal activity by these groups in the region, and China&#39;s law enforcement involvement and cooperation agreements in the region.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span> <span class="st-date">27 July 2026</span></div>
   <p class="bill-asof">Record as of 27 July 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

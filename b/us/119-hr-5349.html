@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">H.R. 5349</h1>
   <h2 class="bill-title">TAS Act</h2>
   <p class="bill-meta">Finance Committee, Ways and Means Committee · Rep. Nathaniel Moran (R-TX)</p>
-  <p class="bill-summary">The bill would amend the Internal Revenue Code to improve how the IRS serves taxpayers, covering areas such as tax administration and customer service, support for Americans living abroad, judicial review in the Tax Court, the Office of the Taxpayer Advocate, tax return preparers, the Office of Appeals, whistleblower awards, relief for hostages and wrongfully detained individuals, small businesses, and miscellaneous tax matters. Its main provisions would require electronic processing and digitization of returns, publish wait-time information, expand online access to tax accounts, and let the Tax Court hear more cases and grant relief from judgments. It would also tighten rules and penalties for tax return preparers, expand appeals rights, and extend deadlines and protections for certain taxpayers.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap has-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-capitol"/></svg><span class="glyph-badge"><svg class="glyph" aria-hidden="true"><use href="#ic-check"/></svg></span></span>Passed Senate with amendment (unanimous consent)</span> <span class="st-date">30 September 2026</span></div>
   <p class="bill-asof">Record as of 30 September 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">

@@ -36,11 +36,9 @@
     .bill-summary { background: var(--wash); border: 1px solid var(--line);
       border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1rem; line-height: 1.65;
       color: var(--ink); margin: 0 0 1.2rem; }
-    /* The AI tag sits BENEATH the summary text, as the card's does (COMPONENT-STYLE §Post card
-       anatomy 7: "[AI-Generated] tag 11 inkFaint beneath the text, always") — one look for the
-       label on every surface; the inline uppercase kicker of the first /b/ cut diverged from it. */
-    .ai-tag { display: block; font-family: var(--sans); font-size: .72rem; color: var(--ink-faint);
-      margin-top: .45rem; }
+    /* The official summary's lead-in, naming its source and version, in the weight of the
+       card's lead-ins (D42). */
+    .bill-summary .lead { font-family: var(--sans); font-weight: 600; }
     .bill-status { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
       border-left: 3px solid var(--accent); padding: .3rem 0 .3rem .9rem; margin: 0 0 .4rem; }
     .bill-status .st-label { font-size: 1.1rem; font-weight: 650; color: var(--navy-ink); }
@@ -228,7 +226,6 @@
   <h1 class="bill-ref">S. 4680</h1>
   <h2 class="bill-title">Expanded Consular Fellows Act of 2026</h2>
   <p class="bill-meta">Foreign Relations Committee · Sen. Jacky Rosen (D-NV)</p>
-  <p class="bill-summary">The bill would let the State Department hire certain staff for consular work, such as visa processing and services for Americans abroad, on temporary non-career appointments lasting up to 8 years, instead of the current maximum of 5 years. It would also add a new 2-year temporary appointment option for consular personnel, and it sets out findings about the importance of consular services, rising demand tied to major international sporting events between 2024 and 2034, and the need to expand staffing to keep these services running efficiently.<span class="ai-tag">[AI-Generated]</span></p>
   <div class="bill-status"><span class="st-label"><span class="glyph-wrap"><svg class="glyph" aria-hidden="true"><use href="#ic-clipboard-text"/></svg></span>Reported by committee</span> <span class="st-date">27 July 2026</span></div>
   <p class="bill-asof">Record as of 27 July 2026 — the most recent action in the official record. Status can lag; each step below carries its own date.</p>
   <ol class="path">
