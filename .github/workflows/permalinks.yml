@@ -193,47 +193,6 @@ jobs:
             else echo "::error::path artifact $name returned $code — refusing to render it posts-only (it may exist)"; exit 1; fi
           done < paths.txt
           echo "fetched $(ls paths 2>/dev/null | wc -l) path artifacts"
-          # [2026-10-16, OPEN-ITEMS OI-0097 — THE SUMMARY BUILD, S1] THE SUMMARY FILES.
-          # Each bot publishes, beside paths/, one small index per legislature
-          # ({FEED}/summaries/index-<bot>.json) and one HOME per bill under the SAME
-          # name as its path artifact ({FEED}/summaries/<name>). The index lists only
-          # bills with a real summary, so a home is fetched only for a bill its index
-          # lists, never one for every bill in the feed. WHICH homes is the RENDERER's
-          # answer, as it is for paths: --list-summaries reads the indexes fetched
-          # here with the app's own reader and matches each bill of the feed to its
-          # line with the app's own key, so this step parses neither the index nor a
-          # bill's key (ONE derivation, the app's). Same rules as the artifacts above:
-          #  • 200 → use it.  • 404 → nothing published under that name. The step
-          #    drops the file without an error, and the pages render without it, so
-          #    each post shows its own summary. Both bots have published their indexes
-          #    since 22 October 2026. Turning summaries off rewrites an index as an
-          #    empty one rather than removing it, so a 404 here means a file is
-          #    missing, not a normal state.
-          #  • anything else → FAIL the run (it may exist; a page drawn without it
-          #    would show a placeholder the record already replaced).
-          # The renderer reads these with --summaries (next step). A renderer older
-          # than the two flags lists nothing here, and the next step says so.
-          mkdir -p summaries
-          for bot in us eu; do
-            code=$(curl -sS --retry 3 --retry-all-errors --max-time 60 -o "summaries/index-$bot.json" -w '%{http_code}' "$FEED/summaries/index-$bot.json" 2>/dev/null || echo 000)
-            if [ "$code" = "200" ]; then :
-            elif [ "$code" = "404" ]; then rm -f "summaries/index-$bot.json"
-            else echo "::error::summary index index-$bot.json returned $code — refusing to render without it (it may exist)"; exit 1; fi
-          done
-          : > summaries.txt
-          if grep -qF -- '--list-summaries' tools/bt-site.cjs; then
-            node tools/bt-site.cjs --feed feed --summaries summaries --list-summaries > summaries.txt
-          fi
-          echo "bills whose summary home is listed: $(grep -c . summaries.txt || true)"
-          while read -r name; do
-            [ -n "$name" ] || continue
-            case "$name" in */*|*..*|index-*) echo "::error::refusing suspicious summary home name: $name"; exit 1;; esac
-            code=$(curl -sS --retry 3 --retry-all-errors --max-time 60 -o "summaries/$name" -w '%{http_code}' "$FEED/summaries/$name" 2>/dev/null || echo 000)
-            if [ "$code" = "200" ]; then :
-            elif [ "$code" = "404" ]; then rm -f "summaries/$name"
-            else echo "::error::summary home $name returned $code — refusing to render without it (it may exist)"; exit 1; fi
-          done < summaries.txt
-          echo "fetched $(ls summaries 2>/dev/null | grep -vc '^index-' || true) summary homes, $(ls summaries/index-*.json 2>/dev/null | wc -l) index file(s)"
 
       # The renderer scans the feed dir for *-overrides.jsonl itself. It renders
       # into a scratch dir — never straight into the checkout — so the guards
@@ -251,20 +210,9 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p out
-          # [2026-10-16, OPEN-ITEMS OI-0097 — S1] --summaries: the summary files the step
-          # above fetched. ⚠️ A RENDERER OLDER THAN THE FLAG REFUSES IT ("unknown
-          # argument"), and tools/bt-site.cjs is a compiled artefact that lands in its
-          # own push — so a renderer without it renders WITHOUT the summaries and says
-          # so in an ::error:: (loud, not fatal: its pages are the pages it always drew,
-          # and freezing /p/ and /b/ every 15 minutes is a blast radius nothing
-          # justifies). The fix is to rebuild and commit the renderer. The line read
-          # `node tools/bt-site.cjs --feed feed --paths paths --out out`.
-          if grep -qF -- '--list-summaries' tools/bt-site.cjs; then
-            node tools/bt-site.cjs --feed feed --paths paths --summaries summaries --out out
-          else
-            echo "::error::tools/bt-site.cjs predates --summaries and --list-summaries — rendering without the published summaries. Rebuild it (npm run build:core && npm run copy:site in the app repo) and commit it."
-            node tools/bt-site.cjs --feed feed --paths paths --out out
-          fi
+          # A post carries its own summary (the app's DECISIONS D42, 2026-10-23), so the
+          # renderer reads no summary file.
+          node tools/bt-site.cjs --feed feed --paths paths --out out
           n=$(ls out/p/*.html | grep -vc 'index.html' || true)
           b=$(find out/b -type f -name '*.html' ! -name index.html | wc -l)
           echo "rendered $n post pages, $b bill pages"

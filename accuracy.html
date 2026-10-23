@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Accuracy &amp; corrections | BillTracking</title>
-<meta name="description" content="How BillTracking keeps its feeds accurate: official sources only, numbers copied exactly, labeled AI, no guessing when the record is unclear, and a public log of every correction.">
+<meta name="description" content="How BillTracking keeps its feeds accurate: official sources only, numbers copied exactly, summaries quoted word for word, no guessing when the record is unclear, and a public log of every correction.">
 <link rel="canonical" href="https://billtracking.org/accuracy">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BillTracking">
@@ -45,9 +45,9 @@
   <div class="hero-inner">
     <p class="eyebrow">Accuracy &amp; corrections</p>
     <h1>What you can rely on, and what to check</h1>
-    <p class="lede">BillTracking is built from official records, and most of what it posts is copied
-    straight from them. The plain-English summaries are written by AI and can be wrong. This page
-    explains where mistakes can happen, how often, and what we do about them. The rule we build by:
+    <p class="lede">BillTracking is built from official records, and what it posts is copied straight
+    from them. Summaries are the legislatures' own, quoted word for word. This page explains where
+    mistakes can still happen and what we do about them. The rule we build by:
     <strong>a wrong claim is worse than a hedged or missing one.</strong></p>
   </div>
 </div>
@@ -62,7 +62,7 @@
       the EU's official registers: the European Parliament's open-data service, the Publications
       Office and the Legislative Observatory (OEIL). They never come from news coverage or social
       media.</li>
-      <li><strong>Numbers come from the official record.</strong> Vote counts, dates and bill numbers are copied exactly as published. A summary can repeat a figure from its source, sometimes rounded, but a summary with a figure its source doesn't contain is never published. If the record has no number, the line is left out rather than estimated.</li>
+      <li><strong>Numbers come from the official record.</strong> Vote counts, dates and bill numbers are copied exactly as published. If the record has no number, the line is left out rather than estimated.</li>
       <li><strong>When in doubt, stay silent.</strong> If an action in the record is ambiguous,
       the system logs it and stays silent instead of posting a guess. Ambiguous means a procedural
       step the system can't confidently classify.</li>
@@ -72,10 +72,8 @@
       <li><strong>Uncertainty stays in words.</strong> Where a bill's path could genuinely go more
       than one way, the feed says so with "expected", "possible" or "if and when". A claim about
       likelihood always gives its basis. A guess is never presented as a fact.</li>
-      <li><strong>AI is labeled.</strong> Plain-English summaries are written by AI and carry an
-      explicit <strong>[AI-Generated]</strong> tag. The tag is placed so it can never be mistaken
-      for a label on the procedural facts, which are not written by AI.</li>
-      <li><strong>Summaries can be wrong.</strong> Summaries are written by AI, and AI makes mistakes. In our testing, summaries based on an official summary held up. Of those based on a bill's own text, about 3 in 50 had a mistake, more often on long or complex bills. To keep the service free, we use a small, fast AI model. Spot a mistake? Email <a href="mailto:accuracy@billtracking.org">accuracy@billtracking.org</a>.</li>
+      <li><strong>No AI writes what you read.</strong> Every post is built from the official record by fixed templates that use the record's own terms. Nothing on a card is written by AI.</li>
+      <li><strong>Summaries are quoted, never written.</strong> Each summary is the legislature's own official summary, quoted word for word under its source's name. We never write, shorten or edit one. Spot a summary under the wrong bill or version? Email <a href="mailto:accuracy@billtracking.org">accuracy@billtracking.org</a>.</li>
       <li><strong>Non-binding means saying so.</strong> When a parliamentary resolution changes no
       law, the post always says "non-binding". A political agreement is never called a law. And
       "in force" is never confused with "applies to you now".</li>
@@ -85,27 +83,18 @@
 
 <section class="alt">
   <div class="wrap">
-    <p class="eyebrow on-light">AI summaries</p>
-    <h2>How a summary is made</h2>
-    <p class="measure-wide muted">Every summary is written automatically by an AI model. For a bill's first summary, it uses the first source available:</p>
+    <p class="eyebrow on-light">Summaries</p>
+    <h2>How summaries work</h2>
+    <p class="measure-wide muted">Each legislature publishes summaries of its own bills: the Congressional Research Service at the Library of Congress for US bills, and the European Parliament's Legislative Observatory for EU files. We show them as published:</p>
 
     <ul class="principles">
-      <li><strong>1. The official summary.</strong> If the legislature has summarized the bill's current text (the Library of Congress in the US, the Legislative Observatory in the EU), the summary is based on that.</li>
-      <li><strong>2. The bill's text.</strong> If not, the summary is based on the bill itself. Very long bills can be too large to process. Legal text is hard for AI to read, and at a cost a free service can sustain, some mistakes can't be avoided: in our testing, about 3 in 50 summaries based on bill text had one.</li>
-      <li><strong>3. The bill's title.</strong> If neither is available, a short placeholder is written from the title until a full summary can be made.</li>
-      <li><strong>4. Nothing.</strong> If none of these work, the post goes out without a summary.</li>
+      <li><strong>Word for word.</strong> The summary is copied exactly, every paragraph, and labelled with its source and the version or stage it describes, for example "Passed House".</li>
+      <li><strong>Matched to the version.</strong> A post carries a summary only when it describes the version of the bill the post's action concerned. When an action changes a bill's text, its post waits for the summary of the new text rather than show the old one.</li>
+      <li><strong>Or none.</strong> Official summaries often arrive weeks after a bill moves. Until one exists for the right version, the post goes out without a summary.</li>
     </ul>
 
-    <p class="measure-wide muted">As the bill moves:</p>
-
-    <ul class="principles">
-      <li><strong>New text.</strong> The new version is compared with the last one. If the substance changed, later posts get a new summary. If the new text can't be processed and there's no official summary for it, posts go out without one until a summary can be made.</li>
-      <li><strong>An official summary arrives later.</strong> If a summary was based on the bill's text, later posts switch to one based on the official summary instead. Summaries based on an official summary are more reliable.</li>
-      <li><strong>It becomes law.</strong> Once the record shows the bill has taken effect, its summary describes it as law. Until then, it describes what the bill would do.</li>
-    </ul>
-
-    <p class="measure-wide muted"><strong>What stays the same.</strong> Posts published since 22 October 2026 keep the summary they were published with. Older posts, and posts published without a summary or with a placeholder from the title, show the bill's summary once one exists. A bill's page shows the summary from its latest post.</p>
-    <p class="measure-wide muted"><strong>Before anything is published.</strong> Every summary goes through automated checks. Any figure in it must appear in its source. If one doesn't, the AI gets one more try, and if it fails again, nothing is published. No person writes, edits or reviews summaries before they go out.</p>
+    <p class="measure-wide muted"><strong>What stays the same.</strong> A post keeps the summary it went out with. A bill's page shows the summary from its latest post.</p>
+    <p class="measure-wide muted"><strong>Earlier posts.</strong> Summaries were once written by AI. Every post on BillTracking that carried one now shows the official summary of the version it concerned, or none where there is none. Copies posted to X keep the summary they went out with, marked [AI-Generated].</p>
   </div>
 </section>
 

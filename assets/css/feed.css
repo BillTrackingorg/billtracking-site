@@ -656,17 +656,6 @@ button[disabled],
   max-width: none;
 }
 
-.card-summary .card-summary-note { color: var(--ink-soft); }
-
-.card-summary .ai-tag {
-  display: block;
-  font-family: var(--sans);
-  font-size: 11px;
-  line-height: 1.4;
-  color: var(--ink-faint-aa);
-  margin-top: 4px;
-}
-
 .card-older-note {
   font-family: var(--sans);
   font-size: 11px;
