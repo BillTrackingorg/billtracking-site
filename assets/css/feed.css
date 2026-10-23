@@ -656,6 +656,12 @@ button[disabled],
   max-width: none;
 }
 
+.card-summary .summary-label,
+.card-summary .summary-heading { font-weight: 600; }
+.card-summary .summary-gap-tight { margin-top: 4px; }
+.card-summary .summary-gap-para { margin-top: 8px; }
+.card-summary .summary-gap-section { margin-top: 16px; }
+
 .card-older-note {
   font-family: var(--sans);
   font-size: 11px;
