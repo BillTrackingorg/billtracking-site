@@ -30,6 +30,7 @@
 .skip-link:focus { transform: translateY(0); color: var(--navy-deep); }
 
 button.btn,
+.bt-docket-add,
 .card-bell,
 .card-collapse,
 .card-expander,
@@ -1833,6 +1834,47 @@ span.bt-tex { cursor: default; }
   margin: 0 0 0 auto;
   font-size: 0.8rem;
   line-height: 1.5;
+}
+
+.bt-count-add {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: auto;
+}
+.bt-count-add .bt-count { margin: 0; }
+.bt-count-add .bt-count::after {
+  content: '';
+  display: inline-block;
+  width: 1px;
+  height: 0.95em;
+  margin: 0 8px;
+  vertical-align: -0.12em;
+  background: var(--line);
+}
+.bt-docket-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 0;
+  padding: 6px 10px;
+  margin: -6px -10px;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--product-blue);
+}
+.bt-docket-add .glyph { width: 15px; height: 15px; stroke-width: 2.2; }
+.bt-docket-add[aria-disabled="true"] { color: var(--navy-ink); cursor: default; }
+.bt-keyword-count {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink-faint-aa);
+  text-align: right;
+  margin: 0.25rem 0 0;
+  max-width: none;
 }
 
 .bt-filtered {
