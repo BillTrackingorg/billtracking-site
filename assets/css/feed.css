@@ -734,7 +734,7 @@ button[disabled],
 .card-expander .glyph { width: 15px; height: 15px; stroke-width: 2.2; }
 .card-expander[hidden] { display: none; }
 
-.bt-docket .card-expander[data-advanced] { margin-top: 18px; }
+.bt-docket .card-expander[data-advanced] { margin-top: 12px; }
 
 .card-tail-more {
   display: inline-flex;
