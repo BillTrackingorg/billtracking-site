@@ -9,7 +9,7 @@ htmlTitle: Terms of use
 description: The terms for using BillTracking: what the service is, what it costs, what it does not promise, and the rules for voting and for reusing the content.
 ogTitle: Terms of use
 ogDescription: A live, source-linked record of lawmaking
-updated: 23 October 2026
+updated: 25 October 2026
 ---
 
 BillTracking republishes the official legislative record of the US Congress and the European Union. It is **free**, there is nothing to buy, and it is run by one person, not a company. These terms are short because the arrangement is simple.
@@ -25,7 +25,7 @@ Automated feeds and an app that report steps in the legislative process, taken f
 
 Automatically classifying legislative stages is genuinely difficult, and the record itself is sometimes amended after the fact. Matching a summary to the right version of a bill is done automatically too, and can go wrong. How we do it is on [Accuracy & corrections](accuracy.html). We do not promise accuracy; we promise that errors are corrected in the open and logged publicly. See [Accuracy & corrections](accuracy.html), and please report anything that looks wrong to [accuracy@billtracking.org](mailto:accuracy@billtracking.org).
 
-Keywords and notifications are a convenience. A keyword matches the words a post contains, so it will not catch every bill about a topic, and a notification can arrive late or not at all. If you must not miss something, follow the bill and check the source.
+Keywords and notifications are a convenience. A keyword is an exact match: it finds its words, whole and in the order you typed them (capital letters, accents and punctuation aside), in the parts of a post your keyword settings include, and, for a post that went out without an official summary, it can also find them in the bill's most recent official summary at that time. It does not match other forms of a word or synonyms, so it will not catch every bill about a topic, and a notification can arrive late or not at all. If you must not miss something, follow the bill and check the source.
 
 ### No guarantee it keeps running
 
@@ -60,6 +60,8 @@ The service is provided as-is. To the extent the law allows, we are not liable f
 > **What we do not exclude, because it cannot be and should not be:** liability for death or personal injury caused by negligence, for fraud, for damage caused intentionally, and any liability that the law of your country does not permit to be excluded. **If you are a consumer in the EU or UK, nothing here takes away rights you have under your own national law, including the right to bring a claim in your own courts.**
 
 We may update these terms. If we change something that matters we will say so on this page and update the date. If you keep using the service after a change, that is acceptance; if you would rather not, you can stop, and delete your account.
+
+**25 October 2026.** Under “It will contain errors”, keywords: a keyword is an exact match, of the words you typed and no other forms or synonyms, and for a post that went out without an official summary it can also find them in the bill's most recent official summary. Nothing else here changed.
 
 **23 October 2026.** Summaries are no longer written by AI: a summary, when a post carries one, is the legislature's own official summary, quoted word for word. “What you're getting”, “It will contain errors” and the voting line say so. Nothing else here changed.
 
