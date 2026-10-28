@@ -2128,8 +2128,18 @@ span.bt-tex { cursor: default; }
 }
 .bt-add .glyph { width: 16px; height: 16px; stroke-width: 2.4; }
 
-.bt-pv-docket[data-polity="us"] { --accent: var(--navy); --accent-wash: var(--wash); }
-.bt-pv-docket[data-polity="eu"] { --accent: var(--royal); --accent-wash: var(--wash-eu); }
+.bt-pv-docket[data-polity="us"] {
+  --accent: var(--navy);
+  --accent-wash: var(--wash);
+  --accent-chip-border: #C7D8EC;
+  --accent-chip-text: var(--navy-ink);
+}
+.bt-pv-docket[data-polity="eu"] {
+  --accent: var(--royal);
+  --accent-wash: var(--wash-eu);
+  --accent-chip-border: #C3CFEE;
+  --accent-chip-text: var(--royal-deep);
+}
 .bt-pv-docket .bt-tsolo {
   font-family: var(--sans);
   font-size: 12.5px;
