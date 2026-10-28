@@ -1811,8 +1811,6 @@ span.bt-tex { cursor: default; }
 }
 .bt-plus .glyph { width: 17px; height: 17px; }
 .bt-plus[aria-expanded="true"] { background: var(--wash); border-color: var(--accent); }
-.bt-plus.is-held { color: var(--navy-ink); }
-.bt-plus[aria-disabled="true"] { cursor: default; }
 
 .bt-drop,
 .bt-panel {
@@ -2058,8 +2056,6 @@ span.bt-tex { cursor: default; }
   left: 12px;
   background: linear-gradient(var(--accent), var(--accent)) center / 8px 2.5px no-repeat, #fff;
 }
-.bt-panel-add { display: block; width: 100%; margin: 0.9rem 0 0; text-align: center; }
-.bt-panel-add[disabled] { opacity: 0.45; }
 
 .bt-ledger {
   list-style: none;
