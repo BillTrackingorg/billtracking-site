@@ -2080,6 +2080,7 @@ span.bt-tex { cursor: default; }
   padding: 0.18rem 0.3rem 0.18rem 0.6rem;
 }
 .bt-tag-n {
+  flex: none;
   margin-left: 0.45rem;
   padding-left: 0.45rem;
   border-left: 1px solid var(--line);
