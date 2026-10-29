@@ -132,6 +132,9 @@ jobs:
           set -euo pipefail
           mkdir -p feed
           fetch() {  # fetch URL DEST -> echoes the HTTP code (000 on transport failure)
+            # -L (2026-10-29, the app's feed scale build): once the feed has its own address,
+            # github.io answers 301 to feed.billtracking.org, and the render follows it rather
+            # than going red; the paths fetch below does the same.
             local out
             out=$(curl -sSL --retry 3 --retry-all-errors --max-time 60 -o "$2" -w '\n%{http_code}' "$1" 2>/dev/null) || { echo 000; return; }
             printf '%s\n' "$out" | tail -n1
