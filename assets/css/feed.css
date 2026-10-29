@@ -1010,6 +1010,12 @@ button[disabled],
   margin: 1.3rem 0 0.45rem;
 }
 
+#bt-settings-groups .acct-card p.bt-row-cap:not([role="status"]) {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-faint-aa);
+}
+
 .acct-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .acct-links a { font-size: 0.94rem; color: var(--navy); }
 
@@ -2010,8 +2016,6 @@ span.bt-tex { cursor: default; }
   border-top: 1px solid var(--line-soft);
   max-width: none;
 }
-
-.bt-foot-note + .bt-foot { margin-top: 0.3rem; padding-top: 0; border-top: 0; }
 
 .bt-sw {
   appearance: none;
