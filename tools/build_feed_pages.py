@@ -28,18 +28,17 @@ published site pages:
     record of lawmaking" is the OG description of every feed page (the template), by his
     ruling that night ("keep the word live"); this file's own titles said "A live feed"
     before that. The rule holds otherwise.]
-  * THE WINDOW CLAIMS (D30, owner 2026-08-20). The intro names the session
-    window the feed covers, and the tracking-start date scopes what is IN it —
-    the two sentences travel together, because we joined mid-session and
-    "covers the 119th" alone would read as completeness back to January 2025.
-    The dates are the published record's own first posts (us-2026-07.jsonl:
-    2026-07-16; eu-2026-07.jsonl: 2026-07-17 — verified 2026-08-20), not the
-    bots' X launch. Only the US line may promise a reset: US bills die with
-    their Congress, while EU files are often RESUMED across terms under their
-    original codes, so the EU window keys on last activity and a "resets in
-    2029" would be false (AGENTS.md, EU WINDOW NUANCE). ⏰ At the 120th's
-    convening (2027-01-03) the US row's window sentence must be re-dated —
-    filed with the rollover cluster in the app repo's OPEN-ITEMS.
+  * THE SESSION CLAIMS (D30). The intro names the session the feed is in
+    now, and the tracking-start date scopes what is in it: the two travel
+    together, because we joined mid-session and the session's name alone
+    would read as completeness back to its start. The dates are the
+    published record's own first posts (us-2026-07.jsonl: 2026-07-16;
+    eu-2026-07.jsonl: 2026-07-17), not the bots' X launch. "Now in", never
+    "covers", and no reset: where a session changes the feed shows a
+    heading. The page fills the session line from the registry
+    (#bt-window); the words here are its fallback without JavaScript and
+    name no session ("Now in the current Congress"), so they never go
+    stale. The meta description takes the same neutral words.
 
 Do not add a claim to this file without the same check.
 """
@@ -83,11 +82,11 @@ SPRITE_PAGES = ["404.html"]
 # here now fails `npm run check` instead of quietly shipping one feed page for a
 # two-legislature build (estate review, 2026-08-20).
 #
-# What the check deliberately does NOT compare is the PROSE — intro, title,
-# og_title, description, explainer_label. Those are this page's own copy, the
-# registry has no field for them, and inventing one so a check could compare it
-# would put marketing sentences in the app's data layer. They are governed by the
-# copy law in this file's docstring instead.
+# What the check deliberately does NOT compare is the PROSE — intro, window,
+# title, og_title, description, explainer_label. Those are this page's own
+# copy, the registry has no field for them, and inventing one so a check could
+# compare it would put marketing sentences in the app's data layer. They are
+# governed by the copy law in this file's docstring instead.
 #
 # The mapping, so the two tables can be read side by side:
 #     polity_name  = names.formal      eyebrow      = f"{names.short} tracker"
@@ -113,22 +112,24 @@ LEGISLATURES: dict[str, dict[str, str]] = {
         # old line ("Every recorded step…") read as a completeness claim over all
         # of history; a reader hunting an old bill would blame our record, not
         # our scope. Bill pages ARE complete per bill, and the intro says so.
-        # The window sentence is D30's (see the docstring's WINDOW CLAIMS law).
+        # The session line is D30's (see the docstring's SESSION CLAIMS law):
+        # {window} is where it stands, in the span the page fills (intro_html).
         "intro": (
             "A live feed of the US Congress — bills as they move, from the "
-            "official record at Congress.gov. The feed covers the 119th "
-            "Congress (January 2025 – January 2027) and resets with the "
-            "120th; tracking since 16 July 2026. Each bill's page carries "
-            "its complete official path."
+            "official record at Congress.gov. {window}; tracking since 16 "
+            "July 2026. Each bill's page carries its complete official path."
         ),
+        # OI-0211: provisional wording, the owner's copy pass
+        "window": "Now in the current Congress",
         "explainer_url": "/us-process",
         "explainer_label": "How a bill becomes law",
         "accent": "#0A3161",
         "title": "The US feed — Congress as it moves | BillTracking",
         "og_title": "The US feed — Congress as it moves",
+        # OI-0211: provisional wording, the owner's copy pass
         "description": (
             "A live feed of the US Congress — bills as they move, from the "
-            "official record at Congress.gov. Covering the 119th Congress; "
+            "official record at Congress.gov. Now in the current Congress; "
             "tracking since 16 July 2026."
         ),
     },
@@ -142,25 +143,27 @@ LEGISLATURES: dict[str, dict[str, str]] = {
         "polity_name": "European Union",
         "eyebrow": "EU tracker",
         "h1": "The EU feed",
-        # No reset promise here, deliberately — EU files are often resumed
-        # across terms under their original codes (the docstring's WINDOW
-        # CLAIMS law), so this row names the term and stops.
+        # No reset promise (the docstring's SESSION CLAIMS law). This row never
+        # made one: EU files are often resumed across terms under their
+        # original codes.
         "intro": (
             "A live feed of EU lawmaking — procedures as they move through the "
             "European Parliament and the Council, from the EU's official "
-            "registers, in plain English. The feed covers the 10th "
-            "parliamentary term (2024–2029); tracking since 17 July 2026. "
-            "Each file's page carries its complete path."
+            "registers, in plain English. {window}; tracking since 17 July "
+            "2026. Each file's page carries its complete path."
         ),
+        # OI-0211: provisional wording, the owner's copy pass
+        "window": "Now in the current parliamentary term",
         "explainer_url": "/eu-process",
         "explainer_label": "How an EU law is made",
         "accent": "#003399",
         "title": "The EU feed — EU lawmaking as it moves | BillTracking",
         "og_title": "The EU feed — EU lawmaking as it moves",
+        # OI-0211: provisional wording, the owner's copy pass
         "description": (
             "A live feed of EU lawmaking as it moves through the "
             "European Parliament and the Council — from the EU's official "
-            "registers. Covering the 10th parliamentary term; tracking "
+            "registers. Now in the current parliamentary term; tracking "
             "since 17 July 2026."
         ),
     },
@@ -197,15 +200,36 @@ def paste_sprite(html: str, sprite: str, where: str) -> str:
     return html[:head_end] + "\n" + sprite.rstrip("\n") + "\n" + html[j:]
 
 
+WINDOW_MARK = "{window}"
+
+
+def intro_html(polity: str, entry: dict[str, str]) -> str:
+    """The intro, escaped, with its session line in the span the page fills.
+
+    The feed page writes the session in force into `#bt-window` from the
+    registry (the app's `sessionWindowNow`, src/data/sessions.ts), so it
+    re-dates itself. The row's `window` is what the span holds until then,
+    and for a reader without JavaScript. The row's intro marks where it
+    stands with {window}, exactly once.
+    """
+    before, mark, after = entry["intro"].partition(WINDOW_MARK)
+    if not mark or WINDOW_MARK in after:
+        raise SystemExit("%s: the intro must carry %s exactly once"
+                         % (polity, WINDOW_MARK))
+    return '%s<span id="bt-window">%s</span>%s' % (
+        esc(before), esc(entry["window"]), esc(after))
+
+
 def render(polity: str, entry: dict[str, str], template: str) -> str:
-    # Registry text is escaped; the two computed values are MARKUP this script
-    # writes itself and are the only things allowed through raw.
+    # Registry text is escaped; the markup this script writes itself (the
+    # intro's #bt-window span and the nav's aria-current) is the only thing
+    # allowed through raw.
     fields = {
         "POLITY": esc(polity),
         "POLITY_NAME": esc(entry["polity_name"]),
         "EYEBROW": esc(entry["eyebrow"]),
         "H1": esc(entry["h1"]),
-        "INTRO": esc(entry["intro"]),
+        "INTRO": intro_html(polity, entry),
         "EXPLAINER_URL": esc(entry["explainer_url"]),
         "EXPLAINER_LABEL": esc(entry["explainer_label"]),
         "ACCENT": esc(entry["accent"]),
