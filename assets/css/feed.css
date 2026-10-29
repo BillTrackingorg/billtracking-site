@@ -1650,6 +1650,12 @@ span.bt-tex { cursor: default; }
 
 #bt-withdraw-all { margin: 4px 0 14px; }
 
+.bt-search.vl-search {
+  --accent-soft: rgba(10, 49, 97, 0.10);
+  max-width: 22rem;
+  margin: 0 0 12px;
+}
+
 .feed-page[data-polity="us"] {
   --accent: var(--navy);
   --accent-soft: rgba(10, 49, 97, 0.10);
