@@ -190,16 +190,6 @@ def esc(value: str) -> str:
     )
 
 
-def paste_sprite(html: str, sprite: str, where: str) -> str:
-    """Replace whatever sits between the BT-SPRITE markers with the sprite."""
-    i = html.find(SPRITE_START)
-    j = html.find(SPRITE_END)
-    if i < 0 or j < 0 or j < i:
-        raise SystemExit("%s: BT-SPRITE markers missing or out of order" % where)
-    head_end = html.index("-->", i) + len("-->")
-    return html[:head_end] + "\n" + sprite.rstrip("\n") + "\n" + html[j:]
-
-
 WINDOW_MARK = "{window}"
 
 
@@ -218,6 +208,16 @@ def intro_html(polity: str, entry: dict[str, str]) -> str:
                          % (polity, WINDOW_MARK))
     return '%s<span id="bt-window">%s</span>%s' % (
         esc(before), esc(entry["window"]), esc(after))
+
+
+def paste_sprite(html: str, sprite: str, where: str) -> str:
+    """Replace whatever sits between the BT-SPRITE markers with the sprite."""
+    i = html.find(SPRITE_START)
+    j = html.find(SPRITE_END)
+    if i < 0 or j < 0 or j < i:
+        raise SystemExit("%s: BT-SPRITE markers missing or out of order" % where)
+    head_end = html.index("-->", i) + len("-->")
+    return html[:head_end] + "\n" + sprite.rstrip("\n") + "\n" + html[j:]
 
 
 def render(polity: str, entry: dict[str, str], template: str) -> str:
