@@ -737,6 +737,8 @@ button[disabled],
 
 .bt-docket .card-expander[data-advanced] { margin-top: 12px; }
 
+.bt-docket .card-expander { position: relative; left: calc(1px + 0.6rem); }
+
 .card-tail-more {
   display: inline-flex;
   align-items: center;
@@ -2047,51 +2049,51 @@ span.bt-tex { cursor: default; }
   background: linear-gradient(var(--accent), var(--accent)) center / 8px 2.5px no-repeat, #fff;
 }
 
-.bt-ledger {
+.bt-tags {
   list-style: none;
-  margin: 0.15rem 0 0.75rem;
-  padding: 0;
-  max-width: none;
-  border-top: 1px solid var(--line-soft);
-}
-.bt-ledger.is-paged { margin-bottom: 0; }
-.bt-ledger-row {
   display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin: 0;
-  padding: 0.42rem 0;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 0.75rem;
+  padding: 0 0 12px;
+  max-width: none;
   border-bottom: 1px solid var(--line-soft);
-  font-family: var(--sans);
 }
-.bt-ledger-word {
-  flex: 1 1 auto;
-  min-width: 0;
-  font-size: 14.5px;
-  line-height: 20px;
+.bt-tags.is-paged { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+.bt-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 100%;
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 13px;
   color: var(--ink);
   overflow-wrap: anywhere;
+  background: var(--accent-wash);
+  border: 1px solid var(--line);
+  border-radius: 7.5px;
+  padding: 0.18rem 0.3rem 0.18rem 0.6rem;
 }
-.bt-ledger-n {
-  flex: none;
-  min-width: 2.5ch;
-  text-align: right;
-  font-size: 13px;
-  line-height: 20px;
+.bt-tag-n {
+  margin-left: 0.45rem;
+  padding-left: 0.45rem;
+  border-left: 1px solid var(--line);
   color: var(--ink-faint-aa);
   font-variant-numeric: tabular-nums;
+  line-height: 1.2;
 }
-.bt-ledger-row .bt-chip-x { margin-right: -3px; }
-
-.bt-ledger.is-paged .bt-ledger-row:last-child { border-bottom: 0; }
-.bt-ledger-more {
+.bt-tags-more {
   display: flex;
-  margin: 0 0 0.75rem;
+  margin: 3px 0 0.75rem;
+  padding-bottom: 5px;
   border-bottom: 1px solid var(--line-soft);
 }
-.bt-ledger-more .card-expander { margin-bottom: 0; }
+.bt-tags-more .card-expander { margin-bottom: 0; }
 
-.acct-card p.bt-ledger-empty {
+#bt-docket-keywords:not(.is-paged),
+#bt-docket-keywords + .bt-tags-more { margin-bottom: 1rem; }
+.acct-card p.bt-tags-empty {
   padding-bottom: 0.42rem;
   margin-bottom: 0.75rem;
   border-bottom: 1px solid var(--line-soft);
@@ -2130,83 +2132,6 @@ span.bt-tex { cursor: default; }
   cursor: pointer;
 }
 .bt-add .glyph { width: 16px; height: 16px; stroke-width: 2.4; }
-
-.bt-pv-docket[data-polity="us"] {
-  --accent: var(--navy);
-  --accent-wash: var(--wash);
-  --accent-chip-border: #C7D8EC;
-  --accent-chip-text: var(--navy-ink);
-}
-.bt-pv-docket[data-polity="eu"] {
-  --accent: var(--royal);
-  --accent-wash: var(--wash-eu);
-  --accent-chip-border: #C3CFEE;
-  --accent-chip-text: var(--royal-deep);
-}
-.bt-pv-docket .bt-tsolo {
-  font-family: var(--sans);
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--ink-soft);
-  margin: 0 0 0.2rem;
-  max-width: none;
-}
-.bt-pv-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 0.6rem; }
-.bt-pv-tags.is-paged { margin-bottom: 0; }
-.bt-pv-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  font-family: var(--sans);
-  font-size: 13px;
-  color: var(--ink);
-  background: var(--accent-wash);
-  border: 1px solid var(--line);
-  border-radius: 7.5px;
-  padding: 0.18rem 0.3rem 0.18rem 0.65rem;
-}
-.bt-pv-n {
-  margin-left: 0.45rem;
-  padding-left: 0.45rem;
-  border-left: 1px solid var(--line);
-  color: var(--ink-faint-aa);
-  font-variant-numeric: tabular-nums;
-  line-height: 1.2;
-}
-.bt-pv-x { padding: 3px; line-height: 0; color: var(--ink-faint-aa); }
-.bt-pv-x .glyph { width: 13px; height: 13px; }
-
-.bt-pv-more {
-  display: flex;
-  margin: 0 0 0.75rem;
-  border-bottom: 1px solid var(--line-soft);
-}
-.bt-pv-more .card-expander { margin-bottom: 0; }
-.bt-pv-kw {
-  flex: 1;
-  min-width: 0;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--card);
-  padding: 0.45rem 0.6rem;
-  font-family: var(--sans);
-  font-size: 14px;
-  color: var(--ink);
-}
-.bt-pv-add {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  border: 0;
-  border-radius: 8px;
-  background: var(--accent);
-  color: #fff;
-}
-.bt-pv-add .glyph { width: 16px; height: 16px; stroke-width: 2.4; }
-.bt-pv-docket .bt-pv-advanced { margin-top: 12px; }
 
 .bt-tier {
   font-family: var(--sans);
