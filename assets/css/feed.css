@@ -1897,22 +1897,6 @@ span.bt-tex { cursor: default; }
   cursor: pointer;
 }
 
-.bt-elsewhere {
-  font-family: var(--sans);
-  font-size: 0.86rem;
-  line-height: 1.6;
-  color: var(--ink-soft);
-  border: 1px dashed var(--line);
-  border-radius: 10px;
-  background: var(--card);
-  padding: 0.75rem 0.95rem;
-  margin: 1.1rem 0 0;
-}
-.bt-elsewhere[hidden] { display: none; }
-.bt-elsewhere p { margin: 0; max-width: none; }
-.bt-elsewhere p + p { margin-top: 0.35rem; }
-.bt-elsewhere a { font-weight: 600; }
-
 .bt-backdrop { display: none; }
 
 .bt-panel {
