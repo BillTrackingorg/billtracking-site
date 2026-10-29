@@ -133,7 +133,7 @@ jobs:
           mkdir -p feed
           fetch() {  # fetch URL DEST -> echoes the HTTP code (000 on transport failure)
             local out
-            out=$(curl -sS --retry 3 --retry-all-errors --max-time 60 -o "$2" -w '\n%{http_code}' "$1" 2>/dev/null) || { echo 000; return; }
+            out=$(curl -sSL --retry 3 --retry-all-errors --max-time 60 -o "$2" -w '\n%{http_code}' "$1" 2>/dev/null) || { echo 000; return; }
             printf '%s\n' "$out" | tail -n1
           }
           y=2026; m=7   # FEED_EPOCH 2026-07 (app feed-client.ts) — nothing older exists
@@ -187,7 +187,7 @@ jobs:
           while read -r name; do
             [ -n "$name" ] || continue
             case "$name" in */*|*..*) echo "::error::refusing suspicious artifact name: $name"; exit 1;; esac
-            code=$(curl -sS --retry 3 --retry-all-errors --max-time 60 -o "paths/$name" -w '%{http_code}' "$FEED/paths/$name" 2>/dev/null || echo 000)
+            code=$(curl -sSL --retry 3 --retry-all-errors --max-time 60 -o "paths/$name" -w '%{http_code}' "$FEED/paths/$name" 2>/dev/null || echo 000)
             if [ "$code" = "200" ]; then :
             elif [ "$code" = "404" ]; then rm -f "paths/$name"   # no path yet — posts-only, honest
             else echo "::error::path artifact $name returned $code — refusing to render it posts-only (it may exist)"; exit 1; fi
