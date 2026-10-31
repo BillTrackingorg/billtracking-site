@@ -14,6 +14,7 @@ updated: 31 October 2026
 
 BillTracking republishes the official legislative record of the US Congress and the European Union. It is **free**, there is nothing to buy, and it is run by one person, not a company. These terms are short because the arrangement is simple.
 
+^The basics
 ## What BillTracking is
 
 Automated feeds and an app that report steps in the legislative process, taken from official sources — Congress.gov, the European Parliament's open data, the Publications Office and the OEIL Legislative Observatory. A summary, when a post carries one, is the legislature's own official summary, quoted word for word under its source's name; we do not write or edit summaries. A summary is a short description, not the bill: it can simplify or leave out details that matter, and it describes one version of the bill, which may since have changed. The procedural facts, dates and vote tallies in a post's own lines are copied from the record.
@@ -30,6 +31,7 @@ Keywords and notifications are a convenience. A keyword is an exact match: it fi
 
 It is a free service run by one person on free infrastructure. It may be interrupted, delayed, or discontinued. If an upstream source changes or goes down, the feeds may go quiet. Please do not build anything you depend on around its continued availability without talking to us first.
 
+^If you sign in
 ## Accounts and voting
 
 - **Reading never requires an account.** An account exists so that a vote on a bill counts once per person.
@@ -41,6 +43,7 @@ It is a free service run by one person on free infrastructure. It may be interru
 
 How votes are stored and published is set out on the [privacy page](privacy.html). In short: who voted which way is never published, shown or attached to a profile.
 
+^Using the content
 ## Content and reuse
 
 The underlying legislative record is public and is not ours. US federal government works are not subject to copyright (17 U.S.C. § 105); EU documents are reusable under the European Commission's reuse decision and the European Parliament's reuse notice. Where you need the authoritative version, go to [api.congress.gov](https://api.congress.gov), the OEIL Legislative Observatory, or the EU Publications Office directly.
@@ -49,6 +52,7 @@ Our own writing, design and code are ours. **Teachers and students: use it.** Qu
 
 Do not use the service to break the law, to attack the infrastructure, or to misrepresent what it says.
 
+^Legal
 ## Liability and your rights
 
 The service is provided as-is. To the extent the law allows, we are not liable for losses arising from your use of it — including decisions taken on the basis of a post or a summary that turned out to be wrong or late.
