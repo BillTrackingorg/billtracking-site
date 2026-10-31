@@ -3,7 +3,7 @@
 # `python ../app/site-build/generate_legal.py` (from the site repo) to regenerate BOTH privacy.html (this site)
 # and the app's in-app Privacy screen. Grammar: legal/LEGAL-SPEC.md
 slug: privacy
-title: What we hold, and how to make us stop
+title: Data collection and retention
 eyebrow: Privacy
 htmlTitle: Privacy
 description: What BillTracking collects, why, and how to delete it. No analytics, no trackers and no visitor logs anywhere — whatever a page keeps stays on your device. An account makes a vote count once, and keeps your followed bills and settings across your devices.
@@ -16,8 +16,7 @@ The short version: **this website carries no analytics and no trackers of any ki
 
 >! **What exists today.** The two X feeds, this website and its feed pages ([/us](/us) and [/eu](/eu)) are live — and voting, with Google sign-in, is live on this website. The BillTracking app is in closed testing and not yet in the app stores. Apple sign-in works in the app on iPhone and on this website.
 
-^This website
-## billtracking.org collects nothing from you
+## The website
 
 There is no analytics anywhere on this site. No Google Analytics, no Cloudflare, no pixel, no tag manager, no advertising and no tracking SDKs — on any page, of any kind. We do not record what you read in the feed or on bill pages, what you search for or where you arrived from, we do not sell or share anything about you, and we build no profile of you.
 
@@ -25,8 +24,7 @@ Some pages do keep things for you, deliberately — the feed pages ([/us](/us) a
 
 One honest caveat, because the alternative would be a false claim: the site is hosted on **GitHub Pages**, and any web host necessarily handles your IP address at the network layer in order to send you a page. GitHub does not surface those logs to us and we have never seen them — but we will not tell you no IP address is processed anywhere, because that would not be true.
 
-^The app — reading
-## Reading needs no account and sends us nothing
+## Reading in the app
 
 The feed and bill timelines all work without signing in. The app and this website both fetch the published record as static files from GitHub Pages, the same infrastructure this site is hosted on; reading the feed and bill pages, and searching, report nothing back to us. Your saved filters, display settings and docket keywords are kept with your account when you are signed in, so the app and this website show you the same set-up; signed out, nothing is kept about you. Following a bill needs an account: your follow list is kept with it, so the app and this website show you the same bills. It is a list of bills, nothing more, and deleting your account deletes it.
 
@@ -38,8 +36,7 @@ The app contains no advertising, no third-party analytics and no tracking SDKs.
 
 The app also checks for updates when it starts. That request carries a random identifier for the installation and the app's version — sent to Expo, the service that delivers our updates. It identifies the installation, not you. If the app failed to start the last time it ran, the request also carries the text of that error — the app's own crash message, shortened — so that a broken release can be spotted.
 
-^The app — accounts and votes
-## An account exists so your vote counts once
+## Accounts and votes
 
 You can mark a bill with a thumbs up or down. Because a reader's position on a bill is **a political opinion** — a specially protected category of personal data under EU law — we are deliberately narrow about this.
 
@@ -49,19 +46,18 @@ You can mark a bill with a thumbs up or down. Because a reader's position on a b
 - **Who voted which way is never published, shown to anyone, or attached to a profile.** There are no public profiles and no public vote histories: your own votes are shown to you alone, on the Your votes page in the app and on this website, where you can change or withdraw any of them. What is published is counts: how many voted each way overall, and how many from each country or state.
 - **You can change or withdraw your vote at any time, or withdraw all of your votes at once**, and deleting your account deletes every vote with it.
 
-### What we ask you to understand about published counts
+### What vote counts show
 
 Counts are exact — we never round, estimate or randomise them, because the whole point of this project is that its numbers can be checked. Every place we show also shows **how many people voted there**, so a small number is visibly small rather than dressed up as a percentage.
 
 > We are not going to claim that nobody could ever guess how you voted. If a bill is very one-sided, or very few people from your country have voted on it, someone who already knows you voted could make a reasonable guess. **That is true of any published total anywhere** and no threshold removes it. What we can tell you is that we never publish, display or share which way any individual voted, that setting a location is optional, and that you can withdraw a vote or delete the account entirely.
 
-### Where it is stored, and on what legal basis
+### Where it's stored and why
 
 Votes are held in a database in **Frankfurt, Germany**, chosen so that this data does not leave the EU. The legal basis is your **explicit consent** (GDPR Article 9(2)(a)), given by choosing to vote after being told what a vote records. Withdrawing that consent and deleting your account are the same action — there is no state in which you have withdrawn consent and we still hold your votes.
 
 Our database provider is Supabase, acting as a processor on our instructions. If you sign in with Apple, we also store a token from Apple used for one purpose only: to properly disconnect BillTracking from your Apple ID when you delete your account, as Apple requires.
 
-^Deleting
 ## Deleting your account
 
 In the app: **You → Delete account**. On this website: your [account page](https://billtracking.org/account). It is immediate and permanent. Your account, every vote you cast and your follow list are erased; there is no recovery window. Your docket keywords, saved settings and notifications go with them. We keep no working copy. Our encrypted backups hold the votes, consent records, follow lists, when you last opened your notifications, docket keywords and saved settings, and are only read to recover from a failure. Deleting your account removes all of it from the live database at once. In the backups it is put beyond use on the rotation: we keep every snapshot from the last 90 days and never fewer than two, so deleted data is normally gone from the archive within 90 days, and a very quiet spell can hold the second-oldest snapshot a while longer. When votes leave with a deleted account we record how many left each bill, from which place, and how many were for and against. It's a count with nothing that identifies a person, and it's there so a bill's history can say that votes left rather than that people changed their minds.
@@ -70,8 +66,7 @@ If you can no longer sign in in either place, use the [account deletion page](de
 
 One thing we will not pretend about: counts that were already published — in a post, or in a file someone downloaded — are not retrospectively rewritten. They were true when published and they contain nothing that points to you. Your vote is removed from our database and from every count produced afterwards.
 
-^Email, and everything else
-## The rest of it
+## Everything else
 
 - **Email.** [contact@billtracking.org](mailto:contact@billtracking.org) and [accuracy@billtracking.org](mailto:accuracy@billtracking.org) are aliases on a single mailbox and receive mail. If you write to us, we hold your message and your address for as long as needed to deal with it. Please don't send us anything sensitive — it's an ordinary mailbox.
 - **Legislators.** The feeds republish the official legislative record, which names Members of Congress and MEPs and records how they voted and what they sponsored. That is public record information, republished on the basis of legitimate interest in making the legislative process followable.
