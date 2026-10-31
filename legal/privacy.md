@@ -14,8 +14,6 @@ updated: 31 October 2026
 
 In short: **this website has no analytics or trackers of any kind, and we receive no visitor logs.** Anything a page keeps for you, such as the filter you set on a feed page or your sign-in session, stays in your browser on your device. You don't need an account to read anything in the app. An account does three things. It allows one vote per person on each bill. It keeps your followed bills and docket keywords the same on every device you sign in on. And it keeps your settings the same on every device. You can delete it in two taps, in the app or on your account page on this website.
 
->! **What exists today.** The two X feeds, this website and its feed pages ([/us](/us) and [/eu](/eu)) are live, and you can vote on this website with Google sign-in. The BillTracking app is not in the app stores yet. Apple sign-in works in the app on iPhone and on this website.
-
 ^billtracking.org
 ## The website
 
@@ -41,7 +39,7 @@ The app also checks for updates when it starts. The request goes to Expo, the se
 ^If you sign in
 ## Accounts and votes
 
-You can vote for or against a bill. A reader's position on a bill is **a political opinion**, which EU law treats as a specially protected category of personal data, so we keep this deliberately narrow.
+You can vote for or against a bill (Yea or Nay on US bills). A reader's position on a bill is **a political opinion**, which EU law treats as a specially protected category of personal data, so we keep this deliberately narrow.
 
 - **You need to sign in with Google or Apple to vote. You never need to sign in to read.** The account is what allows one vote per person on each bill. Without it, the counts would mean nothing.
 - **From the sign-in, the only things we act on are an account identifier and an email address.** If you use Sign in with Apple and choose *Hide My Email*, we only see Apple's relay address.
@@ -57,7 +55,7 @@ Counts are exact. We never round, estimate or randomise them, because the point 
 
 ### Where it's stored and why
 
-Votes are held in a database in **Frankfurt, Germany**, which we chose so that this data does not leave the EU. The legal basis is your **explicit consent** (GDPR Article 9(2)(a)), which you give by choosing to vote after being told what a vote records. Withdrawing that consent and deleting your account are the same action, so there is never a time when you have withdrawn consent and we still hold your votes.
+Votes are held in a database in **Frankfurt, Germany**, so that this data does not leave the EU. The legal basis is your **explicit consent** (GDPR Article 9(2)(a)), which you give by choosing to vote after being told what a vote records. Withdrawing consent and deleting your account are the same action, so we never hold your votes after you withdraw consent.
 
 Our database provider is Supabase, which acts as a processor on our instructions. If you sign in with Apple, we also store a token from Apple. We use it for one purpose only: to disconnect BillTracking from your Apple ID when you delete your account, as Apple requires.
 
@@ -97,7 +95,7 @@ BillTracking is an independent project run by one person, not a company. The dat
 
 If we change how any of this works, we will update this page and change the date below. We will not quietly start collecting something this page says we do not collect.
 
-**31 October 2026.** This page is reworded in plainer language, with new headings. Nothing about what is collected or how it is handled changed. Three descriptions were corrected. The what-exists-today note no longer says the app is in closed testing, which ended in September. Votes are described as for or against instead of thumbs up or down, which the app does not use. And the page now says that a location you set on this website before your first vote waits in your browser until you vote, and is then saved to your account.
+**31 October 2026.** This page is reworded in plainer language, with new headings. Nothing about what is collected or how it is handled changed. The what-exists-today note is removed: it said which parts of BillTracking were live rather than what we collect, and it had gone out of date (it still said the app was in closed testing, which ended in September). Two descriptions were corrected. Votes are described as for or against instead of thumbs up or down, which the app does not use. And the page now says that a location you set on this website before your first vote waits in your browser until you vote, and is then saved to your account.
 
 **23 October 2026.** The AI line now says that nothing in a post is written by AI: summaries are the legislatures' own, quoted word for word. Nothing about what is collected or how it is handled changed.
 
