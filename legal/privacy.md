@@ -41,7 +41,7 @@ The app also checks for updates when it starts. The request goes to Expo, the se
 
 You can vote for or against a bill (Yea or Nay on US bills). A reader's position on a bill is **a political opinion**, which EU law treats as a specially protected category of personal data, so we keep this deliberately narrow.
 
-- **You need to sign in with Google or Apple to vote. You never need to sign in to read.** The account is what allows one vote per person on each bill. Without it, the counts would mean nothing.
+- **You need to sign in with Google or Apple to vote. You don't need to sign in to read.** The account is what allows one vote per person on each bill. Without it, the counts would mean nothing.
 - **From the sign-in, the only things we act on are an account identifier and an email address.** If you use Sign in with Apple and choose *Hide My Email*, we only see Apple's relay address.
 - **A vote record is made up of the bill, whether you voted for or against, when you voted, and a country (and for the US, a state) only if you choose to set one.** The location is optional, you choose it yourself, and nobody checks it. Leaving it unset is a normal way to use the app, and everything still works.
 - **We never publish who voted which way, show it to anyone, or attach it to a profile.** There are no public profiles and no public vote histories. Your own votes are shown only to you, on the Your votes page in the app and on this website, where you can change or withdraw any of them. What we publish is counts: how many voted each way overall, and how many from each country or state.
@@ -49,13 +49,13 @@ You can vote for or against a bill (Yea or Nay on US bills). A reader's position
 
 ### What vote counts show
 
-Counts are exact. We never round, estimate or randomise them, because the point of this project is that its numbers can be checked. Every place we show also shows **how many people voted there**, so a small number looks small instead of being dressed up as a percentage.
+Counts are exact. We don't round, estimate or randomise them, because the point of this project is that its numbers can be checked. Every place we show also shows **how many people voted there**, so a small number looks small instead of being dressed up as a percentage.
 
-> We can't promise that nobody could ever guess how you voted. If a bill is very one-sided, or very few people from your country have voted on it, someone who already knows you voted could make a reasonable guess. **That is true of any published total**, and no threshold removes it. What we can say is this: we never publish, show or share which way any person voted, setting a location is optional, and you can withdraw a vote or delete your account entirely.
+> We can't promise that nobody could ever guess how you voted. If a bill is very one-sided, or very few people from your country have voted on it, someone who already knows you voted could make a reasonable guess. **That is true of any published total**, and no threshold removes it. What we can say is this: we don't publish, show or share which way any person voted, setting a location is optional, and you can withdraw a vote or delete your account entirely.
 
 ### Where it's stored and why
 
-Votes are held in a database in **Frankfurt, Germany**, so that this data does not leave the EU. The legal basis is your **explicit consent** (GDPR Article 9(2)(a)), which you give by choosing to vote after being told what a vote records. Withdrawing consent and deleting your account are the same action, so we never hold your votes after you withdraw consent.
+Votes are held in a database in **Frankfurt, Germany**, so that this data does not leave the EU. The legal basis is your **explicit consent** (GDPR Article 9(2)(a)), which you give by choosing to vote after being told what a vote records. Withdrawing consent and deleting your account are the same action. We don't hold your votes after you withdraw consent or delete your account.
 
 Our database provider is Supabase, which acts as a processor on our instructions. If you sign in with Apple, we also store a token from Apple. We use it for one purpose only: to disconnect BillTracking from your Apple ID when you delete your account, as Apple requires.
 

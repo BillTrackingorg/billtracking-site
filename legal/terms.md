@@ -34,7 +34,7 @@ BillTracking is a free service run by one person on free infrastructure. It may 
 ^If you sign in
 ## Accounts and voting
 
-- **You never need an account to read.** An account is what lets each person vote once on a bill.
+- **You don't need an account to read.** An account is what lets each person vote once on a bill.
 - **One account per person.** Do not create extra accounts to vote more than once, and do not use automated means to influence the counts. That would make the counts meaningless.
 - **Votes show reader sentiment. They are not a poll.** They are a show of hands among whoever happens to use the app, so they are self-selected, unweighted and not representative. Please do not present them as public opinion research, and be careful citing them as anything more than that.
 - **Read beyond the summary.** A summary is short and describes one version of a bill. Every post links to its official source, so read that before you rely on what a bill does.
